@@ -1,0 +1,190 @@
+# The shadow of a legend (owner request 25.10: «я непобедимый … играть дальше не в зависимости от силы»,
+# docs/PLAN_ENDGAME.md part 1). The pressure tier «Легенда» queues these for a character who outgrew the city: the
+# city strikes where strength does not help. Never drawn at random. Gender-neutral text, no past tense about the player.
+
+- id: lg_kidnap_partner
+  title: Похищение
+  category: relationships
+  weight: 1
+  forced_only: true
+  foe_faction: militech
+  conditions: {requires: [has_partner]}
+  text: "Сообщение без подписи: фото твоего партнёра, связанного, на фоне бетона. «Ты непобедим. Это не значит, что непобедимы все, кто рядом с тобой. Двадцать пять процентов всего, что у тебя есть. Сутки»."
+  choices:
+    - label: Заплатить выкуп
+      effects: {eddies_pct: -25, rel_npc:partner: 10, mood: -6}
+      text: "Деньги уходят тремя переводами через пять стран. Через сутки партнёра выбрасывают из фургона у твоего дома. Живого. Молчаливого."
+    - label: Найти их по следу в Сети
+      check: {stat: INT, skill: netrunning, dv: 18}
+      success: {text: "Ты находишь склад по отражению в зрачке на фото. Охрану берут без шума, партнёр дома к утру и долго не отпускает твою руку.", effects: {rel_npc:partner: 15, humanity: 2, fame: 2}}
+      fail: {text: "След ведёт в пустую квартиру. На столе записка: «Мы предупреждали». Похоронами занимаются чужие люди.", effects: {npc_lost:partner: true, mood: -20, humanity: -3}}
+    - label: Штурмовать
+      violent: true
+      effects: {start_combat: 4, npc_lost:partner: true, mood: -15}
+      text: "Ты выбиваешь дверь, и охрана падает одна за другой. Последний выстрел звучит раньше твоего. Сила не успевает."
+
+- id: lg_kidnap_kin
+  title: Родная кровь
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions: {requires: [has_family_alive]}
+  text: "Звонит родственник, голос дрожит: за ним ходят люди в чёрном, вчера они ждали у подъезда. Ультиматума нет. Пока. Кто-то хочет, чтобы ты знал, где у тебя мягко."
+  choices:
+    - label: Спрятать семью
+      effects: {eddies_pct: -12, rel_npc:family: 10, mood: -4}
+      text: "Новые документы, квартира в другом городе, смена номеров. Дорого и одиноко, но они живы."
+    - label: Выяснить, кто заказал
+      check: {stat: COOL, skill: persuasion, dv: 17}
+      success: {text: "Через трёх посредников ты выходишь на заказчика и объясняешь ему, чем это кончится. Люди в чёрном исчезают.", effects: {street_cred: 3, rel_npc:family: 5}}
+      fail: {text: "Пока ты задаёшь вопросы, они действуют. Звонок в три ночи. Не хватило одного дня.", effects: {npc_lost:family: true, mood: -18}}
+    - label: Ничего не делать
+      effects: {rel_npc:family: -25, mood: -6}
+      text: "Ты решаешь, что это блеф. Родственник перестаёт тебе звонить."
+
+- id: lg_heir_threat
+  title: Ребёнок
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions: {requires: [has_child]}
+  text: "На школьном планшете твоего ребёнка появляется видео: он идёт домой, снятый сверху, с дрона. Подпись: «Мы рядом каждый день». Никаких требований. Пока."
+  choices:
+    - label: Отправить подальше
+      effects: {rel_npc:child: -12, mood: -10, eddies_pct: -8}
+      text: "Закрытый интернат в горах, охрана, звонки по расписанию. Ребёнок не понимает, за что. Обижается."
+    - label: Нанять охрану
+      effects: {eddies_pct: -15, rel_npc:child: 5}
+      text: "Два профессионала ходят за ребёнком тенью. Дрон больше не появляется. Счёт приходит каждый месяц."
+    - label: Найти оператора дрона
+      check: {stat: INT, skill: netrunning, dv: 18}
+      success: {text: "Сигнал дрона приводит к человеку, который больше никогда не возьмёт в руки пульт.", effects: {street_cred: 2, humanity: -2}}
+      fail: {text: "Оператор успевает уйти. Через неделю ребёнок исчезает по дороге из школы на шесть часов и возвращается с запиской для тебя.", effects: {rel_npc:child: -20, mood: -15, hook: 1}}
+
+- id: lg_federal_case
+  title: Федеральное дело
+  category: ncpd
+  weight: 1
+  forced_only: true
+  text: "Федеральные агенты кладут на стол папку толщиной с кирпич: налоги, отмывание, связи с бандами. Счета заморожены до суда. Кулаками это не решается."
+  choices:
+    - label: Лучшие юристы города
+      effects: {eddies_pct: -15}
+      text: "Юристы делят папку на сорок ходатайств. Через месяц дело разваливается, и их счёт тоже."
+    - label: Защищаться в суде самому
+      check: {stat: INT, skill: persuasion, dv: 18}
+      success: {text: "Ты разбираешь обвинение по пунктам перед камерами. Присяжные оправдывают, город аплодирует.", effects: {fame: 3}}
+      fail: {text: "Судья не впечатлён. Срок и штраф, апелляция потом.", effects: {jail_weeks: 4, eddies_pct: -10, fame: -3}}
+    - label: Уехать, пока не поздно
+      effects: {vanish_weeks: 4, fame: -4, street_cred: -5}
+      text: "Ты пропадаешь на месяц. Дело закрывают за отсутствием обвиняемого, но улица называет это бегством."
+
+- id: lg_deepfake
+  title: Дипфейк
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Во всех лентах ролик: ты, неотличимо настоящий, плачешь на коленях перед боссом Тигриных когтей и сдаёшь своих. Подделка, но смотрят её миллионы."
+  choices:
+    - label: Нанять пиарщиков
+      effects: {eddies_pct: -8, fame: -1}
+      text: "Через неделю все обсуждают другой скандал. Осадок остаётся, но небольшой."
+    - label: Найти автора
+      check: {stat: INT, skill: netrunning, dv: 17}
+      success: {text: "Ты находишь студию и публикуешь исходники вместе с именем заказчика. Позор теперь его.", effects: {fame: 3, street_cred: 2}}
+      fail: {text: "Автор заметает следы, а твоё опровержение выглядит жалко. Над тобой смеются в барах.", effects: {fame: -6, street_cred: -10, mood: -6}}
+    - label: Сделать вид, что не видно
+      effects: {fame: -4, street_cred: -5, mood: -4}
+      text: "Ролик живёт своей жизнью. Новые знакомые смотрят на тебя с прищуром."
+
+- id: lg_identity_theft
+  title: Кража личности
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Банк вежливо сообщает: перевод всех средств на счёт на Ближнем Востоке подтверждён твоей биометрией. Кто-то носит твоё лицо, твой голос и твой пароль."
+  choices:
+    - label: Гнаться за деньгами по Сети
+      check: {stat: INT, skill: netrunning, dv: 19}
+      success: {text: "Ты перехватываешь транзакцию на третьем прыжке. Деньги возвращаются, двойник остаётся без лица.", effects: {mood: 4}}
+      fail: {text: "Деньги растворяются в криптомиксерах. Двойник ещё и оформил на тебя кредит.", effects: {eddies_pct: -30, debt: 5000, mood: -8}}
+    - label: Заморозить всё и судиться с банком
+      effects: {eddies_pct: -10, mood: -5}
+      text: "Банк возвращает часть, остальное уходит на юристов и штрафы за «сомнительную активность»."
+    - label: Смириться
+      effects: {eddies_pct: -20, mood: -6}
+      text: "Ты переводишь остатки на новый счёт и стараешься не думать, кто сейчас ходит с твоим лицом."
+
+- id: lg_chrome_recall
+  title: Отзыв хрома
+  category: implants
+  weight: 1
+  forced_only: true
+  conditions: {requires: [has_cyberware]}
+  text: "Производитель отзывает серию одного из твоих имплантов: «критическая уязвимость». Через трое суток прошивка отключит его удалённо. Вежливое письмо, без вариантов."
+  choices:
+    - label: Сдать имплант по программе
+      effects: {remove_random_cyberware: true, eddies: 5000, mood: -5}
+      text: "Риппер корпорации вынимает имплант, выдаёт компенсацию и брошюру о новой модели."
+    - label: Заплатить за «расширенную поддержку»
+      effects: {eddies_pct: -12}
+      text: "За деньги уязвимость внезапно оказывается не такой уж критической."
+    - label: Взломать прошивку
+      check: {stat: TECH, skill: tech, dv: 18}
+      success: {text: "Ты отрезаешь имплант от корпоративной сети. Теперь он твой целиком, без обновлений и без хозяина.", effects: {street_cred: 1}}
+      fail: {text: "Прошивка ловит попытку взлома и выжигает имплант вместе с куском нервов.", effects: {remove_random_cyberware: true, hp: -15, humanity: -3}}
+
+- id: lg_poison
+  title: Яд
+  category: street
+  weight: 1
+  forced_only: true
+  text: "После ужина в дорогом ресторане немеют пальцы. Нейротоксин, созданный против хромированных людей: броня от него не помогает, а импланты только ускоряют."
+  choices:
+    - label: В клинику, срочно
+      effects: {hp: -15, eddies_pct: -5}
+      text: "Промывание, антидот, неделя под капельницей. Кто-то знает, что ты ешь и где."
+    - label: Вычислить отравителя
+      check: {stat: COOL, skill: persuasion, dv: 17}
+      success: {text: "Официант называет имя заказчика ещё до того, как ты успеваешь спросить второй раз.", effects: {hp: -8, street_cred: 2, enmity: -1}}
+      fail: {text: "Официант исчезает, яд добирается до нервов. Руки дрожат ещё долго.", effects: {hp: -20, mood: -8}}
+    - label: Перетерпеть самому
+      check: {stat: BODY, skill: null, dv: 18}
+      success: {text: "Тело справляется. Следующую неделю ты ешь только то, что готовишь сам.", effects: {hp: -10}}
+      fail: {text: "Ночь на полу ванной и сорванный хром. Утром ты не узнаёшь своё лицо в зеркале.", effects: {hp: -25, humanity: -2}}
+
+- id: lg_business_arson
+  title: Пожар
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {has_business: true}
+  text: "Ночью звонит управляющий: твоё заведение горит, пожарные не торопятся, а у входа кто-то оставил венок с твоим именем."
+  choices:
+    - label: Отстроить заново
+      effects: {eddies_pct: -15, biz_slump: 4}
+      text: "Новые стены, новая проводка, месяц простоя. Венок ты оставляешь себе на память."
+    - label: Найти поджигателя
+      check: {stat: COOL, skill: persuasion, dv: 17}
+      success: {text: "Поджигатель сам приходит извиняться и платит за ремонт. Его наниматель пропадает с радаров.", effects: {street_cred: 3, biz_slump: 2}}
+      fail: {text: "Пока ты ищешь, пожар добирается до склада. Страховая отказывает: «умысел владельца».", effects: {biz_lost: true, mood: -10}}
+    - label: Списать и забыть
+      effects: {biz_lost: true, mood: -6}
+      text: "От заведения остаётся вывеска на асфальте. Город запоминает, что тебя можно тронуть."
+
+- id: lg_friend_sells
+  title: Друг продаёт
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Старый друг сдал корпорации твой распорядок, адреса и коды. Не со зла: у него долги и дочь. Он сам приходит и рассказывает, глядя в пол."
+  choices:
+    - label: Простить и закрыть его долги
+      effects: {eddies_pct: -8, humanity: 3, rel_npc:friend: 20}
+      text: "Ты переводишь деньги и уходишь, ничего не сказав. За спиной слышно, как он плачет."
+    - label: Вычеркнуть из жизни
+      effects: {rel_npc:friend: -50, mood: -6}
+      text: "Ты удаляешь его номер. Через месяц узнаёшь, что он уехал из города."
+    - label: Сделать из него пример
+      effects: {npc_lost:friend: true, humanity: -6, street_cred: 3, mood: -8}
+      text: "Улица узнаёт, что бывает с теми, кто тебя продаёт. Тебе становится холодно в собственной квартире."

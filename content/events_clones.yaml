@@ -1,0 +1,41 @@
+# The clone corp (owner request 26.10, docs/PLAN_EQUILIBRIUM.md part 3): a corp grows clones of the rich in a closed
+# «Ковчег». The clones believe the world outside burned down; a «lottery» sends a lucky one to the Island. There is no
+# Island: the clone is taken apart for its original. The chain: clone_escapee -> clone_truth; then the window
+# «🧬 Клоны» (services/clones.py) offers to guard the Ark or to storm it. Player text avoids gendered past tense.
+
+- id: clone_escapee
+  title: Девушка в больничной рубашке
+  category: street
+  weight: 2
+  conditions:
+    flags_none: [clone_met, abroad]
+  text: "Ночь, дождь, у мусорных баков сидит босая девушка в больничной рубашке. Лицо знакомое: это же наследница медиахолдинга с рекламных экранов. Только моложе и испуганнее. «Ты из снаружи? Там правда ничего не сгорело? Нам говорили, всё сгорело. Меня выиграли в лотерею на Остров, но я увидела, куда увозят выигравших». На запястье браслет: «Арк Биосистемс. Ковчег. №117»."
+  choices:
+    - label: Спрятать её
+      effects: {flag_set:clone_met: true, flag_set:clone_saw: true, mood: 4, humanity: 1, eddies: -300}
+      text: "Ты отводишь её к знакомому врачу и платишь за ночь. Утром её уже нет: осталась записка с одним словом «спасибо» и номером 117. Ты теперь знаешь, что такое «Ковчег»."
+    - label: Сдать охране корпорации
+      effects: {flag_set:clone_met: true, flag_set:clone_sold: true, eddies: 2500, humanity: -2}
+      text: "Чёрный фургон приезжает через семь минут. Вежливый человек в сером благодарит и переводит деньги. Девушка не кричит. Она просто смотрит на тебя, пока закрываются двери."
+    - label: Пройти мимо
+      effects: {flag_set:clone_met: true, mood: -2}
+      text: "Ты проходишь мимо. За спиной слышно, как подъезжает машина. Номер 117 потом попадается тебе в новостях: «наследница медиахолдинга успешно перенесла пересадку сердца»."
+
+- id: clone_truth
+  title: Отчёт о лотерее
+  category: street
+  weight: 2
+  conditions:
+    flags_all: [clone_met]
+    flags_none: [clone_known, abroad]
+  text: "Детектив Агентства «Полночь» кладёт на стол чип. «Номер сто семнадцать тебе знаком. Вот что такое „Ковчег“». На чипе отчёты: клоны богатых растут в подземном комплексе и думают, что снаружи апокалипсис. Раз в месяц „лотерея“ отправляет счастливчика на Остров. Острова нет. Есть операционная и богатый клиент, которому нужна печень своей группы крови."
+  choices:
+    - label: Слить журналистам
+      effects: {flag_set:clone_known: true, flag_set:clone_leak: true, street_cred: 1, "faction_rep:biotechnica": -4}
+      text: "Через час чип у журналистки из «Полуночных новостей». Через два её эфир снимают с сетки. Но копии уже гуляют по Сети, и в городе начинают задавать вопросы."
+    - label: Продать корпорации
+      effects: {flag_set:clone_known: true, flag_set:clone_sold: true, eddies: 5000, humanity: -2, "faction_rep:biotechnica": 3}
+      text: "Корпорация платит быстро и щедро. Детектив Агентства больше не звонит. Тебе предлагают «постоянное сотрудничество» и скидку на услуги, если однажды понадобится новое тело."
+    - label: Оставить себе
+      effects: {flag_set:clone_known: true}
+      text: "Ты прячешь чип. Пусть полежит. В этом городе правда тоже товар, и цена на неё растёт."

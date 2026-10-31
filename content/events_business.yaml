@@ -1,0 +1,373 @@
+# Stories of an owned business (owner request: a bar is not just a line of income). `business: [kinds]` ([] = any kind)
+# makes an event a story of one business: never drawn at random, queued by the weekly business hook (at most one a
+# press). "{biz}" becomes the business's name: «Ржавый тигр» (бар). Effects `biz_level`, `biz_boost` / `biz_slump`
+# (weeks of income x1.5 / x0.5), `biz_lost`, `biz_chain` act on that business.
+
+# ======================================================================== any business
+
+- id: biz_murder
+  title: Труп в {biz}
+  category: ncpd
+  weight: 3
+  business: []
+  text: "Утром уборщица находит в {biz} тело: парень в дорогой куртке, дырка в затылке, кошелёк на месте. Камеры «случайно» ничего не записали. Через час у двери стоит детектив NCPD."
+  choices:
+    - label: Помочь следствию
+      check: {stat: INT, skill: persuasion, dv: 14}
+      success: {text: "Ты вспоминаешь машину у входа и номер. Детектив жмёт руку: дело закрыто быстро, заведение работает.", effects: {heat: -1, street_cred: 1}}
+      fail: {text: "Детектив решает, что ты что-то скрываешь. Неделя обысков, клиенты обходят {biz} стороной.", effects: {biz_slump: 4, heat: 1}}
+    - label: Замести следы до приезда копов
+      check: {stat: COOL, skill: stealth, dv: 15}
+      success: {text: "Тело уезжает в багажнике знакомого кочевника. Детективу показывают чистый пол и свежий кофе.", effects: {humanity: -2, street_cred: 2}}
+      fail: {text: "Копы находят кровь в подсобке. Штраф, допросы, газеты.", effects: {eddies: -3000, heat: 2, biz_slump: 4}}
+    - label: Закрыться на неделю
+      effects: {biz_slump: 2, mood: -2}
+      text: "Ты вешаешь табличку «Ремонт». Через неделю про труп уже никто не вспоминает. Почти."
+
+- id: biz_competitor_offer
+  title: Предложение о покупке
+  category: money
+  weight: 3
+  business: []
+  text: "Корпоративный агент сети «Вкусно и быстро» кладёт на стойку {biz} планшет с цифрой. «Мы покупаем таких, как вы. Или вытесняем»."
+  choices:
+    - label: Продать за хорошие деньги
+      effects: {biz_lost: true, eddies: 25000, status: 1}
+      text: "Подпись, рукопожатие, вывеска уезжает на свалку. Деньги настоящие."
+    - label: Послать агента
+      effects: {biz_slump: 3, street_cred: 1}
+      text: "Агент улыбается и уходит. Через неделю напротив открывается их точка с ценами ниже твоих."
+    - label: Поторговаться
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "Ты уговариваешь их не покупать, а платить: франшиза, их поставки, твоя вывеска.", effects: {biz_boost: 8, eddies: 3000}}
+      fail: {text: "Переговоры заканчиваются угрозами. Им нравятся угрозы больше, чем тебе.", effects: {biz_slump: 4}}
+
+- id: biz_rival_war
+  title: Война с конкурентом
+  category: street
+  weight: 3
+  business: []
+  text: "Конкурент через улицу переманивает твоих клиентов и, кажется, платит банде, чтобы те пугали твоих поставщиков. Вчера кто-то разбил витрину {biz}."
+  choices:
+    - label: Нанести ответный визит
+      check: {stat: BODY, skill: melee, dv: 15}
+      success: {text: "Ты приходишь к нему ночью с бейсбольной битой и уходишь с его клиентской базой.", effects: {biz_boost: 6, heat: 1, street_cred: 2}}
+      fail: {text: "У конкурента охрана лучше, чем ты думал. Тебя выбрасывают на асфальт.", effects: {hp: -12, biz_slump: 3}}
+    - label: Перекупить его сеть
+      check: {stat: COOL, skill: persuasion, dv: 17}
+      success: {text: "Он устал воевать не меньше тебя. Его точка теперь тоже твоя.", effects: {eddies: -8000, biz_chain: true}}
+      fail: {text: "Он смеётся в трубку. Цена выросла, а война продолжается.", effects: {biz_slump: 2}}
+    - label: Снизить цены и переждать
+      effects: {biz_slump: 4, mood: -2}
+      text: "Месяц работы в ноль. Зато клиенты снова твои."
+
+- id: biz_racket
+  title: Люди «за защитой»
+  category: street
+  weight: 3
+  business: []
+  text: "В {biz} заходят трое. Один садится за лучший столик, двое встают у двери. «Хорошее место. Жаль будет, если сгорит»."
+  choices:
+    - label: Платить каждую неделю
+      effects: {eddies: -1500, mood: -2}
+      text: "Конверт уходит. Витрина цела. Пока."
+    - label: Отказать
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Ты называешь пару имён из банды повыше. Троица переглядывается и уходит.", effects: {street_cred: 2}}
+      fail: {text: "Ночью в окно летит бутылка с горючим. Утром ремонт.", effects: {biz_level: -1, eddies: -2000}}
+    - label: Встретить их с охраной
+      effects: {start_combat: 2}
+      text: "Ты свистишь. Из подсобки выходят свои люди."
+
+- id: biz_inspector
+  title: Инспектор
+  category: money
+  weight: 2
+  business: []
+  text: "Городской инспектор ходит по {biz} с планшетом и морщится. Санитарные нормы, пожарные выходы, лицензии. Всё можно исправить. Всё можно и не исправлять."
+  choices:
+    - label: Дать взятку
+      effects: {eddies: -1200}
+      text: "Планшет гаснет. Инспектор желает приятного вечера."
+    - label: Исправить всё по закону
+      effects: {eddies: -3000, biz_boost: 4}
+      text: "Новая проводка, огнетушители, бумаги. Клиенты замечают, что стало лучше."
+    - label: Спорить
+      check: {stat: INT, skill: persuasion, dv: 15}
+      success: {text: "Ты находишь в его списке ошибку и цитируешь закон. Инспектор уходит без штрафа.", effects: {street_cred: 1}}
+      fail: {text: "Штраф с надбавкой «за неуважение».", effects: {eddies: -2500}}
+
+- id: biz_star_visit
+  title: Звезда в зале
+  category: relationships
+  weight: 2
+  business: []
+  text: "В {biz} заходит звезда брейндансов с охраной. Через пять минут у входа толпа с камерами."
+  choices:
+    - label: Угостить за счёт заведения
+      effects: {eddies: -500, biz_boost: 6, fame: 1}
+      text: "Фото звезды с твоей вывеской облетает сеть. Месяц очередей."
+    - label: Попросить автограф для стены
+      effects: {biz_boost: 3, mood: 3}
+      text: "Автограф висит над стойкой. Гости фотографируются с ним."
+
+- id: biz_wedding
+  title: Свадьба
+  category: relationships
+  weight: 2
+  business: []
+  text: "Местная пара хочет сыграть свадьбу в {biz}. Денег у них мало, гостей много, а жених — сын лейтенанта банды."
+  choices:
+    - label: Сделать скидку
+      effects: {eddies: -800, humanity: 1, street_cred: 2, biz_boost: 3}
+      text: "Гуляют до утра. Банда теперь считает {biz} своим местом, и это скорее хорошо."
+    - label: Взять полную цену
+      effects: {eddies: 2500}
+      text: "Платят. Без улыбок."
+    - label: Отказать
+      effects: {street_cred: -1}
+      text: "Жених долго смотрит на вывеску. Запоминает."
+
+- id: biz_fire
+  title: Пожар
+  category: money
+  weight: 1
+  business: []
+  text: "Ночью в {biz} загорается проводка. Пожарные едут сорок минут, потому что это не корпоративный район."
+  choices:
+    - label: Тушить самому
+      check: {stat: BODY, dv: 14}
+      success: {text: "Огнетушитель, мокрая куртка, обожжённые руки. Заведение стоит.", effects: {hp: -6, street_cred: 1}}
+      fail: {text: "Огонь быстрее тебя. Утром половина зала — уголь.", effects: {hp: -10, biz_level: -1}}
+    - label: Ждать пожарных
+      effects: {biz_level: -1, eddies: -2000}
+      text: "Пожарные приезжают к пепелищу и выписывают счёт за выезд."
+
+- id: biz_famous_review
+  title: Обзор в сети
+  category: money
+  weight: 2
+  business: []
+  text: "Известный стример снимает обзор на {biz}. Камера в лицо, вопросы с подвохом."
+  choices:
+    - label: Сыграть для камеры
+      check: {stat: EMP, skill: persuasion, dv: 14}
+      success: {text: "Обзор называется «Лучшее место района». Месяц аншлагов.", effects: {biz_boost: 6, fame: 1}}
+      fail: {text: "Обзор называется «Я отравился, но выжил». Смешно всем, кроме тебя.", effects: {biz_slump: 4}}
+    - label: Выгнать стримера
+      effects: {biz_slump: 2, street_cred: 1}
+      text: "Ролик «Хозяин выкинул меня на улицу» набирает миллион. Слава бывает и такой."
+
+- id: biz_employee_theft
+  title: Кто-то ворует
+  category: money
+  weight: 2
+  business: []
+  text: "Выручка {biz} не сходится третью неделю. Кто-то из своих тянет из кассы."
+  choices:
+    - label: Устроить проверку
+      check: {stat: INT, skill: persuasion, dv: 13}
+      success: {text: "Камера в кассе ловит управляющую. Деньги возвращаются, управляющая — нет.", effects: {eddies: 1500}}
+      fail: {text: "Ты уволил не того. Воровство продолжается, а честный бармен ушёл к конкуренту.", effects: {biz_slump: 3}}
+    - label: Махнуть рукой
+      effects: {eddies: -1000}
+      text: "Ты просто реже смотришь в отчёты. Так спокойнее."
+
+- id: biz_gang_meeting
+  title: Сходка в подсобке
+  category: street
+  weight: 2
+  business: []
+  text: "Две банды хотят провести переговоры в {biz}: нейтральная территория, хозяин гарантирует, что никто не начнёт стрелять."
+  choices:
+    - label: Согласиться
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Переговоры проходят мирно. Обе банды платят за аренду и уважение.", effects: {eddies: 4000, street_cred: 3}}
+      fail: {text: "Кто-то не выдержал. Перестрелка, мебель в решето, копы на пороге.", effects: {biz_level: -1, heat: 2, hp: -8}}
+    - label: Отказать обеим
+      effects: {mood: 1}
+      text: "Пусть стреляются где-нибудь ещё."
+
+- id: biz_ncpd_raid
+  title: Рейд NCPD
+  category: ncpd
+  weight: 1
+  business: []
+  text: "Ночью в {biz} врываются копы в броне: «Всем на пол!». Кто-то слил им, что через заведение идут грязные дела."
+  choices:
+    - label: Откупиться
+      effects: {eddies: -5000, heat: -1}
+      text: "Капитан пересчитывает конверт и уводит своих. В отчёте напишут «ничего не найдено»."
+    - label: Спрятать улики
+      check: {stat: REF, skill: stealth, dv: 16}
+      success: {text: "Всё лишнее уходит в вентиляцию за секунду до обыска. Копы уходят ни с чем.", effects: {street_cred: 2}}
+      fail: {text: "Копы находят тайник. Схема раскрыта, заведение опечатано на месяц.", effects: {heat: 2, biz_slump: 6, eddies: -4000}}
+    - label: Сдать подельника
+      effects: {humanity: -2, heat: -2}
+      text: "Ты называешь имя. Копы уезжают довольными. Подельник — в наручниках, на тебя он теперь смотрит иначе."
+
+# ======================================================================== the bar
+
+- id: biz_bar_brawl
+  title: Драка в баре
+  category: street
+  weight: 3
+  business: [bar, club]
+  text: "В {biz} сцепились докеры и корпоративные практиканты. Летят стулья, бармен прячется за стойкой."
+  choices:
+    - label: Разнять лично
+      check: {stat: BODY, skill: melee, dv: 14}
+      success: {text: "Двоих ты выносишь на улицу, остальные успокаиваются сами. Гости хлопают.", effects: {street_cred: 2, biz_boost: 2}}
+      fail: {text: "Стул прилетает и в тебя. Драка заканчивается сама, когда кончается мебель.", effects: {hp: -8, eddies: -1500}}
+    - label: Вызвать NCPD
+      effects: {eddies: -800, heat: 1}
+      text: "Копы приезжают через полчаса, всех кладут лицом в пол, включая тебя."
+
+- id: biz_bar_secret
+  title: Тайная комната
+  category: rare
+  weight: 1
+  business: [bar]
+  text: "Во время ремонта в {biz} рабочие находят замурованную дверь. За ней — комната, где в двадцатых годах кто-то хранил оружие и деньги."
+  choices:
+    - label: Забрать всё себе
+      effects: {eddies: 9000, item_grant:assault_rifle: true}
+      text: "Старые эдди ещё в ходу. Старая винтовка — тоже."
+    - label: Сделать из неё приватный зал
+      effects: {biz_level: 1, biz_boost: 4}
+      text: "Зал «для своих» с историей. Фиксеры бронируют его на месяц вперёд."
+
+# ======================================================================== the taxi
+
+- id: biz_taxi_package
+  title: Забытая посылка
+  category: street
+  weight: 3
+  business: [taxi]
+  text: "Водитель {biz} привёз в гараж сумку, забытую пассажиром. Внутри — кибердека в корпоративной упаковке и следящий маячок."
+  choices:
+    - label: Вернуть корпорации
+      effects: {eddies: 1500, status: 1}
+      text: "Корпорация благодарит сухо, но платит. Твои машины теперь в их списке надёжных."
+    - label: Продать на чёрном рынке
+      check: {stat: COOL, skill: stealth, dv: 15}
+      success: {text: "Маячок раздавлен, дека продана. Хороший месяц.", effects: {eddies: 7000}}
+      fail: {text: "Маячок работал. Охрана корпорации навещает твой гараж.", effects: {hp: -10, biz_level: -1}}
+
+- id: biz_taxi_chase
+  title: Погоня
+  category: street
+  weight: 2
+  business: [taxi]
+  text: "Пассажир такси {biz} садится с пакетом и кричит «Гони!». Сзади — фургон банды."
+  choices:
+    - label: Довезти любой ценой
+      check: {stat: REF, skill: driving, dv: 15}
+      success: {text: "Твоя машина уходит дворами. Пассажир платит втрое и оставляет визитку фиксера.", effects: {eddies: 3000, street_cred: 2}}
+      fail: {text: "Фургон таранит машину. Водитель в больнице, машина на свалке.", effects: {biz_slump: 3, eddies: -2500}}
+    - label: Высадить пассажира
+      effects: {mood: -1}
+      text: "Пассажир исчезает в переулке. Водитель дрожит, но цел."
+
+# ======================================================================== the noodle bar
+
+- id: biz_noodle_recipe
+  title: Рецепт бабушки
+  category: relationships
+  weight: 2
+  business: [noodle]
+  text: "Старушка из соседнего дома приносит в {biz} рецепт бульона. «Мой муж держал лапшичную в Японтауне. Его больше нет, пусть рецепт живёт»."
+  choices:
+    - label: Взять рецепт и назвать блюдо в её честь
+      effects: {biz_boost: 8, humanity: 1}
+      text: "Очередь стоит до угла. Старушка каждый день сидит за лучшим столиком бесплатно."
+    - label: Вежливо отказаться
+      effects: {}
+      text: "Она кивает и уходит. Через месяц её рецепт подают у конкурента."
+
+- id: biz_noodle_mystery_meat
+  title: Подозрительное мясо
+  category: money
+  weight: 2
+  business: [noodle]
+  text: "Поставщик предлагает мясо для {biz} в два раза дешевле. Откуда оно — не говорит. Пахнет нормально."
+  choices:
+    - label: Брать
+      effects: {eddies: 2000, humanity: -1, biz_boost: 2}
+      text: "Маржа растёт. Ты стараешься не думать, почему в районе пропадают кошки."
+    - label: Отказаться
+      effects: {mood: 1}
+      text: "Ты остаёшься с дорогим мясом и чистой совестью."
+
+# ======================================================================== the chrome stall and the clinic
+
+- id: biz_chrome_hot
+  title: Горячий товар
+  category: implants
+  weight: 3
+  business: [chrome_stall, clinic]
+  text: "В {biz} приносят ящик военного хрома с номерами «Милитеха». Продавец нервно оглядывается."
+  choices:
+    - label: Купить весь ящик
+      effects: {eddies: -5000, biz_boost: 6, heat: 1}
+      text: "Хром уходит за неделю втрое дороже. Серийные номера ты спилил сам."
+    - label: Сдать продавца «Милитеху»
+      effects: {eddies: 2000, street_cred: -2}
+      text: "Корпорация платит наградные. Улица запоминает, кто сдал."
+    - label: Выгнать
+      effects: {}
+      text: "Продавец уходит к соседу. У соседа через неделю обыск."
+
+- id: biz_clinic_psycho
+  title: Киберпсих на столе
+  category: implants
+  weight: 2
+  business: [clinic, chrome_stall]
+  text: "В {biz} приводят парня с дрожащими руками и пустыми глазами: просит снять хром, пока не поздно. Человечности в нём почти не осталось."
+  choices:
+    - label: Помочь
+      check: {stat: TECH, skill: medicine, dv: 16}
+      success: {text: "Три часа работы, и парень снова плачет, как человек. Его мать приносит тебе пирог.", effects: {humanity: 2, street_cred: 2}}
+      fail: {text: "Он срывается прямо на столе. Ты отделываешься ранами, клиника — ремонтом.", effects: {hp: -15, biz_level: -1}}
+    - label: Вызвать МаксТак
+      effects: {eddies: 1000, humanity: -1}
+      text: "МаксТак приезжает за пять минут. Платят за сигнал. Пустые глаза ты будешь помнить."
+
+# ======================================================================== the club
+
+- id: biz_club_vip
+  title: Вечеринка корпоратов
+  category: money
+  weight: 2
+  business: [club]
+  text: "Отдел «Арасаки» хочет арендовать {biz} на ночь целиком. Платят много, но просят «не задавать вопросов о гостях»."
+  choices:
+    - label: Сдать клуб
+      effects: {eddies: 8000, status: 1}
+      text: "Утром уборщики находят под диваном золотую запонку и чей-то глаз в пакете. Вопросов ты не задаёшь."
+    - label: Отказать
+      effects: {street_cred: 1}
+      text: "Улица уважает, что твой клуб нельзя купить на ночь."
+
+- id: biz_club_overdose
+  title: Передоз в туалете
+  category: ncpd
+  weight: 2
+  business: [club, bar]
+  text: "В туалете {biz} находят девушку без сознания: передоз синтетики. Скорая едет долго, у тебя есть аптечка и нет лицензии."
+  choices:
+    - label: Откачать самому
+      check: {stat: TECH, skill: medicine, dv: 14}
+      success: {text: "Она открывает глаза. Её отец оказывается советником мэрии и очень благодарен.", effects: {status: 2, eddies: 3000}}
+      fail: {text: "Не вышло. Полиция, вопросы, закрытие на неделю.", effects: {biz_slump: 4, heat: 1, humanity: -1}}
+    - label: Вынести на улицу
+      effects: {humanity: -2}
+      text: "Её находят у мусорных баков. Живую, кажется. Ты не проверял."
+    - label: "Залатать"
+      ability: medic
+      effects: {humanity: 2, street_cred: 1}
+      text: "Укол, массаж сердца, капельница из твоего же запястья. Девушка открывает глаза."
+    - label: "Определить дрянь"
+      ability: chem
+      effects: {humanity: 1, mood: 2}
+      text: "Ты знаешь состав с одного касания и даёшь врачам точное противоядие."

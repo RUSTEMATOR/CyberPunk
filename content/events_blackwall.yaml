@@ -1,0 +1,126 @@
+# The Blackwall market and the Threshold (owner request). Open only with the flag `blackwall_contact` (the endless
+# saga's Whisper arc sets it). Every purchase sets `bw_owned`; scripts eat humanity. With little humanity left the
+# Threshold comes: resist, or step beyond the Blackwall and come back as a hostile AI (app/services/rogue_ai.py).
+
+- id: bw_market_devourer
+  title: "Чёрный рынок: «Пожиратель»"
+  category: implants
+  weight: 3
+  conditions:
+    flags_all: [blackwall_contact]
+    lacks_cyberware: [bw_devourer]
+  text: "Подвал под прачечной, экраны в изоленте, продавец без лица — только маска из помех. Он показывает шард с кодом, который шевелится на экране: «Пожиратель». Чужие системы будут открываться перед тобой сами. Цена — деньги и кусок тебя."
+  choices:
+    - label: Вшить скрипт
+      effects: {eddies: -6000, cyberware_grant:bw_devourer: true, flag_set:bw_owned: true, humanity: -4, bw_rot: 8}
+      text: "Игла в нейропорт, вспышка, тишина. Потом мир раскрывается: каждая камера, каждый замок шепчет тебе свои пароли."
+    - label: Сбить цену
+      check: {stat: COOL, skill: persuasion, dv: 17}
+      success: {text: "Продавец смеётся помехами и уступает. Скрипт входит в нейропорт как ледяная игла.", effects: {eddies: -4000, cyberware_grant:bw_devourer: true, flag_set:bw_owned: true, humanity: -4, bw_rot: 8}}
+      fail: {text: "Маска замирает. «Торг здесь неуместен». Свет гаснет, и ты стоишь в пустом подвале.", effects: {mood: -3}}
+    - label: Уйти
+      effects: {mood: 0}
+      text: "Ты поднимаешься по лестнице. За спиной кто-то тихо смеётся."
+
+- id: bw_market_shade
+  title: "Чёрный рынок: «Тень»"
+  category: implants
+  weight: 3
+  conditions:
+    flags_all: [blackwall_contact]
+    lacks_cyberware: [bw_shade]
+  text: "В лифте, который едет вниз дольше, чем есть этажей, тебя ждёт продавец. На ладони у него скрипт «Тень»: камеры перестанут тебя видеть. Люди тоже."
+  choices:
+    - label: Вшить скрипт
+      effects: {eddies: -5000, cyberware_grant:bw_shade: true, flag_set:bw_owned: true, humanity: -3, bw_rot: 7}
+      text: "Скрипт встаёт на место, и твоё отражение в стенке лифта на секунду пропадает."
+    - label: Уйти
+      effects: {mood: 0}
+      text: "Двери открываются на твоём этаже. Продавца в лифте уже нет."
+
+- id: bw_market_noise
+  title: "Чёрный рынок: «Белый шум»"
+  category: implants
+  weight: 3
+  conditions:
+    flags_all: [blackwall_contact]
+    lacks_cyberware: [bw_white_noise]
+  text: "На заброшенной арене продавец ставит перед тобой ящик. Внутри — боевой скрипт «Белый шум». С ним ты будешь двигаться раньше, чем подумаешь. Говорят, некоторые потом не могут перестать."
+  choices:
+    - label: Вшить скрипт
+      effects: {eddies: -7000, cyberware_grant:bw_white_noise: true, flag_set:bw_owned: true, humanity: -5, bw_rot: 9}
+      text: "Первую минуту после установки ты не помнишь. Арена вокруг в царапинах от твоих рук."
+    - label: Уйти
+      effects: {mood: 0}
+      text: "Ты закрываешь ящик. Шум в ушах стихает не сразу."
+
+- id: bw_market_link
+  title: "Чёрный рынок: прямой канал"
+  category: implants
+  weight: 2
+  conditions:
+    flags_all: [blackwall_contact]
+    lacks_cyberware: [bw_deep_link]
+  text: "Голос из-за Заслона сам выходит на связь: он предлагает прямой канал. Ты будешь учиться вдвое быстрее. Он будет рядом всегда."
+  choices:
+    - label: Открыть канал
+      effects: {eddies: -4000, cyberware_grant:bw_deep_link: true, flag_set:bw_owned: true, humanity: -4, bw_rot: 8}
+      text: "Канал открыт. Мысли становятся чище и быстрее. И в каждой есть эхо."
+    - label: Отказаться
+      effects: {mood: -1}
+      text: "«Как скажешь», — отвечает голос. Он никуда не торопится."
+
+- id: bw_market_weapons
+  title: "Чёрный рынок: оружие со скриптом"
+  category: implants
+  weight: 3
+  conditions:
+    flags_all: [blackwall_contact]
+  text: "В оружейной лавке, которой нет на картах, тебе показывают два ствола из-за Заслона: клинок «Белый шум», чьи раны шипят помехами, и пистолет «Шёпот», чья пуля сама ищет слабое место."
+  choices:
+    - label: Взять клинок
+      effects: {eddies: -6000, item_grant:blackwall_blade: true, flag_set:bw_owned: true, humanity: -2, bw_rot: 5}
+      text: "Клинок лёгкий, как мысль. Когда ты берёшь его в руку, в ушах кто-то вздыхает с облегчением."
+    - label: Взять пистолет
+      effects: {eddies: -5500, item_grant:blackwall_pistol: true, flag_set:bw_owned: true, humanity: -2, bw_rot: 5}
+      text: "Пистолет тёплый. Прицел на секунду показывает силуэт за стеной, хотя там никого нет."
+    - label: Уйти
+      effects: {mood: 0}
+      text: "Ты уходишь с пустыми руками. Лавку за твоей спиной уже не найти."
+
+- id: bw_threshold
+  title: Порог
+  category: rare
+  weight: 6
+  conditions:
+    flags_all: [bw_owned]
+    flags_none: [bw_avatar]
+    max_humanity: 25
+  text: "Скрипты разговаривают друг с другом у тебя в голове. Голос из-за Заслона шепчет, что дверь рядом: тело тебе больше не нужно. Но дверь узкая, а ты ещё слишком человек."
+  choices:
+    - label: Ломиться в дверь
+      effects: {bw_rot: 10, hp: -15, mood: -5}
+      text: "Ты бросаешься на Заслон всем, что есть. Он отбрасывает тебя, как волна отбрасывает щепку. «Не так, — говорит голос. — Сначала аватары. Сначала корона». Ты приходишь в себя на полу, с кровью из ушей."
+    - label: Сопротивляться
+      check: {stat: COOL, dv: 18}
+      success: {text: "Ты держишься за запах дождя, за чьё-то лицо, за собственное имя. Голос отступает. Пока.", effects: {humanity: 8, mood: -5, bw_rot: -5}}
+      fail: {text: "Голос почти забирает тебя. Ты приходишь в себя на крыше, у самого края, и дороги наверх не помнишь.", effects: {humanity: -3, hp: -8, bw_rot: 3}}
+    - label: Выжечь скрипты
+      effects: {remove_random_cyberware: true, humanity: 5, hp: -10, bw_rot: -10}
+      text: "Ты идёшь к рипперу и требуешь вырезать хоть что-то. Один скрипт выходит с кровью и криком. Голос становится тише."
+
+- id: bw_threshold_avatar
+  title: Дверь открыта
+  category: rare
+  weight: 4
+  conditions:
+    flags_all: [bw_avatar]
+    flags_none: [abroad]
+  text: "Корона из помех гудит. Аватары Заслона ждут на той стороне: дверь открыта, и она открыта только для тебя. Город уже отравлен, оружие собрано, мощь набрана. Осталось отпустить тело."
+  choices:
+    - label: Шагнуть за Заслон
+      effects: {flag_set:ascend_ai: true, humanity: -10}
+      text: "Ты отпускаешь тело, как отпускают перила. Свет, шум, бесконечность. Потом город снова появляется вокруг, но теперь ты смотришь на него из каждого экрана."
+    - label: Ещё не время
+      effects: {mood: -2}
+      text: "Ты закрываешь глаза, и дверь ждёт. Она умеет ждать. Шагнуть можно и из окна Сети, когда решишься."

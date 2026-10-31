@@ -1,0 +1,108 @@
+# The crossover cities as real cities (owner request 30.10, docs/PLAN_WORLD2.md): Elysium, Libria and Aeon live in
+# parallel with Night City. Living there takes a confirmed move (the «Мир» window). Their own windows (the station, the
+# Prozium, the clock) work only for those who live there. Gender-neutral text.
+
+- country: elysium
+  police: Охрана станции
+  story_title: Билет наверх
+  story: [ely_story_1, ely_story_2, ely_story_3, ely_story_4, ely_story_5, ely_story_6, ely_story_7, ely_story_8]
+  districts:
+    - key: ely_la
+      name: Лос-Анджелес-2154
+      description: "Пыльный мегаполис под колесом станции. Заводы «Армадайн», очереди к врачам, которых нет, дроны полиции над крышами. Каждый вечер колесо Элизиума проходит над городом, как луна, до которой не долететь."
+      danger: 4
+      fixer: ely_spider
+      gangs: [ely_spider_crew, ely_kruger]
+      corps: [militech]
+      places: ["завод «Армадайн»", "подпольная клиника Спайдера", "пустырь шаттлов", "очередь в госпиталь"]
+    - key: ely_station
+      name: Станция Элизиум
+      description: "Трава, бассейны, особняки и медкапсулы в каждом доме. Воздух пахнет скошенным газоном. Охрана сканирует гражданство у каждого, кто не похож на местного."
+      danger: 1
+      fixer: ely_delacourt_aide
+      gangs: [ely_kruger, ely_spider_crew]
+      corps: [militech, arasaka]
+      places: ["особняки кольца", "центральный медотсек", "зал Совета", "оранжерея"]
+      heat_mult: 3.0
+  fixers:
+    - {key: ely_spider, name: Спайдер, districts: [ely_la], description: "Хакер и контрабандист, который продаёт билеты наверх. Его шаттлы падают через раз, но других нет. Мечтает перепрошить станцию и сделать гражданами всех.", voice: "быстро, деловито, с презрением к станции и нежностью к своим шаттлам"}
+    - {key: ely_delacourt_aide, name: Советник Пэттон, districts: [ely_station], description: "Помощник министра обороны станции. Заказывает то, что нельзя заказать официально: найти, стереть, вывезти на Землю.", voice: "холодно, с вежливой угрозой, на «вы»"}
+  gangs:
+    - {key: ely_spider_crew, name: Люди Спайдера, name_gen: Людей Спайдера, name_dat: Людям Спайдера, name_acc: Людей Спайдера, name_ins: Людьми Спайдера, name_pre: Людях Спайдера, description: "Хакеры, пилоты шаттлов и бывшие рабочие с экзоскелетами. Ненавидят станцию и всех, кто на ней живёт.", style: "экзоскелеты на винтах, самодельные дробовики, данные в мозгу", fights_as: voodoo_boys, disposition: {bribe_dv: 14, talk_dv: 13, bribe_cost_mult: 1.0, flee_mod: 0, surrender: {robbed: 2, released: 2}}}
+    - {key: ely_kruger, name: Агенты Крюгера, name_gen: Агентов Крюгера, name_dat: Агентам Крюгера, name_acc: Агентов Крюгера, name_ins: Агентами Крюгера, name_pre: Агентах Крюгера, description: "Спящие агенты станции на Земле: бывшие наёмники, которых будят для грязной работы. Взрывные снаряды, щиты, ни капли жалости.", style: "экзоскелеты, взрывные пули, мечи и смех в рацию", fights_as: arasaka, disposition: {bribe_dv: 18, talk_dv: 18, bribe_cost_mult: 3.0, flee_mod: 1, surrender: {beaten: 3, robbed: 1}}}
+  ripperdocs:
+    - {key: ely_doc_frey, name: Фрей Сантьяго, district: ely_la, description: "Медсестра из госпиталя Лос-Анджелеса, которая лечит тех, кого не берут. Ставит хром на старых операционных столах и мечтает о медкапсуле для дочери.", price_mod: 0.9, complication_chance: 0.08}
+  housing:
+    - {key: ely_h_slum, name: Угол в бараке, district: ely_la, tier: 1, rent: 120, food: 70, description: "Комната на шестерых, бочка с водой во дворе и вид на колесо станции в небе."}
+    - {key: ely_h_worker, name: Квартира рабочего «Армадайн», district: ely_la, tier: 2, rent: 380, food: 110, description: "Бетонная коробка у завода, служебный пропуск и сирена смены в пять утра."}
+    - {key: ely_h_villa, name: Особняк на кольце, district: ely_station, tier: 4, rent: 9000, food: 600, description: "Газон, бассейн, медкапсула в спальне. Соседи вежливо не спрашивают, откуда ты."}
+
+- country: libria
+  police: Тетраграмматон
+  story_title: Доза, которую не приняли
+  story: [lib_story_1, lib_story_2, lib_story_3, lib_story_4, lib_story_5, lib_story_6, lib_story_7, lib_story_8]
+  districts:
+    - key: lib_center
+      name: Центр Либрии
+      description: "Белые плиты, чёрные плащи, одинаковые серые костюмы. Экраны с лицом Отца на каждой стене, раздатчики Прозиума на каждом углу. Ни музыки, ни цвета, ни громкого слова."
+      danger: 2
+      fixer: lib_dupont_clerk
+      gangs: [lib_clerics, lib_underground]
+      corps: [arasaka]
+      places: ["Дворец Равновесия", "раздаточный пункт Прозиума", "мост Тетраграмматона", "площадь Отца"]
+      heat_mult: 2.5
+    - key: lib_nether
+      name: Нетерритория
+      description: "Руины за стеной, которые не отстроили после войны. Здесь живут нарушители чувств: прячут пластинки, книги, собак и картины. Клирики приходят сюда жечь."
+      danger: 4
+      fixer: lib_jurgen
+      gangs: [lib_underground, lib_clerics]
+      corps: []
+      places: ["подвал с пластинками", "разрушенная церковь", "склад конфиската", "питомник собак"]
+  fixers:
+    - {key: lib_dupont_clerk, name: Брандт, districts: [lib_center], description: "Клерк Тетраграмматона, который сортирует доносы. Принимает их и продаёт. Колет Прозиум строго по часам и всё равно потеет, когда врёт.", voice: "ровно, без интонаций, канцелярскими формулами"}
+    - {key: lib_jurgen, name: Юрген, districts: [lib_nether], description: "Голос Подполья. Ведёт людей, которые однажды не укололись. Курит, слушает Бетховена и знает, что его скоро найдут.", voice: "тихо, тепло, с паузами, цитатами из запрещённых книг"}
+  gangs:
+    - {key: lib_clerics, name: Клерики Грамматона, name_gen: Клериков Грамматона, name_dat: Клерикам Грамматона, name_acc: Клериков Грамматона, name_ins: Клериками Грамматона, name_pre: Клериках Грамматона, description: "Высшая каста Тетраграмматона: мастера ган-каты в чёрных плащах. Чувствуют нарушителя по запаху и стреляют раньше, чем тот поймёт.", style: "ган-ката, два пистолета, чёрные плащи, ни слова лишнего", fights_as: arasaka, disposition: {bribe_dv: 20, talk_dv: 18, bribe_cost_mult: 4.0, flee_mod: 2, surrender: {beaten: 2, robbed: 1}}}
+    - {key: lib_underground, name: Подполье, name_gen: Подполья, name_dat: Подполью, name_acc: Подполье, name_ins: Подпольем, name_pre: Подполье, description: "Нарушители чувств, которые однажды перестали колоться. Прячут искусство, слушают музыку шёпотом и готовят удар по фабрике Прозиума.", style: "старые винтовки, самодельные бомбы, шёпот и слёзы", fights_as: scavengers, disposition: {bribe_dv: 12, talk_dv: 11, bribe_cost_mult: 0.6, flee_mod: -1, surrender: {released: 3, robbed: 1}}}
+  ripperdocs:
+    - {key: lib_doc_vessel, name: Санитар Вессел, district: lib_nether, description: "Бывший хирург Тетраграмматона, который однажды пропустил дозу. Ставит хром нарушителям в подвале под пластинку Баха.", price_mod: 0.9, complication_chance: 0.07}
+  housing:
+    - {key: lib_h_cell, name: Ячейка в жилом блоке, district: lib_center, tier: 2, rent: 300, food: 90, description: "Одинаковые стены, одинаковая мебель, ни одной лишней вещи. Проверка раз в неделю без предупреждения."}
+    - {key: lib_h_ruin, name: Подвал в Нетерритории, district: lib_nether, tier: 1, rent: 80, food: 60, description: "Сырые стены, матрас и тайник под полом, где лежит то, за что расстреливают."}
+    - {key: lib_h_cleric, name: Квартира клерика, district: lib_center, tier: 3, rent: 1100, food: 160, description: "Белая, пустая и безупречная. Окна на Дворец Равновесия. Соседи доносят друг на друга по графику."}
+
+- country: aeon
+  police: Хранители времени
+  story_title: Сто лет на руке
+  story: [aeon_story_1, aeon_story_2, aeon_story_3, aeon_story_4, aeon_story_5, aeon_story_6, aeon_story_7, aeon_story_8]
+  districts:
+    - key: aeon_dayton
+      name: Дейтон
+      description: "Гетто у стены, где живут по дню. Люди бегают, потому что ходить — роскошь. Кофе стоит четыре минуты, автобус — два часа. Каждое утро кого-то находят на тротуаре с нулями на руке."
+      danger: 4
+      fixer: aeon_borel
+      gangs: [aeon_minutemen, aeon_keepers]
+      corps: []
+      places: ["фабрика капсул времени", "ломбард времени", "автостанция у стены", "бар «Последняя минута»"]
+    - key: aeon_greenwich
+      name: Нью-Гринвич
+      description: "Центр за четырьмя шлагбаумами времени: проезд через каждую зону стоит месяц жизни. Здесь живут вечно, никуда не спешат и держат в сейфах миллионы лет."
+      danger: 1
+      fixer: aeon_weis_aide
+      gangs: [aeon_keepers, aeon_minutemen]
+      corps: []
+      places: ["банк времени Вайса", "казино «Вечность»", "особняк на холме", "шлагбаум четвёртой зоны"]
+      heat_mult: 2.5
+  fixers:
+    - {key: aeon_borel, name: Борель, districts: [aeon_dayton], description: "Хозяин бара «Последняя минута». Пьёт время, раздаёт работу и выручает соседей, когда у них остаются часы.", voice: "устало, по-соседски, считает всё в минутах"}
+    - {key: aeon_weis_aide, name: Сильвия, districts: [aeon_greenwich], description: "Дочь банкира времени, которой скучно жить вечно. Заказывает рискованные дела, чтобы снова что-то почувствовать.", voice: "лениво, с вызовом, говорит о смерти как о развлечении"}
+  gangs:
+    - {key: aeon_minutemen, name: Минитмены, name_gen: Минитменов, name_dat: Минитменам, name_acc: Минитменов, name_ins: Минитменами, name_pre: Минитменах, description: "Банда Фортиса: отнимают время у слабых в Дейтоне, борются на руках до нуля и выпивают чужие жизни до дна.", style: "борьба на руках, пистолеты, белые пиджаки, смех над чужим временем", fights_as: animals, disposition: {bribe_dv: 13, talk_dv: 15, bribe_cost_mult: 1.5, flee_mod: 0, surrender: {robbed: 3, beaten: 2}}}
+    - {key: aeon_keepers, name: Хранители времени, name_gen: Хранителей времени, name_dat: Хранителям времени, name_acc: Хранителей времени, name_ins: Хранителями времени, name_pre: Хранителях времени, description: "Полиция времени в чёрных костюмах. Следят, чтобы время не утекало из центра в гетто. Им самим выдают время только на день вперёд.", style: "чёрные костюмы, старые машины, сканеры часов", fights_as: arasaka, disposition: {bribe_dv: 17, talk_dv: 16, bribe_cost_mult: 2.5, flee_mod: 1, surrender: {beaten: 2, robbed: 2}}}
+  ripperdocs:
+    - {key: aeon_doc_clocksmith, name: Часовщик, district: aeon_dayton, description: "Ставит хром рядом с часами под кожей и не трогает их: одна ошибка — и пациент обнуляется на столе. Берёт эдди, а не время.", price_mod: 1.0, complication_chance: 0.06}
+  housing:
+    - {key: aeon_h_room, name: Комната над ломбардом, district: aeon_dayton, tier: 1, rent: 110, food: 70, description: "Окно на автостанцию. Внизу каждый вечер кто-то закладывает последние часы."}
+    - {key: aeon_h_flat, name: Квартира в Дейтоне, district: aeon_dayton, tier: 2, rent: 360, food: 100, description: "Две комнаты, часы на стене и соседи, которые стучат, если у них кончается время."}
+    - {key: aeon_h_estate, name: Особняк в Нью-Гринвиче, district: aeon_greenwich, tier: 4, rent: 8000, food: 500, description: "Охрана, бассейн, библиотека на тысячу лет чтения. Никто никуда не торопится."}

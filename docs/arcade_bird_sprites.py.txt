@@ -1,0 +1,143 @@
+"""Pixel-art sprites for the Clumsy Bird restyle: a courier drone over Night City (owner request 29.10)."""
+import random
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
+import sys
+OUT = sys.argv[1]
+FONT_CYR = "/tmp/claude-0/fonts/fontsource-press-start-2p-5.3.0/files/press-start-2p-cyrillic-400-normal.woff"
+BG, PANEL, CELL, LINE = (13, 14, 18), (21, 23, 30), (28, 31, 40), (42, 46, 58)
+Y, C, M, V, G, R, T = (255, 210, 63), (45, 226, 230), (255, 60, 172), (138, 92, 255), (61, 255, 143), (255, 77, 94), (232, 232, 238)
+
+def up(im, k):
+    return im.resize((im.width * k, im.height * k), Image.NEAREST)
+
+# -- the drone: 3 frames of 17x12, x5 = 85x60 ----------------------------------------------------------------------------
+def drone(frame):
+    im = Image.new("RGBA", (17, 12), (0, 0, 0, 0))
+    px = im.load()
+    rotor = [(1, 6), (2, 5), (0, 7)][frame]
+    for x0 in (0, 10):
+        for x in range(x0 + rotor[0], x0 + rotor[1] + 1):
+            px[min(16, x), 1] = (200, 205, 215, 255) if frame != 1 else (140, 145, 160, 255)
+    for x in (3, 13):
+        px[x, 2] = (139, 144, 160, 255)
+    body = [(3, 3, 13), (2, 4, 14), (2, 5, 14), (2, 6, 14), (3, 7, 13), (4, 8, 12)]
+    for (x0, y, x1) in body:
+        for x in range(x0, x1 + 1):
+            px[x, y] = (*LINE, 255)
+    for x in range(4, 13):
+        px[x, 3] = (58, 63, 79, 255)
+    for x in range(3, 14):
+        px[x, 6] = (*Y, 255)
+    for (x, y) in ((11, 4), (12, 4), (13, 4), (11, 5), (12, 5), (13, 5)):
+        px[x, y] = (*C, 255)
+    px[13, 4] = (*T, 255)
+    px[2, 4] = (*R, 255) if frame == 0 else (120, 40, 50, 255)
+    for x in (5, 6, 10, 11):
+        px[x, 9] = (139, 144, 160, 255)
+    for x in range(4, 13):
+        px[x, 10] = (*LINE, 255)
+    px[8, 9] = (*M, 160)
+    px[8, 10] = (*M, 90)
+    return up(im, 5)
+
+sheet = Image.new("RGBA", (255, 60), (0, 0, 0, 0))
+for f in range(3):
+    sheet.paste(drone(f), (f * 85, 0))
+sheet.save(f"{OUT}/clumsy.png")
+
+# -- the pillar: 148x1664, the gap end at the bottom ------------------------------------------------------------------------
+w, h = 148, 1664
+p = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+d = ImageDraw.Draw(p)
+for x in range(8, w - 8):
+    t = abs((x - w / 2) / (w / 2))
+    col = tuple(int(a + (b - a) * t) for a, b in zip((44, 48, 62), PANEL))
+    d.line([(x, 0), (x, h)], fill=(*col, 255))
+d.rectangle([8, 0, 11, h], fill=(*C, 255))
+d.rectangle([w - 12, 0, w - 9, h], fill=(*C, 255))
+for y in range(60, h - 60, 140):
+    d.rectangle([24, y, w - 25, y + 6], fill=(*M, 230))
+    for k in range(4):
+        d.rectangle([30 + k * 24, y + 30, 40 + k * 24, y + 52], fill=(*LINE, 255))
+cap = 44
+d.rectangle([0, h - cap, w - 1, h - 1], fill=(*CELL, 255))
+for x in range(0, w, 24):
+    d.polygon([(x, h - cap), (x + 12, h - cap), (x + 24 - 12, h - 1), (x, h - 1)], fill=(*Y, 255))
+d.rectangle([0, h - cap, w - 1, h - cap + 3], fill=(*C, 255))
+glow = p.filter(ImageFilter.GaussianBlur(3))
+p = Image.alpha_composite(glow, p)
+p.save(f"{OUT}/pipe.png")
+
+# -- the sky and the skyline: 900x1300 (drawn at 450x650, x2); tall so a portrait phone sees no seam ----------------------------
+rnd = random.Random(2077)
+sw, sh = 450, 650
+sky = Image.new("RGB", (sw, sh), BG)
+d = ImageDraw.Draw(sky)
+for y in range(sh):
+    t = y / sh
+    d.line([(0, y), (sw, y)], fill=tuple(int(a + (b - a) * t) for a, b in zip(BG, (58, 20, 78))))
+for _ in range(140):
+    x, y = rnd.randrange(sw), rnd.randrange(int(sh * 0.6))
+    sky.putpixel((x, y), rnd.choice([(180, 180, 200), (120, 120, 150)]))
+for layer, (col, tmin, tmax, win) in enumerate([((32, 22, 52), 180, 380, 0.07), ((22, 18, 36), 280, 460, 0.13), ((15, 14, 22), 380, 540, 0.2)]):
+    x = -rnd.randrange(20)
+    while x < sw:
+        bw = rnd.randrange(18, 46)
+        top = rnd.randrange(tmin, tmax)
+        d.rectangle([x, top, x + bw, sh], fill=col)
+        for wy in range(top + 4, sh - 2, 5):
+            for wx in range(x + 3, x + bw - 2, 4):
+                if rnd.random() < win:
+                    d.point((wx, wy), fill=rnd.choice([Y, C, (255, 140, 80)]))
+                    d.point((wx + 1, wy), fill=rnd.choice([Y, C]))
+        if layer >= 1 and rnd.random() < 0.35:
+            sy = top + rnd.randrange(4, 30)
+            d.rectangle([x + 2, sy, x + min(bw - 2, 14), sy + 3], fill=rnd.choice([M, C, Y]))
+        x += bw + rnd.randrange(0, 6)
+sky = up(sky, 2)
+sky.save(f"{OUT}/bg.png")
+
+# -- the street: 900x96, tiles across ---------------------------------------------------------------------------------------------
+g = Image.new("RGBA", (900, 96), (*PANEL, 255))
+d = ImageDraw.Draw(g)
+d.rectangle([0, 0, 899, 3], fill=(*C, 255))
+d.rectangle([0, 4, 899, 7], fill=(*LINE, 255))
+for x in range(0, 900, 60):
+    d.rectangle([x + 10, 40, x + 40, 44], fill=(*Y, 255))
+for x in range(0, 900, 30):
+    d.line([(x, 8), (x, 95)], fill=(26, 28, 36, 255))
+d.rectangle([0, 92, 899, 95], fill=(*M, 255))
+g.save(f"{OUT}/ground.png")
+
+# -- texts in the pixel font ---------------------------------------------------------------------------------------------------------
+def label(size, lines, fsize, col=Y, shadow=M):
+    im = Image.new("RGBA", size, (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    f = ImageFont.truetype(FONT_CYR, fsize)
+    hs = [d.textbbox((0, 0), s, font=f) for s in lines]
+    total = sum(b[3] - b[1] for b in hs) + (len(lines) - 1) * fsize // 2
+    y = (size[1] - total) // 2
+    for s, b in zip(lines, hs):
+        tw = b[2] - b[0]
+        x = (size[0] - tw) // 2
+        d.text((x + 4, y + 4), s, font=f, fill=(*shadow, 255))
+        d.text((x, y), s, font=f, fill=(*col, 255))
+        y += (b[3] - b[1]) + fsize // 2
+    return im
+
+label((351, 145), ["ДРОН", "КУРЬЕР"], 40).save(f"{OUT}/logo.png")
+label((405, 134), ["ВЗЛЁТ"], 48).save(f"{OUT}/getready.png")
+label((245, 132), ["СБИТ"], 48, col=R, shadow=BG).save(f"{OUT}/gameover.png")
+panel = Image.new("RGB", (505, 361), PANEL)
+d = ImageDraw.Draw(panel)
+d.rectangle([0, 0, 504, 360], outline=Y, width=4)
+d.rectangle([8, 8, 496, 352], outline=LINE, width=2)
+panel.save(f"{OUT}/gameoverbg.png")
+Image.new("RGB", (148, 60), (200, 250, 255)).save(f"{OUT}/hit.png")
+badge = Image.new("RGBA", (48, 48), (0, 0, 0, 0))
+d = ImageDraw.Draw(badge)
+d.rectangle([2, 10, 45, 37], fill=(*M, 255))
+f = ImageFont.truetype(FONT_CYR, 10)
+d.text((6, 19), "НОВ", font=f, fill=(*T, 255))
+badge.save(f"{OUT}/new.png")
+print("sprites ok")

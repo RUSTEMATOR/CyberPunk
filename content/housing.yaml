@@ -1,0 +1,84 @@
+- key: capsule_kabuki
+  name: Капсула в Кабуки
+  description: "Гроб с розеткой и вай-фаем. Тесно и шумно, зато дёшево и своё."
+  district: watson
+  tier: 1
+  rent: 100
+  food: 50
+
+- key: megabuilding_h10
+  name: Комната в мегабашне H10
+  description: "Восемь квадратных метров без окна, зато охрана на входе и лифт, который иногда работает."
+  district: watson
+  tier: 2
+  rent: 250
+  food: 100
+
+- key: japantown_apartment
+  name: Апартаменты в Джапантауне
+  description: "Две комнаты, вода из крана и тихие соседи. Здесь можно нормально выспаться, и раны заживают быстрее."
+  district: westbrook
+  tier: 3
+  rent: 600
+  food: 120
+
+- key: corpo_plaza_loft
+  name: Лофт в Корпо-плазе
+  description: "Панорамное окно с видом на Башню Arasaka, охрана знает тебя по имени. Сдают только людям с положением."
+  district: city_center
+  tier: 4
+  rent: 2000
+  food: 150
+  min_status: 10
+
+# -- more homes in every district (owner request) ---------------------------------------------------------------------
+
+- {key: watson_squat, name: Сквот на заброшенной фабрике, district: watson, tier: 1, rent: 40, food: 50, description: "Матрас на бетонном полу, соседи-сквоттеры и дыра в крыше. Почти бесплатно, почти безопасно."}
+- {key: watson_noodle_room, name: Комната над лапшичной, district: watson, tier: 2, rent: 200, food: 70, description: "Пахнет бульоном круглые сутки, зато хозяйка кормит в долг и предупреждает, если ищут копы."}
+- {key: watson_loft_kabuki, name: Лофт с видом на рынок Кабуки, district: watson, tier: 3, rent: 520, food: 110, description: "Бывший склад, переделанный в лофт. Неон рынка горит прямо за окном, и ты к нему привыкаешь."}
+- {key: westbrook_capsule_hotel, name: Капсульный отель в Японтауне, district: westbrook, tier: 1, rent: 130, food: 70, description: "Чистая капсула, общий онсэн, тишина после десяти. Строго, но по-человечески."}
+- {key: westbrook_tatami, name: Комната с татами, district: westbrook, tier: 2, rent: 320, food: 100, description: "Бумажные перегородки, низкий стол и вид на храм. Соседка снизу учит каллиграфии бесплатно."}
+- {key: westbrook_charter_house, name: Дом в Чартер-Хилл, district: westbrook, tier: 4, rent: 1800, food: 150, min_status: 8, description: "Свой дом с садом и охраной на въезде в квартал. Соседи — корпораты среднего звена и их собаки."}
+- {key: cc_office_cot, name: Раскладушка в офисе, district: city_center, tier: 1, rent: 150, food: 90, description: "Охранник за сотню в неделю пускает ночевать в пустой офис. Душ в спортзале на минус первом."}
+- {key: cc_studio, name: Студия у делового квартала, district: city_center, tier: 3, rent: 800, food: 130, min_status: 3, description: "Маленькая, стеклянная и дорогая. Зато до любой башни пять минут пешком."}
+- {key: cc_penthouse, name: Пентхаус в башне, district: city_center, tier: 4, rent: 4500, food: 200, min_status: 20, description: "Сто восьмой этаж, лифт прямо в гостиную и закат над заливом. Жить выше этого нельзя, можно только летать."}
+- {key: heywood_family_house, name: Дом семьи в Хейвуде, district: heywood, tier: 2, rent: 260, food: 90, description: "Комната в большом доме, где живут три поколения. Шумно, тесно и всегда есть ужин."}
+- {key: heywood_villa_wellsprings, name: Вилла в Веллспрингс, district: heywood, tier: 4, rent: 2600, food: 160, min_status: 10, description: "Бассейн, ворота с камерами и соседи, у которых свои охранники. Здесь живут те, кто выбрался."}
+- {key: heywood_apartment, name: Квартира в Вистапасе, district: heywood, tier: 3, rent: 500, food: 110, description: "Две комнаты, балкон и соседи-лоурайдеры, которые по воскресеньям чинят машины под окнами."}
+- {key: sd_container, name: Контейнер у порта, district: santo_domingo, tier: 1, rent: 70, food: 60, description: "Морской контейнер с окном, прорезанным болгаркой. Летом жарко, зимой холодно, всегда громко."}
+- {key: sd_workers_block, name: Рабочее общежитие, district: santo_domingo, tier: 2, rent: 180, food: 80, description: "Комната в общежитии завода. Сирена будит в шесть, но соседи всегда помогут с ремонтом."}
+- {key: sd_arroyo_house, name: Домик в Арройо, district: santo_domingo, tier: 3, rent: 420, food: 100, description: "Маленький дом с гаражом среди заводов. Тише, чем кажется, и рядом все мастерские района."}
+- {key: pacifica_hotel_ruin, name: Номер в недостроенном отеле, district: pacifica, tier: 1, rent: 60, food: 60, description: "Курортный отель, который так и не открыли. Вид на океан, отсутствие стёкол и банды на нижних этажах."}
+- {key: pacifica_beach_shack, name: Хижина на пляже, district: pacifica, tier: 2, rent: 150, food: 70, description: "Доски, брезент и шум прибоя. Если не думать о том, кто ходит по пляжу ночью, — рай."}
+- {key: dogtown_bunker, name: Бункер в Догтауне, district: dogtown, tier: 2, rent: 300, food: 120, description: "Армейский бункер, переделанный под жильё. Толстые стены, свой генератор, полный контроль хозяев района."}
+- {key: dogtown_stadium_suite, name: Ложа на старом стадионе, district: dogtown, tier: 3, rent: 900, food: 150, min_status: 4, description: "Бывшая VIP-ложа стадиона: кожаные кресла, панорамное стекло и рынок внизу, который никогда не спит."}
+- {key: badlands_trailer, name: Трейлер у трассы, district: badlands, tier: 1, rent: 50, food: 70, description: "Трейлер на кирпичах, солнечная панель и звёзды над головой. Ближайший сосед — в двух километрах."}
+- {key: badlands_nomad_camp, name: Место в лагере кочевников, district: badlands, tier: 2, rent: 120, food: 60, description: "Палатка у общего костра. Клан делит еду, воду и проблемы. Чужаков не любит, своих не бросает."}
+- {key: badlands_ranch, name: Старое ранчо, district: badlands, tier: 3, rent: 400, food: 90, description: "Дом с верандой, сарай и колодец, который ещё даёт воду. В Пустошах это настоящее богатство."}
+
+# -- homes of the new districts (owner request: more districts) ----------------------------------------------------------
+
+- {key: ns_foundry_barracks, name: Койка в бараке литейщиков, district: northside, tier: 1, rent: 50, food: 60, description: "Двухъярусные койки, общий душ и гудок в пять утра. Соседи пахнут металлом и не задают вопросов."}
+- {key: ns_container_flat, name: Квартира в контейнерном доме, district: northside, tier: 2, rent: 190, food: 80, description: "Три морских контейнера, сваренных в одну квартиру. Зимой холодно, летом жарко, зато своя дверь."}
+- {key: ns_foreman_house, name: Дом мастера цеха, district: northside, tier: 3, rent: 450, food: 100, description: "Кирпичный дом начальника смены с гаражом и собакой. Мальстрём его не трогает: мастер когда-то их кормил."}
+- {key: wf_boat_cabin, name: Каюта на ржавом катере, district: waterfront, tier: 1, rent: 70, food: 60, description: "Катер у пирса, который давно не плавает. Качает, скрипит и пахнет рыбой. Зато бесплатный вид на закат."}
+- {key: wf_warehouse_loft, name: Мансарда над складом, district: waterfront, tier: 2, rent: 240, food: 90, description: "Комната под крышей склада. По ночам слышно, как внизу грузят то, о чём лучше не знать."}
+- {key: wf_harbor_master, name: Квартира бывшего начальника порта, district: waterfront, tier: 3, rent: 600, food: 120, description: "Просторная квартира с видом на весь терминал. Бинокль на подоконнике остался от прежнего хозяина."}
+- {key: le_attic, name: Мансарда над кофейней, district: little_europe, tier: 1, rent: 140, food: 80, description: "Скошенный потолок, круглое окно и запах кофе с шести утра. Хозяин кофейни бесплатно отдаёт вчерашние круассаны."}
+- {key: le_old_apartment, name: Квартира с лепниной, district: little_europe, tier: 3, rent: 700, food: 130, description: "Высокие потолки, паркет и камин, который не топят сто лет. Соседка играет на скрипке по вечерам."}
+- {key: le_palazzo, name: Этаж в палаццо, district: little_europe, tier: 4, rent: 2200, food: 170, min_status: 8, description: "Целый этаж старинного особняка с фресками. Консьерж знает всех гостей по именам и всех полицейских по фамилиям."}
+- {key: no_guest_house, name: Гостевой домик при вилле, district: north_oak, tier: 3, rent: 900, food: 140, min_status: 4, description: "Домик садовника за виллой корпората. Тихо, зелено, охрана знает тебя в лицо. Иногда даже здоровается."}
+- {key: no_villa, name: Вилла на холме, district: north_oak, tier: 4, rent: 5000, food: 220, min_status: 22, description: "Бассейн с видом на весь город, винный погреб и охрана, которая стоит дороже машины. Здесь живут те, кто правит городом."}
+- {key: no_servant_room, name: Комната прислуги, district: north_oak, tier: 2, rent: 300, food: 90, description: "Комнатка при кухне большого дома. Работа по хозяйству вместо части аренды. Зато адрес звучит солидно."}
+- {key: glen_rowhouse, name: Квартира в таунхаусе, district: the_glen, tier: 2, rent: 280, food: 90, description: "Узкий дом в ряду таких же. Соседи — клерки из мэрии и семья лоурайдеров, которая каждое воскресенье жарит мясо."}
+- {key: glen_court_studio, name: Студия у Дворца правосудия, district: the_glen, tier: 3, rent: 650, food: 120, min_status: 2, description: "Окна на ступени суда. Каждое утро можно смотреть, как туда ведут тех, кому повезло меньше."}
+- {key: glen_shelter, name: Ночлежка при церкви, district: the_glen, tier: 1, rent: 30, food: 40, description: "Койка в церковном приюте. Тепло, сухо и бесплатный суп, если выслушать проповедь."}
+- {key: cz_bunker, name: Подвал с бронедверью, district: combat_zone, tier: 1, rent: 30, food: 70, description: "Сырой подвал, бронедверь и генератор на час в день. Зато сюда никто не войдёт без приглашения."}
+- {key: cz_fortified_flat, name: Укреплённая квартира, district: combat_zone, tier: 2, rent: 150, food: 90, description: "Окна заложены мешками с песком, на лестнице растяжка. Соседи стреляют только по чужим."}
+- {key: cz_gang_tower, name: Этаж в башне под защитой банды, district: combat_zone, tier: 3, rent: 400, food: 110, description: "Целый этаж в высотке, которую держит банда. Платишь им — и спишь спокойно. Почти."}
+- {key: uni_dorm, name: Комната в общежитии «Улей», district: university, tier: 1, rent: 90, food: 50, description: "Двухъярусная кровать, сосед-нетраннер и вечная очередь в душ. Дёшево, шумно и весело."}
+- {key: uni_shared_flat, name: Квартира на четверых, district: university, tier: 2, rent: 220, food: 80, description: "Четыре студента, одна кухня и график уборки, который никто не соблюдает. Зато всегда есть с кем поговорить."}
+- {key: uni_faculty_house, name: Дом преподавателя, district: university, tier: 3, rent: 550, food: 110, description: "Уютный дом с библиотекой, который сдаёт профессор на годичной стажировке. Книги трогать можно, кота кормить нужно."}
+- {key: hz_ruin_room, name: Комната в мёртвой башне, district: hot_zone, tier: 1, rent: 20, food: 80, description: "Пустой офис на двадцатом этаже башни, пережившей взрыв. Дозиметр щёлкает тихо, если не подходить к окнам."}
+- {key: hz_liquidator_trailer, name: Трейлер ликвидаторов, district: hot_zone, tier: 2, rent: 160, food: 90, description: "Бывший трейлер дезактивации: свинцовые стенки, фильтры и душ. Самое чистое место на километр вокруг."}
+- {key: hz_militech_block, name: Квартира в доме Militech, district: hot_zone, tier: 3, rent: 500, food: 120, description: "Новый дом на краю зоны, построенный для рабочих стройки. Чисто, охраняемо, и окна на воронку не открываются."}

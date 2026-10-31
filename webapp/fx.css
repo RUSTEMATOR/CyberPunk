@@ -1,0 +1,67 @@
+/* «Оптика Кироши» (docs/WEBAPP.md W13): the scanner line, the lock-on corners, readouts, interference. */
+.hero { isolation: isolate; }
+.fx-scan { position: absolute; left: 0; right: 0; top: 0; z-index: 3; height: 2px; pointer-events: none; background: var(--acc);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--acc) 35%, transparent); will-change: transform; }
+.t-clinic .fx-scan { background: var(--acc2); height: 1px; }
+.t-net .fx-scan { height: 3px; background: var(--acc); opacity: .8; }
+.fx-frame { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; pointer-events: none;
+  --arwes-frames-line-color: var(--acc); --arwes-frames-bg-color: transparent; }
+.t-clinic .fx-frame { --arwes-frames-line-color: var(--acc); }
+.fx-tag { position: absolute; z-index: 3; top: 14px; left: calc(18px + var(--safe-l)); font: 500 11px var(--f-num); color: var(--acc);
+  background: color-mix(in srgb, var(--bg) 70%, transparent); padding: 2px 6px; pointer-events: none; }
+.fx-deltas { position: fixed; z-index: 8; top: calc(58px + var(--safe-t)); right: calc(12px + var(--safe-r)); display: flex; flex-direction: column;
+  align-items: flex-end; gap: 4px; pointer-events: none; }
+.fx-delta { font: 500 12px var(--f-num); padding: 3px 8px; background: var(--panel); border: 1px solid var(--line2); border-radius: var(--rad); color: var(--acc2); }
+.fx-delta.down { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 50%, var(--line2)); }
+
+/* interference: only when the character takes damage or an action fails */
+@keyframes fx-jitter { 0% { transform: translate(0, 0); } 25% { transform: translate(-3px, 1px); } 50% { transform: translate(3px, -1px); } 75% { transform: translate(-2px, 0); } 100% { transform: translate(0, 0); } }
+@keyframes fx-split { 0%, 100% { opacity: 0; transform: translateX(0); } 30% { opacity: .55; transform: translateX(6px); } 60% { opacity: .4; transform: translateX(-5px); } }
+.fx-glitch .layout { animation: fx-jitter .24s steps(4) 1; }
+.fx-glitch .hero-img { filter: var(--hero-f) saturate(1.6) hue-rotate(-12deg); }
+.fx-glitch .hero::before { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; mix-blend-mode: screen;
+  background: linear-gradient(90deg, transparent 0 20%, color-mix(in srgb, var(--acc) 40%, transparent) 20% 22%, transparent 22% 61%, color-mix(in srgb, var(--acc2) 40%, transparent) 61% 62.5%, transparent 62.5%);
+  animation: fx-split .24s steps(3) 1; }
+.fx-glitch .hero-t, .fx-glitch .title { text-shadow: 2px 0 var(--acc), -2px 0 var(--acc2); }
+
+/* augmented-ui plates in rough places: the border follows the cut */
+.t-under .btn[data-augmented-ui], .t-alert .btn[data-augmented-ui] {
+  border: 0; --aug-tl: var(--cut); --aug-br: var(--cut); --aug-border-all: 1px; --aug-border-bg: var(--line2); }
+.t-under .btn[data-augmented-ui][data-style="success"], .t-alert .btn[data-augmented-ui][data-style="success"] { --aug-border-bg: var(--acc); }
+.t-under .btn[data-augmented-ui][data-style="danger"], .t-alert .btn[data-augmented-ui][data-style="danger"] { --aug-border-bg: var(--bad); }
+.t-under .btn[data-augmented-ui].pending, .t-alert .btn[data-augmented-ui].pending { --aug-border-bg: var(--acc); }
+
+.sfx-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 14px; color: var(--ink2); }
+.sfx-row .btn { min-height: 40px; padding: 6px 14px; min-width: 96px; }
+
+@media (prefers-reduced-motion: reduce) { .fx-glitch .layout, .fx-glitch .hero::before { animation: none; } }
+
+/* W15: code crawling from the touch, one canvas over the page, never in the way of a tap */
+.fx-code { position: fixed; inset: 0; z-index: 30; pointer-events: none; }
+.t-clinic .fx-code { mix-blend-mode: multiply; }
+
+/* W16 «Живой текст» (fx2.js): lines of a screen, the rolled numbers, the verdict stamp, the NPC caret, weather, sparks */
+.fx-line { will-change: transform; }
+.fx-roll { font-family: var(--f-num); color: var(--acc2); display: inline-block; min-width: 1ch; text-align: right; }
+.fx-stamp { display: inline-block; padding: 0 6px; border: 2px solid currentColor; border-radius: 3px; transform-origin: 50% 60%; letter-spacing: .02em; }
+.fx-stamp.ok { color: var(--acc2); }
+.fx-stamp.fail { color: var(--bad); }
+.fx-caret { display: inline-block; width: .55em; height: 1.05em; margin-left: 2px; vertical-align: -0.15em; background: var(--acc); animation: fx-blink .7s steps(1) infinite; }
+@keyframes fx-blink { 50% { opacity: 0; } }
+.fx-sky { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.fx-sparks { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 31; pointer-events: none; }
+.fx-gbox { position: absolute; inset: 0; overflow: hidden; }
+.fx-gbox > div, .fx-gbox > div > div { width: 100%; height: 100%; }
+.fx-gbox .hero-img { position: relative; inset: auto; width: 100%; height: 100%; }
+@keyframes fx-split2 { 0%, 100% { text-shadow: none; transform: none; } 20% { text-shadow: 3px 0 var(--acc), -3px 0 var(--acc2); transform: translateX(-2px); }
+  40% { text-shadow: -2px 0 var(--acc), 2px 0 var(--acc2); transform: translateX(2px) skewX(-6deg); } 60% { text-shadow: 4px 0 var(--acc2), -1px 0 var(--acc); transform: none; }
+  80% { text-shadow: -3px 0 var(--acc2), 3px 0 var(--acc); transform: translateX(1px); } }
+.fx-split { animation: fx-split2 .45s steps(5) 2; }
+@media (prefers-reduced-motion: reduce) { .fx-caret, .fx-split { animation: none; } }
+html.lowfx .fx-caret, html.lowfx .fx-split { animation: none; }
+/* W16: an animated emoji (lottie) takes the place and size of its still picture */
+.ce-lottie { display: inline-block; width: 1.25em; height: 1.25em; vertical-align: -0.28em; line-height: 0; }
+.ce-lottie svg { width: 100% !important; height: 100% !important; }
+.hero-t .ce-lottie, .title .ce-lottie { width: 30px !important; height: 30px !important; vertical-align: middle !important; }
+.btn .ce-lottie { width: 20px !important; height: 20px !important; vertical-align: -4px !important; margin-right: 6px; }
+.btn.tile .ce-lottie { width: 22px !important; height: 22px !important; margin: 0 !important; flex-shrink: 0; }

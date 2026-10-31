@@ -1,0 +1,142 @@
+# Aeon, the city of the eternal life (owner request: the «In Time» crossover). Effect `chrono: N` adds or takes weeks of
+# time; without the clock a positive amount is paid in eddies at the exchange rate. Clock events need the flag `chrono`.
+
+# ======================================================================== for everyone (and the clock's first)
+
+- id: aeon_rumor
+  title: Город, где не стареют
+  category: rare
+  weight: 3
+  conditions:
+    flags_none: [chrono, aeon_rumor]
+  text: "В баре старик с лицом двадцатилетнего рассказывает про Эон: город за стеной, где время зашито под кожу. «Там тебе всегда двадцать пять, чумба. Пока платишь»."
+  choices:
+    - label: Расспросить подробнее
+      effects: {flag_set:aeon_rumor: true, mood: 2}
+      text: "Часы ставят в клинике «Хронос», дорого. Работы там платят неделями жизни. «Город» → «Эон: город времени»."
+    - label: Не верить ни слову
+      effects: {flag_set:aeon_rumor: true}
+      text: "Старик пожимает плечами и допивает. На его запястье на секунду мелькают зелёные цифры."
+
+- id: aeon_ghetto_mother
+  title: Мать у моста
+  category: relationships
+  weight: 2
+  conditions:
+    flags_all: [chrono]
+    flags_none: [aeon_ghetto_mother]
+  text: "У пропускного моста в Эон женщина не может оплатить проезд: на её часах меньше суток, а автобус до дома стоит два дня. Она бежит пешком, хотя знает, что не успеет."
+  choices:
+    - label: Отдать ей неделю своего времени
+      effects: {flag_set:aeon_ghetto_mother: true, chrono: -1, humanity: 2, mood: 4}
+      text: "Ты прикладываешь запястье к её запястью. Она плачет и не говорит ни слова. Ты тоже."
+    - label: Заплатить за неё проезд эдди
+      effects: {flag_set:aeon_ghetto_mother: true, eddies: -1500, humanity: 1, mood: 2}
+      text: "Через биржу ты покупаешь ей пару дней. Мало, но до дома хватит."
+    - label: Пройти мимо
+      effects: {flag_set:aeon_ghetto_mother: true, humanity: -1}
+      text: "Ты не оборачиваешься. Позже в новостях — женщина у моста, время вышло."
+
+- id: aeon_timekeeper
+  title: Хранитель времени
+  category: ncpd
+  weight: 2
+  conditions:
+    min_heat: 2
+  text: "Хранитель времени в чёрном плаще останавливает тебя на выходе из подземки. У Хранителей нет оружия на виду, но и вопросов к ним никто не задаёт."
+  choices:
+    - label: Объясниться
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Он долго смотрит на тебя, потом уходит. Ты чувствуешь, что он ещё вернётся.", effects: {heat: -1}}
+      fail: {text: "Он берёт твою руку и списывает «штраф за подозрительное поведение».", effects: {chrono: -2, eddies: -1000}}
+    - label: Бежать в толпу
+      check: {stat: REF, skill: stealth, dv: 14}
+      success: {text: "Ты растворяешься среди людей у рынка. Хранители не бегают: им некуда спешить.", effects: {mood: 2}}
+      fail: {text: "Удар в спину, асфальт, щелчок сканера.", effects: {hp: -8, heat: 1}}
+
+# ======================================================================== with the clock
+
+- id: aeon_clock_glitch
+  title: Сбой часов
+  category: implants
+  weight: 3
+  conditions:
+    flags_all: [chrono]
+  text: "Цифры на запястье мигают и прыгают: то на месяц больше, то на неделю меньше. Клиника «Хронос» берёт деньги за диагностику, уличный техник — за смелость."
+  choices:
+    - label: В клинику «Хронос»
+      effects: {eddies: -2000, mood: 1}
+      text: "Чистая палата, стерильные руки, счёт с тремя нулями. Цифры стоят ровно."
+    - label: К уличному технику
+      check: {stat: TECH, skill: tech, dv: 14}
+      success: {text: "Техник ковыряет порт и вдруг присвистывает: сбой был в твою пользу.", effects: {chrono: 3}}
+      fail: {text: "Что-то щёлкает. На часах на две недели меньше, чем было.", effects: {chrono: -2, hp: -3}}
+    - label: Не трогать
+      effects: {chrono: -1}
+      text: "Через пару дней цифры успокаиваются. Одну неделю сбой всё-таки съел."
+
+- id: aeon_rich_party
+  title: Вечеринка бессмертных
+  category: money
+  weight: 2
+  conditions:
+    flags_all: [chrono]
+    min_status: 3
+  text: "Приглашение в особняк в центре Эона. Гостям по двести лет, они играют на века и скучают. Им интересен кто-то, кто ещё боится умереть."
+  choices:
+    - label: Сыграть с ними
+      check: {stat: COOL, skill: persuasion, dv: 17}
+      success: {text: "Старуха с лицом девочки проигрывает тебе десять лет и смеётся: «Наконец-то весело»." , effects: {chrono: 26, status: 1}}
+      fail: {text: "Ты проигрываешь полгода жизни за один вечер. Они даже не замечают.", effects: {chrono: -12, mood: -5}}
+    - label: Просто смотреть
+      effects: {mood: 3}
+      text: "Шампанское, которому сто лет, и люди, которым некуда идти. Ты уходишь первым."
+
+- id: aeon_time_loan
+  title: Кредит временем
+  category: money
+  weight: 2
+  conditions:
+    flags_all: [chrono]
+  text: "Таймлендер предлагает год жизни прямо сейчас. Отдавать — с процентами, эдди, по частям."
+  choices:
+    - label: Взять год
+      effects: {chrono: 52, debt: 90000}
+      text: "Цифры на руке прыгают вверх. Долг в эдди тоже. Посмотрим, что кончится раньше."
+    - label: Отказаться
+      effects: {mood: 1}
+      text: "«Приходи, когда останется день», — улыбается он. Он знает, что так и будет."
+
+- id: aeon_last_day
+  title: Последний день
+  category: relationships
+  weight: 3
+  conditions:
+    flags_all: [chrono]
+  text: "Сосед по дому в гетто Эона стучит ночью: на его часах осталось шесть часов. Он не просит. Он просто стоит в дверях."
+  choices:
+    - label: Отдать ему две недели
+      effects: {chrono: -2, humanity: 2, street_cred: 1}
+      text: "Он живёт. Утром у твоей двери пакет: еда и записка «Я верну»."
+    - label: Дать эдди на биржу
+      effects: {eddies: -3000, humanity: 1}
+      text: "Он бежит к бирже и успевает. Говорит, что никогда не забудет."
+    - label: Закрыть дверь
+      effects: {humanity: -2, mood: -3}
+      text: "Утром его тело выносят из подъезда. Молодое и лёгкое."
+
+- id: aeon_heist
+  title: Банк времени
+  category: work
+  weight: 1
+  conditions:
+    flags_all: [chrono]
+  text: "Старая знакомая предлагает дело: хранилище банка времени, капсулы по сто лет. Раздать гетто или забрать себе — решать потом."
+  choices:
+    - label: Пойти на дело
+      check: {stat: REF, skill: stealth, dv: 18}
+      success: {text: "Капсулы звенят в сумке. Часть ты раздаёшь у моста, часть оставляешь себе. Эон гудит неделю.", effects: {chrono: 40, street_cred: 3, heat: 3, humanity: 1}}
+      fail: {text: "Хранители ждали внутри. Ты уходишь через окно, оставив кровь и полгода жизни.", effects: {chrono: -26, hp: -15, heat: 2}}
+    - label: Отказаться
+      effects: {}
+      text: "Через месяц в новостях: банк времени ограблен, гетто получило по году на человека. Тебя там не было."

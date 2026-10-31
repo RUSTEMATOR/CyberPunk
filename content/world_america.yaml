@@ -1,0 +1,275 @@
+# The cities of the Americas (owner request 25.10, docs/PLAN_WORLD.md). See world_asia.yaml for the format.
+
+- country: nusa
+  police: Федеральная полиция
+  story_title: Чистый список
+  story: [us_story_1, us_story_2, us_story_3, us_story_4, us_story_5, us_story_6, us_story_7, us_story_8]
+  districts:
+    - key: us_federal
+      name: Федеральный квартал
+      description: "Мрамор, флаги и блокпосты. Министерства, лоббисты и охрана «Милитеха» на каждом углу. Нарушить здесь закон легко, уйти после этого почти невозможно."
+      danger: 1
+      fixer: us_harlan
+      gangs: [us_patriots, us_rust]
+      corps: [militech]
+      places: ["Капитолий", "Национальная аллея", "штаб «Милитеха»", "бар лоббистов «Ротонда»"]
+      heat_mult: 2.0
+    - key: us_anacostia
+      name: Анакостия
+      description: "Восточный берег реки, где кончаются деньги федералов. Пустые склады, лагеря ветеранов, гаражные мастерские и рынки краденого армейского снаряжения."
+      danger: 3
+      fixer: us_mama_g
+      gangs: [us_rust, us_patriots]
+      corps: [militech, petrochem]
+      places: ["лагерь ветеранов", "армейский рынок у моста", "заброшенная верфь", "закусочная «Последний патрон»"]
+  fixers:
+    - {key: us_harlan, name: Харлан Пирс, districts: [us_federal], description: "Бывший помощник сенатора. Продаёт услуги тем, кому нужно что-то сделать тихо и законно на бумаге.", voice: "гладко, по-адвокатски, с цитатами из конституции"}
+    - {key: us_mama_g, name: Мама Глория, districts: [us_anacostia], description: "Держит закусочную и половину рынка Анакостии. Кормит ветеранов в долг и знает, у кого какой ствол.", voice: "тепло и громко, называет всех «солнышко», угрожает с той же интонацией"}
+  gangs:
+    - {key: us_patriots, name: Сыны Республики, name_gen: Сынов Республики, name_dat: Сынам Республики, name_acc: Сынов Республики, name_ins: Сынами Республики, name_pre: Сынах Республики, description: "Ополчение патриотов в камуфляже. Охотятся на «врагов нации» и тех, кто плохо смотрит на флаг.", style: "армейские винтовки, лозунги, флаги на пикапах", fights_as: sixth_street, disposition: {bribe_dv: 17, talk_dv: 15, bribe_cost_mult: 2.0, flee_mod: 0, surrender: {beaten: 3, robbed: 1}}}
+    - {key: us_rust, name: Ржавые псы, name_gen: Ржавых псов, name_dat: Ржавым псам, name_acc: Ржавых псов, name_ins: Ржавыми псами, name_pre: Ржавых псах, description: "Дезертиры и списанные солдаты. Торгуют армейскими имплантами и патронами, грабят конвои.", style: "армейский хром, короткие очереди, никаких разговоров", fights_as: maelstrom, disposition: {bribe_dv: 14, talk_dv: 17, bribe_cost_mult: 1.5, flee_mod: 1, surrender: {robbed: 3, chrome_stripped: 1}}}
+  ripperdocs:
+    - {key: us_doc_reyes, name: Сержант-медик Рейес, district: us_anacostia, description: "Полевой медик с тремя войнами за спиной. Ставит армейский хром быстро и грубо, лишних вопросов не задаёт.", price_mod: 0.9, complication_chance: 0.08}
+  housing:
+    - {key: us_h_barracks, name: Койка в бывшей казарме, district: us_anacostia, tier: 1, rent: 150, food: 90, description: "Двухъярусные кровати, общий душ, ветераны храпят по расписанию."}
+    - {key: us_h_rowhouse, name: Таунхаус у реки, district: us_anacostia, tier: 2, rent: 380, food: 110, description: "Узкий кирпичный дом, крыльцо, соседи с ружьями на стене."}
+    - {key: us_h_condo, name: Кондо у Национальной аллеи, district: us_federal, tier: 3, rent: 1200, food: 180, description: "Охрана в холле, вид на обелиск и лифт, который сканирует лицо."}
+
+- country: texas
+  police: Рейнджеры Техаса
+  story_title: Чёрное золото
+  story: [tx_story_1, tx_story_2, tx_story_3, tx_story_4, tx_story_5, tx_story_6, tx_story_7, tx_story_8]
+  districts:
+    - key: tx_ship_channel
+      name: Судоходный канал
+      description: "Нефтехимия до горизонта: факелы, трубы, танкеры и посёлки рабочих в смоге. «Петрохем» здесь закон, остальное — по договорённости."
+      danger: 3
+      fixer: tx_dolores
+      gangs: [tx_cartel, tx_roughnecks]
+      corps: [petrochem]
+      places: ["нефтеперерабатывающий завод", "доки канала", "бар «Факел»", "трейлерный парк"]
+    - key: tx_downtown
+      name: Даунтаун Хьюстона
+      description: "Стеклянные башни нефтяных денег, туннели под улицами и ковбойские шляпы на корпоратах. Деньги здесь громкие, оружие открытое."
+      danger: 2
+      fixer: tx_buck
+      gangs: [tx_roughnecks, tx_cartel]
+      corps: [petrochem, militech]
+      places: ["подземные туннели", "башня «Петрохема»", "стейкхаус «Аламо»", "космодром на окраине"]
+  fixers:
+    - {key: tx_dolores, name: Долорес Вега, districts: [tx_ship_channel], description: "Дочь докера, держит профсоюз и контрабанду канала. Сделки скрепляет текилой и рукопожатием.", voice: "хрипло, с испанскими словечками, без обиняков"}
+    - {key: tx_buck, name: Бак Монтгомери, districts: [tx_downtown], description: "Нефтяной наследник, который любит грязные дела больше бизнеса. Платит щедро и часто не вовремя.", voice: "громко и весело, «партнёр» через слово"}
+  gangs:
+    - {key: tx_cartel, name: Картель Лос-Сетас-Нуэвос, name_gen: картеля Лос-Сетас-Нуэвос, name_dat: картелю Лос-Сетас-Нуэвос, name_acc: картель Лос-Сетас-Нуэвос, name_ins: картелем Лос-Сетас-Нуэвос, name_pre: картеле Лос-Сетас-Нуэвос, description: "Картель, который возит через границу всё: людей, стволы, импланты, синтетику.", style: "тяжёлые пикапы, золото, автоматы и вежливость до первого выстрела", fights_as: valentinos, disposition: {bribe_dv: 15, talk_dv: 17, bribe_cost_mult: 2.5, flee_mod: 1, surrender: {robbed: 3, beaten: 2}}}
+    - {key: tx_roughnecks, name: Буровики, name_gen: Буровиков, name_dat: Буровикам, name_acc: Буровиков, name_ins: Буровиками, name_pre: Буровиках, description: "Рабочие нефтяных вышек, сбившиеся в банду после сокращений. Хромированные руки для бура, теперь для драки.", style: "гаечные ключи, гидравлические кулаки, кантри из колонок", fights_as: animals, disposition: {bribe_dv: 13, talk_dv: 13, bribe_cost_mult: 1.0, flee_mod: 0, surrender: {beaten: 4, released: 1}}}
+  ripperdocs:
+    - {key: tx_doc_hank, name: Док Хэнк, district: tx_ship_channel, description: "Бывший ветеринар с вышек. Ставит хром рабочим в кредит под залог трейлера.", price_mod: 0.8, complication_chance: 0.12, infection_chance: 0.05}
+  housing:
+    - {key: tx_h_trailer, name: Трейлер у канала, district: tx_ship_channel, tier: 1, rent: 120, food: 90, description: "Жестяная коробка, кондиционер, который гремит, и вид на факелы завода."}
+    - {key: tx_h_bungalow, name: Бунгало в рабочем посёлке, district: tx_ship_channel, tier: 2, rent: 320, food: 110, description: "Свой дворик, свой гриль и соседи, которые придут с ружьём, если позовёшь."}
+    - {key: tx_h_tower, name: Лофт в нефтяной башне, district: tx_downtown, tier: 3, rent: 1100, food: 170, description: "Тридцатый этаж, мрамор, виски в баре консьержа."}
+
+- country: mexico
+  police: Федеральная гвардия
+  story_title: Голос из Тепито
+  story: [mx_story_1, mx_story_2, mx_story_3, mx_story_4, mx_story_5, mx_story_6, mx_story_7, mx_story_8]
+  districts:
+    - key: mx_tepito
+      name: Тепито
+      description: "Самый живой и самый опасный рынок континента: всё, что можно украсть, продаётся здесь через час. Святая Смерть на каждом алтаре."
+      danger: 4
+      fixer: mx_chato
+      gangs: [mx_santa, mx_lucha]
+      corps: [biotechnica]
+      places: ["рынок Тепито", "алтарь Святой Смерти", "боксёрский зал", "мастерская подделок"]
+    - key: mx_roma
+      name: Рома-Кондеса
+      description: "Зелёные бульвары, кафе, галереи и бары для богатой молодёжи. Под ними старые туннели ацтеков и новые туннели контрабандистов."
+      danger: 2
+      fixer: mx_valeria
+      gangs: [mx_lucha, mx_santa]
+      corps: [biotechnica, kang_tao]
+      places: ["площадь Рио-де-Жанейро", "галерея «Обсидиан»", "мескалерия «Ла Калака»", "туннели под парком"]
+  fixers:
+    - {key: mx_chato, name: Эль Чато, districts: [mx_tepito], description: "Торговец всем подряд с рынка Тепито. Его прилавок — штаб, его тётя — бухгалтер, его слово — закон рынка.", voice: "быстро, весело, с прибаутками и торгом"}
+    - {key: mx_valeria, name: Валерия Крус, districts: [mx_roma], description: "Галеристка, которая продаёт картины и чужие секреты. Клиенты — коллекционеры и картели.", voice: "изысканно, с иронией, говорит об искусстве, когда речь о деньгах"}
+  gangs:
+    - {key: mx_santa, name: Дети Святой Смерти, name_gen: Детей Святой Смерти, name_dat: Детям Святой Смерти, name_acc: Детей Святой Смерти, name_ins: Детьми Святой Смерти, name_pre: Детях Святой Смерти, description: "Уличная секта-банда с черепами на лицах. Молятся Санта-Муэрте и берут дань со всего рынка.", style: "раскрашенные черепа, мачете, свечи и молитвы перед налётом", fights_as: valentinos, disposition: {bribe_dv: 15, talk_dv: 16, bribe_cost_mult: 1.5, flee_mod: 0, surrender: {robbed: 3, beaten: 2}}}
+    - {key: mx_lucha, name: Масканы, name_gen: Масканов, name_dat: Масканам, name_acc: Масканов, name_ins: Масканами, name_pre: Масканах, description: "Бывшие бойцы луча либре в масках. Охраняют подпольные арены и выбивают долги эффектно, с броском через бедро.", style: "маски рестлеров, захваты, публичность, кулаки вместо стволов", fights_as: animals, disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.0, flee_mod: -1, surrender: {beaten: 4, released: 1}}}
+  ripperdocs:
+    - {key: mx_doc_chuy, name: Чуй-хирург, district: mx_tepito, description: "Ставит импланты за рынком, под алтарём. Дёшево, быстро, иногда со святой водой вместо антисептика.", price_mod: 0.6, complication_chance: 0.15, infection_chance: 0.1, scan_lie_chance: 0.2}
+  housing:
+    - {key: mx_h_vecindad, name: Комната в весиндад, district: mx_tepito, tier: 1, rent: 90, food: 60, description: "Общий двор, бельё на верёвках, соседка поёт болеро с утра до ночи."}
+    - {key: mx_h_casa, name: Квартира над мескалерией, district: mx_roma, tier: 2, rent: 300, food: 90, description: "Высокие потолки, балкон на бульвар и музыка снизу до трёх ночи."}
+    - {key: mx_h_villa, name: Вилла в Кондесе, district: mx_roma, tier: 3, rent: 950, food: 150, description: "Внутренний сад, фонтан и охрана, которая работает и на тебя, и на кого-то ещё."}
+
+- country: canada
+  police: Королевская конная полиция
+  story_title: Северный перевал
+  story: [ca_story_1, ca_story_2, ca_story_3, ca_story_4, ca_story_5, ca_story_6, ca_story_7, ca_story_8]
+  districts:
+    - key: ca_eastside
+      name: Даунтаун-Истсайд
+      description: "Самые бедные кварталы Ванкувера: ночлежки, дождь и импланты из вторых рук. Люди здесь тихие и упрямые, как сам дождь."
+      danger: 3
+      fixer: ca_old_tom
+      gangs: [ca_triad, ca_loggers]
+      corps: [biotechnica]
+      places: ["Гастаун", "пирс Кроны", "ночлежка «Маяк»", "бар «Мокрый лось»"]
+    - key: ca_coal_harbour
+      name: Коул-Харбор
+      description: "Стекло и гидропланы над заливом, яхты, гольф-клубы на крышах. Сюда переезжают корпорации с юга, когда им надоедает стрелять."
+      danger: 1
+      fixer: ca_isabelle
+      gangs: [ca_triad, ca_loggers]
+      corps: [biotechnica, zetatech]
+      places: ["гидропорт", "яхт-клуб", "конференц-центр", "чайный дом в Чайнатауне"]
+      heat_mult: 1.5
+  fixers:
+    - {key: ca_old_tom, name: Старый Том, districts: [ca_eastside], description: "Лесоруб на пенсии, держит ночлежку и знает каждого контрабандиста на перевалах.", voice: "медленно, тихо, извиняется перед каждой угрозой"}
+    - {key: ca_isabelle, name: Изабель Леклер, districts: [ca_coal_harbour], description: "Юрист из Квебека, переводит грязные деньги юга в чистые деньги севера.", voice: "вежливо на двух языках, переходит на французский, когда злится"}
+  gangs:
+    - {key: ca_triad, name: Триада Красного Лотоса, name_gen: Триады Красного Лотоса, name_dat: Триаде Красного Лотоса, name_acc: Триаду Красного Лотоса, name_ins: Триадой Красного Лотоса, name_pre: Триаде Красного Лотоса, description: "Старая триада Чайнатауна. Держит порт, игорные дома и поток имплантов из Азии.", style: "тихие люди в дорогих пальто, ножи-бабочки, бухгалтерия в голове", fights_as: tyger_claws, disposition: {bribe_dv: 15, talk_dv: 15, bribe_cost_mult: 2.0, flee_mod: 1, surrender: {robbed: 3, released: 1}}}
+    - {key: ca_loggers, name: Лесные братья, name_gen: Лесных братьев, name_dat: Лесным братьям, name_acc: Лесных братьев, name_ins: Лесными братьями, name_pre: Лесных братьях, description: "Бывшие лесорубы и браконьеры. Возят через горы всё, что нельзя возить по дорогам.", style: "топоры, охотничьи винтовки, клетчатые куртки, молчаливость", fights_as: wraiths, disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.0, flee_mod: 0, surrender: {released: 2, robbed: 2}}}
+  ripperdocs:
+    - {key: ca_doc_nadia, name: Доктор Надя Кох, district: ca_eastside, description: "Бесплатная клиника для бедных днём, платная для всех остальных ночью. Чистые руки, честные сканы.", price_mod: 1.0, complication_chance: 0.03}
+  housing:
+    - {key: ca_h_shelter, name: Комната в ночлежке «Маяк», district: ca_eastside, tier: 1, rent: 140, food: 90, description: "Сухо, тепло и тихо. По вечерам Том читает вслух."}
+    - {key: ca_h_heritage, name: Квартира в старом Гастауне, district: ca_eastside, tier: 2, rent: 420, food: 120, description: "Кирпич, паровые часы под окном и дождь по стеклу."}
+    - {key: ca_h_glass, name: Стеклянный кондо над заливом, district: ca_coal_harbour, tier: 3, rent: 1300, food: 170, description: "Гидропланы садятся прямо под окнами, горы в тумане напротив."}
+
+- country: brazil
+  police: Военная полиция
+  story_title: Король холма
+  story: [br_story_1, br_story_2, br_story_3, br_story_4, br_story_5, br_story_6, br_story_7, br_story_8]
+  districts:
+    - key: br_rocinha
+      name: Росинья
+      description: "Фавела на склоне горы: дома друг на друге, мототакси, самба из каждой двери и правила, которые пишет не полиция."
+      danger: 4
+      fixer: br_dona_lu
+      gangs: [br_comando, br_milicia]
+      corps: [biotechnica]
+      places: ["верхний переулок", "площадь у мототакси", "церковь на склоне", "баиле фанк под эстакадой"]
+    - key: br_copacabana
+      name: Копакабана
+      description: "Пляж, отели, туристы и бары на песке. Деньги, сёрфинг, кражи с лежаков и киллеры в гавайских рубашках."
+      danger: 2
+      fixer: br_marcelo
+      gangs: [br_milicia, br_comando]
+      corps: [biotechnica, petrochem]
+      places: ["пляж Копакабана", "отель «Атлантика»", "бар на песке", "форт на мысе"]
+  fixers:
+    - {key: br_dona_lu, name: Дона Лу, districts: [br_rocinha], description: "Бабушка всей Росиньи. Кормит детей, хоронит мёртвых и решает, кто сегодня работает на холме.", voice: "ласково и строго, «мой мальчик», «моя девочка», молитвы между делом"}
+    - {key: br_marcelo, name: Марсело Сантос, districts: [br_copacabana], description: "Тренер по сёрфингу, который знает, в каком номере отеля кто спит и сколько у него в сейфе.", voice: "расслабленно, с улыбкой, футбольные метафоры"}
+  gangs:
+    - {key: br_comando, name: Красная команда, name_gen: Красной команды, name_dat: Красной команде, name_acc: Красную команду, name_ins: Красной командой, name_pre: Красной команде, description: "Команда наркобаронов холма. Держит фавелу и платит за школу и врача тем, кто не задаёт вопросов.", style: "автоматы на мотоциклах, фейерверки как сигнал, футбол и золото", fights_as: valentinos, disposition: {bribe_dv: 16, talk_dv: 15, bribe_cost_mult: 2.0, flee_mod: 1, surrender: {robbed: 3, beaten: 2}}}
+    - {key: br_milicia, name: Милиция, name_gen: Милиции, name_dat: Милиции, name_acc: Милицию, name_ins: Милицией, name_pre: Милиции, description: "Бывшие и действующие полицейские, которые продают защиту от банд и сами хуже банд.", style: "полицейские бронежилеты без номеров, дисциплина и рэкет", fights_as: sixth_street, disposition: {bribe_dv: 14, talk_dv: 17, bribe_cost_mult: 2.5, flee_mod: 0, surrender: {robbed: 4, beaten: 2}}}
+  ripperdocs:
+    - {key: br_doc_tiago, name: Тиаго-риппер, district: br_rocinha, description: "Ставит хром прямо в доме на склоне, пока за окном баиле фанк. Мастер, но торопится.", price_mod: 0.65, complication_chance: 0.12, infection_chance: 0.06}
+  housing:
+    - {key: br_h_favela, name: Комната на склоне Росиньи, district: br_rocinha, tier: 1, rent: 80, food: 60, description: "Кирпич без штукатурки, вид на весь Рио и соседский петух в шесть утра."}
+    - {key: br_h_laje, name: Дом с террасой-лаже, district: br_rocinha, tier: 2, rent: 260, food: 90, description: "Своя крыша-терраса для барбекю. Соседи приходят без приглашения и с мясом."}
+    - {key: br_h_ocean, name: Апартаменты на набережной, district: br_copacabana, tier: 3, rent: 1000, food: 150, description: "Окна на океан, мозаика набережной под балконом, портье с пистолетом под стойкой."}
+
+- country: argentina
+  police: Федеральная полиция Аргентины
+  story_title: Танго с долгом
+  story: [ar_story_1, ar_story_2, ar_story_3, ar_story_4, ar_story_5, ar_story_6, ar_story_7, ar_story_8]
+  districts:
+    - key: ar_la_boca
+      name: Ла-Бока
+      description: "Пёстрые жестяные дома, порт, футбол и танго на улицах. Туристы днём, барра-бравас ночью."
+      danger: 3
+      fixer: ar_beto
+      gangs: [ar_barras, ar_peronistas]
+      corps: [petrochem]
+      places: ["улица Каминито", "стадион «Бомбонера»", "старый порт", "милонга «Последнее танго»"]
+    - key: ar_recoleta
+      name: Реколета
+      description: "Особняки в парижском стиле, кладбище с мраморными склепами, кафе для тех, кто не платит налоги. Аргентина для своих."
+      danger: 1
+      fixer: ar_ines
+      gangs: [ar_peronistas, ar_barras]
+      corps: [petrochem, zetatech]
+      places: ["кладбище Реколеты", "кафе «Ла Бьела»", "особняк сенатора", "аукционный дом"]
+  fixers:
+    - {key: ar_beto, name: Бето Гальярдо, districts: [ar_la_boca], description: "Бывший футболист, теперь посредник между фанатами, портом и политиками. Знает цену любому матчу.", voice: "страстно, с жестикуляцией, через слово про футбол"}
+    - {key: ar_ines, name: Инес де Альвеар, districts: [ar_recoleta], description: "Наследница старой семьи, которая потеряла всё, кроме связей. Связи продаёт дорого.", voice: "холодно, с аристократичной скукой"}
+  gangs:
+    - {key: ar_barras, name: Барра-бравас, name_gen: Барра-бравас, name_dat: Барра-бравас, name_acc: Барра-бравас, name_ins: Барра-бравас, name_pre: Барра-бравас, description: "Футбольные ультрас, которые держат стадионы, парковки и букмекеров.", style: "флаги клуба, барабаны, кастеты и толпа", fights_as: animals, disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.0, flee_mod: -1, surrender: {beaten: 4, robbed: 1}}}
+    - {key: ar_peronistas, name: Ночные перонисты, name_gen: Ночных перонистов, name_dat: Ночным перонистам, name_acc: Ночных перонистов, name_ins: Ночными перонистами, name_pre: Ночных перонистах, description: "Политическая машина, которая днём проводит митинги, а ночью — выборы по-своему.", style: "значки партии, профсоюзные дубинки, подкуп и угрозы", fights_as: sixth_street, disposition: {bribe_dv: 14, talk_dv: 13, bribe_cost_mult: 2.0, flee_mod: 0, surrender: {robbed: 2, released: 2}}}
+  ripperdocs:
+    - {key: ar_doc_lorenzo, name: Доктор Лоренцо, district: ar_recoleta, description: "Пластический хирург богачей, который ночью ставит боевой хром. Аккуратно, дорого, со вкусом.", price_mod: 1.2, complication_chance: 0.02}
+  housing:
+    - {key: ar_h_conventillo, name: Комната в конвентильо, district: ar_la_boca, tier: 1, rent: 100, food: 70, description: "Жестяной дом, деревянная лестница, танго через стенку."}
+    - {key: ar_h_ph, name: Квартира с патио, district: ar_la_boca, tier: 2, rent: 290, food: 100, description: "Внутренний дворик, виноград и асадо по воскресеньям."}
+    - {key: ar_h_palacio, name: Этаж в особняке Реколеты, district: ar_recoleta, tier: 3, rent: 1000, food: 160, description: "Лепнина, паркет, вид на кладбище и привидения с родословной."}
+
+- country: colombia
+  police: Национальная полиция
+  story_title: Изумрудная тропа
+  story: [co_story_1, co_story_2, co_story_3, co_story_4, co_story_5, co_story_6, co_story_7, co_story_8]
+  districts:
+    - key: co_candelaria
+      name: Ла-Канделария
+      description: "Старый город Боготы: колониальные дома, граффити, студенты и ремесленники. По ночам по брусчатке ходят торговцы изумрудами."
+      danger: 3
+      fixer: co_gaby
+      gangs: [co_esmeralderos, co_paras]
+      corps: [biotechnica]
+      places: ["площадь Боливара", "изумрудный рынок", "кафе с тинто", "стена граффити"]
+    - key: co_zona_t
+      name: Зона-Т
+      description: "Клубы, бутики и офисы на севере. Здесь деньги кокаиновых лет давно отмыты и сидят в костюмах."
+      danger: 2
+      fixer: co_esteban
+      gangs: [co_paras, co_esmeralderos]
+      corps: [biotechnica, kang_tao]
+      places: ["клуб «Андино»", "бизнес-центр «Ла Торре»", "ресторан на крыше", "частная клиника"]
+  fixers:
+    - {key: co_gaby, name: Габи Монтойя, districts: [co_candelaria], description: "Художница граффити, которая знает все крыши и подвалы старого города.", voice: "дерзко, быстро, шутит про власть"}
+    - {key: co_esteban, name: Эстебан Рестрепо, districts: [co_zona_t], description: "Финансист с мягкими руками и жёсткими клиентами. Никогда не говорит, кто клиент.", voice: "мягко, вежливо, «доктор» к каждому собеседнику"}
+  gangs:
+    - {key: co_esmeralderos, name: Изумрудники, name_gen: Изумрудников, name_dat: Изумрудникам, name_acc: Изумрудников, name_ins: Изумрудниками, name_pre: Изумрудниках, description: "Старинные кланы торговцев изумрудами из шахт Бояки. Честь, вендетта и камни в кармане.", style: "шляпы, револьверы, изумруды как валюта, кровная месть", fights_as: valentinos, disposition: {bribe_dv: 15, talk_dv: 15, bribe_cost_mult: 2.0, flee_mod: 0, surrender: {robbed: 3, beaten: 1}}}
+    - {key: co_paras, name: Чёрные орлы, name_gen: Чёрных орлов, name_dat: Чёрным орлам, name_acc: Чёрных орлов, name_ins: Чёрными орлами, name_pre: Чёрных орлах, description: "Наследники старых военизированных отрядов. Охраняют корпоративные плантации и избавляются от несогласных.", style: "камуфляж, армейские винтовки, списки фамилий", fights_as: sixth_street, disposition: {bribe_dv: 16, talk_dv: 18, bribe_cost_mult: 2.5, flee_mod: 1, surrender: {beaten: 3, robbed: 2}}}
+  ripperdocs:
+    - {key: co_doc_marta, name: Марта-травница, district: co_candelaria, description: "Ставит импланты и лечит травами из сельвы. Иммунодепрессанты варит сама.", price_mod: 0.7, complication_chance: 0.08, infection_chance: 0.04}
+  housing:
+    - {key: co_h_hostal, name: Хостел в Канделарии, district: co_candelaria, tier: 1, rent: 100, food: 60, description: "Двухэтажная кровать, гамак во дворе и бесплатный кофе тинто."}
+    - {key: co_h_colonial, name: Колониальная квартира, district: co_candelaria, tier: 2, rent: 280, food: 90, description: "Толстые стены, деревянный балкон и камин для холодных ночей Боготы."}
+    - {key: co_h_penthouse, name: Пентхаус в Зоне-Т, district: co_zona_t, tier: 3, rent: 950, food: 150, description: "Бронированные стёкла, водитель и вид на Анды."}
+
+- country: cuba
+  police: Революционная полиция
+  story_title: Последний рейс в Майами
+  story: [cu_story_1, cu_story_2, cu_story_3, cu_story_4, cu_story_5, cu_story_6, cu_story_7, cu_story_8]
+  districts:
+    - key: cu_habana_vieja
+      name: Старая Гавана
+      description: "Облупленные дворцы, старые машины с хромированными движками, сальса до утра и чёрный рынок во дворе каждого дома."
+      danger: 2
+      fixer: cu_yoli
+      gangs: [cu_santeros, cu_balseros]
+      corps: [biotechnica]
+      places: ["Малекон", "площадь Собора", "бар «Флоридита»", "двор с петухами"]
+    - key: cu_marianao
+      name: Марианао
+      description: "Окраина, где кончаются туристы. Мастерские, нелегальные лодки, бойцовые петухи и ромовые подвалы."
+      danger: 3
+      fixer: cu_pancho
+      gangs: [cu_balseros, cu_santeros]
+      corps: [biotechnica]
+      places: ["лодочная мастерская", "петушиные бои", "подпольная ромовая", "заброшенный кабаре «Тропикана»"]
+  fixers:
+    - {key: cu_yoli, name: Йоли, districts: [cu_habana_vieja], description: "Хозяйка частного ресторанчика и всех слухов Старой Гаваны. Продаёт сигары, визы и тишину.", voice: "певуче, с музыкой, «мой дорогой» через слово"}
+    - {key: cu_pancho, name: Панчо Механик, districts: [cu_marianao], description: "Чинит американские машины пятидесятых и лодки для тех, кто хочет уплыть.", voice: "ворчливо, про моторы, про жизнь моторами"}
+  gangs:
+    - {key: cu_santeros, name: Сантерос, name_gen: Сантерос, name_dat: Сантерос, name_acc: Сантерос, name_ins: Сантерос, name_pre: Сантерос, description: "Братство жрецов сантерии, которое держит подпольные лотереи и защищает своих. Говорят, им помогают ориша.", style: "белые одежды, бусы, мачете и обряды", fights_as: voodoo_boys, disposition: {bribe_dv: 14, talk_dv: 13, bribe_cost_mult: 1.5, flee_mod: 0, surrender: {released: 2, robbed: 2}}}
+    - {key: cu_balseros, name: Бальсерос, name_gen: Бальсерос, name_dat: Бальсерос, name_acc: Бальсерос, name_ins: Бальсерос, name_pre: Бальсерос, description: "Контрабандисты на быстрых лодках. Возят людей во Флориду и всё остальное обратно.", style: "катера, ракетницы, мокрые купюры", fights_as: scavengers, disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.0, flee_mod: -1, surrender: {robbed: 3, released: 1}}}
+  ripperdocs:
+    - {key: cu_doc_elena, name: Доктор Елена, district: cu_habana_vieja, description: "Кубинская медицина славится на весь мир. Елена ставит хром лучше любого корпората и втрое дешевле.", price_mod: 0.7, complication_chance: 0.03}
+  housing:
+    - {key: cu_h_solar, name: Комната в солар, district: cu_marianao, tier: 1, rent: 70, food: 60, description: "Старый особняк, поделённый на двадцать семей. Шумно, тесно, весело."}
+    - {key: cu_h_casa, name: Каса партикуляр, district: cu_habana_vieja, tier: 2, rent: 250, food: 90, description: "Комната в семье: завтрак с манго, бабушка с сигарой, кресло-качалка на балконе."}
+    - {key: cu_h_malecon, name: Апартаменты на Малеконе, district: cu_habana_vieja, tier: 3, rent: 800, food: 130, description: "Волны бьют о набережную прямо под окном, кондиционер работает через раз."}

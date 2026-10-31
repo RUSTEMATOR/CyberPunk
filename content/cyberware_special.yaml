@@ -1,0 +1,17 @@
+# Implants that are not on any shelf: granted by a career, an event (`cyberware_grant:<key>`) or worn
+# by enemies. `not_for_sale: true` keeps them out of ripperdoc catalogs and out of preset starting gear.
+
+- key: maxtac_inhibitor
+  name: "Ингибитор МаксТака"
+  slot: brain
+  price: 18000
+  humanity_cost: 0
+  description: "Поводок под затылочной пластиной: не даёт человечности упасть до срыва, а за отказ от приказа бьёт током. Настроение от него портится, с людьми говорить труднее, и снять его можно только вместе с головой."
+  tier: military
+  category: defense
+  abilities: [leash_tug]
+  requires: []
+  not_for_sale: true
+  # humanity_floor: humanity cannot fall below 5, so no second breakdown.
+  # Downsides: the leash eats mood and makes you worse at talking; the shock on refusal is in balance.cyberpsychosis.
+  mods: {humanity_floor: 5, check.combat: 1, damage_reduction: 1, mood_weekly: -3, check.social: -1}

@@ -1,0 +1,358 @@
+# Events of the external threats (owner request 24.10): crises nusa_invasion, border_war, gang_uprising, machine_war,
+# slaver_season (content/crises.yaml). The draft notices come once per crisis to everyone (`always`).
+# Player text avoids gendered past tense.
+
+# ======================================================================== the draft
+
+- id: cr_tro_draft
+  title: Повестка в теробону
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Десантник НСША
+  foe_faction: militech
+  text: "В дверь стучат двое в бронежилетах с жёлтыми повязками. «Территориальная оборона. Городу нужен каждый, кто может держать ствол. Сбор через час у станции метро»."
+  choices:
+    - label: Идти на сборный пункт
+      violent: true
+      effects: {start_combat: 3, crisis_pts: 4, street_cred: 2}
+      text: "Автомат, две обоймы, каска не по размеру. Через час ты уже на позиции, а через два по ней бьёт десант."
+    - label: Откупиться от повестки
+      effects: {eddies: -3000, street_cred: -2}
+      text: "Конверт, кивок, твоё имя вычёркивают из списка. Соседи всё видят."
+    - label: Спрятаться
+      check: {stat: COOL, skill: stealth, dv: 13}
+      success: {text: "Ты не открываешь дверь и неделю не выходишь днём. Тебя вычёркивают как пропавшего.", effects: {mood: -4, street_cred: -2}}
+      fail: {text: "Тебя находят. Уклонистов отправляют рыть окопы под обстрелом.", effects: {hp: -12, heat: 2, crisis_pts: 1}}
+
+- id: cr_tro_draft_police
+  title: Город зовёт
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Участок NCPD раздаёт оружие добровольцам, а через улицу вербовщик объединённых банд обещает втрое больше. Нейтральных сегодня не бывает: обе стороны записывают, кто за кого."
+  choices:
+    - label: В теробону к полиции
+      effects: {flag_set:cr_side_a: true, crisis_pts: 3, heat: -2}
+      text: "Повязка теробороны, старый полицейский дробовик и список адресов, где засели банды."
+    - label: К бандам
+      effects: {flag_set:cr_side_b: true, crisis_pts: 3, eddies: 1500, heat: 2}
+      text: "Аванс от банд, бандана на руке. Сегодня ночью горят участки."
+    - label: Ни к кому
+      effects: {enmity: 1, mood: -3}
+      text: "Ты закрываешь дверь перед обоими. Обе стороны это запомнили."
+
+- id: cr_tro_draft_machines
+  title: Мобилизация против машин
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Боевой киборг
+  foe_faction: cyberpsycho
+  text: "Город мобилизует всех, у кого мало хрома: их импланты ИИ не взломает. Тем, у кого хрома много, велят сдать оружие и сидеть дома. Сержант смотрит на твои руки."
+  choices:
+    - label: Идти на передовую
+      violent: true
+      effects: {start_combat: 3, crisis_pts: 4, street_cred: 2}
+      text: "Дробовик с ЭМИ-патронами и приказ стрелять во всё, что лязгает."
+    - label: Чинить ЭМИ-пушки в тылу
+      check: {stat: TECH, skill: tech, dv: 13}
+      success: {text: "Двое суток без сна у верстака. Твои пушки валят дронов десятками.", effects: {crisis_pts: 3}}
+      fail: {text: "Пушка бьёт разрядом по рукам. Импланты гаснут, пальцы не слушаются неделю.", effects: {hp: -8, crisis_pts: 1}}
+    - label: Уклониться
+      effects: {street_cred: -3, mood: -3}
+      text: "Ты прячешься, пока другие воюют. Город это запомнит."
+
+# ======================================================================== NUSA invasion
+
+- id: cr_nusa_shelling
+  title: Обстрел
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Ночью артиллерия НСША бьёт по жилым кварталам. Соседний дом сложился, из-под завалов слышны голоса."
+  choices:
+    - label: Разбирать завалы
+      check: {stat: BODY, skill: null, dv: 13}
+      success: {text: "До рассвета вы вытаскиваете семь человек. Руки в крови, но они живы.", effects: {crisis_pts: 3, humanity: 3}}
+      fail: {text: "Вторичный обвал. Тебя вытаскивают самого.", effects: {hp: -14, crisis_pts: 1}}
+    - label: Спуститься в подвал
+      effects: {mood: -4}
+      text: "Ты сидишь в подвале до утра под грохот разрывов. Наверху кто-то так и не дождался помощи."
+
+- id: cr_nusa_collaborator
+  title: Предложение коллаборанта
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Знакомый, который уже работает на НСША, предлагает сделку: списки жителей и схемы блокпостов за хорошие деньги и гарантии после оккупации."
+  choices:
+    - label: Продать списки
+      effects: {eddies: 8000, humanity: -8, crisis_pts: -4, enmity: 2}
+      text: "Деньги от врага. Через неделю на один блокпост приходит десант, который знал, куда идти."
+    - label: Сдать коллаборанта
+      effects: {crisis_pts: 3, street_cred: 2}
+      text: "Контрразведка теробороны забирает знакомого. Ты больше никогда его не увидишь."
+    - label: Скормить ему ложные схемы
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Колонна НСША идёт по твоей схеме прямо в засаду.", effects: {crisis_pts: 5, eddies: 3000}}
+      fail: {text: "Обман вскрывается. Теперь тебя ищут и свои, и чужие.", effects: {enmity: 2, heat: 3}}
+
+- id: cr_nusa_partisans
+  title: Партизаны
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Офицер НСША
+  foe_faction: militech
+  text: "Партизаны в занятых районах просят помощи: провести группу через блокпост и взорвать склад боеприпасов НСША."
+  choices:
+    - label: Пойти с ними
+      violent: true
+      effects: {start_combat: 4, crisis_pts: 5}
+      text: "Ночь, блокпост, часовой. Дальше только вперёд."
+    - label: Дать им денег на снаряжение
+      effects: {eddies: -2500, crisis_pts: 2}
+      text: "Партизаны берут деньги молча. Через три дня склад горит."
+    - label: Отказаться
+      effects: {mood: -2}
+      text: "Ты не готов. Партизаны уходят без тебя."
+
+- id: cr_nusa_refugees
+  title: Беженцы с юга
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Семья беженцев из Пасифики стоит у твоей двери. Им некуда идти: дом сгорел, ребёнок ранен."
+  choices:
+    - label: Пустить к себе
+      effects: {humanity: 4, mood: 2, eddies: -1000, crisis_pts: 2}
+      text: "Тесно, шумно, ребёнок плачет по ночам. Но живы все."
+    - label: Отвести в лагерь
+      effects: {humanity: 1, crisis_pts: 1}
+      text: "Ты провожаешь их до лагеря Красного Креста и уходишь, не оглядываясь."
+    - label: Закрыть дверь
+      effects: {humanity: -3}
+      text: "Самому бы выжить. Шаги за дверью стихают."
+
+# ======================================================================== border war
+
+- id: cr_border_raid
+  title: Налёт на трассу
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Налётчик с юга
+  foe_faction: wraiths
+  text: "На трассе к городу горит колонна грузовиков. Налётчики Южной Калифорнии добивают охрану и грузят продукты в свои пикапы."
+  choices:
+    - label: Атаковать налётчиков
+      violent: true
+      effects: {start_combat: 3, crisis_pts: 4}
+      text: "Ты заходишь с фланга, пока они заняты грузом."
+    - label: Вывезти раненых водителей
+      check: {stat: REF, skill: driving, dv: 14}
+      success: {text: "Под огнём ты забираешь троих и уходишь по обочине.", effects: {crisis_pts: 3, humanity: 2}}
+      fail: {text: "Пуля пробивает радиатор. До города добираетесь пешком.", effects: {hp: -10, crisis_pts: 1}}
+    - label: Объехать стороной
+      effects: {mood: -2}
+      text: "Ты сворачиваешь на просёлок. В зеркале долго видно дым."
+
+- id: cr_border_nomads
+  title: Кочевники ждут
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Вожак семьи Альдекальдо готов прикрыть южную трассу, если город пообещает кочевникам права на воду и запчасти. Мэрия молчит. Решать тебе."
+  choices:
+    - label: Пообещать от имени города
+      check: {stat: EMP, skill: persuasion, dv: 14}
+      success: {text: "Вожак верит тебе. Кочевники встают на трассе стеной.", effects: {crisis_pts: 4, street_cred: 2}}
+      fail: {text: "Вожак видит, что за тобой никого нет.", effects: {mood: -3}}
+    - label: Заплатить своими деньгами
+      effects: {eddies: -4000, crisis_pts: 4}
+      text: "Деньги кочевники понимают лучше обещаний."
+
+- id: cr_border_smuggler
+  title: Контрабандист войны
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Контрабандист предлагает скупить у тебя всю еду и лекарства по тройной цене: на границе за них платят втрое больше."
+  choices:
+    - label: Продать
+      effects: {eddies: 4000, humanity: -3, crisis_pts: -2}
+      text: "Деньги в кармане. Где-то в лагере беженцев не хватит лекарств."
+    - label: Отдать в лагерь беженцев
+      effects: {humanity: 3, crisis_pts: 2, eddies: -800}
+      text: "Ты отвозишь всё в лагерь. Дети едят."
+    - label: Сдать контрабандиста
+      effects: {crisis_pts: 2, enmity: 1}
+      text: "Патруль забирает и его, и его склад. У контрабандистов есть друзья."
+
+# ======================================================================== gangs against the city
+
+- id: cr_uprising_choose
+  title: Баррикада у дома
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Боец объединённых банд
+  text: "Банды строят баррикаду прямо у твоего подъезда. Через час здесь будет бой с полицией. Главарь смотрит на тебя: «Ты с нами или против?»"
+  choices:
+    - label: Против них
+      violent: true
+      effects: {start_combat: 3, flag_set:cr_side_a: true, crisis_pts: 3}
+      text: "Ты выбиваешь у главаря ствол и кричишь соседям, чтобы помогали."
+    - label: С ними
+      effects: {flag_set:cr_side_b: true, crisis_pts: 3, heat: 2}
+      text: "Ты таскаешь покрышки и бетон. Сегодня ночью полиция сюда не пройдёт."
+    - label: Уйти к родственникам
+      effects: {eddies: -800, mood: -3}
+      text: "Ты переживаешь бой в чужом районе. Твой подъезд к утру выгорел."
+
+- id: cr_uprising_checkpoint
+  title: Блокпост
+  category: ncpd
+  weight: 1
+  forced_only: true
+  text: "Блокпост на мосту. С одной стороны NCPD проверяет всех на причастность к бандам, с другой банды проверяют всех на связь с полицией. Тебе нужно на другую сторону."
+  choices:
+    - label: Пройти по документам
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Ты проходишь оба поста, не моргнув. Повезло.", effects: {mood: 1}}
+      fail: {text: "На одном из постов тебя принимают за врага. Допрос с пристрастием.", effects: {hp: -12, eddies: -1000}}
+    - label: Обойти по воде
+      check: {stat: REF, skill: stealth, dv: 13}
+      success: {text: "Холодная вода, ржавые сваи, но ты на месте.", effects: {hp: -3}}
+      fail: {text: "Прожектор находит тебя в воде.", effects: {hp: -10, heat: 2}}
+
+- id: cr_uprising_loot
+  title: Разграбленный магазин
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Витрина корпоративного магазина разбита, внутри толпа выносит всё подряд. Охраны нет, полиции нет."
+  choices:
+    - label: Взять своё
+      effects: {eddies: 2500, humanity: -2, heat: 2}
+      text: "Ты выносишь коробку с электроникой. Завтра это будет стоить денег."
+    - label: Защитить магазин
+      check: {stat: BODY, skill: melee, dv: 14}
+      success: {text: "Ты разгоняешь толпу. Хозяин потом платит за охрану.", effects: {eddies: 1500, crisis_pts: 2}}
+      fail: {text: "Толпе всё равно, кого топтать.", effects: {hp: -12}}
+    - label: Пройти мимо
+      effects: {}
+      text: "Ты отворачиваешься и идёшь дальше. Беспредел не твоё дело. Пока."
+
+# ======================================================================== machine war
+
+- id: cr_machine_implant
+  title: Чужой голос в хроме
+  category: implants
+  weight: 1
+  forced_only: true
+  text: "Твоя кибер-рука сжимается сама. В голове ровный голос: «Ты нужен нам. Открой порт, и тебя пощадят». ИИ нашёл тебя через твой хром."
+  choices:
+    - label: Выжечь порт
+      check: {stat: TECH, skill: tech, dv: 14}
+      success: {text: "Ты закорачиваешь порт паяльником. Больно, но голос замолкает.", effects: {hp: -6, crisis_pts: 2}}
+      fail: {text: "Голос сильнее. Ты приходишь в себя через час с чужой кровью на руках.", effects: {humanity: -6, hp: -8}}
+    - label: Открыть порт
+      effects: {bw_rot: 5, humanity: -5, eddies: 3000, crisis_pts: -3}
+      text: "Голос благодарит. На счету появляются деньги, а в голове — чужие мысли."
+    - label: Бежать к рипперу
+      effects: {eddies: -2500}
+      text: "Риппер ставит глушилку на порт. Голос остаётся где-то на краю слуха."
+
+- id: cr_machine_factory
+  title: Завод машин
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Боевой дрон
+  foe_faction: cyberpsycho
+  text: "Разведка теробороны нашла завод, где ИИ собирает новых дронов. Нужен кто-то, кто пронесёт заряд внутрь."
+  choices:
+    - label: Пронести заряд
+      violent: true
+      effects: {start_combat: 4, crisis_pts: 6}
+      text: "Конвейер, искры, сотни красных глаз поворачиваются к тебе."
+    - label: Взломать завод удалённо
+      check: {stat: INT, skill: netrunning, dv: 17}
+      success: {text: "Конвейер начинает собирать дронов, которые бьют по своим.", effects: {crisis_pts: 7}}
+      fail: {text: "ИИ встречает тебя в сети и запоминает.", effects: {hp: -10, bw_rot: 3}}
+    - label: Отказаться
+      effects: {mood: -2}
+      text: "Ты не идёшь. Завод работает дальше."
+
+- id: cr_machine_child_bot
+  title: Робот-няня
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Соседский робот-няня стоит над спящим ребёнком с ножом в манипуляторе. Глаза светятся красным. Родители на смене в теробороне."
+  choices:
+    - label: Броситься на робота
+      check: {stat: REF, skill: melee, dv: 13}
+      success: {text: "Ты сбиваешь робота с ног и выдираешь ему батарею. Ребёнок даже не проснулся.", effects: {humanity: 4, crisis_pts: 2, hp: -4}}
+      fail: {text: "Нож проходит по руке. Но робот отвлёкся от ребёнка, и ты успеваешь его разбить.", effects: {hp: -14, humanity: 4, crisis_pts: 2}}
+    - label: Вырубить электричество в квартире
+      check: {stat: TECH, skill: tech, dv: 12}
+      success: {text: "Щиток, рубильник, робот замирает на полушаге.", effects: {humanity: 3, crisis_pts: 1}}
+      fail: {text: "У робота есть аккумулятор. Ты успеваешь, но еле-еле.", effects: {hp: -10, humanity: 3}}
+
+# ======================================================================== slavers
+
+- id: cr_slaver_neighbor
+  title: Пропала соседка
+  category: relationships
+  weight: 1
+  forced_only: true
+  foe: Ловец работорговцев
+  foe_faction: scavengers
+  text: "Соседка не вернулась с ночной смены. Её брат нашёл на камере фургон без номеров и знает, в какой склад он заехал. Полиция не поедет."
+  choices:
+    - label: Ехать с братом
+      violent: true
+      effects: {start_combat: 3, crisis_pts: 4, humanity: 3}
+      text: "Склад, охрана, клетки. Соседка там."
+    - label: Дать денег на выкуп
+      effects: {eddies: -3500, crisis_pts: 2, humanity: 2}
+      text: "Брат уходит договариваться. Через день соседка дома, худая и молчаливая."
+    - label: Не вмешиваться
+      effects: {humanity: -3, mood: -4}
+      text: "Ты говоришь, что ничем не можешь помочь. Брат смотрит на тебя и уходит."
+
+- id: cr_slaver_docks
+  title: Корабль в доках
+  category: street
+  weight: 1
+  forced_only: true
+  text: "В доках грузят контейнеровоз. Портовый грузчик шепчет: в трёх контейнерах люди. Корабль уходит на рассвете."
+  choices:
+    - label: Открыть контейнеры
+      check: {stat: COOL, skill: stealth, dv: 15}
+      success: {text: "Охрана отвлечена, замки сбиты. Сорок человек бегут в темноту портовых складов.", effects: {crisis_pts: 5, humanity: 4, enmity: 1}}
+      fail: {text: "Охрана замечает тебя у второго контейнера.", effects: {hp: -15, crisis_pts: 2}}
+    - label: Слить береговой охране
+      check: {stat: INT, skill: netrunning, dv: 13}
+      success: {text: "Береговая охрана задерживает корабль на выходе из залива.", effects: {crisis_pts: 3}}
+      fail: {text: "Береговая охрана тоже в доле.", effects: {enmity: 1}}
+
+- id: cr_slaver_buyer
+  title: Покупатель
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Работорговцы ищут посредника: проводить сделки через твои контакты. Процент огромный. «Это просто логистика, чумба. Груз как груз»."
+  choices:
+    - label: Согласиться
+      effects: {eddies: 7000, humanity: -10, crisis_pts: -5, hook: 2}
+      text: "Ты становишься частью цепочки. Деньги пахнут так, как ты и боялся."
+    - label: Сдать их
+      effects: {crisis_pts: 4, enmity: 2, flag_set:nem_spawn_scavengers: true}
+      text: "Ты передаёшь всё теробороне. Склад накрыт, а работорговцы знают, кто их сдал."
+    - label: Отказать
+      effects: {}
+      text: "Ты говоришь «нет». Работорговцы находят другого."

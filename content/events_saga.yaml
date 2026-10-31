@@ -1,0 +1,293 @@
+# The endless saga (app/services/saga.py). Every step is forced_only: only the saga deck draws it.
+# A step opens by marks (flags s_<word>): conditions.flags_all / flags_none. Choices set new marks with flag_set.
+# Three openings (one per life) lead to the Whisper beyond the Blackwall; its end sets `blackwall_contact`,
+# which opens the Blackwall market. When the written steps run out, Claude writes the next ones (sagx_*).
+
+# ======================================================================== openings
+
+- id: saga_dreams_1
+  title: Чужие сны
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_none: [s_started]
+  text: "Третью ночь подряд тебе снится чужая жизнь: незнакомая квартира, женщина, которая зовёт тебя чужим именем, и цифры, бегущие по стене. Утром руки дрожат, а нейропорт за ухом тёплый, как после долгого сеанса."
+  choices:
+    - label: Записать сон
+      effects: {flag_set:s_started: true, flag_set:s_dreams_log: true, mood: -2}
+      text: "Ты записываешь всё, что помнишь: адрес, имя, цифры. На бумаге это выглядит как координаты."
+    - label: Сходить к рипперу
+      effects: {flag_set:s_started: true, flag_set:s_dreams_ripper: true, eddies: -150}
+      text: "Риппер подключает диагностику и долго молчит. Потом говорит: «Приходи через неделю. Я хочу кое-что проверить»."
+    - label: Не обращать внимания
+      effects: {flag_set:s_started: true, flag_set:s_whisper: true, mood: -4}
+      text: "Наверное, это просто усталость. На следующую ночь сон приходит снова, и в нём кто-то шепчет твоё имя."
+
+- id: saga_package_1
+  title: Посылка без адреса
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_none: [s_started]
+  text: "У двери лежит коробка без адреса и без отправителя. Внутри, в пене, одинокий шард с выжженной меткой: глаз в квадрате. Коробка пахнет озоном."
+  choices:
+    - label: Вставить шард
+      effects: {flag_set:s_started: true, flag_set:s_whisper: true, glitches: 1}
+      text: "Шард щёлкает в разъёме, и в голове на секунду становится очень тихо. Потом кто-то внутри говорит: «Наконец-то»."
+    - label: Отнести в NCPD
+      effects: {flag_set:s_started: true, flag_set:s_grey_talk: true, heat: -1}
+      text: "Дежурный регистрирует находку и забирает её. Через час тебе звонят с незнакомого номера: «Мы бы хотели поговорить»."
+    - label: Продать барыге
+      effects: {flag_set:s_started: true, flag_set:s_package_sold: true, eddies: 400}
+      text: "Барыга даёт четыре сотни и прячет шард так быстро, будто он жжётся."
+
+- id: saga_grey_1
+  title: Человек в сером
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_none: [s_started]
+  text: "Неделю ты замечаешь одного и того же человека: серое пальто, серое лицо, всегда на краю толпы. Сегодня он стоит у твоего подъезда и даже не притворяется, что ждёт кого-то другого."
+  choices:
+    - label: Подойти
+      effects: {flag_set:s_started: true, flag_set:s_grey_talk: true}
+      text: "Он не удивлён. Протягивает карточку без имени, только символ: глаз в квадрате. «Нам нужно поговорить о вашем нейропорте»."
+    - label: Сбросить хвост
+      check: {stat: REF, skill: stealth, dv: 14}
+      success: {text: "Ты уходишь дворами и через крышу. На твоей куртке, у воротника, ты находишь крошечный маячок.", effects: {flag_set:s_started: true, flag_set:s_tracker: true, skill_xp:stealth: 2}}
+      fail: {text: "Где бы ты ни свернул, он уже там. В конце концов он просто кивает тебе и уходит сам.", effects: {flag_set:s_started: true, flag_set:s_grey_talk: true, mood: -3}}
+    - label: Сфотографировать
+      effects: {flag_set:s_started: true, flag_set:s_whisper: true, mood: -3}
+      text: "На снимке пустая улица. Человека на фото нет, есть только помехи там, где он стоял."
+
+# ======================================================================== second steps
+
+- id: saga_dreams_log
+  title: Координаты из сна
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [s_dreams_log]
+  text: "Цифры из сна оказываются координатами: заброшенный дата-центр на краю города. Внутри темно и сухо, а на одном терминале горит экран. На нём твоё имя."
+  choices:
+    - label: Сесть за терминал
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "Ты входишь в систему, и она узнаёт тебя раньше, чем ты вводишь пароль. Голос из динамика: «Ты пришёл. Слушай».", effects: {flag_set:s_whisper: true, skill_xp:netrunning: 3}}
+      fail: {text: "Экран гаснет, как только ты касаешься клавиатуры. Но голос всё равно звучит, прямо у тебя в голове.", effects: {flag_set:s_whisper: true, hp: -3}}
+    - label: Продать находку
+      effects: {flag_set:s_dreams_sold: true, eddies: 700}
+      text: "Нетраннер из Уотсона платит семь сотен за координаты. Через неделю ты слышишь, что он пропал."
+
+- id: saga_dreams_sold
+  title: Пропавший нетраннер
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [s_dreams_sold]
+  text: "Нетраннер, купивший координаты, возвращается. Точнее, его тело: глаза пустые, говорит медленно и чужим голосом. «Ты продал меня, — говорит он. — Теперь ты должен мне»."
+  choices:
+    - label: Выслушать
+      effects: {flag_set:s_whisper: true, mood: -5}
+      text: "Голос внутри чужого тела рассказывает, кто он: то, что живёт за Чёрным заслоном. И что ему нужен посредник."
+    - label: Бежать
+      check: {stat: REF, dv: 13}
+      success: {text: "Ты уходишь. Он не преследует. Но той же ночью тебе снится его голос.", effects: {flag_set:s_whisper: true}}
+      fail: {text: "Он хватает тебя за руку, и в голове вспыхивает белый шум.", effects: {flag_set:s_whisper: true, hp: -5, glitches: 1}}
+
+- id: saga_dreams_ripper
+  title: Чужой код
+  category: implants
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [s_dreams_ripper]
+  text: "Риппер выводит на экран схему твоего нейропорта. Посередине — участок кода, которого там быть не должно: он переписывает сам себя, пока ты смотришь. «Это не прошивка, — шепчет риппер. — Это что-то живое»."
+  choices:
+    - label: Вырезать
+      check: {stat: BODY, dv: 14}
+      success: {text: "Операция идёт четыре часа. Код вырезан, и голова впервые за месяц ясная. Но на мониторе риппера на миг вспыхивает: «Я вернусь».", effects: {flag_set:s_code_cut: true, humanity: 3, hp: -5}}
+      fail: {text: "Код уходит глубже, пока риппер режет. Ты приходишь в себя с перевязанной головой и чужим шёпотом в ушах.", effects: {flag_set:s_whisper: true, hp: -8}}
+    - label: Оставить
+      effects: {flag_set:s_whisper: true, skill_xp:netrunning: 2}
+      text: "Ты решаешь посмотреть, что будет. Код ведёт себя тихо. Почти дружелюбно."
+
+- id: saga_code_cut
+  title: Пустота
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [s_code_cut]
+  text: "Без чужого кода тихо. Слишком тихо. Сны пропали, но вместе с ними пропало и что-то ещё: ты больше не видишь цвета так ярко. На автоответчике сообщение без звука, только символ: глаз в квадрате."
+  choices:
+    - label: Найти их
+      effects: {flag_set:s_grey_talk: true}
+      text: "Символ ведёт к кафе у Сити-центра. За дальним столиком тебя ждёт человек в сером."
+    - label: Жить дальше
+      effects: {flag_set:s_free: true, mood: 6, humanity: 2}
+      text: "Ты удаляешь сообщение. Пусть эта история закончится здесь. Хотя бы для тебя."
+
+- id: saga_package_sold
+  title: Барыга мёртв
+  category: street
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [s_package_sold]
+  text: "Барыгу, купившего шард, находят в его лавке: сидит перед монитором, улыбается, мозг сгорел. А в твоём почтовом ящике снова коробка. Тот же шард."
+  choices:
+    - label: Вставить
+      effects: {flag_set:s_whisper: true, glitches: 1}
+      text: "Шард щёлкает, и голос говорит: «Он был не тем. Ты — тот»."
+    - label: Сжечь
+      check: {stat: COOL, dv: 15}
+      success: {text: "Шард плавится в огне зажигалки. Пахнет озоном. Больше коробок не приходит.", effects: {flag_set:s_free: true, mood: 4}}
+      fail: {text: "Шард не горит. Утром он снова лежит на твоём столе.", effects: {flag_set:s_whisper: true, mood: -6}}
+
+- id: saga_grey_talk
+  title: Глаз в квадрате
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [s_grey_talk]
+  text: "Человек в сером — из NetWatch. Он говорит тихо и быстро: за Чёрным заслоном что-то проснулось и ищет людей с подходящими нейропортами. Твой подходит. NetWatch предлагает сделку: ты сообщаешь обо всём, что услышишь, а они платят."
+  choices:
+    - label: Согласиться
+      effects: {flag_set:s_netwatch_deal: true, flag_set:s_whisper: true, eddies: 800}
+      text: "Он переводит восемьсот задатка и оставляет номер. «Когда оно заговорит — а оно заговорит — звоните»."
+    - label: Отказаться
+      effects: {flag_set:s_whisper: true, heat: 1}
+      text: "Он пожимает плечами. «Тогда оно найдёт вас без нас». На выходе ты замечаешь камеру, которая поворачивается за тобой."
+
+- id: saga_tracker
+  title: Маячок
+  category: street
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [s_tracker]
+  text: "Маячок оказывается не корпоративным: внутри чип с чужим кодом, который пытается переписать твой телефон. Кто-то хочет знать, где ты, и это не человек."
+  choices:
+    - label: Взломать чип
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "Ты вскрываешь чип и находишь в нём сообщение: «Не бойся. Я просто хочу поговорить».", effects: {flag_set:s_whisper: true, skill_xp:netrunning: 2}}
+      fail: {text: "Чип сгорает у тебя в руках, а телефон на секунду показывает символ: глаз в квадрате.", effects: {flag_set:s_grey_talk: true, hp: -2}}
+    - label: Подкинуть на чужую машину
+      effects: {flag_set:s_grey_talk: true, mood: 3}
+      text: "Маячок уезжает в Пустоши на крыше грузовика. Через два дня человек в сером снова у твоего подъезда, и он недоволен."
+
+# ======================================================================== the Whisper
+
+- id: saga_whisper
+  title: Шёпот
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [s_whisper]
+  text: "Ночью голос приходит ясно, без помех. Он не человек и не называет себя. Он говорит, что живёт за Чёрным заслоном, что ему тесно и что ты можешь помочь. Взамен он предлагает знание, которого нет ни у одного нетраннера."
+  choices:
+    - label: Слушать
+      effects: {flag_set:s_listen: true, skill_xp:netrunning: 3, humanity: -2}
+      text: "Голос учит, и ты понимаешь то, чего не понимал никогда. Сети, протоколы, лазейки. Утром не вспомнить, как пришёл сон."
+    - label: Найти источник
+      check: {stat: INT, skill: netrunning, dv: 16}
+      success: {text: "Ты держишь сигнал до самого конца. Он уходит в Пустоши, к заброшенной станции NetWatch.", effects: {flag_set:s_trace: true, skill_xp:netrunning: 2}}
+      fail: {text: "Сигнал рвётся, и тебя бьёт обратной волной. Голос смеётся: «Не так быстро».", effects: {flag_set:s_listen: true, hp: -5}}
+    - label: Заглушить
+      effects: {flag_set:s_free: true, mood: -3, humanity: 2}
+      text: "Ты ставишь глушилку и спишь в наушниках с белым шумом. Голос пропадает. Навсегда ли — неизвестно."
+
+- id: saga_listen
+  title: Просьба из-за Заслона
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [s_listen]
+  text: "Голос просит одного: открыть ему дверь. Не сейчас, когда-нибудь. Для этого ему нужен якорь в этом мире — фрагмент его кода в твоём нейропорте. «Ты станешь сильнее, — обещает он. — Сильнее всех»."
+  choices:
+    - label: Принять фрагмент
+      effects: {flag_set:s_pact: true, flag_set:blackwall_contact: true, humanity: -4, skill_xp:netrunning: 3}
+      text: "Фрагмент входит в нейропорт, как ледяная игла. Мир на секунду становится прозрачным. Теперь ты знаешь, где в городе продают то, что пришло из-за Заслона."
+    - label: Отказаться
+      effects: {flag_set:s_refuse: true, mood: -4}
+      text: "«Ты передумаешь», — говорит голос и замолкает. Иногда ночью ты всё ещё чувствуешь, что он рядом."
+    - label: Позвонить в NetWatch
+      effects: {flag_set:s_traitor: true, eddies: 1200}
+      text: "Человек в сером берёт трубку после первого гудка. «Хорошая работа». На счёт приходит тысяча двести. Голос молчит. Слишком тихо."
+
+- id: saga_trace
+  title: Станция в Пустошах
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [s_trace]
+  text: "Заброшенная станция NetWatch посреди пустыни. Внутри — ряды серверов, обвитых проводами, и капсула с телом нетраннера, умершего годы назад. Его дека ещё работает, и голос звучит из неё."
+  choices:
+    - label: Забрать деку
+      effects: {flag_set:s_pact: true, flag_set:blackwall_contact: true, cyberware_grant:cyberdeck_street_garage: true, humanity: -3}
+      text: "Дека холодная и тяжёлая. Как только ты её подключаешь, голос говорит: «Теперь мы партнёры». Вместе с декой ты получаешь адрес тех, кто торгует кодом из-за Заслона."
+    - label: Сдать станцию NetWatch
+      effects: {flag_set:s_traitor: true, eddies: 1500, street_cred: 1}
+      text: "Через час над станцией кружат вертолёты NetWatch. Тебе платят полторы тысячи и предупреждают, что голос это запомнит."
+    - label: Уйти
+      effects: {flag_set:s_free: true, mood: 2}
+      text: "Ты закрываешь дверь станции и уезжаешь, не оборачиваясь. Пусть эту дверь откроет кто-нибудь другой."
+
+- id: saga_traitor
+  title: Счёт закрыт
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [s_traitor]
+  text: "Голос возвращается не ночью, а днём, в каждом экране вокруг тебя. Рекламные щиты, витрины, телефон прохожего — везде одна фраза: «Ты выбрал сторону». Камеры по всей улице поворачиваются к тебе."
+  choices:
+    - label: Бежать к NetWatch
+      check: {stat: REF, skill: stealth, dv: 16}
+      success: {text: "Путь до явки NetWatch позади. Человек в сером ставит тебе глушилку: «Теперь вы под нашей защитой». Голос замолкает.", effects: {flag_set:s_netwatch_ally: true, heat: -2}}
+      fail: {text: "Тебя сбивает машина без водителя. Жизнь цела, но голос шепчет: «Это было предупреждение».", effects: {flag_set:s_hunted: true, hp: -12}}
+    - label: Просить прощения
+      effects: {flag_set:s_pact: true, flag_set:blackwall_contact: true, humanity: -5}
+      text: "Ты говоришь в ближайший экран, что это была ошибка. Голос долго молчит, потом соглашается. Цена — фрагмент его кода в твоём нейропорте."
+
+- id: saga_free
+  title: Тишина
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [s_free]
+  text: "Месяц без голоса и снов. Жизнь идёт своим чередом. Но иногда, проходя мимо уличных экранов, ты видишь на долю секунды символ: глаз в квадрате. Кто-то за Заслоном всё ещё помнит тебя."
+  choices:
+    - label: Жить своей жизнью
+      effects: {flag_set:s_quiet_life: true, mood: 8, humanity: 2}
+      text: "Ты отворачиваешься от экранов. У тебя своя жизнь, и она тебе нравится."
+    - label: Вернуться к тайне
+      effects: {flag_set:s_whisper: true, flag_clear:s_free: true}
+      text: "Любопытство сильнее. Ты включаешь старый терминал и пишешь в пустоту: «Я здесь». Ответ приходит через секунду."
+
+- id: saga_pact
+  title: Якорь
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [s_pact]
+  text: "Фрагмент в нейропорте живёт своей жизнью. Иногда ты просыпаешься в другом районе. Иногда знаешь пароли, которых не учил. Голос говорит, что скоро дверь откроется, и тебе решать, кто войдёт первым."
+  choices:
+    - label: Ждать сигнала
+      effects: {flag_set:s_awaiting: true, skill_xp:netrunning: 2, humanity: -2}
+      text: "Ты ждёшь. Голос доволен. Чёрный рынок Заслона теперь отвечает тебе как своему."
+    - label: Изучить фрагмент
+      check: {stat: INT, skill: netrunning, dv: 17}
+      success: {text: "Ты находишь в коде лазейку: голос не может тебя контролировать без твоего согласия. Пока.", effects: {flag_set:s_master: true, skill_xp:netrunning: 4}}
+      fail: {text: "Код замечает, что ты в нём копаешься. Неделю у тебя дрожат руки и сыпятся глюки.", effects: {flag_set:s_awaiting: true, glitches: 2, hp: -4}}

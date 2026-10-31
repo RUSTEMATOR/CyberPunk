@@ -1,0 +1,150 @@
+# Early chrome, batch 3 (owner request: many implants from every era). Street chrome of 2013-2029: cheap, odd, honest.
+
+- key: heel_springs
+  name: Пружины в пятках
+  slot: legs
+  price: 900
+  humanity_cost: 2
+  description: Стальные пружины в каблуках костей. Прыгаешь через забор с места, приземляешься со звоном.
+  tier: street
+  category: noncombat
+  abilities: [heel_bounce]
+  build: ninja
+  requires: []
+  mods: {check.escape: 1}
+- key: knee_shocks_early
+  name: Амортизаторы коленей
+  slot: legs
+  price: 1400
+  humanity_cost: 3
+  description: Гидравлика от мотоцикла в суставах. Колени больше не болят, зато скрипят в дождь.
+  tier: street
+  category: defense
+  abilities: [moto_knees]
+  build: flyer
+  requires: []
+  mods: {hp_max: 2, skill.melee: 1}
+  available_until: 2029
+- key: fingertip_lighter
+  name: Зажигалка в пальце
+  slot: hands
+  price: 300
+  humanity_cost: 1
+  description: Щелчок — и на кончике пальца огонёк. Прикурить, поджечь фитиль, произвести впечатление.
+  tier: street
+  category: noncombat
+  abilities: [finger_flame]
+  build: engineer
+  requires: []
+  mods: {check.social: 1}
+- key: wrist_cash_slot
+  name: Кармашек в запястье
+  slot: forearms
+  price: 600
+  humanity_cost: 1
+  description: Тайник под кожей запястья для кредчипа и пары патронов. Карманники остаются ни с чем.
+  tier: street
+  category: noncombat
+  abilities: [wrist_stash]
+  build: agent
+  requires: []
+  mods: {crime_reward_pct: 5}
+- key: nicotine_gland
+  name: Никотиновая железа
+  slot: circulatory
+  price: 700
+  humanity_cost: 2
+  description: Выделяет никотин по требованию. Сигареты больше не нужны, спокойствие под рукой, а раны заживают медленнее.
+  tier: street
+  category: booster
+  abilities: [inner_smoke]
+  requires: []
+  mods: {mood_weekly: 1, hp_regen: -1}
+  available_until: 2029
+- key: pager_implant
+  name: Пейджер в черепе
+  slot: brain
+  price: 500
+  humanity_cost: 1
+  description: Короткие сообщения прямо в голову. Начальник находит тебя где угодно. Это не всегда хорошо.
+  tier: street
+  category: noncombat
+  abilities: [head_page]
+  build: agent
+  requires: []
+  mods: {check.career: 1, mood_weekly: -1}
+  available_until: 2025
+- key: mirror_shades_early
+  name: Зеркальные линзы
+  slot: eyes
+  price: 1100
+  humanity_cost: 2
+  description: Глаза под зеркальной плёнкой. Никто не видит, куда ты смотришь, а солнце больше не слепит.
+  tier: street
+  category: noncombat
+  abilities: [blank_stare]
+  build: face
+  requires: []
+  mods: {check.talk_exit: 1, check.social: 1}
+  exclusive_group: optics
+- key: bone_lacing_early
+  name: Армирование костей, первая серия
+  slot: body
+  price: 3200
+  humanity_cost: 5
+  description: Титановая сетка на рёбрах и бёдрах. Ломаешься реже, весишь больше, в аэропорту звенишь.
+  tier: street
+  category: defense
+  abilities: [titan_frame]
+  build: tank
+  requires: []
+  mods: {hp_max: 4, damage_reduction: 1, flee: -1}
+- key: cheek_speaker
+  name: Динамик в щеке
+  slot: face
+  price: 800
+  humanity_cost: 2
+  description: Маленький динамик под скулой. Играет музыку для окружающих или делает твой голос громче, чем получается без него.
+  tier: street
+  category: noncombat
+  abilities: [cheek_beat]
+  build: face
+  requires: []
+  mods: {check.social: 1, mood_weekly: 1}
+- key: blood_pump_early
+  name: Насос-помощник для сердца
+  slot: circulatory
+  price: 2600
+  humanity_cost: 4
+  description: Маленький насос рядом с сердцем. После драки кровь бежит быстрее, раны затягиваются быстрее.
+  tier: street
+  category: defense
+  abilities: [heart_helper]
+  build: medic
+  requires: []
+  mods: {hp_regen: 2}
+- key: skin_heater
+  name: Подогрев кожи
+  slot: skin
+  price: 900
+  humanity_cost: 2
+  description: Тонкие нагревательные нити под кожей. Зимой тепло, в Пустошах ночью — спасение.
+  tier: street
+  category: noncombat
+  abilities: [warm_skin]
+  build: engineer
+  requires: []
+  mods: {hp_regen: 1}
+- key: copper_reflex_wire
+  name: Рефлекторный провод
+  slot: spine
+  price: 3800
+  humanity_cost: 6
+  description: Медный провод вдоль позвоночника ускоряет сигналы. Дёргаешься раньше, чем думаешь. Иногда без причины.
+  tier: street
+  category: combat
+  abilities: [jerk_free]
+  build: duelist
+  requires: []
+  mods: {check.combat: 1, flee: 1, mood_weekly: -1}
+  available_until: 2029

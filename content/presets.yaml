@@ -1,0 +1,440 @@
+# Starting kits. A preset is NOT a role: roles are earned from play (roles.yaml).
+# Schema: app/content/schemas.py (Preset). Guide: docs/CONTENT_GUIDE.md.
+# Names are neutral on purpose, they never name a role.
+
+- key: street_gunner
+  group: street
+  name: Уличный стрелок
+  description: "Быстрые руки и твёрдый прицел, а терпения мало. С самого начала есть пистолет и лёгкий жилет: подходит тем, кто решает проблемы стрельбой."
+  stat_template: {BODY: 6, REF: 7, TECH: 3, INT: 4, COOL: 6, EMP: 4, LUCK: 4}
+  skills: {firearms: 5, melee: 3, stealth: 2, driving: 2}
+  gear:
+    weapons: [pistol]
+    armor: light_vest
+    cyberware: []
+  starting_career: null
+
+- key: net_kid
+  group: tech
+  name: Ребёнок Сети
+  description: "Детство прошло у терминала Старой Сети. В голове нейропорт, в рюкзаке дека первого поколения: взламывать можно с первого дня, а вот в драке толку мало."
+  stat_template: {BODY: 3, REF: 4, TECH: 6, INT: 7, COOL: 4, EMP: 5, LUCK: 4}
+  skills: {netrunning: 6, tech: 2, stealth: 1}
+  gear:
+    weapons: [pistol]
+    armor: null
+    cyberware: [neural_link, cyberdeck_early]
+  starting_career: null
+  origin_hint: megabuilding_kid
+  available_until: 2022        # the Old Net dies with the DataKrash; there is no Net to grow up in until CitiNet
+
+- key: citinet_kid
+  group: tech
+  name: Ребёнок CitiNet
+  description: "Детство прошло в CitiNet, где связь бесплатная, а ответы платные. Нейропорт и дека Militech с первого дня, зато тело хрупкое."
+  stat_template: {BODY: 3, REF: 4, TECH: 6, INT: 7, COOL: 4, EMP: 5, LUCK: 4}
+  skills: {netrunning: 6, tech: 2, stealth: 1}
+  gear:
+    weapons: [pistol]
+    armor: null
+    cyberware: [neural_link, cyberdeck_paraline]
+  starting_career: null
+  origin_hint: megabuilding_kid
+  available_from: 2030         # first CitiNet in Night City (ziggurat_citinet_2030)
+
+- key: garage_mechanic
+  group: tech
+  name: Гаражный мастер
+  description: "Чинит всё, что ещё дымит, и берёт оплату вперёд. Сильная техника и сразу работа в мастерской."
+  stat_template: {BODY: 3, REF: 4, TECH: 7, INT: 6, COOL: 4, EMP: 4, LUCK: 5}
+  skills: {tech: 5, driving: 2, firearms: 1}
+  gear:
+    weapons: [pistol]
+    armor: null
+    cyberware: []
+  starting_career: mechanic
+
+- key: orderly
+  group: tech
+  name: Санитар
+  description: "Годы с носилками за спиной у медиков. Разбирается в медицине, не теряет голову при виде крови и начинает со службы в Trauma Team."
+  stat_template: {BODY: 4, REF: 4, TECH: 7, INT: 5, COOL: 6, EMP: 5, LUCK: 4}
+  skills: {medicine: 5, tech: 2, firearms: 1}
+  gear:
+    weapons: [pistol]
+    armor: light_vest
+    cyberware: []
+  starting_career: trauma_team
+
+- key: dealer
+  group: crime
+  name: Делец
+  description: "Знает цены, должников и нужные номера. Силён в разговоре, а на крайний случай носит тяжёлый пистолет."
+  stat_template: {BODY: 3, REF: 4, TECH: 3, INT: 5, COOL: 7, EMP: 6, LUCK: 5}
+  skills: {persuasion: 5, stealth: 2, driving: 2}
+  gear:
+    weapons: [heavy_pistol]
+    armor: null
+    cyberware: []
+  starting_career: null
+
+- key: street_musician
+  group: stage
+  name: Уличный музыкант
+  description: "Играет на углу за мелочь, пока хозяин точки считает свою долю. Обаяние и голос вместо ствола, карьера музыканта с первого дня."
+  stat_template: {BODY: 4, REF: 4, TECH: 3, INT: 5, COOL: 6, EMP: 7, LUCK: 5}
+  skills: {persuasion: 5, melee: 2, firearms: 1}
+  gear:
+    weapons: [combat_knife]
+    armor: null
+    cyberware: []
+  starting_career: rockerboy
+
+- key: media_stringer
+  group: stage
+  name: Медиа-стрингер
+  description: "Снимает на что придётся и продаёт кадры тому, кто больше заплатит. Острый ум, хорошая память на лица и внештатная работа в медиа."
+  stat_template: {BODY: 3, REF: 5, TECH: 3, INT: 7, COOL: 5, EMP: 6, LUCK: 4}
+  skills: {persuasion: 4, stealth: 2, driving: 1}
+  gear:
+    weapons: [pistol]
+    armor: null
+    cyberware: []
+  starting_career: media
+
+- key: corp_intern
+  group: order
+  name: Корпоративный стажёр
+  description: "Бейдж, костюм и испытательный срок в корпорации. Выдержка и подвешенный язык помогут подняться с самой нижней ступени."
+  stat_template: {BODY: 3, REF: 4, TECH: 4, INT: 6, COOL: 7, EMP: 5, LUCK: 5}
+  skills: {persuasion: 4, tech: 2, firearms: 1}
+  gear:
+    weapons: [heavy_pistol]
+    armor: null
+    cyberware: []
+  starting_career: corpo
+  origin_hint: corpo_brat
+
+- key: rookie_patrolman
+  group: order
+  name: Патрульный-новичок
+  description: "Первый год в форме NCPD. Крепкое тело, служебный пистолет, бронекуртка и зарплата, на которую трудно прожить."
+  stat_template: {BODY: 6, REF: 6, TECH: 3, INT: 4, COOL: 6, EMP: 4, LUCK: 4}
+  skills: {firearms: 4, melee: 2, driving: 2, persuasion: 1}
+  gear:
+    weapons: [pistol]
+    armor: medium_armorjack
+    cyberware: []
+  starting_career: ncpd
+
+- key: road_nomad
+  group: wheels
+  name: Кочевник
+  description: "Из семьи, которая живёт на колёсах между городом и пустыней. Лучше всех водит машину, при себе пистолет-пулемёт и пистолет."
+  stat_template: {BODY: 6, REF: 6, TECH: 4, INT: 4, COOL: 5, EMP: 5, LUCK: 6}
+  skills: {driving: 5, firearms: 3, tech: 1}
+  gear:
+    weapons: [smg, pistol]
+    armor: kevlar_jacket
+    cyberware: []
+  starting_career: null
+  origin_hint: badlands_nomad
+
+- key: civilian
+  group: street
+  name: Обычный житель
+  description: "Ни оружия, ни имплантов, все качества средние. Просто человек, которому надо дотянуть до пятницы."
+  stat_template: {BODY: 5, REF: 5, TECH: 5, INT: 5, COOL: 5, EMP: 5, LUCK: 5}
+  skills: {}
+  gear:
+    weapons: []
+    armor: null
+    cyberware: []
+  starting_career: null
+  always_offered: true
+
+- key: novice
+  group: street
+  name: Послушник
+  description: "Монастырь: подъём в пять утра, тишина и ни одного импланта. Спокойствие и крепкая рукопашная; путь начинается без хрома."
+  stat_template: {BODY: 5, REF: 5, TECH: 3, INT: 4, COOL: 7, EMP: 6, LUCK: 4}
+  skills: {melee: 4, persuasion: 2, medicine: 1}
+  gear:
+    weapons: []
+    armor: null
+    cyberware: []
+  starting_career: null
+  origin_hint: monastery_novice
+  chrome_free_start: true
+
+- key: refugee
+  group: street
+  name: Беженец
+  description: "Три сумки, жестяная кружка и семья, которую надо кормить. Из Бэдлендса пришлось уйти, когда кончилась вода. Сочувствие и умение договориться выручают чаще ножа."
+  stat_template: {BODY: 5, REF: 5, TECH: 4, INT: 5, COOL: 6, EMP: 7, LUCK: 6}
+  skills: {persuasion: 3, stealth: 2, melee: 1}
+  gear:
+    weapons: [combat_knife]
+    armor: null
+    cyberware: []
+  starting_career: null
+  origin_hint: refugee
+
+- key: megablock_kid
+  group: street
+  name: Дитя мегабашни
+  description: "Сорок этажей без лифта, и все трубы знакомы наперечёт. Хорошо разбирается в технике и умеет оставаться незаметным."
+  stat_template: {BODY: 4, REF: 5, TECH: 7, INT: 6, COOL: 5, EMP: 6, LUCK: 4}
+  skills: {stealth: 3, tech: 2, driving: 1}
+  gear:
+    weapons: [combat_knife]
+    armor: null
+    cyberware: []
+  starting_career: null
+  origin_hint: megabuilding_kid
+
+- key: small_dealer
+  group: crime
+  name: Мелкий торговец
+  description: "Лоток на рынке Уотсона и знакомые в каждом подъезде. Купит что угодно и знает, кому это продать."
+  stat_template: {BODY: 3, REF: 4, TECH: 5, INT: 7, COOL: 6, EMP: 6, LUCK: 5}
+  skills: {persuasion: 4, driving: 2, tech: 1}
+  gear:
+    weapons: [pistol]
+    armor: null
+    cyberware: []
+  starting_career: null
+  origin_hint: watson_street_kid
+
+- key: ripper_apprentice
+  group: tech
+  name: Ученик риппера
+  description: "Инструменты в чехле, руки пахнут антисептиком. Учится у риппера, пока тот жив и на свободе, и разбирается и в медицине, и в железе."
+  stat_template: {BODY: 4, REF: 6, TECH: 7, INT: 5, COOL: 5, EMP: 4, LUCK: 5}
+  skills: {medicine: 3, tech: 3, firearms: 1}
+  gear:
+    weapons: [pistol]
+    armor: null
+    cyberware: []
+  starting_career: mechanic
+  origin_hint: ripper_kid
+
+# -- more starting kits (owner request) --------------------------------------------------------------------------------
+
+- key: getaway_driver
+  group: wheels
+  name: Водила для налётов
+  description: "Три минуты с работающим мотором у чужого банка — твоя работа. Лучший водитель района, старый седан в придачу."
+  stat_template: {BODY: 4, REF: 7, TECH: 5, INT: 4, COOL: 6, EMP: 3, LUCK: 5}
+  skills: {driving: 6, firearms: 2, stealth: 2}
+  gear: {weapons: [pistol], armor: null, cyberware: [], vehicle: old_sedan}
+
+- key: street_racer
+  group: wheels
+  name: Стритрейсер
+  description: "Ночные гонки, неон на днище и вечный ремонт. С тобой маленькая быстрая машинка и хорошие руки."
+  stat_template: {BODY: 4, REF: 7, TECH: 6, INT: 4, COOL: 5, EMP: 4, LUCK: 5}
+  skills: {driving: 6, tech: 2}
+  gear: {weapons: [], armor: null, cyberware: [], vehicle: makigai_compact}
+
+- key: biker
+  group: wheels
+  name: Байкер
+  description: "Мотоцикл, кожанка и мачете в ножнах на спине. Дорога — дом, байк — семья."
+  stat_template: {BODY: 6, REF: 6, TECH: 4, INT: 3, COOL: 6, EMP: 4, LUCK: 5}
+  skills: {driving: 5, melee: 3, firearms: 1}
+  gear: {weapons: [machete], armor: padded_leather, cyberware: [], vehicle: arch_street}
+
+- key: smuggler
+  group: crime
+  name: Контрабандист
+  description: "Фургон без окон, двойное дно и знакомые на каждом блокпосту. Спрашивать, что внутри, не принято."
+  stat_template: {BODY: 4, REF: 6, TECH: 4, INT: 5, COOL: 7, EMP: 4, LUCK: 5}
+  skills: {driving: 4, stealth: 4, persuasion: 2}
+  gear: {weapons: [pistol], armor: null, cyberware: [], vehicle: colby_van}
+
+- key: fixer_runner
+  group: crime
+  name: Посыльный фиксера
+  description: "Отвезти, забрать, передать, не открывая. Скутер, хорошая память и язык, который умеет молчать."
+  stat_template: {BODY: 4, REF: 6, TECH: 3, INT: 5, COOL: 6, EMP: 6, LUCK: 5}
+  skills: {persuasion: 4, driving: 3, stealth: 2}
+  gear: {weapons: [combat_knife], armor: null, cyberware: [], vehicle: yamada_scooter}
+
+- key: bouncer
+  group: street
+  name: Вышибала
+  description: "Стоишь у двери клуба и решаешь, кто войдёт. Большие кулаки, бейсбольная бита и куртка с подкладкой."
+  stat_template: {BODY: 8, REF: 5, TECH: 3, INT: 3, COOL: 6, EMP: 4, LUCK: 4}
+  skills: {melee: 5, persuasion: 2}
+  gear: {weapons: [baseball_bat], armor: padded_leather, cyberware: []}
+
+- key: pit_fighter
+  group: street
+  name: Подпольный боец
+  description: "Бои без правил в подвалах Кабуки. Без хрома, на чистых кулаках и сломанных рёбрах."
+  stat_template: {BODY: 7, REF: 7, TECH: 2, INT: 3, COOL: 6, EMP: 4, LUCK: 4}
+  skills: {melee: 6}
+  gear: {weapons: [], armor: null, cyberware: []}
+  chrome_free_start: true
+
+- key: pickpocket
+  group: crime
+  name: Карманник
+  description: "Лёгкие пальцы и ещё более лёгкая совесть. Кошелёк исчезает раньше, чем владелец успевает моргнуть."
+  stat_template: {BODY: 3, REF: 7, TECH: 4, INT: 5, COOL: 5, EMP: 4, LUCK: 7}
+  skills: {stealth: 6, persuasion: 2}
+  gear: {weapons: [combat_knife], armor: null, cyberware: []}
+  origin_hint: watson_street_kid
+
+- key: street_orphan
+  group: street
+  name: Беспризорник
+  description: "Вырос на крышах и в подвалах. Знает каждую щель района и умеет исчезать, когда пахнет жареным."
+  stat_template: {BODY: 4, REF: 6, TECH: 4, INT: 4, COOL: 5, EMP: 5, LUCK: 7}
+  skills: {stealth: 4, melee: 2, driving: 1}
+  gear: {weapons: [crowbar], armor: kevlar_hoodie, cyberware: []}
+  origin_hint: orphanage_kid
+
+- key: gambler
+  group: crime
+  name: Игрок
+  description: "Карты, кости, ставки на бои роботов. Удача — твоя профессия, тяжёлый револьвер — страховка."
+  stat_template: {BODY: 3, REF: 5, TECH: 3, INT: 5, COOL: 7, EMP: 5, LUCK: 8}
+  skills: {persuasion: 4, stealth: 2, firearms: 2}
+  gear: {weapons: [heavy_revolver], armor: null, cyberware: []}
+
+- key: corp_guard
+  group: order
+  name: Охранник корпорации
+  description: "Форма, пропуск и армейский пистолет. Корпорация платит вовремя и требует не задавать вопросов."
+  stat_template: {BODY: 6, REF: 6, TECH: 3, INT: 4, COOL: 6, EMP: 4, LUCK: 4}
+  skills: {firearms: 4, melee: 3, persuasion: 1}
+  gear: {weapons: [militech_avenger], armor: kevlar_jacket, cyberware: []}
+  starting_career: corpo
+
+- key: bodyguard
+  group: order
+  name: Телохранитель
+  description: "Ловить пули за чужие деньги. Баллистический тренч, надёжный ствол и привычка садиться спиной к стене."
+  stat_template: {BODY: 7, REF: 6, TECH: 3, INT: 4, COOL: 7, EMP: 3, LUCK: 4}
+  skills: {firearms: 4, melee: 4}
+  gear: {weapons: [militech_avenger], armor: ballistic_trench, cyberware: []}
+
+- key: ex_cop
+  group: order
+  name: Бывший коп
+  description: "Выгнали из NCPD за честность или за её отсутствие, сам не помнишь. Остались привычки, дубинка и тяжёлый пистолет."
+  stat_template: {BODY: 5, REF: 6, TECH: 4, INT: 5, COOL: 7, EMP: 3, LUCK: 4}
+  skills: {firearms: 4, persuasion: 3, driving: 3}
+  gear: {weapons: [heavy_pistol, stun_baton], armor: kevlar_jacket, cyberware: []}
+
+- key: silent_blade
+  group: crime
+  name: Тихий клинок
+  description: "Работаешь тихо и не оставляешь следов. Нож, пистолет с глушителем и умение ждать."
+  stat_template: {BODY: 4, REF: 7, TECH: 4, INT: 5, COOL: 7, EMP: 2, LUCK: 4}
+  skills: {stealth: 6, melee: 4}
+  gear: {weapons: [silenced_pistol, combat_knife], armor: null, cyberware: []}
+
+- key: chrome_head
+  group: crime
+  name: Хромоголовый
+  description: "Тратишь на хром каждый эдди. Когти, усиленные сухожилия и уличный Керензиков уже на месте. Человечность — дело наживное."
+  stat_template: {BODY: 6, REF: 7, TECH: 4, INT: 3, COOL: 5, EMP: 3, LUCK: 4}
+  skills: {melee: 4, firearms: 2}
+  gear: {weapons: [], armor: null, cyberware: [cyber_claws, reinforced_tendons, kerenzikov]}
+
+- key: street_medic
+  group: tech
+  name: Подпольный медик
+  description: "Штопаешь раны в подсобке прачечной. Медсканер в ладони, транквилизатор на поясе и куртка медика."
+  stat_template: {BODY: 4, REF: 5, TECH: 6, INT: 6, COOL: 5, EMP: 6, LUCK: 4}
+  skills: {medicine: 6, tech: 2}
+  gear: {weapons: [tranq_gun], armor: medic_jacket, cyberware: [palm_medscanner]}
+
+- key: noodle_cook
+  group: street
+  name: Повар из лапшичной
+  description: "Двенадцать часов у котла с бульоном. Все сплетни района проходят через твою стойку, а сковородой ты владеешь лучше, чем ножом."
+  stat_template: {BODY: 6, REF: 5, TECH: 4, INT: 4, COOL: 5, EMP: 7, LUCK: 5}
+  skills: {persuasion: 3, melee: 2, medicine: 1}
+  gear: {weapons: [frying_pan], armor: null, cyberware: []}
+
+- key: bd_star
+  group: stage
+  name: Звезда брейнданса
+  description: "Твои эмоции продаются миллионами копий. Светящиеся тату, клубный блеск и работа в медиа."
+  stat_template: {BODY: 4, REF: 4, TECH: 4, INT: 5, COOL: 6, EMP: 8, LUCK: 5}
+  skills: {persuasion: 5, stealth: 1}
+  gear: {weapons: [], armor: party_jumpsuit, cyberware: [led_tattoos]}
+  starting_career: media
+
+- key: streamer
+  group: stage
+  name: Стример
+  description: "Глаз-камера пишет всё подряд, подписчики ждут контент. Иногда контент стреляет в ответ."
+  stat_template: {BODY: 4, REF: 5, TECH: 6, INT: 5, COOL: 6, EMP: 6, LUCK: 4}
+  skills: {persuasion: 4, tech: 2, driving: 1}
+  gear: {weapons: [pistol], armor: null, cyberware: [eye_camera]}
+
+- key: corp_heir
+  group: order
+  name: Наследник корпорации
+  description: "Фамилия открывает двери, представительский седан ждёт у подъезда. Мускулы и реакция остались где-то в детстве."
+  stat_template: {BODY: 2, REF: 3, TECH: 4, INT: 6, COOL: 6, EMP: 5, LUCK: 6}
+  skills: {persuasion: 5, driving: 1}
+  gear: {weapons: [pistol], armor: armored_suit, cyberware: [], vehicle: exec_sedan}
+  starting_career: corpo
+  origin_hint: corpo_brat
+
+- key: scrap_collector
+  group: tech
+  name: Сборщик утиля
+  description: "Разбираешь мёртвую технику на свалках Времени Красного. Рука собрана из пяти протезов, монтировка всегда под рукой."
+  stat_template: {BODY: 5, REF: 4, TECH: 7, INT: 5, COOL: 4, EMP: 4, LUCK: 5}
+  skills: {tech: 5, melee: 2, driving: 1}
+  gear: {weapons: [crowbar], armor: null, cyberware: [scavenger_arm]}
+  available_from: 2023
+
+- key: war_veteran
+  group: order
+  name: Ветеран Корпоративных войн
+  description: "Вернулся с войны, на которой сражались чужие флаги. Штурмовая винтовка, арморджек и сны, о которых лучше не рассказывать."
+  stat_template: {BODY: 7, REF: 6, TECH: 4, INT: 4, COOL: 6, EMP: 3, LUCK: 3}
+  skills: {firearms: 6, melee: 3}
+  gear: {weapons: [assault_rifle], armor: medium_armorjack, cyberware: [subdermal_armor]}
+  origin_hint: corp_war_veteran
+  available_from: 2022
+  available_until: 2049
+
+- key: av_pilot
+  group: wheels
+  name: Пилот аэродина
+  description: "Возишь корпоратов над пробками и знаешь все воздушные коридоры. Своего аэродина нет, но руки помнят штурвал."
+  stat_template: {BODY: 4, REF: 7, TECH: 6, INT: 6, COOL: 5, EMP: 3, LUCK: 4}
+  skills: {driving: 6, tech: 2}
+  gear: {weapons: [pistol], armor: null, cyberware: []}
+  available_from: 2050
+
+- key: smart_gunner
+  group: order
+  name: Стрелок с умным стволом
+  description: "Пули сами огибают укрытия, ты только задаёшь направление. Умный пистолет и линк в ладони."
+  stat_template: {BODY: 5, REF: 7, TECH: 5, INT: 5, COOL: 6, EMP: 3, LUCK: 4}
+  skills: {firearms: 5, tech: 2}
+  gear: {weapons: [smart_pistol], armor: light_vest, cyberware: [kang_tao_link]}
+  available_from: 2071
+
+# -- owner request: start in MaxTac ------------------------------------------------------------------------------------
+- key: maxtac_rookie
+  group: order
+  name: Новобранец МаксТака
+  description: "Тебя взяли в МаксТак из армейского спецназа: тело в хроме, винтовка в руках, позывной вместо имени. Охота на киберпсихов — работа, а не геройство. Платят хорошо, живут недолго."
+  stat_template: {BODY: 7, REF: 7, TECH: 4, INT: 4, COOL: 6, EMP: 4, LUCK: 3}
+  skills: {firearms: 5, melee: 3, stealth: 2, driving: 1}
+  gear:
+    weapons: [assault_rifle, heavy_pistol]
+    armor: heavy_armorjack
+    cyberware: [subdermal_armor, reinforced_tendons]
+  starting_career: maxtac

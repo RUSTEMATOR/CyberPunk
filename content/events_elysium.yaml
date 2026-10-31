@@ -1,0 +1,95 @@
+# Elysium, the station of the rich (owner request: the «Elysium» crossover). Flags: `elysium` (a record: citizen or a
+# visitor), `radiation` (a lethal dose). The station's screen is «Город» → «Элизиум».
+
+- id: ely_sky
+  title: Колесо в небе
+  category: rare
+  weight: 3
+  conditions:
+    flags_none: [ely_sky]
+  text: "Днём над городом снова видно колесо Элизиума. Дети в очереди за водой показывают на него пальцами: «Там никто не болеет». Контрабандист у пустыря раздаёт листовки: «Шаттл. Без вопросов. Иногда долетаем»."
+  choices:
+    - label: Взять листовку
+      effects: {flag_set:ely_sky: true, mood: 1}
+      text: "На обороте адрес и цена: пятнадцать тысяч. «Город» → «Элизиум»."
+    - label: Смять и выбросить
+      effects: {flag_set:ely_sky: true}
+      text: "Колесо медленно уходит за смог. До завтра."
+
+- id: ely_sick_child
+  title: Девочка с медкартой
+  category: relationships
+  weight: 2
+  conditions:
+    flags_none: [ely_sick_child]
+  text: "Медсестра из районной больницы просит о помощи: у дочки её подруги лейкемия, на Земле это приговор. На станции — минута в капсуле. Нужны деньги на шаттл или гражданин, который возьмёт ребёнка с собой."
+  choices:
+    - label: Оплатить шаттл
+      effects: {flag_set:ely_sick_child: true, eddies: -15000, humanity: 3, street_cred: 2, mood: 5}
+      text: "Через неделю приходит видео: девочка бежит по траве под стеклянным небом. Она здорова."
+    - label: Отказать
+      effects: {flag_set:ely_sick_child: true, humanity: -1, mood: -3}
+      text: "Медсестра кивает, будто так и знала. Ты долго не можешь уснуть."
+
+- id: ely_drone_patrol
+  title: Дроны-полицейские
+  category: ncpd
+  weight: 2
+  conditions:
+    min_heat: 1
+  text: "Робот-полицейский станции, сданный в аренду городу, требует документы и остановиться. Он не умеет понимать шутки и отвечает на сарказм дубинкой."
+  choices:
+    - label: Спокойно показать документы
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Робот сканирует ID, полминуты молчит и отпускает тебя.", effects: {}}
+      fail: {text: "«Обнаружено враждебное отношение». Удар дубинкой ломает тебе два ребра.", effects: {hp: -8, mood: -3}}
+    - label: Пошутить
+      effects: {hp: -6, street_cred: 1}
+      text: "Робот не понял. Прохожие поняли и сняли на видео. Рёбра болят, зато тебя узнают на районе."
+
+- id: ely_citizen_guilt
+  title: Письмо с Земли
+  category: relationships
+  weight: 2
+  conditions:
+    flags_all: [elysium]
+    flags_none: [ely_citizen_guilt]
+  text: "Тебе пишет старый друг с Земли. Он не просит ничего, просто рассказывает, как у них дела: завод, очереди, кашель по ночам. Подписывается: «Помнишь нас?»."
+  choices:
+    - label: Прислать денег
+      effects: {flag_set:ely_citizen_guilt: true, eddies: -5000, humanity: 2, mood: 3}
+      text: "Он отвечает одним словом: «Спасибо». Этого хватает."
+    - label: Не отвечать
+      effects: {flag_set:ely_citizen_guilt: true, humanity: -2}
+      text: "Письмо висит непрочитанным. Над головой сияет стекло станции."
+
+- id: ely_radiation_doctor
+  title: Врач без лицензии
+  category: implants
+  weight: 4
+  conditions:
+    flags_all: [radiation]
+  text: "Уличный врач смотрит на твои анализы и качает головой: «Лучевая. Неделя, может две сверху, если колоть стимуляторы. Вылечить — только на станции»."
+  choices:
+    - label: Колоть стимуляторы
+      effects: {eddies: -2000, hp: 5, mood: -2}
+      text: "Руки перестают дрожать. Ненадолго. Шаттл всё ещё нужен."
+    - label: Искать шаттл
+      effects: {mood: 1}
+      text: "Врач даёт адрес пустыря на окраине: «Скажи, что от меня»."
+
+- id: ely_shuttle_crash
+  title: Упавший шаттл
+  category: street
+  weight: 2
+  conditions:
+    flags_none: [ely_shuttle_crash]
+  text: "В пустыре за городом догорает сбитый станцией шаттл. Вокруг уже возятся мародёры: груз, медикаменты, может, чьи-то документы."
+  choices:
+    - label: Обыскать обломки
+      check: {stat: REF, skill: stealth, dv: 14}
+      success: {text: "В обгоревшем кейсе — ампулы со станции и пачка эдди. Хозяевам они уже не понадобятся.", effects: {flag_set:ely_shuttle_crash: true, eddies: 3500, hp: 5}}
+      fail: {text: "Мародёры решили, что ты лишний. Уходишь с порезом и пустыми руками.", effects: {flag_set:ely_shuttle_crash: true, hp: -7}}
+    - label: Вытащить выживших
+      effects: {flag_set:ely_shuttle_crash: true, humanity: 2, street_cred: 1, hp: -3}
+      text: "Двоих ещё можно спасти. Ты несёшь их до дороги на себе. Один из них потом пришлёт тебе открытку."

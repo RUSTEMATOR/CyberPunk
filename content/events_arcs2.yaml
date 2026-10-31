@@ -1,0 +1,189 @@
+# Story arcs, batch 2 (owner request: many quests). Same rules as events_arcs.yaml: the first step is a random event
+# once per life (flags_none on the arc flag), every next step is forced_only and comes with the next week.
+
+# ======================================================================== «Пропавший груз» (контрабанда)
+
+- id: arc_cargo_1
+  title: Груз, который никто не ждёт
+  category: work
+  weight: 3
+  conditions:
+    flags_none: [arc_cargo]
+  text: "В порту тебя ловит портовый грузчик: на складе стоит контейнер без документов, и за него никто не приходит третью неделю. Внутри что-то тикает."
+  choices:
+    - label: Вскрыть контейнер
+      effects: {flag_set:arc_cargo: true, queue_event:arc_cargo_2: true}
+      text: "Внутри не бомба, а часы: сотни дорогих часов в коробках. И один шард с адресом. Хозяин груза где-то есть."
+    - label: Сдать охране порта
+      effects: {flag_set:arc_cargo: true, eddies: 200}
+      text: "Охрана благодарит и выдаёт двести «за бдительность». Что было в контейнере, ты не узнаешь."
+
+- id: arc_cargo_2
+  title: Адрес на шарде
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Адрес приводит в ломбард в Уотсоне. Хозяин бледнеет, увидев шард: контейнер принадлежит людям, с которыми не спорят, и его ищут. За находку обещают награду, за кражу — смерть."
+  choices:
+    - label: Вернуть хозяевам
+      effects: {queue_event:arc_cargo_3: true, street_cred: 1}
+      text: "Ломбардщик звонит кому надо. Тебе назначают встречу на следующей неделе."
+    - label: Продать часы самому
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Ты сбываешь часы по одной через пятерых барыг. Четыре тысячи. Шард выбрасываешь в залив.", effects: {eddies: 4000, heat: 1, humanity: -1}}
+      fail: {text: "Третий барыга оказывается своим для хозяев груза. Тебя находят быстро.", effects: {hp: -12, eddies: -500}}
+
+- id: arc_cargo_3
+  title: Встреча на парковке
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Пустая парковка, три машины, человек в шляпе. Он открывает контейнер, проверяет часы и долго смотрит на тебя. «Ты мог продать. Почему не продал?»"
+  choices:
+    - label: Сказать правду
+      effects: {eddies: 2500, street_cred: 3, add_npc:contact: true, item_grant:heavy_revolver: true}
+      text: "«Не люблю брать чужое». Человек смеётся, отсчитывает деньги и дарит тебе свой револьвер: «Пригодится. Звони, если что»."
+    - label: Попросить больше
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Он уважает наглость и платит вдвое больше обещанного.", effects: {eddies: 5000, street_cred: 1}}
+      fail: {text: "Наглость он не уважает. Платит половину и велит больше не показываться.", effects: {eddies: 1200}}
+
+# ======================================================================== «Ученик риппера»
+
+- id: arc_ripper_1
+  title: Риппер ищет помощника
+  category: implants
+  weight: 3
+  conditions:
+    flags_none: [arc_ripper]
+  text: "Старый риппер из подсобки прачечной стареет: руки дрожат, а очередь всё длиннее. Он ищет того, кто будет держать пациентов и учиться."
+  choices:
+    - label: Пойти в ученики
+      effects: {flag_set:arc_ripper: true, queue_event:arc_ripper_2: true, skill_xp:medicine: 2}
+      text: "Первый день: кровь, крики, антисептик. Риппер говорит, что ты не упал в обморок, а это уже много."
+    - label: Отказаться
+      effects: {flag_set:arc_ripper: true}
+      text: "Риппер кивает. Через месяц в подсобке новый помощник."
+
+- id: arc_ripper_2
+  title: Первая операция
+  category: implants
+  weight: 1
+  forced_only: true
+  text: "Риппер не может удержать скальпель: пациенту нужна срочная замена оптики, а руки старика трясутся. Он смотрит на тебя."
+  choices:
+    - label: Оперировать самому
+      check: {stat: TECH, skill: medicine, dv: 14}
+      success: {text: "Двадцать минут тишины, и пациент открывает новый глаз. Риппер хлопает тебя по плечу: «Теперь ты риппер».", effects: {skill_xp:medicine: 4, street_cred: 1, queue_event:arc_ripper_3: true}}
+      fail: {text: "Пациент выживает, но оптика встаёт криво. Он уходит, ругаясь. Риппер молчит.", effects: {skill_xp:medicine: 2, mood: -5, queue_event:arc_ripper_3: true}}
+    - label: Позвать другого риппера
+      effects: {eddies: -300, queue_event:arc_ripper_3: true}
+      text: "Ты бежишь через квартал за коллегой. Успеваете. Старик благодарит, но в глаза не смотрит."
+
+- id: arc_ripper_3
+  title: Наследство риппера
+  category: implants
+  weight: 1
+  forced_only: true
+  text: "Старик уходит на покой. Он отдаёт тебе ключи от подсобки и коробку: инструменты, записи и один имплант, который он берёг для себя."
+  choices:
+    - label: Взять медсканер
+      effects: {cyberware_grant:palm_medscanner: true, skill_xp:medicine: 3, humanity: 1}
+      text: "Он ставит тебе медсканер последней операцией своей жизни. Руки уже не дрожат: он знает, что это в последний раз."
+    - label: Взять клинику
+      effects: {eddies: 1500, status: 1, skill_xp:medicine: 2}
+      text: "Ты продолжаешь принимать его пациентов по выходным. Деньги небольшие, но благодарность района — настоящая."
+
+# ======================================================================== «Голос в радиоприёмнике»
+
+- id: arc_radio_1
+  title: Голос в эфире
+  category: rare
+  weight: 2
+  conditions:
+    flags_none: [arc_radio]
+  text: "Каждую ночь в три часа старый приёмник ловит один и тот же голос: девушка называет координаты и плачет. Никто, кроме тебя, этого не слышит."
+  choices:
+    - label: Записать координаты
+      effects: {flag_set:arc_radio: true, queue_event:arc_radio_2: true}
+      text: "Координаты ведут на окраину Санто-Доминго, к старой радиостанции, закрытой двадцать лет назад."
+    - label: Выключить приёмник
+      effects: {flag_set:arc_radio: true, mood: -2}
+      text: "Ты выключаешь приёмник и кладёшь его в шкаф. В три часа ночи шкаф тихо шипит."
+
+- id: arc_radio_2
+  title: Старая радиостанция
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Радиостанция заколочена. Внутри пыль, мёртвые пульты и один работающий передатчик, подключённый к старому кибердеку. На деке надпись: «Не выключать»."
+  choices:
+    - label: Подключиться к деке
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "Внутри деки — образ девушки, застрявшей в старой Сети после Краха. Она просит перенести её на новый носитель.", effects: {skill_xp:netrunning: 3, queue_event:arc_radio_3: true}}
+      fail: {text: "Дека бьёт током. В голове на секунду чужой крик. Ты приходишь в себя на полу.", effects: {hp: -6, glitches: 1, queue_event:arc_radio_3: true}}
+    - label: Выдернуть провод
+      effects: {humanity: -1}
+      text: "Голос обрывается на полуслове. Больше приёмник ничего не ловит."
+
+- id: arc_radio_3
+  title: Девушка из Сети
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Образ девушки ждёт решения. Её можно переписать на чистый шард и отдать нетраннерам, которые помогут. Можно продать корпорации, которая платит за такие находки."
+  choices:
+    - label: Отдать нетраннерам
+      effects: {humanity: 3, mood: 8, add_npc:friend: true, luck_pool: 1}
+      text: "Через месяц нетраннеры присылают сообщение от неё: короткое «спасибо» и песню, которую она пела по радио."
+    - label: Продать корпорации
+      effects: {eddies: 6000, humanity: -4, mood: -6}
+      text: "Корпорация платит без вопросов. Иногда в три часа ночи ты всё ещё слышишь шипение."
+
+# ======================================================================== «Бойцовский клуб»
+
+- id: arc_fight_1
+  title: Подвальные бои
+  category: street
+  weight: 3
+  conditions:
+    flags_none: [arc_fightclub]
+  text: "Под автомойкой в Хейвуде дерутся по пятницам. Без хрома, без правил, на деньги зрителей. Организатор зовёт тебя попробовать."
+  choices:
+    - label: Выйти на ринг
+      check: {stat: BODY, skill: melee, dv: 13}
+      success: {text: "Ты кладёшь соперника во втором раунде. Толпа ревёт, организатор зовёт на следующую неделю.", effects: {flag_set:arc_fightclub: true, eddies: 300, queue_event:arc_fight_2: true}}
+      fail: {text: "Тебя кладут быстро. Организатор всё равно зовёт: «Публике нравятся упорные».", effects: {flag_set:arc_fightclub: true, hp: -6, queue_event:arc_fight_2: true}}
+    - label: Только смотреть
+      effects: {flag_set:arc_fightclub: true, mood: 3}
+      text: "Ты смотришь бой с краю ринга. Кровь, пот и честность, которой больше нигде нет."
+
+- id: arc_fight_2
+  title: Подставной бой
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Организатор отводит тебя в сторону: в следующем бою надо лечь в третьем раунде. Ставки большие, твоя доля — тысяча."
+  choices:
+    - label: Лечь
+      effects: {eddies: 1000, humanity: -1, queue_event:arc_fight_3: true}
+      text: "Ты падаешь от удара, который мог бы выдержать. Толпа свистит. В конверте тысяча."
+    - label: Драться честно
+      check: {stat: BODY, skill: melee, dv: 15}
+      success: {text: "Ты выигрываешь. Ставки сгорают, организатор в бешенстве, а толпа носит тебя на руках.", effects: {street_cred: 3, fame: 1, queue_event:arc_fight_3: true}}
+      fail: {text: "Ты дерёшься честно и проигрываешь честно. Организатор доволен вдвойне.", effects: {hp: -8, queue_event:arc_fight_3: true}}
+
+- id: arc_fight_3
+  title: Чемпионский пояс
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Финал сезона. Против тебя чемпион подвала, огромный, со шрамом через всё лицо. Ставки уже сделаны, зрители висят на перилах."
+  choices:
+    - label: Драться за пояс
+      check: {stat: BODY, skill: melee, dv: 17}
+      success: {text: "Он падает в пятом раунде. Пояс из старой автомобильной покрышки и пять тысяч. Ты чемпион подвала.", effects: {eddies: 5000, street_cred: 4, fame: 2, item_grant:brass_knuckles: true}}
+      fail: {text: "Ты держишься до последнего раунда и падаешь. Чемпион поднимает тебя за руку: «Уважаю». Зрители тоже.", effects: {hp: -12, street_cred: 2, eddies: 800}}
+    - label: Сдаться до боя
+      effects: {mood: -4}
+      text: "Ты отдаёшь пояс без боя. Иногда это тоже решение."

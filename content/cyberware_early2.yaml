@@ -1,0 +1,374 @@
+# Early chrome, batch 2 (owner request: many items). Generated once, edit by hand.
+
+- key: pocket_flashlight_eye
+  name: Глаз-фонарик
+  slot: eyes
+  price: 500
+  humanity_cost: 1
+  description: Встроенный фонарик в зрачке. Удобно в подвалах, жутко на свиданиях.
+  tier: street
+  category: noncombat
+  abilities: [eye_beam]
+  build: engineer
+  requires: []
+  mods:
+    check.crime: 1
+  exclusive_group: optics
+- key: scan_eye_early
+  name: Сканирующий глаз «Модель-1»
+  slot: eyes
+  price: 2900
+  humanity_cost: 6
+  description: Показывает пульс и оружие цели. Картинка рябит, голова гудит к вечеру.
+  tier: street
+  category: combat
+  abilities: [pulse_weapon_scan]
+  build: sniper
+  requires: []
+  mods:
+    enemy_scan: 1
+    check.combat: 1
+    mood_weekly: -1
+  exclusive_group: optics
+  available_until: 2019
+- key: cyber_ear_dog
+  name: Собачий слух
+  slot: face
+  price: 1400
+  humanity_cost: 3
+  description: Слышишь ультразвук, шаги на крыше и сирены за пять кварталов.
+  tier: street
+  category: noncombat
+  abilities: [listen]
+  build: hunter
+  requires: []
+  mods:
+    check.escape: 1
+    check.gig_quiet: 1
+- key: lockpick_finger
+  name: Палец-отмычка
+  slot: hands
+  price: 1300
+  humanity_cost: 3
+  description: Указательный палец раскрывается в набор отмычек. Двери перестают быть препятствием.
+  tier: street
+  category: noncombat
+  abilities: [lockpick]
+  build: engineer
+  requires: []
+  mods:
+    check.crime: 2
+- key: knuckle_spikes
+  name: Шипы на костяшках
+  slot: hands
+  price: 900
+  humanity_cost: 3
+  description: Выдвижные шипы на костяшках. Каждый удар оставляет дырки.
+  tier: street
+  category: combat
+  abilities: [spike_jab]
+  build: berserk
+  requires: []
+  weapon_damage: 2d6+1
+- key: hydraulic_fist_early
+  name: Гидравлический кулак
+  slot: hands
+  price: 3100
+  humanity_cost: 8
+  description: Кулак на гидроцилиндре. Бьёт как отбойный молоток и так же шумит.
+  tier: street
+  category: combat
+  abilities: [jackhammer]
+  build: berserk
+  requires: []
+  mods:
+    strength: 1
+  weapon_damage: 3d6+2
+  available_until: 2029
+- key: blade_arm_early
+  name: Рука-клинок
+  slot: forearms
+  price: 3400
+  humanity_cost: 9
+  description: Предплечье раскладывается в длинное лезвие. Грубо, но страшно.
+  tier: street
+  category: combat
+  abilities: [arm_unfold]
+  build: duelist
+  requires: []
+  mods:
+    check.talk_exit: 1
+  weapon_damage: 4d6
+  available_until: 2044
+- key: dart_launcher
+  name: Наручный дротикомёт
+  slot: forearms
+  price: 2600
+  humanity_cost: 5
+  description: Отравленный дротик из запястья. Тихо и неприятно.
+  tier: street
+  category: combat
+  abilities: [sleep_dart]
+  build: ninja
+  requires: []
+  mods:
+    check.gig_quiet: 1
+  active:
+    mode: shot
+    button: Дротик
+    recharge_per_tick: 34
+    min_charge: 50
+    cost: 50
+    effects:
+      damage: 2d6+2
+      targets: 1
+- key: smoke_gland
+  name: Дымовая железа
+  slot: body
+  price: 2400
+  humanity_cost: 4
+  description: Выпускает облако дыма изо рта. Отличный способ уйти красиво.
+  tier: street
+  category: combat
+  abilities: [smoke_breath]
+  build: ninja
+  requires: []
+  mods:
+    check.escape: 2
+  active:
+    mode: reactive
+    button: Дым
+    recharge_per_tick: 20
+    min_charge: 60
+    cost: 60
+    effects:
+      dodge: true
+- key: toxin_sack
+  name: Ядовитая железа
+  slot: face
+  price: 3000
+  humanity_cost: 7
+  description: Укус передаёт токсин. Звучит дико, работает лучше, чем звучит.
+  tier: street
+  category: combat
+  abilities: [toxin]
+  build: ninja
+  requires: []
+  mods:
+    melee_damage: 1
+    check.social: -1
+- key: bone_plates_early
+  name: Костяные пластины
+  slot: skin
+  price: 2800
+  humanity_cost: 6
+  description: Пластины вросли под кожу груди и спины. Тяжело дышать, легко держать удар.
+  tier: street
+  category: defense
+  abilities: [plate_wall]
+  build: tank
+  requires: []
+  mods:
+    armor: 2
+    flee: -1
+  exclusive_group: dermal_plating
+  available_until: 2029
+- key: liver_filter_pro
+  name: Фильтр крови
+  slot: circulatory
+  price: 2200
+  humanity_cost: 3
+  description: Чистит кровь от химии и боевых стимуляторов. Утро после вечеринки проходит легче.
+  tier: street
+  category: defense
+  abilities: [stim_flush]
+  build: medic
+  requires: []
+  mods:
+    hp_regen: 1
+    humanity_loss_pct: -5
+- key: adrenal_valve
+  name: Адреналиновый клапан
+  slot: circulatory
+  price: 1900
+  humanity_cost: 4
+  description: Сброс адреналина в кровь по команде. Боевой хром включается раньше.
+  tier: street
+  category: booster
+  abilities: [valve_open]
+  build: berserk
+  requires: []
+  mods:
+    active.all.min_charge: -10
+- key: reflex_spring
+  name: Рефлекторная пружина
+  slot: legs
+  price: 1700
+  humanity_cost: 4
+  description: Пружины в коленях. Прыжок на противника — и он уже на земле.
+  tier: street
+  category: combat
+  abilities: [spring_tackle]
+  build: duelist
+  requires: []
+  mods:
+    flee: 1
+    skill.melee: 1
+- key: night_runner_legs
+  name: Ноги ночного бегуна
+  slot: legs
+  price: 3300
+  humanity_cost: 7
+  description: Беззвучные шаги и рывок, от которого тошнит неподготовленных. Любимые ноги курьеров.
+  tier: street
+  category: combat
+  abilities: [night_sprint]
+  build: hunter
+  requires: []
+  mods:
+    flee: 2
+    check.gig_quiet: 1
+  available_until: 2034
+- key: data_jack_early
+  name: Дата-разъём в запястье
+  slot: hands
+  price: 800
+  humanity_cost: 2
+  description: Втыкаешь палец в терминал и читаешь его как книгу. Медленно, но надёжно.
+  tier: street
+  category: netrun
+  abilities: [jackin]
+  build: ghost
+  requires: []
+  mods:
+    check.gig_hack: 1
+- key: tape_deck
+  name: Дека «Магнитофон»
+  slot: brain
+  price: 2100
+  humanity_cost: 5
+  description: 'Самая древняя дека в продаже: щёлкает, пищит и иногда жуёт программы.'
+  tier: street
+  category: netrun
+  abilities: [tape_loop]
+  build: ghost
+  requires:
+  - neural_link
+  mods:
+    skill.netrunning: 1
+    mood_weekly: -1
+  exclusive_group: cyberdeck
+  deck:
+    ram_max: 5
+    ram_recharge: 1
+    hack_bonus: 0
+  available_until: 2019
+- key: charisma_chip
+  name: Чип обаяния
+  slot: brain
+  price: 3200
+  humanity_cost: 4
+  description: Подсказывает, что сказать, по выражению лица собеседника. Иногда подсказывает глупости.
+  tier: street
+  category: noncombat
+  abilities: [right_words]
+  build: face
+  requires: []
+  mods:
+    skill.persuasion: 1
+    check.social: 1
+- key: ledger_brain
+  name: Бухгалтерский кортекс
+  slot: brain
+  price: 2600
+  humanity_cost: 3
+  description: Считает быстрее калькулятора. Корпорации ценят, друзья скучают.
+  tier: street
+  category: noncombat
+  abilities: [calc]
+  build: agent
+  requires: []
+  mods:
+    salary_pct.corpo: 10
+    check.career: 1
+- key: pain_amp
+  name: Усилитель боли
+  slot: brain
+  price: 1200
+  humanity_cost: 5
+  description: Ты чувствуешь чужую боль как свою. Отличный переговорщик, ужасный сон.
+  tier: street
+  category: noncombat
+  abilities: [share_pain]
+  build: berserk
+  requires: []
+  mods:
+    therapy_bonus: -1
+    check.talk_exit: 2
+- key: muscle_memory_chip
+  name: Чип мышечной памяти
+  slot: brain
+  price: 3000
+  humanity_cost: 4
+  description: Записанные движения чемпионов. Тело учится быстрее, чем голова.
+  tier: street
+  category: noncombat
+  abilities: [champion_moves]
+  requires: []
+  mods:
+    xp.melee: 20
+    xp.firearms: 20
+- key: polyglot_jaw
+  name: Говорящая челюсть
+  slot: face
+  price: 1800
+  humanity_cost: 3
+  description: Синтезатор речи подстраивает акцент под собеседника. Свой среди своих везде.
+  tier: street
+  category: noncombat
+  abilities: [local_accent]
+  build: face
+  requires: []
+  mods:
+    check.bribe: 1
+    check.gig_talk: 1
+- key: rfid_tattoo
+  name: Подкожный пропуск
+  slot: skin
+  price: 1500
+  humanity_cost: 1
+  description: Поддельный корпоративный пропуск под кожей запястья. Двери открываются сами.
+  tier: street
+  category: noncombat
+  abilities: [fake_badge]
+  build: tank
+  requires: []
+  mods:
+    check.gig_quiet: 1
+    check.crime: 1
+- key: chrome_teeth
+  name: Хромированные зубы
+  slot: face
+  price: 700
+  humanity_cost: 2
+  description: Блестят при улыбке и перекусывают проволоку.
+  tier: street
+  category: combat
+  abilities: [wire_bite]
+  build: hunter
+  requires: []
+  mods:
+    melee_damage: 1
+- key: stomach_vault
+  name: Желудок-сейф
+  slot: body
+  price: 1600
+  humanity_cost: 3
+  description: Герметичная капсула вместо части желудка. Контрабанда путешествует внутри тебя.
+  tier: street
+  category: noncombat
+  abilities: [gut_safe]
+  build: agent
+  requires: []
+  mods:
+    crime_reward_pct: 5

@@ -1,0 +1,197 @@
+# Threats to the rich (owner request: the richer, the harder). Forced by the week (balance.economy.wealth) by the
+# tier of the character's wealth. Losses are shares of the money on hand (`eddies_pct`); the accountant and the
+# bodyguard make them smaller and rarer.
+
+- id: wealth_pickpocket
+  title: Лёгкие пальцы
+  category: street
+  weight: 1
+  forced_only: true
+  text: "В толпе у рынка кто-то слишком близко. Через минуту ты понимаешь, что кредчип стал легче. Мальчишка в красной куртке ныряет в переулок."
+  choices:
+    - label: Догнать
+      check: {stat: REF, dv: 13}
+      success: {text: "Ты ловишь его за капюшон у мусорных баков. Деньги возвращаются, мальчишка — в слёзы.", effects: {mood: 2}}
+      fail: {text: "Переулок, второй, третий — и пусто. Деньги ушли.", effects: {eddies_pct: -4, mood: -3}}
+    - label: Махнуть рукой
+      effects: {eddies_pct: -4}
+      text: "Пусть подавится. Но теперь ты знаешь: на тебя смотрят."
+
+- id: wealth_relatives
+  title: Дальняя родня
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Объявляется троюродный брат, от которого десять лет не было вестей. Он прослышал, что у тебя дела идут в гору, и у него как раз «временные трудности»."
+  choices:
+    - label: Помочь деньгами
+      effects: {eddies_pct: -5, humanity: 1, mood: 2}
+      text: "Брат обнимает тебя и обещает вернуть. Вы оба знаете, что не вернёт."
+    - label: Отказать
+      effects: {mood: -3}
+      text: "Брат уходит, хлопнув дверью. Через неделю вся родня считает тебя жмотом."
+
+- id: wealth_racket
+  title: Налог на крышу
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Трое бугаёв банды района заходят без стука: раз уж ты стал зарабатывать, плати за спокойствие. Каждый месяц, без задержек."
+  choices:
+    - label: Заплатить
+      effects: {eddies_pct: -8}
+      text: "Пачка эдди исчезает в кармане старшего. «Умный выбор. Увидимся через месяц»."
+    - label: Послать их
+      violent: true
+      effects: {start_combat: 2, street_cred: 1}
+      text: "Ты показываешь на дверь. Бугаи переглядываются и достают ножи."
+    - label: Договориться
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Ты объясняешь, кому ещё ты платишь и почему им лучше не мешать. Они уходят, извинившись.", effects: {street_cred: 1}}
+      fail: {text: "Слова их не впечатляют. Платишь вдвое за то, что отнял их время.", effects: {eddies_pct: -12}}
+
+- id: wealth_robbery
+  title: Гости ночью
+  faction: scavengers
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Три часа ночи. Входная дверь щёлкает: кто-то знает код. В коридоре шаги, луч фонаря по стенам. Они пришли за деньгами."
+  choices:
+    - label: Встретить с оружием
+      violent: true
+      effects: {start_combat: 3}
+      text: "Ты выходишь в коридор со стволом. Луч фонаря замирает на тебе."
+    - label: Спрятаться и ждать
+      effects: {eddies_pct: -15, mood: -5}
+      text: "Ты сидишь в ванной, пока они выносят всё, что нашли. Утром полиция пожимает плечами."
+    - label: Вызвать NCPD
+      check: {stat: COOL, dv: 14}
+      success: {text: "Патруль приезжает через восемь минут. Грабители уходят ни с чем, разбив окно.", effects: {mood: -2}}
+      fail: {text: "Пока NCPD едет, грабители успевают унести половину. Полиция составляет протокол.", effects: {eddies_pct: -8, mood: -4}}
+
+- id: wealth_hack
+  title: Пустой счёт
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Утром банк присылает уведомление: со счёта уходят деньги, перевод за переводом. Кто-то сидит в твоём аккаунте прямо сейчас."
+  choices:
+    - label: Выбить взломщика
+      check: {stat: INT, skill: netrunning, dv: 16}
+      success: {text: "Ты находишь нетраннера по следу и выкидываешь его из сети. Ушло совсем немного.", effects: {eddies_pct: -2, skill_xp:netrunning: 2}}
+      fail: {text: "Взломщик быстрее. Пока ты возишься с паролями, счёт худеет.", effects: {eddies_pct: -12}}
+    - label: Заблокировать всё
+      effects: {eddies_pct: -6, mood: -2}
+      text: "Ты звонишь в банк и блокируешь счета. Часть денег всё равно успели вывести."
+
+- id: wealth_audit
+  title: Налоговая проверка
+  category: ncpd
+  weight: 1
+  forced_only: true
+  text: "Вежливый человек из налоговой службы с папкой: ваши доходы не совпадают с вашими декларациями. Сумма недоимки приятно круглая."
+  choices:
+    - label: Заплатить недоимку
+      effects: {eddies_pct: -10}
+      text: "Человек из налоговой довольно кивает и закрывает папку. До следующего года."
+    - label: Дать на лапу
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Папка закрывается после конверта вдвое тоньше недоимки.", effects: {eddies_pct: -5, heat: 1}}
+      fail: {text: "Инспектор оказывается честным. Теперь у тебя недоимка и дело о взятке.", effects: {eddies_pct: -12, heat: 2}}
+    - label: Спорить через юристов
+      effects: {eddies: -1500, mood: -2}
+      text: "Юристы тянут дело два месяца и выигрывают. Их счёт — меньше недоимки, но не намного."
+
+- id: wealth_kidnap
+  title: Похищение
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Звонок с незнакомого номера: «У нас кое-кто из твоих близких. Сумма — к пятнице. Без полиции». На фото — знакомое лицо с мешком на голове."
+  choices:
+    - label: Заплатить выкуп
+      effects: {eddies_pct: -20, mood: -6}
+      text: "Ты оставляешь сумку в условленном месте. Через час близкий человек звонит тебе с пустой парковки — живой."
+    - label: Штурмовать
+      violent: true
+      effects: {start_combat: 4}
+      text: "Ты выясняешь адрес через знакомых и едешь лично. Дверь склада распахивается."
+    - label: Торговаться
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "Ты сбиваешь цену вдвое, объяснив, во что им обойдётся война с тобой.", effects: {eddies_pct: -10}}
+      fail: {text: "Похитители злятся и поднимают цену. Платишь больше, чем они просили сначала.", effects: {eddies_pct: -25, mood: -8}}
+
+- id: wealth_sabotage
+  title: Конкуренты
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Кто-то портит тебе жизнь методично: слухи в сети, сорванные сделки, сломанные замки. Твой успех кому-то сильно мешает."
+  choices:
+    - label: Найти, кто это
+      check: {stat: INT, skill: persuasion, dv: 15}
+      success: {text: "След ведёт к конкуренту из соседнего района. Короткий разговор, и он больше не мешает.", effects: {street_cred: 2}}
+      fail: {text: "Ты тратишь деньги на частных детективов и ничего не находишь.", effects: {eddies_pct: -6}}
+    - label: Откупиться пиаром
+      effects: {eddies_pct: -8, fame: 1}
+      text: "Хорошая пресса и пара благотворительных вечеров заглушают слухи. Дорого, но эффективно."
+
+- id: wealth_hitman
+  title: Заказ на тебя
+  foe: "Наёмный убийца"
+  foe_faction: militech
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Знакомый фиксер предупреждает шёпотом: на тебя пришёл заказ. Исполнитель уже в городе, профессионал, работает чисто."
+  choices:
+    - label: Ждать и встретить
+      violent: true
+      effects: {start_combat: 4}
+      text: "Ты не спишь три ночи. На четвёртую в окне напротив вспыхивает блик оптики."
+    - label: Залечь на дно
+      effects: {eddies_pct: -10, vanish_weeks: 2}
+      text: "Ты исчезаешь на две недели в капсульном отеле на окраине. Исполнитель уезжает ни с чем. Деньги на жизнь в бегах тают."
+    - label: Перекупить заказ
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Ты выходишь на исполнителя через фиксера и платишь больше заказчика. Теперь у заказчика проблемы.", effects: {eddies_pct: -12, street_cred: 2}}
+      fail: {text: "Исполнитель берёт твои деньги и всё равно приходит. Профессионалы так не делают, но этот — делает.", effects: {eddies_pct: -12, start_combat: 3}}
+
+- id: wealth_corp_raid
+  title: Корпоративный рейд
+  faction: arasaka
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Юристы мегакорпорации присылают пакет документов: твои активы «вызывают вопросы». Через неделю придут с охраной, если вопрос не решится."
+  choices:
+    - label: Отдать часть активов
+      effects: {eddies_pct: -18, status: -1}
+      text: "Ты подписываешь бумаги. Корпорация забирает своё и забывает о тебе. Пока."
+    - label: Бороться в суде
+      check: {stat: INT, skill: persuasion, dv: 17}
+      success: {text: "Твои юристы находят дыру в их договорах. Корпорация отступает, а пресса пишет о тебе как о герое.", effects: {eddies: -3000, fame: 2, status: 2}}
+      fail: {text: "Суд затягивается и проигрывается. Ты платишь и юристам, и корпорации.", effects: {eddies_pct: -25}}
+    - label: Встретить охрану
+      violent: true
+      effects: {start_combat: 5}
+      text: "Ты не подписываешь ничего. Через неделю у дверей бронеавтомобиль с логотипом."
+
+- id: wealth_blackmail
+  title: Компромат
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "В почте видео: ты, ночь, и то, что лучше бы забыть навсегда. Подпись: «Или платишь, или это увидит весь город»."
+  choices:
+    - label: Заплатить
+      effects: {eddies_pct: -15}
+      text: "Ты переводишь деньги. Видео больше не всплывает. Через полгода приходит новое письмо, но это будет потом."
+    - label: Выложить первым
+      effects: {fame: 2, status: -2, mood: -6}
+      text: "Ты публикуешь видео сам с комментарием. Город смеётся неделю и забывает. Шантажисту нечего продавать."
+    - label: Найти шантажиста
+      check: {stat: INT, skill: netrunning, dv: 16}
+      success: {text: "Ты находишь его по метаданным видео. Он сам переводит тебе деньги, чтобы ты забыл его адрес.", effects: {eddies: 2000, street_cred: 1}}
+      fail: {text: "Шантажист замечает слежку и удваивает цену.", effects: {eddies_pct: -25}}

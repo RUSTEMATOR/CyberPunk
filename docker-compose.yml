@@ -1,0 +1,11 @@
+services:
+  bot:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - TZ=Europe/Kyiv
+    volumes:
+      - ./data:/app/data
+      - ./content:/app/content:ro
+      - ./images:/app/images:ro

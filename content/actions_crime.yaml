@@ -1,0 +1,288 @@
+# More crime (owner request). Criminal → «Ещё дела». A miss can bring heat, wounds or jail (jail_weeks).
+
+- key: porch_pirate
+  section: crime
+  name: Кража посылок
+  button: Посылки
+  description: "Дроны оставляют посылки у дверей. Некоторые дороже, чем кажутся."
+  check: {stat: REF, skill: stealth, dv: 12}
+  success:
+    - {weight: 3, text: "Три коробки за вечер. В одной — новенький кибер-глаз в упаковке. Барыга берёт его за три сотни.", effects: {eddies: 300}}
+    - {weight: 2, text: "В коробке оказывается пятьдесят пар носков. Хорошие носки, но всё же.", effects: {eddies: 40, mood: 2}}
+    - {weight: 1, text: "Ты уносишь коробку, а внутри — живой котёнок с запиской «Позаботьтесь о нём». Теперь он твой.", effects: {mood: 6, humanity: 1}}
+  fail:
+    - {weight: 2, text: "Дверная камера снимает тебя крупным планом. Фото уже гуляет по соседским чатам.", effects: {heat: 1, mood: -2}}
+    - {weight: 1, text: "Посылка оказывается ловушкой с краской. Ты неделю ходишь синим.", effects: {heat: 1, mood: -5, fame: 1}}
+  bus: [crime_done:kind=pickpocket]
+
+- key: delivery_drone_theft
+  section: crime
+  name: Угон дрона-доставщика
+  button: Угнать дрона
+  description: "Сбить дрон с курса и продать на запчасти. Груз — бонусом."
+  check: {stat: TECH, skill: tech, dv: 14}
+  success:
+    - {weight: 3, text: "Дрон послушно садится тебе в руки. Запчасти уходят за четыре сотни, груз — пакет протеиновых батончиков.", effects: {eddies: 400, skill_xp:tech: 1}}
+    - {weight: 1, text: "Дрон вёз чьи-то лекарства. Ты возвращаешь их адресату и всё равно продаёшь дрон.", effects: {eddies: 300, humanity: 1}}
+  fail:
+    - {weight: 2, text: "Дрон отбивается и бьёт тебя током. Он улетает, а ты лежишь на асфальте.", effects: {hp: -5, heat: 1}}
+    - {weight: 1, text: "Дрон оказывается полицейским. Как можно было его не узнать — загадка.", effects: {heat: 2, jail_weeks: 2}}
+  bus: [crime_done:kind=car_theft]
+
+- key: chip_skimming
+  section: crime
+  name: Скимминг кредчипов
+  button: Скимминг
+  description: "Скиммер на банкомате у метро. Тихие деньги, пока не заметят."
+  check: {stat: INT, skill: netrunning, dv: 15}
+  success:
+    - {weight: 3, text: "За ночь скиммер собирает десяток чипов. Ты снимаешь понемногу с каждого, чтобы никто не заметил.", effects: {eddies: 700, humanity: -1}}
+    - {weight: 1, text: "Один из чипов принадлежит корпорату. На нём столько, что даже страшно. Ты берёшь чуть-чуть.", effects: {eddies: 1200, heat: 1}}
+  fail:
+    - {weight: 2, text: "Банк ловит скиммер за час. Хорошо, что на нём нет твоих пальцев. Почти нет.", effects: {heat: 2}}
+    - {weight: 1, text: "Тебя берут у банкомата с поличным.", effects: {heat: 2, jail_weeks: 4}}
+  bus: [hack]
+
+- key: fake_chrome
+  section: crime
+  name: Поддельный хром
+  button: Подделки
+  description: "Покрасить старые импланты, переклеить серийники и продать как новые."
+  cost: 200
+  check: {stat: COOL, skill: persuasion, dv: 14}
+  success:
+    - {weight: 3, text: "Покупатель в восторге от «нового» сандевистана. Ты в восторге от его денег.", effects: {eddies: 900, humanity: -1}}
+  fail:
+    - {weight: 2, text: "Покупатель оказывается риппером и узнаёт подделку за секунду. Он забирает товар и бьёт тебя.", effects: {hp: -6, mood: -3}}
+    - {weight: 1, text: "Через неделю покупатель находит тебя. С друзьями.", effects: {hp: -10, heat: 1}}
+  bus: [deal:kind=trade]
+
+- key: extortion
+  section: crime
+  name: Вымогательство
+  button: Вымогать
+  description: "Объяснить лавочнику, что его витрина очень хрупкая. А ты нет."
+  check: {stat: BODY, skill: persuasion, dv: 14}
+  success:
+    - {weight: 3, text: "Лавочник платит без лишних слов. Три сотни и бесплатный кофе.", effects: {eddies: 300, humanity: -2, street_cred: 1}}
+    - {weight: 1, text: "Лавочник платит и предлагает работу охранника. Ты отказываешься, но визитку берёшь.", effects: {eddies: 250, humanity: -1}}
+  fail:
+    - {weight: 2, text: "У лавочника под стойкой дробовик и сын-боксёр. Ты уходишь быстро.", effects: {hp: -6, mood: -4}}
+    - {weight: 1, text: "Лавочник оказывается под защитой банды. Банда тебя запоминает.", effects: {heat: 1, hp: -4}}
+
+- key: bank_job
+  section: crime
+  name: Ограбление банка
+  button: Банк
+  description: "Большое дело: отделение банка в Сити-центре. Либо ты богат, либо долго сидишь."
+  ap: 2
+  cost: 500
+  conditions:
+    min_street_cred: 15
+  check: {stat: COOL, skill: firearms, dv: 18}
+  success:
+    - {weight: 3, text: "Сейф открыт, деньги в сумке, машина у входа. Через час ты пересчитываешь восемь тысяч в безопасной квартире.", effects: {eddies: 8000, heat: 3, street_cred: 3, fame: 2}, loud: "Ограблено отделение банка в Сити-центре. Камеры успели снять лицо: это {name}. Награда за информацию пока не объявлена."}
+    - {weight: 1, text: "Ты уходишь с деньгами и чужим кредитным ключом от ячейки. В ячейке — ещё больше денег.", effects: {eddies: 12000, heat: 4, street_cred: 4, fame: 3}, loud: "{name} выносит из банка сейф и ячейку в придачу. NCPD в бешенстве, улицы в восторге."}
+  fail:
+    - {weight: 2, text: "Охрана быстрее, чем казалось. Тебя берут у сейфа.", effects: {heat: 3, jail_weeks: 16}, loud: "{name}: арест прямо у банковского сейфа. Шестнадцать недель за решёткой."}
+    - {weight: 1, text: "Ты уходишь ни с чем, с пулей в плече и сиренами за спиной.", effects: {hp: -15, heat: 3}}
+  bus: [crime_done:kind=store_robbery]
+
+- key: graffiti_tag
+  section: crime
+  name: Граффити на корпоративной башне
+  button: Граффити
+  description: "Нарисовать что-нибудь неприличное на стене корпоративной башни. Для души и славы."
+  check: {stat: REF, skill: stealth, dv: 13}
+  success:
+    - {weight: 2, text: "К утру на стене Arasaka красуется огромный кот в каске. Фото во всех лентах.", effects: {fame: 2, street_cred: 1, mood: 8}}
+    - {weight: 1, text: "Ты пишешь на стене что-то философское. Утром это закрашивают, но фото уже разошлось.", effects: {fame: 1, mood: 6}}
+  fail:
+    - {weight: 2, text: "Дрон охраны засекает тебя на половине рисунка. Убегаешь, оставив недорисованного кота.", effects: {heat: 1, fame: 1}}
+    - {weight: 1, text: "Тебя ловит охрана и заставляет оттирать стену до утра.", effects: {heat: 1, mood: -5}}
+
+- key: braindance_bootleg
+  section: crime
+  name: Пиратские брейндансы
+  button: Пиратство
+  description: "Переписать свежие брейндансы с премьеры и продать на рынке. Студии это очень не любят."
+  check: {stat: TECH, skill: tech, dv: 13}
+  success:
+    - {weight: 3, text: "Партия копий уходит за вечер. Пятьсот эдди и благодарные фанаты.", effects: {eddies: 500}}
+  fail:
+    - {weight: 2, text: "Копии бракованные: у покупателей неделю звенит в ушах. Деньги приходится вернуть.", effects: {mood: -3}}
+    - {weight: 1, text: "Студия выслеживает тебя через водяные знаки.", effects: {heat: 2, eddies: -300}}
+
+# -- drugs (owner request): street chemistry of the fiction (synthcoke, glitter, black lace). No recipes, only risk.
+
+- key: deal_synthcoke
+  section: crime
+  name: Толкать синтокс в клубах
+  button: Синтокс
+  description: "Пакетики в подкладке куртки, клиенты в туалетах клубов. Быстрые деньги, медленный розыск."
+  cost: 300
+  check: {stat: COOL, skill: persuasion, dv: 13}
+  success:
+    - {weight: 3, text: "За ночь уходит вся партия. Клиенты довольны, вышибалы получили свою долю.", effects: {eddies: 900, heat: 1, humanity: -1}}
+    - {weight: 1, text: "Постоянный клиент берёт оптом для вечеринки в Чартер-Хилл. Корпораты тоже нюхают.", effects: {eddies: 1500, heat: 1, humanity: -1}}
+  fail:
+    - {weight: 2, text: "Под видом клиента подходит коп в штатском. Ты успеваешь сбросить товар, но тебя запомнили.", effects: {heat: 2}}
+    - {weight: 1, text: "Тебя берут с товаром на кармане.", effects: {heat: 2, jail_weeks: 4}}
+    - {weight: 1, text: "Местная банда объясняет, что это их клуб. Объясняет кулаками.", effects: {hp: -8}}
+
+- key: cook_glitter
+  section: crime
+  name: Варить «Блеск» в подвале
+  button: Варить Блеск
+  description: "Подпольная лаборатория в подвале мегабашни. Раз в день: варка занимает сутки. Нужна техника, чтобы ничего не взорвалось."
+  cost: 500
+  daily: true
+  check: {stat: TECH, skill: tech, dv: 15}
+  success:
+    - {weight: 3, text: "Партия чистая, барыги берут без вопросов. Ты моешь руки три раза и всё равно чувствуешь запах.", effects: {eddies: 1800, heat: 2, humanity: -2}}
+  fail:
+    - {weight: 2, text: "Что-то шипит, что-то хлопает. Подвал в дыму, ты в ожогах, партия на выброс.", effects: {hp: -10}}
+    - {weight: 1, text: "Соседи вызывают пожарных. Пожарные вызывают полицию.", effects: {heat: 3, jail_weeks: 6}}
+
+- key: cartel_courier
+  section: crime
+  name: Курьер для картеля
+  button: Курьер
+  description: "Отвезти сумку из Санто-Доминго в Пасифику и не заглядывать внутрь. Если в сумке то, о чём ты думаешь, лучше не думать."
+  conditions:
+    min_street_cred: 8
+  check: {stat: COOL, skill: driving, dv: 14}
+  success:
+    - {weight: 3, text: "Сумка доезжает. Получатель кивает, проверяет вес и отсчитывает деньги.", effects: {eddies: 1100, street_cred: 1, heat: 1}}
+  fail:
+    - {weight: 2, text: "На блокпосту собака начинает лаять на багажник. Сумку приходится бросить. Картель недоволен.", effects: {heat: 2, eddies: -1000}}
+    - {weight: 1, text: "Блокпост, собака, наручники.", effects: {heat: 3, jail_weeks: 8}}
+
+# -- batch 2 -------------------------------------------------------------------------------------------------------------
+
+- key: ammo_heist
+  section: crime
+  name: Обчистить оружейный магазин
+  button: Оружейка
+  description: "Ночью вскрыть оружейный магазин. Можно уйти со стволом, можно — в наручниках."
+  conditions:
+    min_street_cred: 6
+  check: {stat: REF, skill: stealth, dv: 15}
+  success:
+    - {weight: 2, text: "Сигнализация молчит. Ты уходишь с армейским пистолетом и коробкой патронов.", effects: {item_grant:militech_avenger: true, heat: 1}}
+    - {weight: 2, text: "Под прилавком дробовик-помпа. Хозяин явно держал его для таких, как ты.", effects: {item_grant:pump_shotgun: true, heat: 1}}
+    - {weight: 1, text: "В подсобке ящик бронежилетов. Один уносишь сам, остальные продаёшь.", effects: {item_grant:kevlar_hoodie: true, eddies: 600, heat: 2}}
+  fail:
+    - {weight: 2, text: "Хозяин спит в магазине. С дробовиком.", effects: {hp: -10, heat: 1}}
+    - {weight: 1, text: "Патруль приезжает через две минуты.", effects: {heat: 2, jail_weeks: 3}}
+
+- key: clinic_raid
+  section: crime
+  name: Вынести хром из клиники
+  button: Клиника
+  description: "Ночью пробраться в подпольную клинику и забрать импланты со склада. Рипперы злопамятны."
+  conditions:
+    min_street_cred: 10
+  check: {stat: TECH, skill: stealth, dv: 16}
+  success:
+    - {weight: 2, text: "На складе коробка с кибер-когтями. Риппер утром поклянётся найти вора.", effects: {cyberware_grant:cyber_claws: true, heat: 1, humanity: -1}}
+    - {weight: 2, text: "Ты уносишь ящик имплантов и сбываешь барыге за полцены. Всё равно много.", effects: {eddies: 2200, heat: 1}}
+  fail:
+    - {weight: 2, text: "Риппер ставит ловушки лучше, чем импланты. Ты уходишь с ожогом на пол-лица.", effects: {hp: -9}}
+    - {weight: 1, text: "Риппер узнаёт тебя по камере и продаёт твоё лицо бандам.", effects: {heat: 2, hp: -4}}
+
+- key: card_cheat
+  section: crime
+  name: Шулерство в покер
+  button: Покер
+  description: "Подпольный покер в задней комнате бара. Ловкость рук против бандитов с плохим чувством юмора."
+  cost: 200
+  check: {stat: REF, skill: persuasion, dv: 14}
+  success:
+    - {weight: 3, text: "Тузы приходят как по заказу. Ты встаёшь из-за стола с тысячей и улыбкой.", effects: {eddies: 1000}}
+    - {weight: 1, text: "Один из игроков ставит на кон свой пистолет. Теперь он твой.", effects: {item_grant:heavy_pistol: true, eddies: 300}}
+  fail:
+    - {weight: 2, text: "Кто-то замечает карту в рукаве. Тебя выносят из бара по частям.", effects: {hp: -10, street_cred: -1}}
+    - {weight: 1, text: "Ты проигрываешь честно. Обидно вдвойне.", effects: {mood: -3}}
+
+- key: scrap_copper
+  section: crime
+  name: Срезать медный кабель
+  button: Медь
+  description: "Ночью срезать кабель с заброшенной подстанции. Мелочь, пока кабель действительно заброшенный."
+  check: {stat: TECH, skill: tech, dv: 11}
+  success:
+    - {weight: 4, text: "Сто метров меди к утру лежат у скупщика. Двести эдди и чёрные руки.", effects: {eddies: 200}}
+  fail:
+    - {weight: 2, text: "Кабель оказывается под напряжением.", effects: {hp: -8}}
+    - {weight: 1, text: "Половина района остаётся без света. Соседи догадываются, кто это был.", effects: {heat: 1, street_cred: -1}}
+
+# -- batch 3 -------------------------------------------------------------------------------------------------------------
+
+- key: fake_charity
+  section: crime
+  name: Фальшивый благотворительный сбор
+  button: Фальш-сбор
+  description: "Ящик для пожертвований, жилетка волонтёра и грустная история про сирот. Деньги идут тебе. Совесть — в минус."
+  check: {stat: EMP, skill: persuasion, dv: 12}
+  success:
+    - {weight: 3, text: "Добрые люди Найт-Сити жертвуют четыреста эдди. Сиротам ничего не достаётся.", effects: {eddies: 400, humanity: -1}}
+  fail:
+    - {weight: 2, text: "Настоящие волонтёры узнают тебя по жилетке с ошибкой в названии фонда.", effects: {street_cred: -1, mood: -3}}
+    - {weight: 1, text: "Монахиня из соседней церкви берёт тебя за ухо и ведёт в полицию.", effects: {heat: 1, jail_weeks: 1}}
+
+- key: arms_smuggle
+  section: crime
+  name: Провезти оружие через блокпост
+  button: Контрабанда
+  description: "Багажник со стволами и блокпост NCPD на въезде в район. Быстрая тачка помогает, хладнокровие — тоже."
+  daily: true
+  conditions:
+    min_street_cred: 8
+  check: {stat: COOL, skill: driving, dv: 15}
+  success:
+    - {weight: 3, text: "Офицер машет рукой: проезжай. Ящики уходят заказчику, ты — с толстым конвертом.", effects: {eddies: 1500, heat: 1}}
+    - {weight: 1, text: "Заказчик доплачивает стволом из партии.", effects: {eddies: 900, item_grant:battle_rifle: true, heat: 1}}
+  fail:
+    - {weight: 2, text: "Собака на блокпосте лает на багажник. Ты бросаешь машину и уходишь дворами.", effects: {heat: 2, eddies: -400}}
+    - {weight: 1, text: "Наручники, допрос и три недели за решёткой.", effects: {heat: 2, jail_weeks: 3}}
+
+- key: catfish_scam
+  section: crime
+  name: Сетевой роман на деньги
+  button: Сетевой роман
+  description: "Фальшивый профиль, сгенерированные фото, долгие переписки. Одинокий корпорат переводит деньги на «билет к тебе»."
+  daily: true
+  check: {stat: INT, skill: persuasion, dv: 13}
+  success:
+    - {weight: 3, text: "Он переводит восемьсот на «билет». Ты блокируешь номер. Почему-то противно.", effects: {eddies: 800, humanity: -2}}
+  fail:
+    - {weight: 2, text: "Он оказывается нетраннером NetWatch и тоже ведёт фальшивый профиль. Тупик.", effects: {heat: 1, mood: -3}}
+    - {weight: 1, text: "Он влюбляется по-настоящему, ты тоже начинаешь. Денег нет, зато есть что вспомнить.", effects: {mood: 5, humanity: 1}}
+
+- key: parking_meter
+  section: crime
+  name: Вскрыть паркоматы
+  button: Паркоматы
+  description: "Ночью пройти по улице с отвёрткой и вскрыть пять паркоматов. Мелочь, но много мелочи."
+  check: {stat: TECH, skill: tech, dv: 11}
+  success:
+    - {weight: 4, text: "Пять паркоматов, полторы сотни монет и тяжёлые карманы.", effects: {eddies: 180}}
+  fail:
+    - {weight: 2, text: "Паркомат бьёт током и вызывает эвакуатор на твою же тачку.", effects: {hp: -3, eddies: -100}}
+    - {weight: 1, text: "Патруль застаёт тебя с отвёрткой в руке.", effects: {heat: 1}}
+
+- key: underground_casino
+  section: crime
+  name: Поработать крупье в нелегальном казино
+  button: Крупье
+  description: "Нелегальное казино в подвале нужен крупье на ночь. Платят хорошо, а если подыгрывать нужным людям — ещё лучше."
+  conditions:
+    min_street_cred: 5
+  check: {stat: REF, skill: persuasion, dv: 13}
+  success:
+    - {weight: 3, text: "Ты подыгрываешь хозяйскому другу, он выигрывает, хозяин доволен. Шестьсот за ночь.", effects: {eddies: 600}}
+    - {weight: 1, text: "Хозяин приглашает тебя работать постоянно. Ты обещаешь подумать.", effects: {eddies: 600, add_npc:contact: true}}
+  fail:
+    - {weight: 2, text: "Ты путаешь фишки, хозяин теряет тысячу. Теряешь работу и зуб.", effects: {hp: -4, eddies: -200}}
+    - {weight: 1, text: "Облава NCPD посреди смены. Ты уходишь через вентиляцию.", effects: {heat: 1}}

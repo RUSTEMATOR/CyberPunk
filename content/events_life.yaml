@@ -1,0 +1,187 @@
+# Events of M9: partner and child, work and firing, prison. DESIGN.md 10, 11.
+# `forced_only` events are never drawn at random: a service puts them in the week's queue.
+
+- id: partner_pregnancy
+  title: Новость дома
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    requires: [has_partner]
+  text: "Вечером дома тебя ждёт разговор, к которому не подготовишься: у вас будет ребёнок. Партнёр смотрит на тебя и ждёт, что ты скажешь первым."
+  choices:
+    - label: Обрадоваться
+      effects: {add_npc:child: true, mood: 10, eddies: -300, rel_npc:partner: 10}
+      text: "Ты говоришь, что это счастье, и почти не врёшь. Три сотни уходят на кроватку и первую одёжку, а в доме становится тесно и тепло."
+    - label: Попросить подождать
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Вы просидели до рассвета и договорились не торопиться. Обида осталась, но разговор был честным.", effects: {rel_npc:partner: -5, mood: -2}}
+      fail: {text: "Разговор вышел тяжёлым. В итоге решение приняли без тебя, и ребёнок всё равно будет. Партнёр это запомнит.", effects: {add_npc:child: true, rel_npc:partner: -20, mood: -5}}
+    - label: Принять как есть
+      effects: {add_npc:child: true, mood: 3}
+      text: "Ты киваешь и идёшь ставить чайник. Слов нет, но ты остаёшься, и этого пока достаточно."
+
+# ---------------------------------------------------------------- work and firing (PLAN 9.3)
+
+- id: work_crime_discovered
+  title: Проверка службы безопасности
+  category: work
+  weight: 1
+  forced_only: true
+  conditions:
+    requires: [has_job]
+  text: "Тебя вызывает служба безопасности. На столе лежат записи с камер, на которых ты на этой неделе был вовсе не на работе. Вопросов у них пока больше, чем доказательств."
+  choices:
+    - label: Всё отрицать
+      bus: [lie]
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Ты говоришь ровно и без пауз. Записи нечёткие, а у них нет ничего, кроме подозрений. Тебя отпускают с предупреждением.", effects: {mood: -1}}
+      fail: {text: "Ты путаешься в датах, и они это видят. К концу дня тебе выдают коробку для личных вещей и пропуск перестаёт работать.", effects: {career_clear: true, eddies: 200, mood: -8}}
+    - label: Откупиться
+      effects: {eddies: -600, heat: -1}
+      text: "Ты заходишь к человеку, которому здесь доверяют, и оставляешь на столе шесть сотен. Записи пропадают из системы, а разговор переходит на погоду."
+    - label: Уволиться самому
+      effects: {career_clear: true, eddies: 150, mood: -3}
+      text: "Ты кладёшь заявление на стол раньше, чем они начнут. Тебе выплачивают расчёт за отработанное и не провожают."
+
+- id: work_layoffs
+  title: Сокращение
+  category: work
+  weight: 2
+  conditions:
+    careers: [corpo, ncpd, trauma_team, media, rockerboy, mechanic]
+  text: "С утра в коридоре шепчутся: руководство режет штат. Список ещё не вывесили, но пара знакомых лиц уже сидит с коробками."
+  choices:
+    - label: Доказать свою ценность
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Ты приходишь к начальству с цифрами и конкретными делами. Тебя оставляют, а часть чужой работы переходит к тебе.", effects: {status: 1, mood: 2}}
+      fail: {text: "Твои доводы выслушивают до конца и вежливо благодарят. Через час в почте приказ об увольнении и выходное.", effects: {career_clear: true, eddies: 400, mood: -8}}
+    - label: Взять выходное
+      effects: {career_clear: true, eddies: 600, mood: -4}
+      text: "Ты не ждёшь списка и сам идёшь за расчётом. Выходное выше, чем дали бы тем, кого вычеркнут позже."
+    - label: Промолчать и ждать
+      check: {stat: LUCK, dv: 10}
+      success: {text: "Список вывесили к вечеру, и твоей фамилии в нём нет. Ты выдыхаешь и возвращаешься к работе.", effects: {mood: 1}}
+      fail: {text: "Твоя фамилия в списке пятая сверху. Расчёт тебе выдают в тот же день.", effects: {career_clear: true, eddies: 300, mood: -8}}
+
+# ---------------------------------------------------------------- prison (PLAN 9.5)
+# Only drawn while the character serves a sentence (conditions.requires: in_jail).
+
+- id: jail_yard_challenge
+  title: Вызов во дворе
+  category: street
+  weight: 3
+  conditions:
+    requires: [in_jail]
+  text: "На прогулке к тебе подходит крепкий парень с татуировкой через всю шею. Он говорит негромко: во дворе все платят за место, и ты теперь тоже. Вокруг делают вид, что ничего не слышат."
+  choices:
+    - label: Заплатить
+      effects: {eddies: -150, mood: -2}
+      text: "Ты отдаёшь сто пятьдесят, которые передал тебе кто-то снаружи. Парень кивает и отходит. До конца срока тебя больше не трогают."
+    - label: Дать отпор
+      check: {stat: BODY, skill: melee, dv: 14}
+      success: {text: "Первый удар достаётся тебе, зато второй и третий твои. Парень сползает по стене, а двор запоминает, кто сидит в третьей камере.", effects: {street_cred: 1, hp: -3}}
+      fail: {text: "Тебя прижимают к стене и бьют, пока не придёт надзиратель. Деньги забирают в любом случае.", effects: {hp: -8, eddies: -150, mood: -4}}
+    - label: Промолчать
+      effects: {mood: -4}
+      text: "Ты опускаешь глаза и идёшь дальше. Тебя не бьют, но следующие недели ты ходишь вдоль стены."
+
+- id: jail_cellmate
+  title: Сосед по камере
+  category: relationships
+  weight: 3
+  conditions:
+    requires: [in_jail]
+  text: "Нового соседа привели ночью. Он сидит на нижней койке и разглядывает потолок, потом вдруг спрашивает, за что ты здесь. Судя по голосу, ему нужно просто с кем-то поговорить."
+  choices:
+    - label: Рассказать
+      effects: {add_npc:contact: true, mood: 3}
+      text: "Вы проговорили до утра. Оказалось, что на воле он знает многих, а ты теперь знаешь его. Выйдет раньше тебя и обещал передать привет нужным людям."
+    - label: Молчать
+      effects: {mood: -1}
+      text: "Ты отворачиваешься к стене. Сосед пожимает плечами, и до конца срока вы почти не разговариваете."
+
+- id: jail_guard_offer
+  title: Предложение охранника
+  category: money
+  weight: 2
+  conditions:
+    requires: [in_jail]
+  text: "Охранник подходит к решётке после отбоя. Он готов за небольшую плату принести передачу с воли: нормальную еду, сигареты, пару чипов с музыкой. Цену называет вполголоса."
+  choices:
+    - label: Заплатить
+      effects: {eddies: -200, mood: 6}
+      text: "Через два дня на койке лежит пакет. Еда горячая, чипы целые. Жизнь за решёткой стала чуть терпимее."
+    - label: Отказаться
+      effects: {mood: -1}
+      text: "Ты качаешь головой. Охранник пожимает плечами и уходит. Дважды он не предлагает."
+    - label: Сдать его начальству
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Начальник тюрьмы слушает, кивает и записывает. Охранника переводят в другой блок, а к тебе относятся мягче.", effects: {mood: 3, street_cred: 1}}
+      fail: {text: "Начальник и охранник давно в одной упряжке. Тебя запирают в карцер на неделю.", effects: {mood: -6, hp: -2}}
+
+- id: jail_visit
+  title: Свидание
+  category: relationships
+  weight: 2
+  conditions:
+    requires: [in_jail, has_family_alive]
+  text: "Тебя вызывают в комнату свиданий. За стеклом сидит кто-то из родных: бледный, с пакетом, который не пропустили. Вы говорите по телефону, и ни у одного не получается подобрать слов."
+  choices:
+    - label: Успокоить
+      effects: {rel_npc:family: 5, mood: 3}
+      text: "Ты говоришь, что всё в порядке и срок не такой уж большой. Он не верит, но кивает. Уходить вам обоим легче, чем приходить."
+    - label: Попросить денег
+      effects:
+        rel_npc:family: -3
+        mood: 1
+        later:
+          - weeks: 1
+            effects: {eddies: 200}
+            text: "Родные перевели двести эдди. Откуда они, лучше не спрашивать."
+            hint: родные обещали перевести двести
+      text: "Родные обещают перевести двести эдди через неделю. О том, откуда они их возьмут, вы больше не говорите."
+
+# owner request 23.10: the second and the third time the job finds out about crime (balance.careers.crime_strike_events)
+- id: work_crime_second
+  title: Последнее предупреждение
+  category: work
+  weight: 1
+  forced_only: true
+  conditions:
+    requires: [has_job]
+  text: "Служба безопасности снова. На этот раз в комнате двое, а на столе твоё досье толщиной в палец. «Второй раз. Третьего не будет»."
+  choices:
+    - label: Всё отрицать
+      bus: [lie]
+      check: {stat: COOL, skill: persuasion, dv: 18}
+      success: {text: "Ты держишься. Доказательств не хватает, но теперь за тобой ходит человек в сером.", effects: {mood: -3}}
+      fail: {text: "Они не верят ни слову. Пропуск блокируют прямо при тебе.", effects: {career_clear: true, mood: -8, status: -1}}
+    - label: Дорого откупиться
+      effects: {eddies: -8000, heat: -1, mood: -2}
+      text: "Восемь тысяч уходят человеку, который «может потерять файл». Он берёт и предупреждает: больше не поможет."
+    - label: Сдать подельников
+      effects: {humanity: -2, street_cred: -3, heat: -2}
+      text: "Ты называешь имена. Тебя оставляют. Улица узнает об этом раньше, чем ты думаешь."
+
+- id: work_crime_final
+  title: Без права на ошибку
+  faction: arasaka
+  category: work
+  weight: 1
+  forced_only: true
+  conditions:
+    requires: [has_job]
+  text: "Третий раз. Тебя не вызывают: за тобой приходят. Машина без номеров, подвал без окон, человек без имени. «Компания не любит, когда её позорят»."
+  choices:
+    - label: Уйти тихо
+      effects: {career_clear: true, flag_set:corp_blacklist: true, eddies_pct: -15, status: -2, mood: -10}
+      text: "Ты подписываешь всё, что дают: увольнение, отказ от выплат, неразглашение. Твоё имя уходит во все чёрные списки города."
+    - label: Попробовать договориться
+      check: {stat: COOL, skill: persuasion, dv: 20}
+      success: {text: "Ты предлагаешь то, что знаешь о них самих. Человек без имени долго молчит, потом отпускает. Работу ты всё равно теряешь.", effects: {career_clear: true, flag_set:corp_blacklist: true}}
+      fail: {text: "Им не нравится шантаж. Тебя находят утром на берегу реки, живого, но едва.", effects: {career_clear: true, flag_set:corp_blacklist: true, hp: -30, mood: -10}}
+    - label: Бежать
+      violent: true
+      effects: {career_clear: true, flag_set:corp_blacklist: true, start_combat: 4}
+      text: "Ты бьёшь охранника и бежишь к лестнице. Позади уже передёргивают затворы."

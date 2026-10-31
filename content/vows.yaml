@@ -1,0 +1,37 @@
+# Vows. Schema: app/content/schemas.py (Vow). Guide: docs/CONTENT_GUIDE.md.
+
+- key: no_chrome
+  name: Обет чистого тела
+  description: "Ни одного импланта. Пока обет держится, настроение ровнее, а через полгода легче учиться и сходиться с людьми."
+  forbids: [cyberware]
+  streak_bonuses:
+    - {weeks: 4, mods: {mood_weekly: 1}}
+    - {weeks: 26, mods: {xp.all: 10, relation_gain: 1}}
+  break_effects: {mood: -10, fame: -1}
+
+- key: no_violence
+  name: Обет мирного пути
+  description: "Никого не бить и ни в кого не стрелять. Через месяц раны заживают быстрее, через полгода проще договориться и уйти из драки разговором."
+  forbids: [violence]
+  streak_bonuses:
+    - {weeks: 4, mods: {hp_regen: 1}}
+    - {weeks: 26, mods: {check.talk_exit: 1, relation_gain: 1}}
+  break_effects: {mood: -8, street_cred: -2}
+
+- key: no_braindance
+  name: "Обет ясной памяти"
+  description: "Никаких брейндансов: чужую память не смотришь, свою не продаёшь. Терапия помогает лучше, а со временем приходят покой и доверие людей."
+  forbids: [braindance]
+  streak_bonuses:
+    - {weeks: 4, mods: {therapy_bonus: 1}}
+    - {weeks: 26, mods: {mood_weekly: 1, relation_gain: 1}}
+  break_effects: {mood: -8, humanity: -3}
+
+- key: no_lies
+  name: Обет честного слова
+  description: "Ни слова лжи, даже по мелочи. Люди быстрее начинают тебе доверять, а через полгода тебя слушают внимательнее."
+  forbids: [lies]
+  streak_bonuses:
+    - {weeks: 4, mods: {relation_gain: 1}}
+    - {weeks: 26, mods: {check.social: 1, mood_weekly: 1}}
+  break_effects: {mood: -8, status: -2}

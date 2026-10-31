@@ -1,0 +1,177 @@
+# Early crude implants (2013 and later). Schema: app/content/schemas.py (Cyberware). Guide: docs/CONTENT_GUIDE.md.
+# Every record is a rougher, pricier twin of a later model and leaves the catalog the year before that model arrives
+# (available_until = twin's available_from - 1). Later models: kiroshi_optics, gorilla_arms, mantis_blades, cyberdeck_paraline,
+# reflex_tuner, smartlink_gun, pain_editor, reinforced_skeleton (2030), memory_module (2045), dust_filter, pheromone_gland,
+# immune_booster (bioware, 2016). Price and humanity here are base values; the early_chrome era multiplies both again.
+
+- key: cyberoptic_early
+  name: Кибероптика первого поколения
+  slot: eyes
+  exclusive_group: optics
+  price: 1800
+  humanity_cost: 5
+  description: "Первые глазные импланты: захват цели с заметной задержкой. Стрелять легче, но к концу дня раскалывается голова."
+  tier: street
+  category: combat
+  abilities: [first_lock]
+  build: sniper
+  requires: []
+  mods: {skill.firearms: 1, mood_weekly: -1}
+  available_until: 2029
+
+- key: cyberarm_early
+  name: Силовая рука первого поколения
+  slot: hands
+  price: 4800
+  humanity_cost: 11
+  description: "Гидравлика в сером кожухе: ломает кирпич, но тяжёлая и неуклюжая. На бегу рука тянет в сторону."
+  tier: mid
+  category: combat
+  abilities: [brick_break]
+  build: berserk
+  requires: []
+  mods: {strength: 2, flee: -1}
+  available_until: 2029
+
+- key: wolver_blades
+  name: Выдвижные лезвия
+  slot: forearms
+  price: 4500
+  humanity_cost: 10
+  description: "Три клинка выходят из предплечья с хрустом и убираются не с первого раза. Грубее богомолов, но в драке своё дело делают."
+  tier: mid
+  category: combat
+  abilities: [triple_carve]
+  build: duelist
+  requires: []
+  mods: {skill.melee: 1}
+  weapon_damage: 2d6
+  available_until: 2029
+
+- key: cyberdeck_early
+  name: Дека для Старой Сети
+  slot: brain
+  exclusive_group: cyberdeck
+  price: 3200
+  humanity_cost: 6
+  description: "Громоздкая дека с кабелем в затылок и ручным вводом команд. Тяжёлая и горячая, но Старая Сеть писалась как раз под такие."
+  tier: street
+  category: netrun
+  abilities: [old_net_cable]
+  build: ghost
+  requires: [neural_link]
+  mods: {skill.netrunning: 2}
+  deck: {ram_max: 5, ram_recharge: 1, hack_bonus: 0}
+  available_until: 2029
+
+- key: boosted_reflexes_early
+  name: Ускоритель рефлексов
+  slot: spine
+  price: 3600
+  humanity_cost: 8
+  description: "Стимулятор в позвоночнике: реакция быстрее, но спишь плохо, а по утрам дрожат руки."
+  tier: mid
+  category: combat
+  abilities: [catch_throw]
+  build: duelist
+  requires: []
+  mods: {stat.REF: 1, mood_weekly: -3}
+  available_until: 2029
+
+- key: smartgun_link_early
+  name: Линк для смартгана
+  slot: brain
+  price: 3200
+  humanity_cost: 6
+  description: "Провод от ладони к затылку, и ствол сам ищет цель. После долгой смены трудно понять, где кончаешься ты и начинается оружие."
+  tier: street
+  category: combat
+  abilities: [wire_aim]
+  build: sniper
+  requires: []
+  mods: {skill.firearms: 1, ranged_damage: 1, mood_weekly: -2}
+  available_until: 2029
+
+- key: pain_damper_early
+  name: Глушитель боли
+  slot: brain
+  price: 3000
+  humanity_cost: 6
+  description: "Блокирует сигналы от ран. Боль уходит, а вместе с ней и радость."
+  tier: street
+  category: combat
+  abilities: [dull_pain]
+  build: berserk
+  requires: []
+  mods: {damage_reduction: 1, mood_weekly: -3}
+  available_until: 2029
+
+- key: bone_lace_early
+  name: Костная сетка
+  slot: body
+  price: 9500
+  humanity_cost: 12
+  description: "Пластиковые накладки на рёбрах и позвоночнике: удары держишь лучше. Двигаешься при этом как деревянный."
+  tier: mid
+  category: defense
+  abilities: [rib_shield]
+  build: tank
+  requires: []
+  mods: {hp_max: 6, strength: 1, flee: -1}
+  available_until: 2029
+
+- key: memory_chip_early
+  name: Чип памяти
+  slot: brain
+  price: 5800
+  humanity_cost: 5
+  description: "Запоминает всё, что ты видел, и учиться становится проще. Забыть что-нибудь уже не получится."
+  tier: mid
+  category: noncombat
+  abilities: [recall]
+  build: agent
+  requires: []
+  mods: {xp.all: 5, mood_weekly: -1}
+  available_until: 2044
+
+- key: lung_filter_early
+  name: Лёгочный фильтр
+  slot: body
+  price: 2600
+  humanity_cost: 5
+  description: "Пластиковые мехи чистят воздух, и тело быстрее восстанавливается. В горле вечно сухо, и настроение под стать."
+  tier: street
+  category: noncombat
+  abilities: [old_bellows]
+  build: diver
+  requires: []
+  mods: {hp_regen: 1, mood_weekly: -1}
+  available_until: 2015
+
+- key: pheromone_pump_early
+  name: Феромонная помпа
+  slot: body
+  price: 3400
+  humanity_cost: 7
+  description: "Помпа под рёбрами подмешивает химию в пот, и люди тянутся к тебе, сами не зная почему. Ты-то знаешь, и от этого паршиво."
+  tier: street
+  category: noncombat
+  abilities: [sweat_charm]
+  build: face
+  requires: []
+  mods: {check.social: 1, mood_weekly: -2}
+  available_until: 2015
+
+- key: immune_implant_early
+  name: Иммунный имплант
+  slot: circulatory
+  price: 3200
+  humanity_cost: 6
+  description: "Капсула с антителами у сердца: раны затягиваются быстрее. Во рту постоянный привкус железа, и он раздражает."
+  tier: street
+  category: noncombat
+  abilities: [antibody_gift]
+  build: medic
+  requires: []
+  mods: {hp_regen: 1, mood_weekly: -2}
+  available_until: 2015

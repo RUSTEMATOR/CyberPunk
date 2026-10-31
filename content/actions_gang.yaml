@@ -1,0 +1,145 @@
+# Tasks of your city gang (owner request: join a gang). Criminal → «Банды» → your gang. `$gang` = your gang.
+# Standing with the gang (faction_rep) is your rank there (balance.players.gangs.ranks).
+
+- key: gang_tribute
+  section: gang
+  name: Собрать дань
+  button: Дань
+  description: "Обойти лавки на своей улице и собрать долю для банды."
+  conditions: {in_gang: true}
+  check: {stat: COOL, skill: persuasion, dv: 13}
+  success:
+    - {weight: 3, text: "Лавочники платят без споров. Часть уходит банде, часть — тебе за труды.", effects: {eddies: 200, faction_rep:my_gang: 2}}
+    - {weight: 1, text: "Один лавочник пытается торговаться, но передумывает, увидев твоё лицо. Старшие довольны.", effects: {eddies: 250, faction_rep:my_gang: 3, humanity: -1}}
+  fail:
+    - {weight: 2, text: "Половина лавок закрыта, вторая половина «уже заплатила». Старшие недовольны.", effects: {faction_rep:my_gang: -1, mood: -3}}
+    - {weight: 1, text: "Лавочник вызывает копов. Ты уходишь ни с чем и с хвостом.", effects: {heat: 1}}
+
+- key: gang_turf_fight
+  section: gang
+  name: Разборка за квартал
+  button: Разборка
+  description: "Чужие залезли на вашу улицу. Банда идёт объяснять, чья это улица."
+  conditions: {in_gang: true}
+  check: {stat: BODY, skill: melee, dv: 15}
+  success:
+    - {weight: 3, text: "Чужие уходят, оставив на асфальте зубы и самоуважение. Улица снова ваша.", effects: {faction_rep:my_gang: 4, street_cred: 2, hp: -3}}
+  fail:
+    - {weight: 2, text: "Чужих оказывается больше. Отступаете, ты несёшь раненого на плече.", effects: {hp: -10, faction_rep:my_gang: 1}}
+    - {weight: 1, text: "Приезжает NCPD, все разбегаются. Тебя успевают сфотографировать.", effects: {heat: 2, hp: -5}}
+
+- key: gang_delivery
+  section: gang
+  name: Доставка для банды
+  button: Доставка
+  description: "Отвезти сумку. Не открывать. Не задавать вопросов."
+  conditions: {in_gang: true}
+  check: {stat: REF, skill: driving, dv: 13}
+  success:
+    - {weight: 3, text: "Сумка доставлена, вопросов не задано. Старшие кивают.", effects: {eddies: 300, faction_rep:my_gang: 2}}
+    - {weight: 1, text: "По дороге ты всё-таки заглядываешь в сумку. Там коробка пончиков. Это была проверка, и она почти пройдена.", effects: {eddies: 100, faction_rep:my_gang: 1, mood: 3}}
+  fail:
+    - {weight: 2, text: "Патруль останавливает машину. Сумку приходится выбросить в канал.", effects: {faction_rep:my_gang: -3, heat: 1}}
+
+- key: gang_party
+  section: gang
+  name: Вечеринка банды
+  button: Вечеринка
+  description: "Банда гуляет. Пропустить — значит обидеть старших."
+  conditions: {in_gang: true}
+  cost: 50
+  daily: true
+  success:
+    - {weight: 3, text: "Музыка, выпивка, кто-то делает новое тату прямо на диване. Ты свой.", effects: {mood: 10, faction_rep:my_gang: 1}}
+    - {weight: 1, text: "Под утро ты выигрываешь у старшего в армрестлинг. Он смеётся и хлопает тебя по плечу.", effects: {mood: 12, faction_rep:my_gang: 2, street_cred: 1}}
+    - {weight: 1, text: "Утро на крыше в чужой куртке. Дорогу туда не помнит никто.", effects: {mood: 5, hp: -2}}
+
+- key: gang_raid
+  section: gang
+  name: Налёт на склад
+  button: Налёт
+  description: "Большое дело банды: склад конкурентов. Доля — по заслугам."
+  ap: 2
+  conditions: {in_gang: true}
+  check: {stat: REF, skill: firearms, dv: 16}
+  success:
+    - {weight: 3, text: "Склад вычищен за десять минут. Твоя доля — тысяча двести и уважение старших.", effects: {eddies: 1200, faction_rep:my_gang: 5, street_cred: 2, heat: 1}}
+  fail:
+    - {weight: 2, text: "На складе засада. Отходите с потерями, ты — с пулей в боку.", effects: {hp: -12, faction_rep:my_gang: 1, heat: 1}}
+    - {weight: 1, text: "Тебя берут на выходе со склада.", effects: {heat: 2, jail_weeks: 6}}
+
+- key: gang_recruit
+  section: gang
+  name: Привести новичка
+  button: Новичок
+  description: "Банде нужны люди. Найти пацана, который хочет быть своим."
+  conditions: {in_gang: true}
+  check: {stat: EMP, skill: persuasion, dv: 14}
+  success:
+    - {weight: 3, text: "Пацан с горящими глазами клянётся в верности. Старшие записывают его за тобой.", effects: {faction_rep:my_gang: 3, humanity: -1}}
+  fail:
+    - {weight: 2, text: "Пацан слушает, кивает и уходит в колледж. Возможно, это к лучшему.", effects: {humanity: 1, mood: -1}}
+
+# -- batch 2 (owner request: more deeds and items) ----------------------------------------------------------------------
+
+- key: gang_armory
+  section: gang
+  name: Дежурство в оружейке банды
+  button: Оружейка
+  description: "Ночь на складе банды: почистить стволы, пересчитать патроны, не уснуть. Старшие иногда разрешают взять что-нибудь себе."
+  conditions: {in_gang: true}
+  success:
+    - {weight: 3, text: "Ты чистишь стволы до рассвета. Старший проверяет и одобрительно кивает.", effects: {faction_rep:my_gang: 2, skill_xp:firearms: 1}}
+    - {weight: 1, text: "Старший разрешает взять ствол из ящика списанных: «Заработано»", effects: {faction_rep:my_gang: 1, item_grant:garage_smg: true}}
+    - {weight: 1, text: "В ящике со старьём лежит кастет. Никто не против.", effects: {faction_rep:my_gang: 1, item_grant:brass_knuckles: true}}
+
+- key: gang_mural
+  section: gang
+  name: Нарисовать мурал банды
+  button: Мурал
+  description: "Огромный рисунок на стене соседнего квартала: символ банды, чтобы все знали, чья это улица. Чужие будут злиться."
+  conditions: {in_gang: true}
+  check: {stat: TECH, skill: stealth, dv: 12}
+  success:
+    - {weight: 3, text: "К утру на стене огромный символ банды. Весь район приходит посмотреть.", effects: {faction_rep:my_gang: 3, fame: 1}}
+  fail:
+    - {weight: 2, text: "Чужие застают тебя с баллончиком на лестнице. Баллончик остаётся у них, синяк — у тебя.", effects: {hp: -5, faction_rep:my_gang: 1}}
+    - {weight: 1, text: "Камера NCPD снимает тебя за работой. Рисунок, впрочем, хороший.", effects: {heat: 1, faction_rep:my_gang: 2}}
+
+- key: gang_hospital
+  section: gang
+  name: Навестить раненого брата
+  button: Раненый
+  description: "Один из своих лежит в подпольной клинике. Принести еды, посидеть рядом, заплатить рипперу."
+  conditions: {in_gang: true}
+  cost: 300
+  success:
+    - {weight: 3, text: "Ты сидишь с ним до вечера, рассказываешь новости улицы. Он обещает вернуть долг кровью, если понадобится.", effects: {faction_rep:my_gang: 3, humanity: 1}}
+    - {weight: 1, text: "Риппер в благодарность за оплату ставит тебе пару швов бесплатно.", effects: {faction_rep:my_gang: 2, hp: 6}}
+
+- key: gang_initiation
+  section: gang
+  name: Принять новичка в банду
+  button: Посвящение
+  description: "Новичок проходит посвящение, и кто-то из старших должен его вести. Можно жёстко, можно по-человечески."
+  conditions: {in_gang: true}
+  check: {stat: COOL, skill: persuasion, dv: 13}
+  success:
+    - {weight: 2, text: "Новичок проходит испытание и смотрит на тебя как на старшего в семье. Банда растёт.", effects: {faction_rep:my_gang: 3, add_npc:protege: true}}
+    - {weight: 1, text: "Новичок оказывается толковым и приносит тебе первый заработок в знак уважения.", effects: {faction_rep:my_gang: 2, eddies: 300}}
+  fail:
+    - {weight: 2, text: "Новичок сбегает посреди посвящения. Старшие косо смотрят на тебя.", effects: {faction_rep:my_gang: -1, mood: -2}}
+
+- key: gang_rival_spy
+  section: gang
+  name: Шпионить за соперниками
+  button: Разведка
+  description: "Тихо пройтись по чужой территории, посчитать бойцов и машины, вернуться живым."
+  conditions: {in_gang: true}
+  check: {stat: INT, skill: stealth, dv: 14}
+  success:
+    - {weight: 3, text: "Ты приносишь карту с постами и сменами охраны. Старшие планируют налёт.", effects: {faction_rep:my_gang: 4, street_cred: 1}}
+    - {weight: 1, text: "У чужого склада ты замечаешь незапертый пикап и уводишь из кабины обрез.", effects: {faction_rep:my_gang: 3, item_grant:sawed_off: true}}
+  fail:
+    - {weight: 2, text: "Тебя замечают. Убегаешь через три двора и забор с колючкой.", effects: {hp: -6}}
+    - {weight: 1, text: "Тебя ловят и отпускают с посланием для твоих старших. Послание — на твоём лице.", effects: {hp: -9, faction_rep:my_gang: 1}}

@@ -1,0 +1,104 @@
+- key: tyger_claws_loan
+  name: Заём у Тигриных когтей
+  creditor: Тигриные когти
+  creditor_kind: gang
+  creditor_ref: tyger_claws
+  principal_min: 3000
+  principal_max: 8000
+  weekly_rate: null
+  description: "Деньги на первое время дали Тигриные когти. Они не торопят, они просто ничего не забывают."
+  available_from: 2020
+
+- key: kabuki_ripper_loan
+  name: Долг рипперу из Кабуки
+  creditor: Подпольный риппер из Кабуки
+  creditor_kind: ripper
+  creditor_ref: underground_watson
+  principal_min: 3000
+  principal_max: 6000
+  weekly_rate: null
+  description: "Дешёвый имплант пришлось переделывать, а за вторую операцию платить было уже нечем. Риппер не любит, когда клиенты уходят, не расплатившись."
+
+- key: district_bank_loan
+  name: Кредит в банке Уотсона
+  creditor: Банк «Гарант»
+  creditor_kind: bank
+  creditor_ref: null
+  principal_min: 5000
+  principal_max: 8000
+  weekly_rate: null
+  description: "Договор подписан не глядя, мелкий шрифт пропущен. Проценты капают каждую неделю, даже пока ты спишь."
+
+- key: maelstrom_loan
+  name: "Долг Мальстрёму"
+  creditor: "Мальстрём"
+  creditor_kind: gang
+  creditor_ref: maelstrom
+  principal_min: 4000
+  principal_max: 8000
+  weekly_rate: null
+  description: "Деньги на ремонт квартиры и обещание вернуть к концу месяца. Сколько длится месяц, в Мальстрёме решает главарь."
+  available_from: 2020
+
+- key: single_mother_loan
+  name: "Долг матери-одиночке"
+  creditor: Мать-одиночка из Хейвуда
+  creditor_kind: family
+  creditor_ref: null
+  principal_min: 3000
+  principal_max: 5000
+  weekly_rate: null
+  description: "Она одолжила тебе то, что откладывала на лечение сына, и взяла слово вернуть вовремя. Пистолет на кухонной полке лежит не для красоты."
+
+- key: arasaka_advance
+  name: "Служебный аванс от Arasaka"
+  creditor: "Arasaka"
+  creditor_kind: corp
+  creditor_ref: arasaka
+  principal_min: 6000
+  principal_max: 8000
+  weekly_rate: null
+  description: "Аванс за контракт, который так и не начался. Контракт расторгли, а аванс превратился в долг с корпоративными процентами."
+
+- key: moxes_loan
+  name: "Долг Шельмам"
+  creditor: "Шельмы"
+  creditor_kind: gang
+  creditor_ref: moxes
+  principal_min: 3000
+  principal_max: 6000
+  weekly_rate: null
+  description: "Машина, проданная Шельмам, оказалась в чужом залоге. Деньги назад они не требуют: просто включили тебе счётчик."
+  available_from: 2067
+
+- key: valentinos_loan
+  name: "Долг Валентинос"
+  creditor: "Валентинос"
+  creditor_kind: gang
+  creditor_ref: valentinos
+  principal_min: 4000
+  principal_max: 7000
+  weekly_rate: null
+  description: "Карточный проигрыш дилеру Валентинос в Хейвуде. Теперь каждую пятницу кто-нибудь из банды заходит поздороваться."
+  available_from: 2037
+
+- key: dogtown_usurer_loan
+  name: "Долг ростовщику из Догтауна"
+  creditor: "Ростовщик из Догтауна"
+  creditor_kind: other
+  creditor_ref: null
+  principal_min: 3000
+  principal_max: 8000
+  weekly_rate: null
+  description: "Ты поручился за друга. Друг уехал, а ростовщик остался и теперь ждёт денег от тебя."
+  available_from: 2070
+
+- key: trauma_team_policy_debt
+  name: "Счёт от Trauma Team"
+  creditor: "Trauma Team"
+  creditor_kind: corp
+  creditor_ref: trauma_team
+  principal_min: 4000
+  principal_max: 8000
+  weekly_rate: null
+  description: "Тебя соскребли с асфальта, спасли и выставили счёт. Страховка, как выяснилось, такие случаи не покрывает."

@@ -1,0 +1,203 @@
+- key: regina_jones
+  name: Регина Джонс
+  districts: [watson]
+  description: "Фиксер Уотсона. Знает всех, платит вовремя и не прощает ошибок. С неё удобно начинать."
+  voice: сухо, по делу, без сантиментов; называет клиента чумбой только когда довольна
+  min_street_cred: 0
+  legendary: false
+  available_from: 2070
+
+- key: wakako_okada
+  name: Вакако Окада
+  districts: [westbrook]
+  description: "Фиксер Вестбрука. Держит Джапантаун на родственных связях и долгах. Если она назвала цену, торговаться уже поздно."
+  voice: вежливо, с паузой перед каждым словом; угрозы произносит ровным голосом
+  min_street_cred: 0
+  legendary: false
+  available_from: 2070
+
+- key: dino_dinovic
+  name: Дино Диновик
+  districts: [city_center]
+  description: "Фиксер Сити-центра. Работает на корпоративную охрану и её начальство. Улыбается ровно до тех пор, пока не прозвучит сумма."
+  voice: бодро, гладко, как корпоративный менеджер; любит слова «проект» и «риск»
+  min_street_cred: 0
+  legendary: false
+  available_from: 2070
+
+- key: padre
+  name: Падре
+  districts: [heywood]
+  description: "Фиксер Хейвуда. Ведёт дела из задней комнаты церкви. Грехи отпускает, долги никогда."
+  voice: "спокойно, с тихим смешком; говорит короткими фразами и любит паузы"
+  min_street_cred: 0
+  legendary: false
+  available_from: 2070
+
+- key: el_capitan
+  name: Эль Капитан
+  districts: [santo_domingo]
+  description: "Фиксер Санто-Доминго. Старый уличный боец, который держит Шестую улицу в узде и помнит каждого должника."
+  voice: прямо, на испанском вперемешку с английским; хрипит и мало объясняет
+  min_street_cred: 0
+  legendary: false
+  available_from: 2070
+
+- key: mr_hands
+  name: Мистер Хэндс
+  districts: [pacifica, dogtown]
+  description: "Фиксер Пасифики и Догтауна. Говорит тихо, руки держит на виду. Щедро платит за заказы, сделанные без шума."
+  voice: тихо, размеренно; угрозы звучат как инструкция по технике безопасности
+  min_street_cred: 0
+  legendary: false
+  available_from: 2070
+
+- key: dakota_smith
+  name: Дакота Смит
+  districts: [badlands]
+  description: "Фиксер Бэдлендса. Держит караваны и дороги в город. Явишься в пустыню без воды, она даже не удивится."
+  voice: резко, по-простому, с сарказмом; называет людей по марке машины
+  min_street_cred: 0
+  legendary: false
+  available_from: 2070
+
+- key: rogue
+  name: Роуг
+  districts: [watson]
+  description: "Легенда «Посмертия». Берёт в работу только тех, у кого уже есть имя на улице. Заказы идут через Регину, но решает Роуг сама."
+  voice: медленно, с усмешкой; говорит о людях в прошедшем времени, даже когда они живы
+  min_street_cred: 35
+  legendary: true
+
+# Early-era fixers (2013-2069): original characters, not canon. Each is a handle that passes to a successor,
+# so one record can cover decades. The canon fixers of the 2070s take over from 2070 (see docs/QUESTIONS.md, M1.7b).
+- key: schetovod
+  name: "Счетовод"
+  districts: [watson]
+  description: "Фиксер Уотсона. Счетовод — прозвище, а не человек: его носили уже трое, а цены не менялись. Всё записывает в бумажную книгу и никогда её не теряет."
+  voice: монотонно, как диктор; называет суммы вслух и просит повторить
+  min_street_cred: 0
+  legendary: false
+  available_until: 2069
+
+- key: old_lantern
+  name: Старик Фонарь
+  districts: [westbrook]
+  description: "Фиксер японского квартала. Днём торгует бумажными фонарями, настоящие дела ведёт в подсобке. Прозвище переходит к ученику."
+  voice: тихо, с поклоном; никогда не говорит «нет», только «подумаем»
+  min_street_cred: 0
+  legendary: false
+  available_until: 2069
+
+- key: faceless_manager
+  name: Безликий менеджер
+  districts: [city_center]
+  description: "Фиксер Сити-центра. Визитка без имени, кабинет этажом ниже приёмной. Берёт заказы у корпоратов, которым нельзя светиться рядом с делом."
+  voice: гладко, в третьем лице; «проект», «риск», «закрыли вопрос»
+  min_street_cred: 0
+  legendary: false
+  available_until: 2069
+
+- key: deacon
+  name: Дьякон
+  districts: [heywood]
+  description: "Фиксер Хейвуда. Принимает в подсобке церковного приюта, среди чаш и свечей. Грехи отпускает оптом, долги не прощает никогда."
+  voice: ровно, с цитатами; угрожает шёпотом
+  min_street_cred: 0
+  legendary: false
+  available_until: 2069
+
+- key: tia_marisol
+  name: Тётка Марисоль
+  districts: [santo_domingo]
+  description: "Фиксер Санто-Доминго. Кормит полрайона из столовой при складе и точно знает, кто сколько должен. Если эдди нет, платит едой."
+  voice: "ласково, на двух языках; зовёт всех «mijo» и берёт за это втридорога"
+  min_street_cred: 0
+  legendary: false
+  available_until: 2069
+
+- key: old_axle
+  name: "Старик Ось"
+  districts: [badlands]
+  description: "Фиксер Бэдлендса. Держит заправку на трассе и знает всё, что везут в город. Вода, бензин и заказы у него идут по одной цене."
+  voice: хрипло, с паузами; считает расстояния в канистрах
+  min_street_cred: 0
+  legendary: false
+  available_until: 2069
+
+- key: ti_jean
+  name: Ти-Жан
+  districts: [pacifica]
+  description: "Фиксер гаитянской стройки в Пасифике. Набирает бригады на курорт, который никто не достроит. Платит вовремя, пока платят ему."
+  voice: мягко, на смеси креольского и английского; шутит там, где другие угрожают
+  min_street_cred: 0
+  legendary: false
+  available_from: 2062
+  available_until: 2069
+
+# -- fixers of the new districts (owner request: more districts). Original characters, every year. --------------------
+
+- key: big_mama_zhu
+  name: Мама Чжу
+  districts: [northside]
+  description: "Фиксер Нортсайда. Держит столовую для рабочих литейного цеха и раздаёт заказы вместе с пельменями. Знает, кто из местных хромированных ещё человек, а кто уже нет."
+  voice: "по-матерински строго, кормит и ругает одновременно; называет всех «худышка»"
+  min_street_cred: 0
+  legendary: false
+
+- key: captain_rook
+  name: Капитан Рук
+  districts: [waterfront]
+  description: "Фиксер Портового района. Бывший капитан сухогруза, списанный на берег за контрабанду. Теперь контрабандой руководит."
+  voice: "морскими словечками, спокойно; меряет всё в узлах и бочках"
+  min_street_cred: 0
+  legendary: false
+
+- key: signora_valli
+  name: Синьора Валли
+  districts: [little_europe]
+  description: "Фиксер Маленькой Европы. Вдова оперного тенора, хозяйка кафе «Вена». Заказы передаёт в конвертах с запахом духов."
+  voice: "церемонно, с итальянскими словами; никогда не говорит прямо о деньгах"
+  min_street_cred: 0
+  legendary: false
+
+- key: mister_blue
+  name: Мистер Блю
+  districts: [north_oak]
+  description: "Фиксер Норт-Оука. Дворецкий трёх поколений одной корпоративной семьи. Решает проблемы богатых так, чтобы о них не узнали газеты."
+  voice: "безупречно вежливо, на «вы»; самое страшное говорит самым мягким тоном"
+  min_street_cred: 0
+  legendary: false
+
+- key: judge_ortega
+  name: Судья Ортега
+  districts: [the_glen]
+  description: "Фиксер Глена. Бывший судья, лишённый мантии за взятки. Теперь честно берёт взятки за то, что сводит нужных людей."
+  voice: "как на заседании: «итак», «по существу», «вопрос закрыт»"
+  min_street_cred: 0
+  legendary: false
+
+- key: one_eyed_sam
+  name: Одноглазый Сэм
+  districts: [combat_zone]
+  description: "Фиксер Боевой зоны. Торгует водой, патронами и заказами из окна бронированного трейлера. Второй глаз потерял на работе, которую сам же и дал."
+  voice: "отрывисто, без лишних слов; цену называет раньше задачи"
+  min_street_cred: 0
+  legendary: false
+
+- key: professor_kane
+  name: Профессор Кейн
+  districts: [university]
+  description: "Фиксер Университетского района. Преподаёт этику корпоративного права и продаёт студентам заказы, которые этой этике противоречат."
+  voice: "лекторским тоном, со ссылками на авторов; ставит оценки за выполненную работу"
+  min_street_cred: 0
+  legendary: false
+
+- key: geiger
+  name: Гейгер
+  districts: [hot_zone]
+  description: "Фиксер Горячей зоны. Бывший ликвидатор 2023 года, у которого щёлкает дозиметр в кармане. Знает, где в руинах ещё лежат деньги, и где лежат те, кто за ними ходил."
+  voice: "хрипло и весело, считает всё в рентгенах; советует пить йод"
+  min_street_cred: 0
+  legendary: false
+  available_from: 2023

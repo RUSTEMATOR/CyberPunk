@@ -1,0 +1,103 @@
+# Legendary weapons (owner request): rare stories, each can end with one unique weapon (weapons.yaml lg_*).
+# Every story happens once per life (flags_none on its own flag).
+
+- id: lg_veteran_will
+  title: Завещание ветерана
+  category: rare
+  weight: 1
+  conditions:
+    min_street_cred: 8
+    flags_none: [lg_veteran]
+  text: "Нотариус в потёртом пиджаке находит тебя в баре. Старый наёмник, с которым ты однажды пил, умер и оставил тебе ящик. Внутри пистолет и записка: «Ты единственный, кто слушал мои истории до конца»."
+  choices:
+    - label: Взять пистолет
+      effects: {flag_set:lg_veteran: true, item_grant:lg_last_word: true, mood: 4}
+      text: "Пистолет лежит в руке так, будто ждал именно тебя. На затворе: «Говорю один раз»."
+    - label: Продать коллекционеру
+      effects: {flag_set:lg_veteran: true, eddies: 4500}
+      text: "Коллекционер платит не торгуясь. Ночью тебе снится старик, который молча качает головой."
+
+- id: lg_sniper_nest
+  title: Гнездо снайпера
+  category: rare
+  weight: 1
+  conditions:
+    min_street_cred: 15
+    flags_none: [lg_sniper]
+  text: "Фиксер шепчет адрес: на крыше заброшенной высотки двадцать лет назад сидел снайпер, которого так и не нашли. Его винтовку тоже. Туда уже ходили трое, вернулся один."
+  choices:
+    - label: Подняться на крышу
+      check: {stat: REF, skill: stealth, dv: 17}
+      success: {text: "Ты обходишь растяжки, о которые споткнулись другие. В тайнике под вентиляцией лежит винтовка с сорока зарубками. Она в идеальном состоянии.", effects: {flag_set:lg_sniper: true, item_grant:lg_widowmaker: true, street_cred: 2}}
+      fail: {text: "Растяжка срабатывает на сороковом этаже. Ты успеваешь отпрыгнуть, но крыша обваливается вместе с тайником.", effects: {flag_set:lg_sniper: true, hp: -12}}
+    - label: Не лезть
+      effects: {}
+      text: "Двое не вернулись. Ты не хочешь быть третьим."
+
+- id: lg_lotus_trial
+  title: Испытание мастера
+  category: rare
+  weight: 1
+  conditions:
+    min_street_cred: 10
+    flags_none: [lg_lotus]
+  text: "Старый кузнец из Японтауна ищет того, кому отдать последний клинок. Условие одно: продержаться против его ученика до первой крови. Ученик моложе тебя и улыбается."
+  choices:
+    - label: Принять вызов
+      check: {stat: REF, skill: melee, dv: 17}
+      success: {text: "Ученик падает на колено, на щеке тонкая царапина. Мастер кланяется и протягивает катану: «Её зовут Красный лотос. Не позорь её»", effects: {flag_set:lg_lotus: true, item_grant:lg_red_lotus: true, fame: 2}}
+      fail: {text: "Ты даже не видишь удар. Кровь на рукаве твоя. Мастер вежливо провожает тебя до двери.", effects: {flag_set:lg_lotus: true, hp: -6, mood: -4}}
+    - label: Поклониться и уйти
+      effects: {flag_set:lg_lotus: true, humanity: 1}
+      text: "Мастер кивает с одобрением: «Знать свой предел — тоже искусство»."
+
+- id: lg_preacher
+  title: Уличный проповедник
+  category: street
+  weight: 1
+  conditions:
+    flags_none: [lg_preacher]
+  text: "Проповедник на углу кричит о конце света и о том, что город надо очистить. Под плащом у него дробовик. Вечером его находят мёртвым, а дробовик лежит рядом, и никто не решается его взять."
+  choices:
+    - label: Забрать дробовик
+      check: {stat: COOL, dv: 13}
+      success: {text: "Ты поднимаешь дробовик и уходишь, не оглядываясь. На стволе выжжено: «Чистота — это порядок».", effects: {flag_set:lg_preacher: true, item_grant:lg_street_sweeper: true, humanity: -1}}
+      fail: {text: "Ты наклоняешься, и из подворотни выходят его прихожане. Дробовик остаётся им, тебе — синяки.", effects: {flag_set:lg_preacher: true, hp: -5}}
+    - label: Позвонить в морг
+      effects: {flag_set:lg_preacher: true, humanity: 1}
+      text: "Ты вызываешь труповозку и ждёшь, пока его увезут. Кто-то же должен."
+
+- id: lg_cook_cleaver
+  title: Тесак из лапшичной
+  category: rare
+  weight: 1
+  conditions:
+    flags_none: [lg_cleaver]
+  text: "Лапшичная, где ты когда-то ел каждую неделю, закрывается. Старый повар раздаёт посуду постоянным клиентам. Тебе протягивает тесак: «Им я отбился от Тигриных когтей в восемьдесят восьмом. Пусть и тебе повезёт»."
+  choices:
+    - label: Взять тесак
+      effects: {flag_set:lg_cleaver: true, item_grant:lg_lucky_cleaver: true, mood: 5}
+      text: "Тесак тяжёлый и пахнет имбирём. Повар хлопает тебя по плечу и закрывает дверь навсегда."
+    - label: Взять миску
+      effects: {flag_set:lg_cleaver: true, humanity: 1, mood: 3}
+      text: "Ты выбираешь треснутую миску. Повар смеётся впервые за неделю."
+
+- id: lg_mayor_revolver
+  title: Револьвер на аукционе
+  category: money
+  weight: 1
+  conditions:
+    min_status: 5
+    flags_none: [lg_ghost]
+  text: "Закрытый аукцион в Сити-центре. Лот номер семь: револьвер, из которого, по легенде, стреляли в мэра. Стартовая цена — пять тысяч. Против тебя торгуется корпорат с охраной."
+  choices:
+    - label: Торговаться до конца (7000)
+      effects: {flag_set:lg_ghost: true, eddies: -7000, item_grant:lg_ghost_revolver: true, status: 1}
+      text: "Корпорат сдаётся на семи тысячах и смотрит на тебя с интересом. Револьвер в бархатной коробке, барабан чуть проворачивается сам."
+    - label: Украсть с витрины
+      check: {stat: REF, skill: stealth, dv: 18}
+      success: {text: "Пока все смотрят на лот номер восемь, ты меняешь коробки. Охрана хватится только утром.", effects: {flag_set:lg_ghost: true, item_grant:lg_ghost_revolver: true, heat: 2}}
+      fail: {text: "Охрана берёт тебя у витрины. Скандал на весь Сити-центр.", effects: {flag_set:lg_ghost: true, heat: 3, jail_weeks: 4, fame: 1}}
+    - label: Просто смотреть
+      effects: {}
+      text: "Ты смотришь, как револьвер уходит корпорату. Красивая вещь. Не твоя."

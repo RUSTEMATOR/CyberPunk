@@ -1,0 +1,23 @@
+# The Blackwall branch of the character (owner request 25.10): «Прокачка» → «ЗАСЛОН». Opens for those on the side of
+# the Blackwall (the cult, the Avatar chain started, or an Avatar). Blackwall points come from the path itself
+# (engine/bwtree.py). The branch mixes the Blackwall with the character: most perks need one of the character's own
+# attributes and make that side of the character stronger.
+# Fields: name, text, ranks, stat {ATTR: value} (the first rank; each next rank needs one more), tier / step / avatar
+# (the Blackwall progress needed), mods (per rank), special (a combat special, per rank), top_stat (+N per rank to the
+# character's strongest attribute).
+
+title: "ЗАСЛОН · Сплав"
+perks:
+  echo_self: {name: Эхо себя, text: "Заслон усиливает то, кто ты есть: +1 к твоему самому сильному атрибуту за ранг.", ranks: 2, top_stat: 1}
+  noise_flesh: {name: Шум в мышцах, text: "Здоровье +8 и урон в ближнем бою +1 за ранг.", ranks: 2, stat: {BODY: 6}, mods: {hp_max: 8, melee_damage: 1}}
+  noise_reflex: {name: Помехи в рефлексах, text: "Проверки в бою +1 за ранг, и ещё одна атака по тебе за бой уходит в помехи.", ranks: 2, stat: {REF: 6}, mods: {check.combat: 1}, special: ghost}
+  noise_hands: {name: Код в пальцах, text: "Защита +1 и урон из огнестрела +1 за ранг.", ranks: 2, stat: {TECH: 6}, mods: {armor: 1, ranged_damage: 1}}
+  noise_mind: {name: Заслон в мыслях, text: "RAM +2 и защита от взломов +2 за ранг; на втором ранге программа бьёт ещё одну цель.", ranks: 2, stat: {INT: 6}, mods: {ram_max: 2, ice: 2}, rank2: {quickhack_targets: 1}}
+  noise_voice: {name: Голос помех, text: "Люди слушают тебя, как шум в эфире: общение и уговоры +2 за ранг.", ranks: 2, stat: {COOL: 6}, mods: {check.social: 2}}
+  noise_heart: {name: Тихое сердце, text: "Настроение +1 в неделю и потеря человечности от имплантов −10% за ранг.", ranks: 2, stat: {EMP: 6}, mods: {mood_weekly: 1, humanity_loss_pct: -10}}
+  noise_luck: {name: Монета помех, text: "Удача +1 и криминал +1 за ранг.", ranks: 2, stat: {LUCK: 6}, mods: {stat.LUCK: 1, check.crime: 1}}
+  silence: {name: Тишина за Заслоном, text: "Порча больше не ест человечность и настроение и не мешает говорить с людьми.", ranks: 1, tier: 2, mods: {check.social: 3, mood_weekly: 2}}
+  static_burst: {name: Разряд помех, text: "В начале каждого боя из твоего хрома бьёт разряд Заслона: урон и оглушение врага.", ranks: 1, step: 2, special: emp}
+  hunger: {name: Голод сервера, text: "Каждое убийство в бою лечит и разгоняет урон до конца боя.", ranks: 1, step: 3, special_many: {bloodlust: 1, edgerunner: 1}}
+  undying: {name: Неупокоенный код, text: "Здоровье +10, и раз за бой на четверти здоровья код поднимает тебя.", ranks: 1, tier: 3, mods: {hp_max: 10}, special: second_wind}
+  crown: {name: Корона помех, text: "Все атрибуты +1 и снижение урона +1. Только для Аватара.", ranks: 1, avatar: true, mods: {stat.BODY: 1, stat.REF: 1, stat.TECH: 1, stat.INT: 1, stat.COOL: 1, stat.EMP: 1, stat.LUCK: 1, damage_reduction: 1}}

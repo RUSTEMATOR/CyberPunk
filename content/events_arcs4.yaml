@@ -1,0 +1,235 @@
+# Story arcs, batch 4 (owner request: many quests and items). Same rules as events_arcs.yaml: the first step is a
+# random event once per life (flags_none on the arc flag), every next step is forced_only and comes with the next week.
+
+# ======================================================================== «Перебежчик»
+
+- id: arc_defector_1
+  title: Корпорат в мусорном баке
+  category: work
+  weight: 3
+  conditions:
+    flags_none: [arc_defector]
+  text: "В мусорном баке за твоим домом прячется человек в дорогом костюме. Он шепчет, что сбежал из Militech с файлами и что за ним идут. Просит спрятать его до утра."
+  choices:
+    - label: Спрятать у себя
+      effects: {flag_set:arc_defector: true, heat: 1, queue_event:arc_defector_2: true}
+      text: "Он спит на твоём полу в костюме за десять тысяч. Утром благодарит и просит ещё об одной услуге."
+    - label: Сдать охране Militech
+      effects: {flag_set:arc_defector: true, eddies: 1500, humanity: -2}
+      text: "Охрана приезжает через пять минут. Тебе переводят полторы тысячи. Его крик ты слышишь до сих пор."
+
+- id: arc_defector_2
+  title: Документы на выезд
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Перебежчику нужны чистые документы, чтобы улететь из города. Фальсификатор в Кабуки сделает их за три тысячи, но у корпората на счету заморожено всё. Платить тебе — или искать другой путь."
+  choices:
+    - label: Заплатить фальсификатору
+      effects: {eddies: -3000, queue_event:arc_defector_3: true}
+      text: "Документы готовы за два дня. Корпорат клянётся вернуть всё с процентами."
+    - label: Взломать базу самому
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "Ты вписываешь его новое имя прямо в реестр аэропорта. Чисто и бесплатно.", effects: {skill_xp:netrunning: 3, queue_event:arc_defector_3: true}}
+      fail: {text: "Лёд базы бьёт в ответ. Документы ты всё же получаешь, но Militech теперь знает твой адрес.", effects: {hp: -6, heat: 2, queue_event:arc_defector_3: true}}
+
+- id: arc_defector_3
+  title: Посадка на рейс
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Аэропорт. Корпорат проходит контроль и оборачивается. Он протягивает тебе шард: «Здесь мой имплант-прототип, подкожная броня. Риппер поставит. Или продай — Militech заплатит любые деньги, чтобы получить его назад»."
+  choices:
+    - label: Поставить имплант
+      effects: {cyberware_grant:subdermal_armor: true, eddies: 2000, humanity: 1}
+      text: "Риппер ставит прототип подкожной брони и присвистывает: «Такого на рынке нет». На счёт падают две тысячи: корпорат сдержал слово."
+    - label: Продать Militech
+      effects: {eddies: 9000, humanity: -2, faction_rep:militech: 3}
+      text: "Militech платит девять тысяч и не задаёт вопросов. Что стало с перебежчиком, ты не спрашиваешь."
+
+# ======================================================================== «Лапшичная тётушки Мэй»
+
+- id: arc_noodles_1
+  title: Рэкет в лапшичной
+  category: street
+  weight: 3
+  conditions:
+    flags_none: [arc_noodles]
+  text: "Тётушка Мэй, у которой ты ешь лапшу третий год, плачет за стойкой: Тигриные когти подняли плату за крышу вдвое. Иначе — пожар."
+  choices:
+    - label: Поговорить с Когтями
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Ты договариваешься на старую цену. Когти уходят, ворча. Тётушка Мэй кормит тебя бесплатно до конца недели.", effects: {flag_set:arc_noodles: true, mood: 6, queue_event:arc_noodles_2: true}}
+      fail: {text: "Когти смеются тебе в лицо. Но запоминают, кто за неё заступается.", effects: {flag_set:arc_noodles: true, street_cred: -1, queue_event:arc_noodles_2: true}}
+    - label: Дать ей денег
+      effects: {flag_set:arc_noodles: true, eddies: -800, humanity: 1}
+      text: "Тётушка Мэй берёт деньги со слезами. Лапшичная работает. Чем кончится через месяц — неизвестно."
+
+- id: arc_noodles_2
+  title: Ночной пожар
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Ночью ты видишь, как у лапшичной двое Когтей разливают бензин. Звонить в NCPD бесполезно: приедут к утру."
+  choices:
+    - label: Остановить поджигателей
+      check: {stat: BODY, skill: melee, dv: 14}
+      success: {text: "Двое Когтей уходят с переломами. Канистры летят в канал.", effects: {skill_xp:melee: 2, faction_rep:tyger_claws: -3, queue_event:arc_noodles_3: true}}
+      fail: {text: "Тебя бьют, но огонь удаётся потушить. Лапшичная закопчена, но цела.", effects: {hp: -9, queue_event:arc_noodles_3: true}}
+    - label: Снять на камеру и слить в сеть
+      effects: {fame: 1, heat: 1, queue_event:arc_noodles_3: true}
+      text: "Видео набирает миллион просмотров. Когтям приходится отступить: огласка им невыгодна."
+
+- id: arc_noodles_3
+  title: Рецепт тётушки Мэй
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Тётушка Мэй закрывает кафе раньше и сажает тебя за стол. Она достаёт тетрадь с рецептами и старый нож шеф-повара: «Мой сын не вернулся с войны. Хочу, чтобы это было у тебя»."
+  choices:
+    - label: Взять нож
+      effects: {item_grant:cleaver_pair: true, add_npc:friend: true, humanity: 2}
+      text: "Два тяжёлых тесака, наточенные до блеска. Тётушка Мэй называет тебя по имени, как родного."
+    - label: Взять тетрадь
+      effects: {add_npc:friend: true, humanity: 3, mood: 10}
+      text: "Ты готовишь её лапшу дома. Получается не так, но в первый раз за год пахнет домом."
+
+# ======================================================================== «Призрак в квартире»
+
+- id: arc_haunt_1
+  title: Голос в стенах
+  category: rare
+  weight: 2
+  conditions:
+    flags_none: [arc_haunt]
+  text: "Ночью в квартире сам включается свет. Холодильник шепчет. На экране появляется надпись: «Это моя квартира». Соседи говорят, что прошлый жилец был нетраннером и умер прямо здесь."
+  choices:
+    - label: Ответить на экране
+      effects: {flag_set:arc_haunt: true, queue_event:arc_haunt_2: true}
+      text: "«Кто ты?» Ответ приходит через минуту: «Тот, кто не может уйти». Свет мигает три раза."
+    - label: Позвать экзорциста-нетраннера
+      effects: {flag_set:arc_haunt: true, eddies: -600}
+      text: "Нетраннер полдня ковыряется в проводке и уходит с жёстким диском под мышкой. Квартира замолкает навсегда."
+
+- id: arc_haunt_2
+  title: Чужая память
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Призрак показывает обрывки памяти: девушка-нетраннер, корпоративный контракт, предательство напарника. Она просит найти её старую деку, спрятанную в вентиляции."
+  choices:
+    - label: Найти деку
+      check: {stat: INT, skill: netrunning, dv: 13}
+      success: {text: "Дека в вентиляции, в пакете от лапши. Ты подключаешь её, и голос в стенах становится громче и спокойнее.", effects: {skill_xp:netrunning: 3, queue_event:arc_haunt_3: true}}
+      fail: {text: "Дека бьёт током. В голове на мгновение чужие воспоминания. Ты приходишь в себя на полу.", effects: {hp: -4, glitches: 1, queue_event:arc_haunt_3: true}}
+    - label: Отказаться
+      effects: {mood: -5}
+      text: "Призрак замолкает. Иногда свет всё равно мигает, когда ты засыпаешь."
+
+- id: arc_haunt_3
+  title: Отпустить
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Призрак знает, где живёт напарник, который её предал. Она может уйти тихо, оставив тебе свою деку и всё, что знала. Или попросить тебя закончить её историю."
+  choices:
+    - label: Отпустить её
+      effects: {skill_xp:netrunning: 4, humanity: 2, luck_pool: 1}
+      text: "Она говорит «спасибо» голосом холодильника и уходит. В квартире тихо и светло. В голове остаются её трюки со льдом."
+    - label: Закончить её историю
+      check: {stat: COOL, skill: stealth, dv: 15}
+      success: {text: "Ты находишь напарника и забираешь всё, что он украл у неё. Деньги пахнут старым предательством.", effects: {eddies: 6000, street_cred: 2, humanity: -1}}
+      fail: {text: "Напарник оказывается готов. Ты уносишь ноги, но с пулей в плече.", effects: {hp: -12, eddies: 1500}}
+
+# ======================================================================== «Старая любовь»
+
+- id: arc_flame_1
+  title: Звонок из прошлого
+  category: relationships
+  weight: 2
+  conditions:
+    flags_none: [arc_flame]
+  text: "Звонит твоя старая любовь — из тех времён, что были до этого города и этой жизни. Голос дрожит: в беде, без денег, в мотеле на выезде из города. Просит приехать."
+  choices:
+    - label: Приехать
+      effects: {flag_set:arc_flame: true, queue_event:arc_flame_2: true}
+      text: "Мотель с мигающей вывеской, номер двенадцать. Дверь открывается раньше, чем ты стучишь."
+    - label: Сбросить звонок
+      effects: {flag_set:arc_flame: true, mood: -4}
+      text: "Телефон звонит ещё дважды, потом замолкает. Ты долго смотришь в потолок."
+
+- id: arc_flame_2
+  title: Номер двенадцать
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Старая любовь задолжала картелю. Деньги нужны к пятнице, иначе её найдут. Она не просит денег — просит помочь исчезнуть."
+  choices:
+    - label: Заплатить долг
+      effects: {eddies: -4000, queue_event:arc_flame_3: true}
+      text: "Ты отвозишь деньги посреднику картеля. Он пересчитывает и кивает: долг закрыт."
+    - label: Вывезти из города
+      check: {stat: REF, skill: driving, dv: 14}
+      success: {text: "Ночная трасса, две погони, один блокпост. К утру вы в Пустошах.", effects: {skill_xp:driving: 2, heat: 1, queue_event:arc_flame_3: true}}
+      fail: {text: "На блокпосте вас останавливают. Приходится отстреливаться и прорываться.", effects: {hp: -8, heat: 2, queue_event:arc_flame_3: true}}
+
+- id: arc_flame_3
+  title: Остаться или отпустить
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Всё позади. Старая любовь стоит у машины и смотрит на тебя так же, как много лет назад. «Может, начнём сначала?»"
+  choices:
+    - label: Начать сначала
+      effects: {add_npc:partner: true, mood: 15, humanity: 2}
+      text: "Вы возвращаетесь в город вдвоём. В этот раз, может, получится."
+    - label: Отпустить
+      effects: {mood: 5, humanity: 1, luck_pool: 1}
+      text: "Ты отдаёшь ключи и смотришь, как машина исчезает на трассе. Иногда любить — значит отпускать."
+
+# ======================================================================== «Курьерская война»
+
+- id: arc_couriers_1
+  title: Две курьерские службы
+  category: work
+  weight: 3
+  conditions:
+    flags_none: [arc_couriers]
+  text: "Две курьерские службы Кабуки воюют за район: «Молния» режет шины, «Ветер» подкупает швейцаров. Обе зовут тебя работать на них."
+  choices:
+    - label: К «Молнии»
+      effects: {flag_set:arc_couriers: true, flag_set:courier_bolt: true, eddies: 300, queue_event:arc_couriers_2: true}
+      text: "«Молния» выдаёт куртку с логотипом и первый заказ. Скорость важнее всего, остальное — потом."
+    - label: К «Ветру»
+      effects: {flag_set:arc_couriers: true, eddies: 300, queue_event:arc_couriers_2: true}
+      text: "«Ветер» выдаёт рацию и список швейцаров, которым надо улыбаться. Связи важнее скорости."
+
+- id: arc_couriers_2
+  title: Саботаж
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Тебе поручают подставить конкурентов: подменить посылку важному клиенту. Если получится, клиент уйдёт к вам навсегда."
+  choices:
+    - label: Подменить посылку
+      check: {stat: REF, skill: stealth, dv: 13}
+      success: {text: "Клиент получает коробку с живыми тараканами. Конкурентам конец, тебе премия.", effects: {eddies: 1200, humanity: -1, queue_event:arc_couriers_3: true}}
+      fail: {text: "Тебя ловит курьер конкурентов. Драка на тротуаре, обе посылки в луже.", effects: {hp: -5, queue_event:arc_couriers_3: true}}
+    - label: Предложить перемирие
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Ты сажаешь владельцев обеих служб за один стол. Через час они делят район по улицам.", effects: {street_cred: 2, status: 1, queue_event:arc_couriers_3: true}}
+      fail: {text: "Оба владельца уходят из-за стола, обругав тебя. Война продолжается.", effects: {mood: -3, queue_event:arc_couriers_3: true}}
+
+- id: arc_couriers_3
+  title: Лучший курьер района
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Сезон закончен. Твоя служба выиграла район и устраивает вечеринку. Хозяин вручает приз лучшему курьеру — тебе. На выбор: новый мотоцикл или пачка эдди."
+  choices:
+    - label: Мотоцикл
+      effects: {vehicle_grant:arch_street: true, fame: 1}
+      text: "Лёгкий уличный мотоцикл с логотипом службы на баке. Логотип можно закрасить, но ты не станешь."
+    - label: Деньги
+      effects: {eddies: 2500, fame: 1}
+      text: "Две с половиной тысячи и аплодисменты. Хозяин обещает взять тебя в долю, если откроет вторую точку."

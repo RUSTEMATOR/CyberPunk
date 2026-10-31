@@ -1,0 +1,326 @@
+# Working for a corporation directly, and the nomad road (owner request, 23.10.2026).
+# Corp events read the employer of the corpo career (conditions.employers); recruiters bring you in directly
+# (career_set:corpo + employer). Nomad events read the career `nomad`; the road call takes you out of the city.
+
+# ======================================================================== recruiters: straight into a corporation
+
+- id: corp_recruiter_arasaka
+  title: Визитка с красным кругом
+  category: work
+  weight: 2
+  conditions:
+    min_status: 4
+    forbids: [has_job]
+  text: "После очередного дела к тебе подсаживается вежливая женщина в строгом костюме. На визитке красный круг Arasaka. «Нам нравится, как вы работаете. Отдел внутренней безопасности. Чистые документы, страховка, своя квартира». Она не ждёт долго."
+  choices:
+    - label: Подписать контракт
+      effects: {career_set:corpo: true, employer:arasaka: true, status: 3, faction_rep:arasaka: 10}
+      text: "Подпись, отпечаток пальца, пропуск. Теперь ты человек Arasaka. Улица это заметит."
+    - label: Поторговаться
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "Она улыбается краешком губ и добавляет подъёмные. Контракт подписан на твоих условиях.", effects: {career_set:corpo: true, employer:arasaka: true, status: 3, eddies: 1500, faction_rep:arasaka: 10}}
+      fail: {text: "Улыбка гаснет. «Мы перезвоним». Не перезванивают.", effects: {mood: -3}}
+    - label: Отказаться
+      effects: {street_cred: 1}
+      text: "Ты возвращаешь визитку. На улице такое уважают."
+
+- id: corp_recruiter_militech
+  title: Предложение Militech
+  category: work
+  weight: 2
+  conditions:
+    min_street_cred: 8
+    forbids: [has_job]
+  text: "Отставной сержант с имплантом вместо челюсти ставит перед тобой кружку пива. Militech набирает людей в службу охраны объектов: оружие, броня, премии за риск. «Ты умеешь стрелять. Нам такие нужны»."
+  choices:
+    - label: Пойти в Militech
+      effects: {career_set:corpo: true, employer:militech: true, status: 2, faction_rep:militech: 10, item_grant:assault_rifle: true}
+      text: "Через неделю у тебя пропуск, служебная винтовка и инструктаж. Militech своих снаряжает щедро."
+    - label: Отказаться
+      effects: {mood: 1}
+      text: "Ты допиваешь пиво и уходишь. Сержант пожимает плечами: «Предложение в силе»."
+
+- id: corp_recruiter_biotechnica
+  title: Лаборатория Biotechnica
+  category: work
+  weight: 2
+  conditions:
+    forbids: [has_job]
+  text: "Biotechnica ищет людей с головой в новый исследовательский корпус. Анкета короткая, тесты долгие. Платят хорошо, особенно тем, кто не задаёт вопросов о подопытных."
+  choices:
+    - label: Пройти тесты
+      check: {stat: INT, skill: medicine, dv: 15}
+      success: {text: "Ты проходишь всё с первого раза. Белый халат, пропуск в лабораторию и подъёмные.", effects: {career_set:corpo: true, employer:biotechnica: true, status: 2, eddies: 500}}
+      fail: {text: "На третьем тесте тебя вежливо благодарят и провожают к выходу.", effects: {mood: -3}}
+    - label: Отказаться
+      effects: {mood: 0}
+      text: "Ты не хочешь знать, что они делают с подопытными."
+
+# ======================================================================== inside a corporation
+
+- id: corp_loyalty_test
+  title: Проверка на лояльность
+  category: work
+  weight: 3
+  conditions:
+    careers: [corpo]
+  text: "Твой начальник вызывает тебя вечером. На столе папка: коллега из соседнего отдела сливает данные конкурентам. Нужен свидетель, который подпишет показания. Свидетелем будешь ты, даже если сам ничего не знаешь."
+  choices:
+    - label: Подписать
+      effects: {status: 2, humanity: -2, eddies: 500}
+      text: "Ты подписываешь. Коллегу выводят из здания с охраной. Тебе выписывают премию и повышенный допуск."
+    - label: Отказаться
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Ты объясняешь, что показания без фактов развалятся в суде и ударят по отделу. Начальник неохотно соглашается.", effects: {humanity: 1, status: 1}}
+      fail: {text: "Начальник молча убирает папку. Следующий месяц тебе достаются самые паршивые задачи.", effects: {status: -2, mood: -5}}
+    - label: Предупредить коллегу
+      effects: {humanity: 2, status: -1, add_npc:friend: true}
+      text: "Ты шепчешь коллеге в лифте. Наутро её стол пуст, а ты приобретаешь друга, который тебе должен."
+
+- id: corp_arasaka_honor
+  title: Кодекс Arasaka
+  category: work
+  weight: 3
+  conditions:
+    careers: [corpo]
+    employers: [arasaka]
+  text: "Ваш отдел провалил проект. По неписаному кодексу кто-то должен взять вину на себя. Твой начальник смотрит на тебя и ждёт."
+  choices:
+    - label: Взять вину
+      effects: {status: -2, faction_rep:arasaka: 10, mood: -4, later: [{weeks: 6, text: "Arasaka помнит верность: тебя повышают через голову начальника.", hint: верность не забудут, effects: {status: 5, eddies: 2000}}]}
+      text: "Ты кланяешься совету и берёшь вину. Тебя понижают. Но в Arasaka умеют помнить."
+    - label: Подставить начальника
+      check: {stat: INT, skill: persuasion, dv: 17}
+      success: {text: "Документы ложатся на стол совета в правильном порядке. Начальника переводят на склад в Пустошах, его кабинет теперь твой.", effects: {status: 4, humanity: -2}}
+      fail: {text: "Начальник оказывается на шаг впереди. Виноватым становишься ты, и без всякой чести.", effects: {status: -4, mood: -6}}
+    - label: Промолчать
+      effects: {status: -1}
+      text: "Ты смотришь в стол. Вину берёт кто-то другой. Тебе это припомнят."
+
+- id: corp_arasaka_implant
+  title: Корпоративный хром
+  category: implants
+  weight: 2
+  conditions:
+    careers: [corpo]
+    employers: [arasaka, militech, kang_tao]
+    lacks_cyberware: [corp_loyalty_plate]
+  text: "Отдел кадров предлагает сотрудникам «программу лояльности»: бесплатную пластину под затылком. Она сообщает компании, где ты и что чувствуешь. Отказ запишут в личное дело."
+  choices:
+    - label: Поставить
+      effects: {cyberware_grant:corp_loyalty_plate: true, status: 3}
+      text: "Пластина встаёт за ухом. Пропуска открываются быстрее, а начальник стал здороваться первым."
+    - label: Отказаться
+      effects: {status: -2, humanity: 1}
+      text: "Ты подписываешь отказ. В личном деле появляется строчка красным."
+
+- id: corp_militech_field
+  title: Полевая командировка
+  category: work
+  weight: 3
+  conditions:
+    careers: [corpo]
+    employers: [militech]
+  text: "Militech отправляет тебя сопровождать груз через пограничный пост. Говорят, по дороге могут встретиться люди, которым этот груз очень нужен."
+  choices:
+    - label: Ехать в броне
+      check: {stat: REF, skill: firearms, dv: 15}
+      success: {text: "Засаду ты замечаешь раньше, чем она стреляет. Груз доходит целым, тебе вручают премию и знак отличия.", effects: {status: 3, eddies: 1200, street_cred: 1}}
+      fail: {text: "Засада бьёт первой. Груз спасён, но ты неделю в госпитале компании.", effects: {hp: -15, status: 1, eddies: 600}}
+    - label: Сделать крюк
+      effects: {status: 1, eddies: 400}
+      text: "Ты выбираешь дальнюю дорогу. Груз опаздывает на сутки, зато целый. Начальство кривится, но платит."
+
+- id: corp_kangtao_drones
+  title: Испытание дронов Kang Tao
+  category: work
+  weight: 3
+  conditions:
+    careers: [corpo]
+    employers: [kang_tao]
+  text: "Kang Tao испытывает новых умных дронов, и твой отдел должен подписать отчёт об успешных тестах. На твоих глазах один дрон открыл огонь по манекенам с лицами настоящих людей."
+  choices:
+    - label: Подписать отчёт
+      effects: {status: 3, eddies: 900, humanity: -2}
+      text: "Отчёт уходит наверх. Дроны поступят в продажу через месяц."
+    - label: Слить запись в сеть
+      check: {stat: INT, skill: netrunning, dv: 16}
+      success: {text: "Запись разлетается по всем лентам. Анонимно. В Kang Tao ищут крысу, но не тебя.", effects: {fame: 3, humanity: 2}}
+      fail: {text: "Служба безопасности перехватывает пакет на выходе из сети. Тебя увольняют в тот же день.", effects: {career_clear: true, heat: 2}}
+    - label: "Взломать дронов"
+      ability: jackin
+      effects: {street_cred: 2, heat: 2, humanity: 1}
+      text: "Ты переписываешь им цели: дроны стреляют в испытательную трибуну Kang Tao. Отчёт подписывать больше некому."
+
+- id: corp_biotechnica_trial
+  title: Испытуемые
+  category: work
+  weight: 3
+  conditions:
+    careers: [corpo]
+    employers: [biotechnica]
+  text: "В закрытом крыле лаборатории испытывают новую сыворотку на людях из Пустошей. Им обещали деньги и лечение. Половина из них уже не встаёт с кроватей."
+  choices:
+    - label: Делать работу
+      effects: {status: 2, eddies: 800, humanity: -3}
+      text: "Ты записываешь показатели и не смотришь в глаза. Премия приходит в пятницу."
+    - label: Тайно вывести людей
+      check: {stat: COOL, skill: stealth, dv: 17}
+      success: {text: "Ночью ты выводишь шестерых через погрузочную. Кочевники встречают их у ворот. Кочевники такое не забывают.", effects: {humanity: 4, street_cred: 2, flag_set:nomad_friend: true}}
+      fail: {text: "Охрана ловит вас у ворот. Людей возвращают в палаты, тебя — за дверь с волчьим билетом.", effects: {career_clear: true, heat: 2, humanity: 2}}
+
+- id: corp_double_agent
+  title: Двойной агент
+  category: work
+  weight: 2
+  conditions:
+    careers: [corpo]
+    min_status: 8
+  text: "Человек из конкурирующей корпорации предлагает большие деньги за пароли твоего отдела. Он знает, сколько ты получаешь, и знает, сколько ты хочешь получать."
+  choices:
+    - label: Продать пароли
+      check: {stat: COOL, skill: stealth, dv: 16}
+      success: {text: "Пароли уходят, деньги приходят на чистый счёт. Никто ничего не заметил. Пока.", effects: {eddies: 5000, humanity: -2, later: [{weeks: 8, chance: 0.4, text: "Внутреннее расследование вышло на тебя. Тебя увольняют без выходного.", fail_text: "Расследование закрыли. Слив списали на хакеров.", hint: внутреннее расследование, effects: {career_clear: true, status: -5}}]}}
+      fail: {text: "Это была проверка службы безопасности. Тебя уводят из кабинета в наручниках.", effects: {career_clear: true, jail_weeks: 4, status: -5}}
+    - label: Сдать его своим
+      effects: {status: 4, eddies: 1000}
+      text: "Ты записываешь разговор и несёшь его в службу безопасности. Тебя хвалят на совете директоров."
+    - label: Отказаться
+      effects: {mood: 1}
+      text: "Ты встаёшь и уходишь. Деньги большие, но жизнь дороже."
+
+- id: corp_board_seat
+  title: Место в совете
+  category: work
+  weight: 2
+  conditions:
+    careers: [corpo]
+    min_status: 20
+  text: "Освободилось кресло в совете директоров. Претендентов трое, и двое из них уже собирают на тебя компромат."
+  choices:
+    - label: Собрать компромат первым
+      check: {stat: INT, skill: persuasion, dv: 18}
+      success: {text: "Твой компромат ложится на стол раньше их. Кресло твоё. Ты смотришь на город с верхнего этажа.", effects: {status: 8, eddies: 5000, humanity: -3}}
+      fail: {text: "Они оказываются быстрее. Кресло уходит другому, а тебя переводят в региональный офис.", effects: {status: -5, mood: -8}}
+    - label: Договориться с одним из них
+      effects: {status: 4, eddies: 2000}
+      text: "Ты уступаешь кресло в обмен на его поддержку через год. Сделка надёжная, по корпоративным меркам."
+
+# ======================================================================== the nomad road
+
+- id: nomad_call
+  title: Зов Пустошей
+  category: rare
+  weight: 2
+  conditions:
+    forbids: [has_job]
+    max_heat: 4
+  text: "На заправке у выезда из города семья кочевников чинит фуру. Старшая, с седыми косами, видит, как ты держишь руль, и говорит: «Город тебя съест. Поехали с нами. В клане всегда нужен ещё один водитель»."
+  choices:
+    - label: Уехать с кланом
+      effects: {career_set:nomad: true, heat: -3, mood: 10, flag_set:nomad_friend: true}
+      text: "Ты бросаешь последний взгляд на огни Найт-Сити и садишься в кабину. Дорога пахнет пылью и свободой."
+    - label: Помочь с фурой
+      check: {stat: TECH, skill: tech, dv: 13}
+      success: {text: "Ты чинишь фуру за час. Кочевники делятся едой и оставляют частоту рации: «Будешь готов — позови».", effects: {flag_set:nomad_friend: true, mood: 6, skill_xp:tech: 2}}
+      fail: {text: "Фура так и не заводится. Кочевники всё равно благодарят за попытку.", effects: {mood: 2}}
+    - label: Остаться в городе
+      effects: {mood: -1}
+      text: "Ты качаешь головой. Город держит крепко."
+
+- id: nomad_radio
+  title: Частота клана
+  category: rare
+  weight: 3
+  conditions:
+    flags_all: [nomad_friend]
+    forbids: [has_job]
+  text: "Рация, оставленная кочевниками, оживает ночью: «Клан уходит на север. Место в конвое за тобой, если хочешь»."
+  choices:
+    - label: Поехать
+      effects: {career_set:nomad: true, heat: -3, mood: 10}
+      text: "Ты собираешь сумку за десять минут. К утру город уже точка в зеркале заднего вида."
+    - label: Не сейчас
+      effects: {mood: -1}
+      text: "Ты отвечаешь, что не сейчас. Голос в рации смеётся: «Мы подождём»."
+
+- id: nomad_convoy_raid
+  title: Налёт на конвой
+  category: street
+  weight: 3
+  conditions:
+    careers: [nomad]
+  text: "Посреди пустыни конвой клана атакуют рейдеры на багги. Твоя фура в хвосте колонны, и она первая под огнём."
+  choices:
+    - label: Отбиваться
+      violent: true
+      check: {stat: REF, skill: firearms, dv: 15}
+      success: {text: "Ты держишь хвост колонны, пока рейдеры не отваливают. Клан поднимает тост за тебя у вечернего костра.", effects: {street_cred: 2, skill_xp:firearms: 2, mood: 5}}
+      fail: {text: "Пуля пробивает кабину и плечо. Конвой уходит, но ты неделю правишь одной рукой.", effects: {hp: -12, skill_xp:firearms: 1}}
+    - label: Уходить на скорости
+      check: {stat: REF, skill: driving, dv: 14}
+      success: {text: "Ты уводишь фуру через сухое русло, куда багги не сунутся. Груз цел.", effects: {skill_xp:driving: 3, eddies: 300}}
+      fail: {text: "Фура увязает в песке. Рейдеры забирают часть груза и уезжают.", effects: {eddies: -400, mood: -4}}
+
+- id: nomad_smuggling
+  title: Контрабанда через границу
+  category: money
+  weight: 3
+  conditions:
+    careers: [nomad]
+  text: "Клану заказали провезти через пограничный пост ящики без маркировки. Платят втрое больше обычного. Что в ящиках, не говорят."
+  choices:
+    - label: Везти
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Пограничник смотрит в твои документы, в твои глаза и машет рукой. Клан делит выручку.", effects: {eddies: 1500, heat: 1}}
+      fail: {text: "Собака на посту начинает лаять у твоей фуры. Груз приходится бросить, а тебе — уходить пешком.", effects: {heat: 2, hp: -5}}
+    - label: Отказаться
+      effects: {mood: 1}
+      text: "Ты говоришь вожаку, что не повезёшь вслепую. Тот кивает: в клане уважают тех, кто знает, где граница."
+
+- id: nomad_sandstorm
+  title: Пыльная буря
+  category: street
+  weight: 3
+  conditions:
+    careers: [nomad]
+  text: "С юга идёт стена песка. Конвою нужно встать в круг и переждать, но одна фура с детьми отстала на три километра."
+  choices:
+    - label: Вернуться за ней
+      check: {stat: REF, skill: driving, dv: 16}
+      success: {text: "Ты находишь отставшую фуру на ощупь и приводишь её в круг. Дети спят у тебя на плечах до утра.", effects: {humanity: 3, mood: 8, street_cred: 1}}
+      fail: {text: "Буря сбивает тебя с дороги. Утром тебя откапывают из песка, живого. Фуру нашёл кто-то другой.", effects: {hp: -10, mood: -3}}
+    - label: Держать круг
+      effects: {mood: -3}
+      text: "Ты держишь свою позицию в круге. Отставшую фуру находят утром. Все живы, но смотрят на тебя иначе."
+
+- id: nomad_city_trade
+  title: Торг с городом
+  category: money
+  weight: 3
+  conditions:
+    careers: [nomad]
+  text: "Клан везёт в город воду, топливо и запчасти. Городской скупщик пытается сбить цену вдвое, пользуясь тем, что вам нужны деньги на лекарства."
+  choices:
+    - label: Торговаться
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Ты стоишь на своём, и скупщик сдаётся. Клан уезжает с полными баками и лекарствами.", effects: {eddies: 900, skill_xp:persuasion: 2}}
+      fail: {text: "Скупщик не уступает. Продаёте дёшево, лекарств хватит не на всех.", effects: {eddies: 300, mood: -3}}
+    - label: Найти другого покупателя
+      effects: {eddies: 600, mood: 2}
+      text: "Ты знаешь фиксера, который берёт оптом. Выходит меньше, чем хотелось, но без унижений."
+
+- id: nomad_clan_wedding
+  title: Свадьба в клане
+  category: relationships
+  weight: 2
+  conditions:
+    careers: [nomad]
+  text: "Клан гуляет свадьбу: костры, гитары, жареное мясо, которого в городе не найти. Тебя зовут в круг танцевать."
+  choices:
+    - label: Танцевать до утра
+      effects: {mood: 15, hp: 5, add_npc:friend: true}
+      text: "Ты танцуешь, пока не гаснут костры. К утру у тебя новый брат по клану и сорванный голос."
+    - label: Сесть у костра
+      effects: {mood: 8, humanity: 2}
+      text: "Ты сидишь у огня и слушаешь старые песни. Город далеко, и здесь не нужно никем притворяться."

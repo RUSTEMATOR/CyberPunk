@@ -1,0 +1,4 @@
+<!-- the Unity client (docs/PLAN_UNITY.md): CreatePrimitive at runtime needs the colliders, keep physics -->
+<linker>
+  <assembly fullname="UnityEngine.PhysicsModule" preserve="all"/>
+</linker>

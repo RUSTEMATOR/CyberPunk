@@ -1,0 +1,290 @@
+"""Night City art for the Tower game («Мегабашня», owner request 29.10): replaces every picture of the game."""
+import math, random, sys
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
+
+OUT = sys.argv[1]
+SS = 3  # supersampling
+BG, PANEL, CELL, LINE = (13, 14, 18), (21, 23, 30), (28, 31, 40), (42, 46, 58)
+Y, C, M, V, G, R, T = (255, 210, 63), (45, 226, 230), (255, 60, 172), (138, 92, 255), (61, 255, 143), (255, 77, 94), (232, 232, 238)
+FONT_CYR = "/tmp/claude-0/fonts2/tektur-cyrillic-600-normal.woff2"
+FONT_LAT = "/tmp/claude-0/fonts2/tektur-latin-600-normal.woff2"
+
+def canvas(w, h, fill=(0, 0, 0, 0)):
+    im = Image.new("RGBA", (w * SS, h * SS), fill)
+    return im, ImageDraw.Draw(im)
+
+def done(im, w, h, name, glow=0):
+    im = im.resize((w, h), Image.LANCZOS)
+    if glow:
+        g = im.filter(ImageFilter.GaussianBlur(glow))
+        im = Image.alpha_composite(g, im)
+    im.save(f"{OUT}/{name}")
+    return im
+
+def S(*v):
+    return [int(round(x * SS)) for x in v]
+
+def a(c, alpha=255):
+    return (*c, alpha)
+
+def font(size, cyr=True):
+    return ImageFont.truetype(FONT_CYR if cyr else FONT_LAT, size * SS)
+
+def text_center(d, box, s, size, fill, cyr=True, stroke=0, stroke_fill=None):
+    f = font(size, cyr)
+    x0, y0, x1, y1 = S(*box)
+    b = d.textbbox((0, 0), s, font=f, stroke_width=stroke * SS)
+    tw, th = b[2] - b[0], b[3] - b[1]
+    d.text((x0 + (x1 - x0 - tw) // 2 - b[0], y0 + (y1 - y0 - th) // 2 - b[1]), s, font=f, fill=fill,
+           stroke_width=stroke * SS, stroke_fill=stroke_fill)
+
+rnd = random.Random(2077)
+
+# -- the floor module: block, block-perfect, block-rope ------------------------------------------------------------------------
+def floor(perfect=False, rope=False):
+    w, h0 = 188, 134
+    top = 45 if rope else 0
+    h = h0 + top
+    im, d = canvas(w, h)
+    if rope:
+        d.line(S(18, top + 2, 94, 4), fill=a(LINE), width=3 * SS)
+        d.line(S(170, top + 2, 94, 4), fill=a(LINE), width=3 * SS)
+        d.ellipse(S(89, 0, 99, 10), fill=a(Y))
+    trim = Y if perfect else M
+    d.rectangle(S(4, top + 2, w - 5, top + h0 - 3), fill=a((34, 37, 48)), outline=a(BG), width=2 * SS)
+    d.rectangle(S(4, top + 2, w - 5, top + 10), fill=a(trim))
+    d.rectangle(S(4, top + h0 - 12, w - 5, top + h0 - 4), fill=a((24, 26, 34)))
+    lit = [Y, C, (255, 160, 80), M, (70, 76, 96)]
+    for i in range(4):
+        x = 16 + i * 42
+        col = Y if perfect else rnd.choice(lit)
+        d.rectangle(S(x, top + 26, x + 30, top + 82), fill=a(col), outline=a(BG), width=2 * SS)
+        d.line(S(x + 15, top + 26, x + 15, top + 82), fill=a(BG), width=2 * SS)
+        if col != (70, 76, 96):
+            d.rectangle(S(x + 3, top + 29, x + 12, top + 40), fill=a((255, 255, 255), 120))
+    d.rectangle(S(20, top + 92, 52, top + 110), fill=a(LINE), outline=a(BG), width=SS)
+    d.rectangle(S(136, top + 92, 168, top + 110), fill=a(LINE), outline=a(BG), width=SS)
+    d.rectangle(S(64, top + 94, 124, top + 108), fill=a(C if not perfect else Y, 230))
+    name = "block-rope.png" if rope else ("block-perfect.png" if perfect else "block.png")
+    done(im, w, h, name, glow=2 if perfect else 0)
+
+floor()
+floor(perfect=True)
+floor(rope=True)
+
+# -- the base scene: background.png 750x1050, transparent sky, the lobby roof at y≈378, x 255..495 ------------------------------------
+w, h = 750, 1050
+im, d = canvas(w, h)
+for layer, (col, top_min, top_max, win) in enumerate([((34, 20, 58), 60, 260, 0.06), ((26, 16, 44), 200, 420, 0.1), ((18, 14, 30), 380, 560, 0.16)]):
+    x = -rnd.randrange(30)
+    while x < w:
+        bw = rnd.randrange(40, 110)
+        top = rnd.randrange(top_min, top_max)
+        d.rectangle(S(x, top, x + bw, 760), fill=a(col))
+        if rnd.random() < 0.3:
+            d.rectangle(S(x + bw // 2 - 2, top - 30, x + bw // 2 + 1, top), fill=a(col))
+            d.ellipse(S(x + bw // 2 - 4, top - 34, x + bw // 2 + 3, top - 27), fill=a(R))
+        for wy in range(top + 10, 740, 14):
+            for wx in range(x + 8, x + bw - 8, 12):
+                if rnd.random() < win:
+                    d.rectangle(S(wx, wy, wx + 5, wy + 6), fill=a(rnd.choice([Y, C, (255, 150, 80), M]), 220))
+        if layer >= 1 and rnd.random() < 0.3:
+            sy = top + rnd.randrange(20, 80)
+            d.rectangle(S(x + 6, sy, x + min(bw - 6, 60), sy + 14), fill=a(rnd.choice([M, C, Y, V]), 235))
+        x += bw + rnd.randrange(0, 12)
+# the plaza
+for y in range(700, 1050):
+    t = (y - 700) / 350
+    col = tuple(int(p + (q - p) * t) for p, q in zip((30, 26, 46), (14, 13, 22)))
+    d.line(S(0, y, w, y), fill=a(col))
+for k in range(5):
+    px = rnd.randrange(40, 700)
+    py = rnd.randrange(820, 1000)
+    d.ellipse(S(px, py, px + rnd.randrange(60, 140), py + 18), fill=a(rnd.choice([M, C, V]), 60))
+d.line(S(0, 702, w, 702), fill=a(C), width=2 * SS)
+# the lobby
+d.rectangle(S(170, 378, 580, 770), fill=a((24, 26, 36)), outline=a(BG), width=3 * SS)
+d.rectangle(S(255, 360, 495, 378), fill=a(LINE))
+for x in range(255, 495, 24):
+    d.polygon(S(x, 360, x + 12, 360, x + 6, 378, x - 6, 378), fill=a(Y))
+d.rectangle(S(170, 378, 580, 392), fill=a(M))
+d.rectangle(S(190, 410, 560, 450), fill=a(BG), outline=a(C), width=2 * SS)
+text_center(d, (190, 410, 560, 450), "МЕГАБАШНЯ", 28, a(C))
+for i in range(6):
+    x = 196 + i * 60
+    for j in range(3):
+        y = 470 + j * 70
+        d.rectangle(S(x, y, x + 46, y + 52), fill=a(rnd.choice([Y, C, (70, 76, 96), (255, 150, 80)]), 230), outline=a(BG), width=2 * SS)
+d.rectangle(S(320, 680, 430, 770), fill=a((10, 40, 48)), outline=a(C), width=3 * SS)
+d.line(S(375, 680, 375, 770), fill=a(C), width=2 * SS)
+d.rectangle(S(300, 770, 450, 790), fill=a(LINE))
+d.ellipse(S(140, 780, 610, 830), fill=a(M, 70))
+bgimg = done(im, w, h, "background.png")
+
+# -- hook and rope --------------------------------------------------------------------------------------------------------------------------------
+im, d = canvas(50, 507)
+d.line(S(25, 0, 25, 470), fill=a((90, 95, 110)), width=3 * SS)
+d.rectangle(S(13, 455, 37, 485), fill=a(Y), outline=a(BG), width=2 * SS)
+for k in range(3):
+    d.line(S(13, 462 + k * 8, 37, 456 + k * 8), fill=a(BG), width=3 * SS)
+d.arc(S(14, 478, 36, 504), 300, 200, fill=a(C), width=4 * SS)
+done(im, 50, 507, "hook.png")
+im, d = canvas(255, 51)
+d.line(S(4, 49, 127, 3), fill=a((90, 95, 110)), width=3 * SS)
+d.line(S(251, 49, 127, 3), fill=a((90, 95, 110)), width=3 * SS)
+done(im, 255, 51, "rope.png")
+
+# -- clouds (smog) and the high-altitude objects ---------------------------------------------------------------------------------------------------
+def smog(name, seed):
+    r = random.Random(seed)
+    im, d = canvas(260, 260)
+    for _ in range(7):
+        cx, cy, rr = r.randrange(50, 210), r.randrange(110, 160), r.randrange(30, 60)
+        d.ellipse(S(cx - rr, cy - rr * 0.7, cx + rr, cy + rr * 0.7), fill=a((70, 50, 110), 150))
+    for _ in range(4):
+        cx, cy, rr = r.randrange(60, 200), r.randrange(130, 165), r.randrange(25, 45)
+        d.ellipse(S(cx - rr, cy - rr * 0.4, cx + rr, cy + rr * 0.4), fill=a(r.choice([M, C]), 70))
+    im = im.filter(ImageFilter.GaussianBlur(4 * SS))
+    done(im, 260, 260, name)
+
+for i, sd in enumerate((1, 2, 3), 1):
+    smog(f"c{i}.png", sd)
+
+def satellite(name):
+    im, d = canvas(260, 260)
+    d.rectangle(S(110, 110, 150, 150), fill=a(LINE), outline=a(C), width=2 * SS)
+    for x0 in (20, 160):
+        d.rectangle(S(x0, 118, x0 + 80, 142), fill=a((30, 50, 90)), outline=a(C), width=2 * SS)
+        for k in range(1, 4):
+            d.line(S(x0 + k * 20, 118, x0 + k * 20, 142), fill=a(C), width=SS)
+    d.line(S(130, 110, 130, 80), fill=a(T), width=2 * SS)
+    d.ellipse(S(124, 72, 136, 84), fill=a(R))
+    done(im, 260, 260, name, glow=2)
+
+def debris(name, seed):
+    r = random.Random(seed)
+    im, d = canvas(260, 260)
+    pts = [(130 + math.cos(t) * r.randrange(55, 85), 130 + math.sin(t) * r.randrange(55, 85)) for t in [k * math.pi / 5 for k in range(10)]]
+    d.polygon([tuple(S(x, y)) for x, y in pts], fill=a((52, 44, 70)), outline=a(V), width=3 * SS)
+    for _ in range(5):
+        x, y = r.randrange(95, 165), r.randrange(95, 165)
+        d.ellipse(S(x, y, x + 14, y + 10), fill=a((34, 28, 48)))
+    d.line(S(90, 150, 170, 110), fill=a(M), width=3 * SS)
+    done(im, 260, 260, name, glow=2)
+
+def station(name):
+    im, d = canvas(260, 260)
+    d.ellipse(S(40, 100, 220, 160), outline=a(C), width=6 * SS)
+    d.rectangle(S(115, 70, 145, 190), fill=a(LINE), outline=a(Y), width=2 * SS)
+    d.ellipse(S(118, 118, 142, 142), fill=a(Y))
+    done(im, 260, 260, name, glow=3)
+
+def billboard(name):
+    im, d = canvas(260, 260)
+    d.rectangle(S(40, 80, 220, 170), fill=a(BG), outline=a(M), width=4 * SS)
+    text_center(d, (40, 80, 220, 125), "КУПИ", 30, a(Y))
+    text_center(d, (40, 122, 220, 168), "ХРОМ", 30, a(C))
+    d.line(S(130, 170, 130, 230), fill=a(LINE), width=4 * SS)
+    done(im, 260, 260, name, glow=3)
+
+satellite("c4.png"); debris("c5.png", 5); station("c6.png"); billboard("c7.png"); debris("c8.png", 8)
+
+# -- the flying things: f1 swarm (→), f2 police AV (←), f3 taxi AV (→), f4/f5/f6 up, f7 comet (↙) -------------------------------------------------
+def av(name, body, right=True, lights=None, label=None, cyr=True):
+    im, d = canvas(260, 260)
+    d.rounded_rectangle(S(40, 110, 220, 160), radius=22 * SS, fill=a(body), outline=a(BG), width=3 * SS)
+    nose = 180 if right else 50
+    d.polygon(S(nose, 112, nose + (30 if right else -30) + 10, 135, nose, 158) if right else S(nose + 30, 112, 10, 135, nose + 30, 158), fill=a(body))
+    d.rounded_rectangle(S(90, 98, 170, 122), radius=10 * SS, fill=a((20, 60, 70)), outline=a(C), width=2 * SS)
+    for x in (70, 190) if right else (70, 190):
+        d.ellipse(S(x - 18, 156, x + 18, 172), fill=a(C, 200))
+    if lights:
+        d.rectangle(S(100, 90, 128, 98), fill=a(lights[0]))
+        d.rectangle(S(132, 90, 160, 98), fill=a(lights[1]))
+    if label:
+        text_center(d, (60, 126, 200, 152), label, 16, a(BG) if body == Y else a(T), cyr=cyr)
+    done(im, 260, 260, name, glow=3)
+
+def swarm(name):
+    im, d = canvas(260, 260)
+    r = random.Random(11)
+    for _ in range(7):
+        x, y = r.randrange(30, 210), r.randrange(70, 190)
+        d.rectangle(S(x, y, x + 22, y + 8), fill=a(LINE), outline=a(BG), width=SS)
+        d.line(S(x - 6, y - 4, x + 8, y - 4), fill=a(T), width=SS)
+        d.line(S(x + 14, y - 4, x + 28, y - 4), fill=a(T), width=SS)
+        d.rectangle(S(x + 16, y + 2, x + 21, y + 6), fill=a(C))
+    done(im, 260, 260, name, glow=2)
+
+def vertical(name, body, accent, label=None):
+    im, d = canvas(260, 260)
+    d.polygon(S(130, 20, 160, 70, 160, 200, 100, 200, 100, 70), fill=a(body), outline=a(BG))
+    d.polygon(S(100, 150, 70, 210, 100, 200), fill=a(accent))
+    d.polygon(S(160, 150, 190, 210, 160, 200), fill=a(accent))
+    d.ellipse(S(118, 70, 142, 94), fill=a(C), outline=a(BG), width=2 * SS)
+    for k in range(3):
+        d.polygon(S(108 + k * 16, 200, 116 + k * 16, 200, 112 + k * 16, 245), fill=a(Y if k != 1 else M))
+    if label:
+        f = font(14)
+        for k, ch in enumerate(label):
+            text_center(d, (100, 104 + k * 18, 160, 122 + k * 18), ch, 14, a(BG))
+    done(im, 260, 260, name, glow=3)
+
+def comet(name):
+    im, d = canvas(260, 260)
+    for k in range(18):
+        t = k / 18
+        x, y = 200 - 150 * t, 60 + 150 * t
+        rr = 6 + 16 * t
+        d.ellipse(S(x - rr, y - rr, x + rr, y + rr), fill=a(M if k < 12 else Y, int(40 + 200 * t)))
+    d.ellipse(S(40, 190, 80, 230), fill=a(T))
+    done(im, 260, 260, name, glow=4)
+
+swarm("f1.png")
+av("f2.png", (30, 34, 52), right=False, lights=(R, (70, 120, 255)), label="NCPD", cyr=False)
+av("f3.png", Y, right=True, label="ТАКСИ")
+vertical("f4.png", (52, 56, 72), C)
+vertical("f5.png", (232, 232, 238), M, label="КОРП")
+vertical("f6.png", (40, 30, 60), Y)
+comet("f7.png")
+
+# -- the interface: heart, score panel, modal, buttons, tutorial, logos -----------------------------------------------------------------------------------
+im, d = canvas(60, 53)
+d.polygon(S(30, 50, 4, 22, 4, 12, 12, 4, 22, 4, 30, 12, 38, 4, 48, 4, 56, 12, 56, 22), fill=a(M), outline=a(BG), width=2 * SS)
+done(im, 60, 53, "heart.png", glow=2)
+
+im, d = canvas(409, 131)
+d.rounded_rectangle(S(6, 10, 403, 121), radius=18 * SS, fill=a(BG, 230), outline=a(Y), width=4 * SS)
+text_center(d, (24, 30, 200, 100), "СЧЁТ", 40, a(Y))
+done(im, 409, 131, "score.png", glow=3)
+
+im, d = canvas(556, 190)
+text_center(d, (0, 0, 556, 120), "ОБРУШЕНИЕ", 64, a(R), stroke=3, stroke_fill=a(BG))
+text_center(d, (0, 120, 556, 186), "счёт", 44, a(Y), stroke=2, stroke_fill=a(BG))
+done(im, 556, 190, "main-modal-over.png", glow=3)
+
+im, d = canvas(640, 1020)
+d.rounded_rectangle(S(10, 10, 630, 1010), radius=30 * SS, fill=a(PANEL, 245), outline=a(Y), width=5 * SS)
+d.rounded_rectangle(S(30, 30, 610, 990), radius=22 * SS, outline=a(LINE), width=3 * SS)
+done(im, 640, 1020, "main-modal-bg.png")
+
+def button(name, w, h, label):
+    im, d = canvas(w, h)
+    d.rounded_rectangle(S(8, 8, w - 8, h - 14), radius=26 * SS, fill=a((150, 110, 10)))
+    d.rounded_rectangle(S(8, 4, w - 8, h - 22), radius=26 * SS, fill=a(Y), outline=a(BG), width=3 * SS)
+    text_center(d, (8, 4, w - 8, h - 22), label, 50, a(BG))
+    done(im, w, h, name, glow=3)
+
+button("main-index-start.png", 459, 141, "СТАРТ")
+button("main-modal-again-b.png", 459, 138, "ЕЩЁ РАЗ")
+im, d = canvas(181, 85)
+text_center(d, (0, 0, 181, 85), "ТАП", 52, a(C), stroke=2, stroke_fill=a(BG))
+done(im, 181, 85, "tutorial.png", glow=3)
+im, d = canvas(182, 85)
+d.polygon(S(61, 4, 121, 4, 121, 40, 150, 40, 91, 82, 32, 40, 61, 40), fill=a(Y), outline=a(BG), width=3 * SS)
+done(im, 182, 85, "tutorial-arrow.png", glow=2)
+for n, (w, h) in {"main-index-logo.png": (165, 62), "main-loading-logo.png": (160, 57), "main-index-title.png": (398, 520),
+                  "main-share-icon.png": (555, 373), "main-modal-invite-b.png": (459, 141)}.items():
+    Image.new("RGBA", (w, h), (0, 0, 0, 0)).save(f"{OUT}/{n}")
+Image.new("RGB", (444, 356), BG).save(f"{OUT}/main-bg.png")
+print("tower art ok")

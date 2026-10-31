@@ -1,0 +1,787 @@
+# The stories of the cities of Europe (owner request 25.10, docs/PLAN_WORLD.md). Four steps each, one a day.
+# Never drawn at random. Player text is gender-neutral.
+
+# ======================================================================== Paris: night over the Seine
+
+- id: eu_story_1
+  title: Украденный Моне
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Селеста Дюваль показывает пустую раму. «Из музея Орсе пропал Моне. Страховая платит десять процентов тому, кто вернёт. Корсиканцы платят двадцать тому, кто вернёт его им». Карим из Сен-Дени видел, кто вёз картину."
+  choices:
+    - label: Искать для страховой
+      effects: {flag_set:eu_st_insure: true}
+      text: "Селеста кивает: «Честный путь. Редкость в Париже». И даёт номер Карима."
+    - label: Искать для корсиканцев
+      effects: {flag_set:eu_st_corsica: true, hook: 1}
+      text: "Селеста улыбается: «Значит, вы человек дела». Аванс приходит в конверте с запахом табака."
+    - label: Отказаться
+      effects: {mood: -1}
+      text: "Ты возвращаешь раму. Селеста пожимает плечами: в Париже всегда кто-то что-то ищет."
+
+- id: eu_story_2
+  title: Такси Карима
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Зонар с мачете
+  foe_faction: eu_zonards
+  text: "Карим ведёт к гаражу в Сен-Дени, где картину перепаковали. Зонары охраняют гараж и не любят чужих."
+  choices:
+    - label: Договориться с зонарами
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Ты угощаешь их кебабом и говоришь на их языке. Узнаёшь, что картину увезли на баржу на Сене.", effects: {flag_set:eu_st_barge: true}}
+      fail: {text: "Слова не те. Мачете поднимаются.", effects: {start_combat: 2}}
+    - label: Пробиться силой
+      violent: true
+      effects: {start_combat: 3, flag_set:eu_st_barge: true}
+      text: "Ты выбиваешь дверь гаража. Внутри шестеро и пустой ящик с надписью «баржа»."
+    - label: Подкупить сторожа
+      effects: {eddies: -1500, flag_set:eu_st_barge: true}
+      text: "Сторож берёт деньги и шепчет: баржа «Мадлен», причал Берси."
+
+- id: eu_story_3
+  title: Баржа «Мадлен»
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Боевик синдиката
+  foe_faction: eu_syndicat
+  text: "Ночь, Сена, баржа «Мадлен» у причала. На палубе люди Корсиканского синдиката с тихими пистолетами. Картина в трюме."
+  choices:
+    - label: Проникнуть в трюм
+      check: {stat: REF, skill: stealth, dv: 15}
+      success: {text: "Ты проходишь по борту в тени и выносишь тубус с холстом. Никто не заметил.", effects: {flag_set:eu_st_monet: true}}
+      fail: {text: "Скрипит палуба. Синдикат оборачивается.", effects: {start_combat: 3}}
+    - label: Взять баржу штурмом
+      violent: true
+      effects: {start_combat: 4, flag_set:eu_st_monet: true, enmity: 1}
+      text: "Ты прыгаешь на палубу первым."
+    - label: Вызвать жандармерию
+      effects: {flag_set:eu_st_police: true, enmity: 1}
+      text: "Через десять минут на воде катера жандармерии. Картину конфискуют, ты остаёшься свидетелем."
+
+- id: eu_story_4
+  title: Холст на рассвете
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Рассвет над Сеной. У тебя в руках подлинный Моне, за который готовы платить музей, синдикат и частный коллекционер из Маре, который предлагает больше всех."
+  choices:
+    - label: Вернуть в музей
+      effects: {eddies: 8000, fame: 3, humanity: 2}
+      text: "Страховая платит, газеты пишут о «таинственном спасителе». Селеста смеётся: «Вы испортили мне рынок»."
+    - label: Отдать синдикату
+      effects: {eddies: 15000, hook: 2, street_cred: 2}
+      text: "Корсиканцы платят вдвое и предлагают работу. Отказываться от них не принято."
+    - label: Продать коллекционеру
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Коллекционер платит втрое и молчит. Теперь Моне висит в спальне человека, который никогда его не покажет.", effects: {eddies: 25000, enmity: 2}}
+      fail: {text: "Коллекционер оказывается агентом страховой. Деньги не приходят, картину забирают.", effects: {heat: 2, enmity: 1}}
+
+# ======================================================================== London: fog on the Thames
+
+- id: uk_story_1
+  title: Долг Бабули Мэгги
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Бабуля Мэгги наливает чай с ромом. «Милок, мой внук Томми задолжал дриллерам. Его грозятся порезать на видео. Фирма не может вмешаться, иначе война. А ты чужой»."
+  choices:
+    - label: Помочь Томми
+      effects: {flag_set:uk_st_in: true, humanity: 1}
+      text: "Мэгги даёт адрес многоэтажки и пачку фунтов на непредвиденные расходы."
+    - label: Предложить услуги Фирме
+      effects: {hook: 1, eddies: 1500, flag_set:uk_st_firm: true}
+      text: "Мэгги смотрит долго. «Значит, ты наш». Аванс пахнет пивом и порохом."
+
+- id: uk_story_2
+  title: Многоэтажка
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Дриллер в балаклаве
+  foe_faction: uk_drillers
+  text: "Двадцатый этаж муниципальной башни. Дриллеры снимают клип, Томми привязан к стулу в кадре. Они ждут денег до конца трека."
+  choices:
+    - label: Заплатить долг
+      effects: {eddies: -4000, flag_set:uk_st_tommy: true}
+      text: "Дриллеры пересчитывают деньги и отпускают Томми. Клип выйдет без него."
+    - label: Ворваться в кадр
+      violent: true
+      effects: {start_combat: 3, flag_set:uk_st_tommy: true, fame: 1}
+      text: "Камера всё ещё снимает. Это будет очень популярный клип."
+    - label: Сбить их с толку
+      check: {stat: INT, skill: netrunning, dv: 14}
+      success: {text: "Ты взламываешь их канал и выкладываешь черновик клипа с полицейскими сиренами. Дриллеры бегут, Томми остаётся.", effects: {flag_set:uk_st_tommy: true, street_cred: 2}}
+      fail: {text: "Они замечают взлом и поднимают ножи.", effects: {start_combat: 3}}
+
+- id: uk_story_3
+  title: Кто продал Томми
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Томми рассказывает: долг был подставой. Его продал Руперт Эшфорд из Сити, которому нужна война между Фирмой и дриллерами, чтобы скупить район под застройку."
+  choices:
+    - label: Найти доказательства в банке
+      check: {stat: INT, skill: netrunning, dv: 16}
+      success: {text: "В переписке банка план застройки Ист-Энда и платежи дриллерам. Всё подписано.", effects: {flag_set:uk_st_proof: true}}
+      fail: {text: "Лёд банка отбрасывает тебя. Руперт узнаёт о попытке.", effects: {enmity: 2, hp: -8}}
+    - label: Поговорить с Рупертом напрямую
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Руперт выслушивает и предлагает долю в застройке за молчание. Предложение записано.", effects: {flag_set:uk_st_proof: true, eddies: 3000}}
+      fail: {text: "Руперт вызывает охрану клуба. Тебя выводят под руки на Пэлл-Мэлл.", effects: {enmity: 1, mood: -3}}
+
+- id: uk_story_4
+  title: Туман на Темзе
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Наёмник банка
+  foe_faction: militech
+  text: "Туманная ночь у доков. Руперт прислал людей забрать доказательства. Фирма и дриллеры впервые стоят рядом: им тоже интересно, кто их стравил."
+  choices:
+    - label: Драться вместе с Ист-Эндом
+      violent: true
+      effects: {start_combat: 4, street_cred: 3, humanity: 2, item_grant:heavy_revolver: true}
+      text: "Бабуля Мэгги бросает тебе старый револьвер мужа. «Не промахнись, дорогуша»."
+    - label: Отдать доказательства прессе
+      effects: {fame: 3, enmity: 2, eddies: 3000}
+      text: "Утром скандал на первых полосах. Руперта отстраняют, застройку отменяют, Мэгги шлёт тебе ящик эля."
+    - label: Продать доказательства Руперту
+      effects: {eddies: 20000, humanity: -6, hook: 2}
+      text: "Руперт платит и улыбается. Через год на месте паба Мэгги стоит стеклянная башня."
+
+# ======================================================================== Berlin: the data wall
+
+- id: de_story_1
+  title: Утечка из Митте
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Юсуф Озтюрк приносит флешку. «Кто-то из сквота украл базу федерального ведомства: адреса всех, кто получает пособие. Клан Аль-Захир хочет её купить, Красный фронт — выложить в сеть. Грета Шульц хочет, чтобы она исчезла»."
+  choices:
+    - label: Найти хакера
+      effects: {flag_set:de_st_in: true}
+      text: "Юсуф даёт адрес сквота на Ораниенштрассе и предупреждает: там не любят камеры."
+    - label: Продать флешку клану
+      effects: {eddies: 5000, humanity: -4, hook: 1}
+      text: "Клан платит наличными. Через месяц у сотен людей начинаются проблемы с коллекторами."
+
+- id: de_story_2
+  title: Сквот на Ораниенштрассе
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Анархист
+  foe_faction: de_rotfront
+  text: "Общее собрание сквота. Хакер по прозвищу Мотте говорит: «Эти данные — доказательство, что ведомство продаёт их корпорациям. Мы выложим всё»."
+  choices:
+    - label: Убедить подождать
+      check: {stat: EMP, skill: persuasion, dv: 14}
+      success: {text: "Ты объясняешь, что в базе адреса беззащитных людей. Мотте соглашается вырезать личные данные и оставить доказательства.", effects: {flag_set:de_st_clean: true, humanity: 2}}
+      fail: {text: "Собрание голосует против тебя. Тебя выводят под свист.", effects: {mood: -3}}
+    - label: Забрать копию силой
+      violent: true
+      effects: {start_combat: 2, flag_set:de_st_copy: true, enmity: 1}
+      text: "Собрание превращается в драку."
+
+- id: de_story_3
+  title: Предложение Греты
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Грета Шульц встречает в кафе на Унтер-ден-Линден. «Пункт первый: данные утекли по вине ведомства. Пункт второй: если они выйдут, полетят головы. Пункт третий: я плачу за то, чтобы головы остались на месте»."
+  choices:
+    - label: Помочь Грете
+      effects: {eddies: 9000, hook: 2, flag_set:de_st_greta: true}
+      text: "Грета подписывает договор о консультационных услугах. Всё законно на бумаге."
+    - label: Отказать
+      effects: {enmity: 1}
+      text: "Грета записывает что-то в блокнот. Пункт четвёртый, видимо, касается тебя."
+
+- id: de_story_4
+  title: Стена данных
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Боец клана
+  foe_faction: de_clan
+  text: "Ночь в старой электростанции, ставшей клубом. Мотте готов выпустить данные в эфир, клан Аль-Захир пришёл их забрать, а Грета прислала своих людей. Все смотрят на тебя: флешка у тебя."
+  choices:
+    - label: Выпустить очищенные данные
+      effects: {fame: 3, humanity: 3, enmity: 2}
+      text: "Доказательства уходят в сеть без единого адреса. Ведомство в скандале, клан остаётся ни с чем."
+    - label: Отбиться от клана
+      violent: true
+      effects: {start_combat: 4, street_cred: 3, eddies: 4000}
+      text: "Клан идёт сквозь танцпол. Басы не стихают."
+    - label: Уничтожить флешку
+      effects: {humanity: 1, mood: 2}
+      text: "Ты ломаешь флешку на глазах у всех. Никто не получает ничего. Иногда это лучший исход."
+
+# ======================================================================== Rome: the family and the Vatican
+
+- id: it_story_1
+  title: Исповедь банкира
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Нонна Карла ставит перед тобой пасту и говорит тихо: «Банкир Ватикана исповедался не тому священнику. Теперь семья Россетти хочет его найти. А он мой крестник»."
+  choices:
+    - label: Спрятать банкира
+      effects: {flag_set:it_st_hide: true, humanity: 1}
+      text: "Нонна благословляет тебя и даёт ключ от старой типографии."
+    - label: Сдать его семье
+      effects: {eddies: 4000, humanity: -4, hook: 1}
+      text: "Семья Россетти благодарит. Нонна больше не кормит тебя бесплатно."
+
+- id: it_story_2
+  title: Типография
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Солдат семьи
+  foe_faction: it_famiglia
+  text: "Банкир дрожит среди старых станков. Он знает, через какие счета семья Россетти отмывает деньги через банк Ватикана. У двери уже слышны шаги."
+  choices:
+    - label: Защищать типографию
+      violent: true
+      effects: {start_combat: 3, flag_set:it_st_ledger: true}
+      text: "Ты гасишь свет и ждёшь у станка."
+    - label: Вывести через катакомбы
+      check: {stat: INT, skill: stealth, dv: 14}
+      success: {text: "Древние коридоры, кости, свечи. Вы выходите у Тибра, банкир отдаёт тебе свою книгу счетов.", effects: {flag_set:it_st_ledger: true}}
+      fail: {text: "Вы теряетесь в катакомбах на сутки. Выходите голодными и злыми.", effects: {hp: -6, mood: -4}}
+
+- id: it_story_3
+  title: Монсеньор
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Монсеньор Бальди принимает в кабинете с видом на площадь Святого Петра. «Дитя, книга банкира — грех многих людей. Отдай её церкви, и она исчезнет навсегда. Церковь умеет благодарить»."
+  choices:
+    - label: Отдать книгу церкви
+      effects: {eddies: 10000, hook: 2}
+      text: "Монсеньор кладёт книгу в сейф и благословляет тебя. Благословение стоит дорого."
+    - label: Оставить себе
+      effects: {flag_set:it_st_keep: true, enmity: 1}
+      text: "Монсеньор вздыхает. «Тогда молись, дитя»."
+
+- id: it_story_4
+  title: Поцелуй на прощание
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Капо семьи Россетти
+  foe_faction: it_famiglia
+  text: "Ужин в траттории. Капо семьи Россетти садится напротив, целует тебя в щёку и говорит: «Книга или ты». За окном его люди."
+  choices:
+    - label: Драться
+      violent: true
+      effects: {start_combat: 4, street_cred: 3, item_grant:shotgun: true}
+      text: "Нонна Карла достаёт из-под прилавка лупару мужа и бросает тебе."
+    - label: Передать книгу карабинерам
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Через неделю аресты по всему Риму. Банкир свидетельствует, Нонна печёт торт.", effects: {fame: 3, humanity: 3, enmity: 2}}
+      fail: {text: "Карабинеры тоже берут у семьи. Книга исчезает, ты едва уезжаешь.", effects: {hp: -12, enmity: 2}}
+    - label: Отдать книгу капо
+      effects: {eddies: 6000, humanity: -5}
+      text: "Капо улыбается. Банкир уезжает в долгую командировку, из которой не возвращаются."
+
+# ======================================================================== Barcelona: lights of Barceloneta
+
+- id: es_story_1
+  title: Катер в бухте
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Монтсе Пуйоль просит помочь: её яхту использовали галисийцы для перевозки, и теперь Гражданская гвардия думает на неё. «Найди, кто взял ключи»."
+  choices:
+    - label: Взяться
+      effects: {flag_set:es_st_in: true}
+      text: "Монтсе даёт список экипажа и бутылку кавы «на удачу»."
+    - label: Сдать Монтсе гвардии
+      effects: {eddies: 2500, humanity: -3, enmity: 1}
+      text: "Гвардия благодарит. Монтсе арестовывают на причале."
+
+- id: es_story_2
+  title: Карманники Раваля
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Ньета с мачете
+  foe_faction: es_ninetas
+  text: "Пако Флако знает: ключи от яхты украли его карманники и продали ньетас. Ньетас ждут в баре «Марсела»."
+  choices:
+    - label: Выкупить информацию
+      effects: {eddies: -1500, flag_set:es_st_name: true}
+      text: "Ньетас берут деньги и называют имя: капитан Иньиго, галисиец."
+    - label: Выбить информацию
+      violent: true
+      effects: {start_combat: 3, flag_set:es_st_name: true}
+      text: "Бар «Марсела» видел многое. Сегодня увидит ещё."
+    - label: Станцевать с Пако
+      check: {stat: REF, skill: null, dv: 14}
+      success: {text: "Пако не танцевал двадцать лет. Сегодня танцует с тобой и в благодарность называет имя.", effects: {flag_set:es_st_name: true, mood: 4}}
+      fail: {text: "Пако смеётся до слёз и даёт имя бесплатно, из жалости.", effects: {flag_set:es_st_name: true, mood: -1}}
+
+- id: es_story_3
+  title: Капитан Иньиго
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Галисиец
+  foe_faction: es_narcos
+  text: "Капитан Иньиго грузит катер в порту Вель. На борту груз, который вернёт Монтсе свободу, если попадёт к гвардии."
+  choices:
+    - label: Захватить катер
+      violent: true
+      effects: {start_combat: 3, flag_set:es_st_boat: true, enmity: 1}
+      text: "Ты прыгаешь на борт, когда катер уже отваливает от причала."
+    - label: Поставить маячок
+      check: {stat: TECH, skill: tech, dv: 14}
+      success: {text: "Маячок под кормой. Гвардия знает маршрут.", effects: {flag_set:es_st_boat: true}}
+      fail: {text: "Иньиго находит маячок и выбрасывает в море. Вместе с твоим авансом.", effects: {eddies: -1000}}
+
+- id: es_story_4
+  title: Огни Барселонеты
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Ночь на пляже. Иньиго предлагает долю в рейсе, если ты забудешь его имя. Монтсе ждёт у отеля, гвардия ждёт звонка."
+  choices:
+    - label: Сдать Иньиго гвардии
+      effects: {fame: 2, humanity: 2, eddies: 5000, enmity: 1}
+      text: "Монтсе свободна и дарит тебе месяц на своей яхте. Гвардия жмёт руку."
+    - label: Взять долю
+      effects: {eddies: 12000, hook: 2, humanity: -4}
+      text: "Иньиго платит щедро. Монтсе садится вместо него."
+    - label: Сыграть за обоих
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "Иньиго уходит в море, гвардия берёт его склад, Монтсе свободна, а у тебя деньги с обеих сторон.", effects: {eddies: 9000, street_cred: 2}}
+      fail: {text: "Обе стороны понимают, что их водят за нос.", effects: {enmity: 2, hp: -10}}
+
+# ======================================================================== Amsterdam: the port and the fog
+
+- id: nl_story_1
+  title: Пропавший контейнер
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Брам Ван Дейк нервно курит у терминала. «Контейнер номер семь исчез из системы. Не мной. Мокро-мафия думает, что мной. У меня трое детей»."
+  choices:
+    - label: Найти контейнер
+      effects: {flag_set:nl_st_in: true}
+      text: "Брам даёт доступ к журналам порта и термос с кофе."
+    - label: Сдать Брама мафии
+      effects: {eddies: 3000, humanity: -5}
+      text: "Мокро-мафия платит за адрес. Брам больше не выходит на смену."
+
+- id: nl_story_2
+  title: Журналы порта
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Журналы порта стёрты аккуратно, профессионально. Но кто-то забыл камеры на складе байкеров."
+  choices:
+    - label: Восстановить журналы
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "Контейнер перегрузили на склад Ангелов Севера. Байкеры решили сыграть против мафии.", effects: {flag_set:nl_st_found: true}}
+      fail: {text: "Журналы не восстановить. Остаются только слухи.", effects: {mood: -2}}
+    - label: Спросить у Санне
+      effects: {eddies: -1000, flag_set:nl_st_found: true}
+      text: "Санне де Врис знает всех. За скромную плату она называет склад байкеров."
+
+- id: nl_story_3
+  title: Склад Ангелов
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Байкер
+  foe_faction: nl_bikers
+  text: "Склад Ангелов Севера. Контейнер внутри, байкеры пьют пиво вокруг и ждут покупателя."
+  choices:
+    - label: Ворваться
+      violent: true
+      effects: {start_combat: 3, flag_set:nl_st_box: true}
+      text: "Пивные бутылки летят первыми."
+    - label: Предложить сделку
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Байкеры отдают контейнер за обещание, что мафия не узнает их имён.", effects: {flag_set:nl_st_box: true, hook: 1}}
+      fail: {text: "Байкеры смеются и закрывают ворота.", effects: {mood: -2}}
+
+- id: nl_story_4
+  title: Туман в порту
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Боевик мокро-мафии
+  foe_faction: nl_mocro
+  text: "Туман над водой. Мокро-мафия пришла за контейнером. Брам дрожит у крана, Санне стоит рядом с тобой."
+  choices:
+    - label: Отдать контейнер мафии и спасти Брама
+      effects: {eddies: 3000, humanity: 2}
+      text: "Мафия забирает груз и оставляет Брама в покое. Он плачет и обнимает тебя."
+    - label: Драться
+      violent: true
+      effects: {start_combat: 4, street_cred: 3, eddies: 6000, item_grant:sidewinder_smg: true}
+      text: "Санне бросает тебе пистолет-пулемёт. «Старые привычки»."
+    - label: Вызвать полицию
+      effects: {fame: 2, enmity: 2}
+      text: "Через пять минут порт в мигалках. Мафия уходит, обещая вернуться."
+
+# ======================================================================== Stockholm: the white night
+
+- id: se_story_1
+  title: Подросток с гранатой
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Амир Хассан ловит тебя у футбольной коробки. «Моему ученику Юсефу четырнадцать. Сеть Фокстрот дала ему гранату и адрес. Сегодня ночью. Помоги мне его остановить»."
+  choices:
+    - label: Помочь Амиру
+      effects: {flag_set:se_st_in: true, humanity: 2}
+      text: "Амир показывает фото мальчика и адрес. Время до полуночи."
+    - label: Не вмешиваться
+      effects: {humanity: -2, mood: -3}
+      text: "Ночью в новостях взрыв в Тенсте. Амир больше не здоровается."
+
+- id: se_story_2
+  title: До полуночи
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Вербовщик Сети
+  foe_faction: se_network
+  text: "Юсеф у подъезда с гранатой в рюкзаке. Рядом вербовщик Сети снимает его на телефон, для отчёта."
+  choices:
+    - label: Поговорить с Юсефом
+      check: {stat: EMP, skill: persuasion, dv: 14}
+      success: {text: "Мальчик отдаёт рюкзак и плачет. Амир уводит его домой.", effects: {humanity: 4, flag_set:se_st_saved: true}}
+      fail: {text: "Юсеф убегает с рюкзаком. Вы с Амиром бежите следом.", effects: {hp: -4}}
+    - label: Заняться вербовщиком
+      violent: true
+      effects: {start_combat: 2, flag_set:se_st_saved: true}
+      text: "Ты выбиваешь телефон и бьёшь первым."
+
+- id: se_story_3
+  title: Кто платит Сети
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Ингрид Лунд находит в телефоне вербовщика переводы. Сеть Фокстрот платит из счёта, который принадлежит уважаемой компании в Гамла Стане."
+  choices:
+    - label: Взломать счёт
+      check: {stat: INT, skill: netrunning, dv: 16}
+      success: {text: "Ты находишь заказчика: девелопер скупает Ринкебю, распугивая жителей взрывами.", effects: {flag_set:se_st_proof: true}}
+      fail: {text: "Банк замечает взлом. Ингрид советует уехать на пару дней.", effects: {heat: 2}}
+    - label: Заплатить Ингрид
+      effects: {eddies: -4000, flag_set:se_st_proof: true}
+      text: "Ингрид делает всё сама за полчаса и берёт двойной тариф за срочность."
+
+- id: se_story_4
+  title: Белая ночь
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Северный волк
+  foe_faction: se_wolves
+  text: "Белая ночь, солнце не садится. Девелопер нанял Северных волков, чтобы забрать доказательства. Они ждут у пристани паромов."
+  choices:
+    - label: Драться
+      violent: true
+      effects: {start_combat: 4, street_cred: 3, item_grant:fire_axe: true}
+      text: "Волк с рунами на руках протягивает тебе топор: «Честный бой»."
+    - label: Отдать доказательства полиции
+      effects: {fame: 3, humanity: 3, enmity: 2}
+      text: "Девелопера арестовывают. Амир устраивает в Ринкебю футбольный турнир твоего имени."
+    - label: Продать доказательства девелоперу
+      effects: {eddies: 18000, humanity: -7}
+      text: "Девелопер платит щедро. Ринкебю продолжает взрываться по ночам."
+
+# ======================================================================== Warsaw: the amber road
+
+- id: pl_story_1
+  title: Янтарь из Гданьска
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Пан Збышек показывает кусок янтаря с вплавленным чипом. «Контрабанда с Балтики. В каждом камне — данные натовского склада. Прушковские возят, киболе охраняют. Мне нужен один камень»."
+  choices:
+    - label: Достать камень
+      effects: {flag_set:pl_st_in: true}
+      text: "Збышек даёт адрес водочной фабрики и анекдот про милиционера."
+    - label: Предупредить полицию
+      effects: {enmity: 1, flag_set:pl_st_cops: true}
+      text: "Полиция благодарит и просит не мешать. Збышек узнаёт об этом к вечеру."
+
+- id: pl_story_2
+  title: Водочная фабрика
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Прушковский
+  foe_faction: pl_pruszkow
+  text: "Заброшенная фабрика. Прушковские сортируют янтарь при свете фар. Камни с чипами отдельно."
+  choices:
+    - label: Украсть камень
+      check: {stat: REF, skill: stealth, dv: 14}
+      success: {text: "Один камень из ящика в карман. Никто не считал.", effects: {flag_set:pl_st_stone: true}}
+      fail: {text: "Считали.", effects: {start_combat: 3}}
+    - label: Купить камень
+      effects: {eddies: -3000, flag_set:pl_st_stone: true}
+      text: "Прушковские продают один камень без вопросов. Это подозрительно."
+
+- id: pl_story_3
+  title: Что внутри
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Магда Ковальская расшифровывает чип. Там не склад НАТО, а списки еврофондов: кто украл деньги на строительство больниц."
+  choices:
+    - label: Отдать Магде
+      effects: {eddies: 6000, hook: 1, flag_set:pl_st_magda: true}
+      text: "Магда платит и говорит, что знает, кому это продать."
+    - label: Отдать журналистам
+      effects: {fame: 2, enmity: 2, flag_set:pl_st_press: true}
+      text: "Через неделю скандал. Трое депутатов в отставке."
+
+- id: pl_story_4
+  title: Ночь на Висле
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Кибол
+  foe_faction: pl_kibole
+  text: "На набережной Вислы тебя ждут киболе, которых наняли вернуть камень. Збышек стоит поодаль со своими людьми."
+  choices:
+    - label: Драться
+      violent: true
+      effects: {start_combat: 3, street_cred: 3, item_grant:assault_rifle: true}
+      text: "Збышек кивает своим. Старый автомат переходит к тебе в руки."
+    - label: Договориться через Збышка
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Збышек звонит кому-то из старых знакомых. Киболе уходят, извинившись.", effects: {eddies: 3000, street_cred: 2}}
+      fail: {text: "Старые знакомые давно в тюрьме. Драка неизбежна.", effects: {start_combat: 3}}
+    - label: Отдать камень
+      effects: {mood: -3}
+      text: "Ты отдаёшь камень. Киболе уходят довольными."
+
+# ======================================================================== Kyiv: the underground city
+
+- id: ua_story_1
+  title: Карта подземелий
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Оксана Мельник раскладывает на столе кофейни старую карту. «Под Подолом сеть ходов. Левобережные нашли там склад и что-то прячут. Диггеры говорят, туда пропадают люди»."
+  choices:
+    - label: Спуститься с диггерами
+      effects: {flag_set:ua_st_in: true}
+      text: "Оксана даёт номер старшего диггера и термос с кофе. «В подземелье холодно»."
+    - label: Продать карту левобережным
+      effects: {eddies: 2500, humanity: -3, hook: 1}
+      text: "Левобережные платят и обещают «не забыть». Оксана перестаёт наливать тебе раф."
+
+- id: ua_story_2
+  title: Под Подолом
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Охранник склада
+  foe_faction: ua_cartel
+  text: "Узкие кирпичные ходы, вода по щиколотку. Диггер с фонарём показывает новую дверь в старом тоннеле. За дверью голоса."
+  choices:
+    - label: Открыть дверь
+      violent: true
+      effects: {start_combat: 3, flag_set:ua_st_found: true}
+      text: "Ты выбиваешь дверь. Внутри склад и охрана."
+    - label: Подслушать
+      check: {stat: COOL, skill: stealth, dv: 14}
+      success: {text: "Склад краденых медицинских имплантов. Их снимают с людей, которых заманивают через объявления о работе.", effects: {flag_set:ua_st_found: true}}
+      fail: {text: "Под ногой хрустит стекло. Голоса стихают.", effects: {start_combat: 2}}
+    - label: Отступить
+      effects: {mood: -2}
+      text: "Диггер кивает: правильно, сначала нужно больше людей."
+
+- id: ua_story_3
+  title: Гаражи Богдана
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Богдан Гаражный узнаёт импланты по номерам: их ставил он. Людям, которые потом пропали. «Та я их найду. Только помоги»."
+  choices:
+    - label: Помочь найти людей
+      check: {stat: INT, skill: tech, dv: 14}
+      success: {text: "По трекерам имплантов вы находите заброшенную стройку на Троещине. Люди живы.", effects: {flag_set:ua_st_people: true, humanity: 2}}
+      fail: {text: "Трекеры отключены. Остаётся одна зацепка: стройка, о которой шепчут на рынке.", effects: {flag_set:ua_st_people: true}}
+    - label: Взять долю у Богдана
+      effects: {eddies: 3000, hook: 1}
+      text: "Богдан платит за помощь, но смотрит с сожалением."
+
+- id: ua_story_4
+  title: Стройка на левом берегу
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Левобережный
+  foe_faction: ua_cartel
+  text: "Заброшенная стройка. В подвале люди, у которых сняли импланты. Левобережные охраняют вход. Диггеры и Богдан с гаражными мужиками рядом с тобой."
+  choices:
+    - label: Освободить людей
+      violent: true
+      effects: {start_combat: 4, humanity: 4, street_cred: 3, item_grant:baseball_bat: true}
+      text: "Богдан протягивает биту: «Та нормально, у меня ещё есть»."
+    - label: Вызвать полицию
+      effects: {fame: 2, humanity: 3, enmity: 1}
+      text: "Полиция приезжает быстро. Людей выносят на руках. Оксана пишет репортаж, который читает весь город."
+    - label: Выкупить людей
+      effects: {eddies: -8000, humanity: 3}
+      text: "Левобережные берут деньги и уходят. Люди выходят на свет живыми."
+
+# ======================================================================== Moscow: the black market under the Kremlin
+
+- id: ru_story_1
+  title: Посылка из Капотни
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Валентина Петровна ставит на стол коробку. «Тут посылка для Льва Аркадьевича. Отвези. Не открывай. Заплатят хорошо, а если откроешь — тоже заплатят, но иначе»."
+  choices:
+    - label: Отвезти посылку
+      effects: {flag_set:ru_st_in: true, eddies: 1000}
+      text: "Коробка тяжёлая и тикает. Нет, это часы. Наверное."
+    - label: Открыть посылку
+      effects: {flag_set:ru_st_open: true}
+      text: "Внутри жёсткий диск с бухгалтерией подпольного рынка запчастей. И записка: «Знаешь много — живёшь мало»."
+
+- id: ru_story_2
+  title: Переулки Китай-города
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Бригадный
+  foe_faction: ru_brigada
+  text: "В переулке тебя останавливает Бригада: «Посылочку отдай, по-хорошему»."
+  choices:
+    - label: Отдать
+      effects: {mood: -3, enmity: 1}
+      text: "Бригада уходит с коробкой. Лев Аркадьевич будет недоволен."
+    - label: Драться
+      violent: true
+      effects: {start_combat: 3, flag_set:ru_st_kept: true}
+      text: "Биты против всего, что у тебя есть."
+    - label: Уйти через подземный переход
+      check: {stat: REF, skill: stealth, dv: 14}
+      success: {text: "Ты теряешься в толпе перехода и выходишь на другой стороне.", effects: {flag_set:ru_st_kept: true}}
+      fail: {text: "Переход перекрыт с двух сторон.", effects: {start_combat: 3}}
+
+- id: ru_story_3
+  title: Лев Аркадьевич
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Лев Аркадьевич встречает в баре «Последний рубеж». «Вы человек надёжный. У меня к вам предложение: диск отдать мне, а воры в законе пусть думают, что его украла Бригада. Всем будет чем заняться»."
+  choices:
+    - label: Согласиться
+      effects: {eddies: 8000, hook: 2}
+      text: "Лев Аркадьевич платит и улыбается. Через неделю Бригада и воры в войне."
+    - label: Отдать диск ворам
+      effects: {eddies: 5000, street_cred: 2, flag_set:ru_st_vory: true}
+      text: "Воры ценят честность. Лев Аркадьевич — нет."
+
+- id: ru_story_4
+  title: Сходка
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Вор в законе
+  foe_faction: ru_vory
+  text: "Тебя зовут на сходку в гаражный кооператив «Рассвет». Воры, Бригада и люди Льва Аркадьевича выясняют, кто кого подставил. Валентина Петровна шепчет: «Говори правду, они её чуют»."
+  choices:
+    - label: Сказать правду
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "Воры слушают молча и выносят решение: виноват посредник. Ты уходишь с уважением и долей.", effects: {street_cred: 3, eddies: 6000}}
+      fail: {text: "Правда никому не нравится.", effects: {start_combat: 4}}
+    - label: Драться
+      violent: true
+      effects: {start_combat: 4, street_cred: 2, item_grant:heavy_pistol: true}
+      text: "Валентина Петровна вздыхает и протягивает тебе пистолет из-под прилавка."
+    - label: Уехать до сходки
+      effects: {mood: -4, enmity: 2}
+      text: "Ты уезжаешь. В Москве такого не прощают."
+
+# ======================================================================== Istanbul: the key to the cistern
+
+- id: tr_story_1
+  title: Ковёр с секретом
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Айше Ханым разворачивает ковёр. В него вшит ключ. «Джаным, это ключ от цистерны под базаром. Там византийское золото, контрабанда и люди, которые его стерегут. Кабадаи и люди Босфора уже знают, что ключ у меня»."
+  choices:
+    - label: Помочь Айше
+      effects: {flag_set:tr_st_in: true}
+      text: "Айше даёт ключ и стакан чая. «Половина твоя, джаным»."
+    - label: Продать ключ кабадаи
+      effects: {eddies: 4000, enmity: 1}
+      text: "Кабадаи платят. Айше закрывает лавку и уезжает к сестре."
+
+- id: tr_story_2
+  title: Цистерна
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Человек Босфора
+  foe_faction: tr_smugglers
+  text: "Под базаром тёмная вода и колонны. В цистерне ящики контрабанды и лодка людей Босфора."
+  choices:
+    - label: Найти золото
+      check: {stat: INT, skill: stealth, dv: 14}
+      success: {text: "За медузой на колонне тайник. Монеты Юстиниана.", effects: {flag_set:tr_st_gold: true, eddies: 3000}}
+      fail: {text: "Ты будишь охрану контрабандистов.", effects: {start_combat: 3}}
+    - label: Захватить лодку
+      violent: true
+      effects: {start_combat: 3, flag_set:tr_st_gold: true}
+      text: "Лодка качается, выстрелы гремят под сводами."
+    - label: Уйти и вернуться с Айше
+      effects: {mood: -2}
+      text: "Ты тихо уходишь по колоннам. Айше говорит, что золото лежит там тысячу лет и подождёт ещё день."
+
+- id: tr_story_3
+  title: Селим Бей
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Селим Бей поднимает рюмку ракы. «За тех, кто нашёл золото Византии. Кабадаи хотят его, люди Босфора хотят его, музей хочет его. Я хочу, чтобы все остались живы. Это дороже золота»."
+  choices:
+    - label: Поделить золото
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Селим устраивает ужин для всех. Золото делят на четыре части. Никто не стреляет.", effects: {eddies: 6000, street_cred: 2}}
+      fail: {text: "Ужин заканчивается до десерта.", effects: {enmity: 2}}
+    - label: Отдать музею
+      effects: {fame: 3, humanity: 2, enmity: 1}
+      text: "Монеты в витрине музея. Айше гордится. Кабадаи нет."
+
+- id: tr_story_4
+  title: Паром на рассвете
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Кабадаи
+  foe_faction: tr_kabadayi
+  text: "Рассвет над Босфором. На пароме к тебе подходят кабадаи. Чётки, ножи и вопрос: где их доля."
+  choices:
+    - label: Драться
+      violent: true
+      effects: {start_combat: 4, street_cred: 3, item_grant:cleaver_pair: true}
+      text: "Айше с соседнего ряда бросает тебе два тесака из корзины."
+    - label: Заплатить
+      effects: {eddies: -5000, mood: 2}
+      text: "Кабадаи берут деньги и угощают тебя симитом. Мир восстановлен."
+    - label: Прыгнуть за борт
+      check: {stat: BODY, skill: null, dv: 13}
+      success: {text: "Холодная вода, течение, берег Азии. Мокро, холодно, зато свободно.", effects: {hp: -4, mood: 3}}
+      fail: {text: "Течение сильнее. Тебя вылавливает рыбак и требует плату.", effects: {hp: -10, eddies: -1000}}

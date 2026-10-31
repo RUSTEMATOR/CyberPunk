@@ -1,0 +1,386 @@
+- key: mantis_blades
+  name: Клинки-богомолы
+  slot: forearms
+  price: 3000
+  humanity_cost: 7
+  description: Лезвия выходят из предплечий за долю секунды и режут лучше любого ножа. Тот, кто их видел, уже не считает тебя обычным человеком.
+  tier: street
+  category: combat
+  abilities: [blades]
+  build: duelist
+  requires: []
+  mods: {skill.melee: 1}
+  weapon_damage: 3d6
+  available_from: 2030
+
+- key: neural_link
+  name: Нейропорт
+  slot: brain
+  price: 500
+  humanity_cost: 2
+  description: Разъём в основании черепа. Сам ничего не даёт, но без него не встанет ни одна кибердека.
+  tier: street
+  category: netrun
+  abilities: [port_handshake]
+  build: ghost
+  requires: []
+
+- key: cyberdeck_paraline
+  name: Кибердека Militech Paraline
+  slot: brain
+  price: 2000
+  humanity_cost: 4
+  description: "Простая армейская дека: памяти немного, подзарядка медленная. Зато надёжная и недорогая, с неё начинают многие нетраннеры."
+  tier: street
+  category: netrun
+  abilities: [field_hack]
+  build: ghost
+  exclusive_group: cyberdeck
+  requires: [neural_link]
+  mods: {skill.netrunning: 2}
+  deck: {ram_max: 6, ram_recharge: 1, hack_bonus: 0}
+  available_from: 2030
+
+- key: cyberdeck_netdriver
+  name: Кибердека NetWatch Netdriver
+  slot: brain
+  price: 7000
+  humanity_cost: 6
+  description: "Быстрая дека с большим запасом памяти. Прошивка от NetWatch, и что ещё она умеет, знает только NetWatch."
+  tier: mid
+  category: netrun
+  abilities: [watch_backdoor]
+  build: ghost
+  exclusive_group: cyberdeck
+  requires: [neural_link]
+  mods: {skill.netrunning: 4}
+  deck: {ram_max: 10, ram_recharge: 2, hack_bonus: 1}
+  available_from: 2045
+
+- key: kiroshi_optics
+  name: Оптика Kiroshi
+  slot: eyes
+  exclusive_group: optics
+  price: 500
+  humanity_cost: 2
+  description: "Простые глазные импланты с захватом цели. Целиться легче, а нагрузки на психику почти никакой."
+  tier: street
+  category: combat
+  abilities: [lock_mark]
+  build: sniper
+  requires: []
+  mods: {skill.firearms: 1}
+  available_from: 2030
+
+- key: kiroshi_stalker
+  name: Оптика Kiroshi «Сталкер»
+  slot: eyes
+  exclusive_group: optics
+  price: 3000
+  humanity_cost: 4
+  description: "Ночное зрение, тепловизор и подсветка контуров. Выручает и в перестрелке, и когда нужно пройти незамеченным."
+  tier: street
+  category: combat
+  abilities: [outline_glow]
+  build: hunter
+  requires: []
+  mods: {skill.firearms: 2, skill.stealth: 1}
+  available_from: 2030
+
+- key: subdermal_armor
+  name: Подкожная броня
+  slot: skin
+  price: 1500
+  humanity_cost: 4
+  description: "Пластины под кожей держат пулю и нож. Дёшево и надёжно, а поверх неё ставят броню посерьёзнее."
+  tier: street
+  category: defense
+  abilities: [brace]
+  build: tank
+  requires: []
+  mods: {armor: 4}
+
+- key: biomonitor
+  name: Биомонитор
+  slot: circulatory
+  price: 500
+  humanity_cost: 1
+  description: "Следит за пульсом и кровопотерей и вовремя впрыскивает коагулянт. В бою кровь уходит медленнее."
+  tier: street
+  category: defense
+  abilities: [early_warn]
+  build: medic
+  requires: []
+  mods: {bleed: 1}
+
+- key: reinforced_tendons
+  name: Усиленные сухожилия
+  slot: legs
+  price: 1000
+  humanity_cost: 3
+  description: "Синтетические сухожилия в ногах: бегаешь и прыгаешь лучше. Из драки, которая пошла не так, уйти проще."
+  tier: street
+  category: combat
+  abilities: [escape_run]
+  build: flyer
+  requires: []
+  mods: {flee: 3}
+
+- key: gorilla_arms
+  name: Руки-гориллы
+  slot: hands
+  price: 2500
+  humanity_cost: 7
+  description: "Гидравлика в кистях и предплечьях: выбиваешь двери, гнёшь решётки, а кулак бьёт как кувалда. Тонкая работа таким рукам уже не по душе."
+  tier: street
+  category: combat
+  abilities: [force]
+  build: berserk
+  requires: []
+  mods: {strength: 2}
+  weapon_damage: 3d6
+  available_from: 2030
+
+- key: monowire
+  name: Мононить
+  slot: hands
+  price: 3500
+  humanity_cost: 7
+  description: "Режущая нить в запястье: одним взмахом задеваешь двоих, если стоят рядом. Одно неловкое движение, и останешься без пальцев."
+  tier: mid
+  category: combat
+  abilities: [wire_disarm]
+  build: duelist
+  requires: []
+  weapon_damage: 3d6
+  weapon_targets: 2
+  available_from: 2045
+
+- key: synthskin_face
+  name: Синтекожа и лицевой скульпт
+  slot: face
+  price: 1500
+  humanity_cost: 2
+  description: "Новое лицо по каталогу. Незнакомцы доверяют охотнее, а старые знакомые узнают не сразу."
+  tier: street
+  category: noncombat
+  abilities: [face]
+  build: face
+  requires: []
+  mods: {skill.persuasion: 1}
+
+- key: second_heart
+  name: Второе сердце
+  slot: circulatory
+  price: 10000
+  humanity_cost: 10
+  description: "Запасное сердце запускается, когда родное останавливается. Спасает от смерти один раз, потом сгорает."
+  tier: military
+  category: defense
+  abilities: [heart_restart]
+  build: tank
+  requires: []
+  resurrection: true
+  available_from: 2060
+
+- key: full_conversion
+  name: Полная конверсия
+  slot: body
+  price: 50000
+  humanity_cost: 40
+  description: "Тело целиком заменено машиной. Киберпсихоз тебе больше не грозит, но близкие перестают видеть в тебе человека."
+  tier: military
+  category: defense
+  abilities: [machine_body]
+  build: tank
+  requires: []
+  smasher_only: true
+
+- key: full_conversion_black
+  name: Полная конверсия (подполье)
+  slot: body
+  price: 150000
+  humanity_cost: 40
+  description: "То же железное тело, что у смэшеров, только на столе подпольного риппера и для тела, которое к этому не готово. Многие с этого стола не встают. Кто встаёт, тот больше не боится киберпсихоза, но близкие перестают видеть в нём человека."
+  tier: military
+  category: defense
+  abilities: [stitched_body]
+  build: tank
+  requires: []
+  borg_risk: true
+
+- key: kerenzikov
+  name: Керензиков
+  slot: spine
+  price: 2500
+  humanity_cost: 7
+  description: "В момент опасности время на миг замедляется: уходишь от удара и бьёшь точнее в ответ. Между срабатываниями приходится ждать заряда."
+  tier: street
+  category: combat
+  abilities: [bullet_slip]
+  build: duelist
+  exclusive_group: kerenzikov
+  requires: []
+  active:
+    mode: reactive
+    button: Керензиков
+    recharge_per_tick: 25
+    min_charge: 50
+    cost: 50
+    effects: {dodge: true, next_attack_bonus: 2}
+
+- key: kerenzikov_boosted
+  name: Усиленный Керензиков
+  slot: spine
+  price: 5000
+  humanity_cost: 9
+  description: "Форсированный Керензиков: срабатывает чаще, ответный удар точнее, и автоматику можно выключить. Нервы после него долго не успокаиваются."
+  tier: mid
+  category: combat
+  abilities: [quick_draw]
+  build: duelist
+  exclusive_group: kerenzikov
+  requires: []
+  active:
+    mode: reactive
+    button: Керензиков
+    recharge_per_tick: 30
+    min_charge: 40
+    cost: 40
+    trigger_toggle: true
+    effects: {dodge: true, next_attack_bonus: 3}
+  available_from: 2045
+
+- key: sandevistan_zetatech
+  name: Сандевистан Zetatech Mk.1
+  slot: spine
+  price: 4000
+  humanity_cost: 10
+  description: "Дешёвый Сандевистан: на пару секунд мир почти замирает. Включается только на полном заряде, и остановить его раньше нельзя."
+  tier: mid
+  category: combat
+  abilities: [two_seconds]
+  build: duelist
+  exclusive_group: sandevistan
+  requires: []
+  active:
+    mode: duration
+    button: Сандевистан
+    recharge_per_tick: 20
+    duration_ticks: 2
+    min_charge: 100
+    effects: {extra_actions: 1, check_bonus: 2}
+
+- key: sandevistan_dynalar
+  name: Сандевистан Dynalar Mk.3
+  slot: spine
+  price: 7000
+  humanity_cost: 12
+  description: "Рабочая лошадка уличного соло: включается не только на полном заряде и выключается, когда нужно. Каждый убитый или взятый живым враг немного его подзаряжает."
+  tier: mid
+  category: combat
+  abilities: [sprint]
+  build: duelist
+  exclusive_group: sandevistan
+  requires: []
+  active:
+    mode: duration
+    button: Сандевистан
+    recharge_per_tick: 15
+    recharge_on_kill: 5
+    recharge_on_takedown: 5
+    duration_ticks: 3
+    min_charge: 60
+    can_cancel: true
+    effects: {extra_actions: 1, check_bonus: 3}
+  available_from: 2045
+
+- key: sandevistan_apogee
+  name: Сандевистан Militech «Апогей»
+  slot: spine
+  price: 15000
+  humanity_cost: 16
+  description: "Военный Сандевистан: включается почти с нуля, работает долго, а враги в замедленном мире стреляют хуже. Сам заряжается медленно, зато каждый убитый или взятый живым враг быстро возвращает заряд."
+  tier: military
+  category: combat
+  abilities: [room_clear]
+  build: duelist
+  exclusive_group: sandevistan
+  requires: []
+  active:
+    mode: duration
+    button: Сандевистан
+    recharge_per_tick: 5
+    recharge_on_kill: 10
+    recharge_on_takedown: 10
+    duration_ticks: 5
+    min_charge: 10
+    can_cancel: true
+    effects: {extra_actions: 1, check_bonus: 3, enemy_attack_penalty: 2}
+  available_from: 2070
+
+- key: berserk_zetatech
+  name: Берсерк Zetatech
+  slot: spine
+  price: 4000
+  humanity_cost: 10
+  description: "Адреналин и блокаторы боли: бьёшь сильнее и почти не чувствуешь ран. Включается только на полном заряде и работает до конца."
+  tier: mid
+  category: combat
+  abilities: [zeta_fury]
+  build: berserk
+  exclusive_group: berserk
+  requires: []
+  active:
+    mode: duration
+    button: Берсерк
+    recharge_per_tick: 10
+    recharge_on_kill: 15
+    duration_ticks: 3
+    min_charge: 100
+    effects: {melee_bonus: 3, damage_reduction: 2}
+
+- key: berserk_militech
+  name: Берсерк Militech
+  slot: spine
+  price: 8000
+  humanity_cost: 14
+  description: "Армейский Берсерк: дольше, сильнее, включается не только на полном заряде и выключается по команде. Подзаряжается от каждого убитого и взятого живым врага."
+  tier: mid
+  category: combat
+  abilities: [cold_rage]
+  build: berserk
+  exclusive_group: berserk
+  requires: []
+  active:
+    mode: duration
+    button: Берсерк
+    recharge_per_tick: 10
+    recharge_on_kill: 20
+    recharge_on_takedown: 10
+    duration_ticks: 4
+    min_charge: 50
+    can_cancel: true
+    effects: {melee_bonus: 4, damage_reduction: 3, check_bonus: 1}
+  available_from: 2045
+
+- key: projectile_launcher
+  name: Ракетная установка
+  slot: hands
+  price: 3000
+  humanity_cost: 7
+  description: "Пусковая установка в предплечье: самонаводящиеся ракеты бьют по одной цели или залпом по двум. После выстрела нужно ждать перезарядки."
+  tier: street
+  category: combat
+  abilities: [rocket_show]
+  build: engineer
+  exclusive_group: projectile_launcher
+  requires: []
+  active:
+    mode: shot
+    button: Ракеты
+    recharge_per_tick: 34
+    min_charge: 50
+    cost: 50
+    effects: {damage: 4d6, targets: 2}
+  available_from: 2030

@@ -1,0 +1,69 @@
+# Afterlife token shop. Schema: app/content/schemas.py (ShopItem). Guide: docs/CONTENT_GUIDE.md.
+# Tokens cannot be bought for eddies or given to anyone.
+
+- key: stim_shot
+  name: Стим
+  description: "Укол от бармена. Даёт +2 к одной проверке на твой выбор в течение недели."
+  price_tokens: 3
+  effect: stim
+
+- key: recharge_all
+  name: Полный заряд
+  description: "Все активные импланты сразу заряжаются до конца. Бармен ни о чём не спрашивает."
+  price_tokens: 4
+  effect: recharge_all
+
+- key: streak_freeze
+  name: Заморозка серии
+  description: "Один пропущенный день не обнулит серию ежедневных заданий."
+  price_tokens: 4
+  effect: streak_freeze
+
+- key: tarot_reroll
+  name: Перетасовка
+  description: "Мисти заново тасует колоду и вытягивает тебе другую карту на сегодня."
+  price_tokens: 2
+  effect: tarot_reroll
+
+- key: title_afterlife
+  name: "Свой в «Посмертии»"
+  description: "Титул рядом с именем. На игру не влияет, зато его видят все."
+  price_tokens: 3
+  effect: "title:Свой в «Посмертии»"
+
+- key: title_no_chrome
+  name: Без хрома, без страха
+  description: "Титул для тех, кто держит тело чистым от хрома."
+  price_tokens: 3
+  effect: "title:Без хрома, без страха"
+
+- key: title_night_client
+  name: Ночной клиент
+  description: "Титул для тех, кто живёт после полуночи."
+  price_tokens: 2
+  effect: "title:Ночной клиент"
+
+- key: title_caliber
+  name: Калибр не главное
+  description: "Титул для тех, у кого ствол короткий, а язык длинный."
+  price_tokens: 2
+  effect: "title:Калибр не главное"
+
+# Cat shop: effect cat_item:<key>, the key is a chrome of balance.cat.chrome (it holds the fight bonus).
+- key: cat_claws
+  name: Стальные когти
+  description: "Выдвижные когти для твоего кота. Дают преимущество в кошачьих боях."
+  price_tokens: 6
+  effect: cat_item:claws
+
+- key: cat_optics
+  name: "Кошачья оптика"
+  description: "Красные глаза с прицельной сеткой. Кот раньше замечает добычу и соперника."
+  price_tokens: 5
+  effect: cat_item:optics
+
+- key: cat_tail
+  name: Хвост-балансир
+  description: "Хвост с гироскопом. Кот приземляется на лапы, как его ни бросай."
+  price_tokens: 4
+  effect: cat_item:tail

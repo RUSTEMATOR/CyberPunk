@@ -1,0 +1,243 @@
+# Stories of the Purge night (owner request 24.10: few NPC on the night, attacks only between players).
+# A hunter's «Улица» may open one of them (balance purge.street_events); never drawn at random.
+# Player text avoids gendered past tense.
+
+- id: pg_tourists
+  title: Туристы ночи
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Наёмник туристов
+  foe_faction: sixth_street
+  text: "Три человека в новеньких тактических костюмах с ценниками на рукавах снимают на камеры горящий мусорный бак. За ними двое наёмников со скучающими лицами. Туристы из Токио купили тур «Судная ночь в Найт-Сити»."
+  choices:
+    - label: Ограбить туристов
+      violent: true
+      effects: {start_combat: 3, street_cred: 1}
+      text: "Наёмники перестают скучать. Туристы прячутся за машину и продолжают снимать."
+    - label: Продать экскурсию
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Ты ведёшь их по кварталу, показываешь трупы и рассказываешь страшилки. Чаевые в йенах и долларах.", effects: {eddies: 1800, fame: 1}}
+      fail: {text: "Наёмники решают, что ты слишком много болтаешь, и прогоняют тебя прикладом.", effects: {hp: -6}}
+    - label: Пройти мимо
+      effects: {mood: -1}
+      text: "Через квартал слышны выстрелы и визг. Тур, судя по всему, удался не всем."
+
+- id: pg_mask_shop
+  title: Лавка масок
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Единственная открытая лавка на улице. Старик продаёт маски для Судной ночи: улыбки, черепа, лица корпоратов. «Без маски тебя запомнят, чумба. А с маской ты никто»."
+  choices:
+    - label: Купить маску
+      effects: {eddies: -500, mood: 3, street_cred: 1}
+      text: "Хромированный оскал, светящиеся глаза. В отражении витрины кто-то чужой и опасный."
+    - label: Забрать маски силой
+      violent: true
+      check: {stat: BODY, skill: melee, dv: 12}
+      success: {text: "Старик не сопротивляется. Ты уходишь с охапкой масок и тяжестью на душе.", effects: {eddies: 900, humanity: -2}}
+      fail: {text: "Из-под прилавка выезжает дробовик. Старик стреляет, не вставая со стула.", effects: {hp: -12}}
+    - label: Спросить про ночь
+      check: {stat: EMP, skill: persuasion, dv: 11}
+      success: {text: "Старик рассказывает, какие кварталы сегодня пусты, а где Мальстрём устроил засаду. Это стоит дороже любой маски.", effects: {mood: 2, street_cred: 1}}
+      fail: {text: "Старик молча показывает на ценник и отворачивается.", effects: {}}
+
+- id: pg_child
+  title: Ребёнок на улице
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Посреди пустой улицы стоит ребёнок лет восьми с плюшевым медведем. Плачет. Родители, судя по всему, не успели домой. Из окон за ним наблюдают."
+  choices:
+    - label: Отвести домой
+      check: {stat: COOL, skill: stealth, dv: 13}
+      success: {text: "Дворами, под эстакадой, мимо горящего фургона. Мать открывает дверь и плачет громче ребёнка.", effects: {humanity: 4, mood: 4, street_cred: 2}}
+      fail: {text: "На полпути вас замечают. Ты закрываешь ребёнка собой и получаешь пулю, но вы доходите.", effects: {humanity: 4, hp: -14, street_cred: 2}}
+    - label: Крикнуть в окна
+      effects: {humanity: 1}
+      text: "Ты орёшь, чтобы кто-нибудь забрал ребёнка. Через минуту дверь приоткрывается, и маленькая фигурка исчезает внутри."
+    - label: Это ловушка
+      check: {stat: INT, skill: stealth, dv: 12}
+      success: {text: "Ты замечаешь провод, уходящий под медведя, и людей за углом. Приманка. Ты уходишь, пока они ждут другого.", effects: {mood: -2}}
+      fail: {text: "Ты уходишь, не разобравшись. Всю ночь не отпускает мысль, правильно ли это было.", effects: {humanity: -3, mood: -4}}
+
+- id: pg_ncpd_offduty
+  title: Копы без жетонов
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Коп без жетона
+  foe_faction: ncpd
+  text: "Четверо в гражданском, но с полицейскими стволами и выправкой. Копы, которые в Судную ночь решают свои вопросы. Один узнаёт тебя по базе розыска."
+  choices:
+    - label: Драться
+      violent: true
+      effects: {start_combat: 3, street_cred: 2}
+      text: "Без жетонов они просто люди со стволами. Хорошими стволами."
+    - label: Договориться
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Ты называешь пару имён, которые им интереснее тебя. Копы уходят охотиться на других.", effects: {humanity: -1}}
+      fail: {text: "Им не нужны имена. Им нужен ты. Удаётся сбежать, оставив кошелёк и немного крови.", effects: {eddies_pct: -10, hp: -10}}
+    - label: Откупиться
+      effects: {eddies: -2000}
+      text: "Полицейская привычка брать деньги сильнее ночной свободы. Пачка эдди, кивок, разошлись."
+
+- id: pg_corpo_safari
+  title: Корпоративное сафари
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Охранник корпората
+  foe_faction: arasaka
+  text: "Бронированный лимузин медленно едет по улице. Из люка торчит корпорат с винтовкой и ищет цель. Это его ежегодное развлечение. Ты в прицеле."
+  choices:
+    - label: Напасть на лимузин
+      violent: true
+      effects: {start_combat: 4, fame: 2}
+      text: "Ты бросаешься к машине. Охрана выскакивает из задних дверей, корпорат ныряет в люк."
+    - label: Спрятаться
+      check: {stat: REF, skill: stealth, dv: 13}
+      success: {text: "Пуля выбивает кирпич там, где только что была твоя голова. Ты уходишь через подвал.", effects: {mood: -2}}
+      fail: {text: "Корпорат хороший стрелок. Пуля задевает плечо, лимузин уезжает с довольным гудком.", effects: {hp: -16}}
+    - label: Записать номер
+      check: {stat: INT, skill: netrunning, dv: 14}
+      success: {text: "Номер, лицо, имя из базы. Утром журналисты заплатят за это хорошие деньги.", effects: {eddies: 2500, mood: 3}}
+      fail: {text: "Камера лимузина замечает тебя раньше. Пуля, крик, асфальт.", effects: {hp: -12}}
+
+- id: pg_ripper_open
+  title: Риппер работает
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Над подвальной дверью горит красный крест. Риппер работает всю Судную ночь: двойной тариф, никаких вопросов, лечит всех."
+  choices:
+    - label: Подлататься
+      effects: {eddies: -1200, hp: 25}
+      text: "Скобы, гель, укол. Риппер работает быстро: очередь за дверью длинная."
+    - label: Помочь с ранеными
+      check: {stat: TECH, skill: medicine, dv: 13}
+      success: {text: "До рассвета ты держишь фонарь, зажимаешь артерии и подаёшь инструменты. Риппер платит и запоминает тебя.", effects: {eddies: 1500, humanity: 3}}
+      fail: {text: "Руки дрожат. Риппер выгоняет тебя после второго уроненного скальпеля.", effects: {mood: -3}}
+    - label: Обчистить клинику
+      violent: true
+      check: {stat: REF, skill: stealth, dv: 15}
+      success: {text: "Пока все заняты, ты выносишь коробку с имплантами. Кто-то сегодня останется без руки.", effects: {eddies: 3500, humanity: -4}}
+      fail: {text: "Риппер всегда смотрит за своими коробками. Скальпель в бедре, и ты на улице.", effects: {hp: -15, street_cred: -1}}
+
+- id: pg_wounded_hunter
+  title: Раненый охотник
+  category: street
+  weight: 1
+  forced_only: true
+  text: "У стены сидит охотник, такой же, как ты. Нога в крови, винтовка рядом, рюкзак набит добычей. Он видит тебя и тянется к стволу медленнее, чем нужно."
+  choices:
+    - label: Добить и забрать
+      violent: true
+      effects: {eddies: 3000, humanity: -5}
+      text: "Ночь законов не знает. Рюкзак тяжёлый, на душе тяжелее."
+    - label: Перевязать
+      effects: {humanity: 3, mood: 2, street_cred: 1}
+      text: "Ты затягиваешь жгут. Он молча отдаёт тебе часть добычи и уходит, хромая. Кто-то сегодня вспомнит, что они люди."
+    - label: Забрать рюкзак и уйти
+      check: {stat: REF, skill: stealth, dv: 12}
+      success: {text: "Ты пинаешь винтовку в сторону и подхватываешь рюкзак. Он ругается вслед, но стрелять уже нечем.", effects: {eddies: 2000, humanity: -1}}
+      fail: {text: "У него оказывается второй ствол в ботинке.", effects: {hp: -14}}
+
+- id: pg_drone_auction
+  title: Аукцион дронов
+  category: street
+  weight: 1
+  forced_only: true
+  text: "На парковке торгуют сбитыми полицейскими дронами. Продавец кричит цены, покупатели держат стволы наготове. Один дрон ещё мигает."
+  choices:
+    - label: Купить дрон
+      effects: {eddies: -1500, street_cred: 1}
+      text: "Дрон твой. Перепрошить его утром — и в квартире будет охранник, который не спит."
+    - label: Перепродать на месте
+      check: {stat: INT, skill: tech, dv: 13}
+      success: {text: "Ты находишь в дроне карту памяти с полицейскими записями. Её покупают тут же, втрое дороже самого дрона.", effects: {eddies: 3000}}
+      fail: {text: "Дрон оживает у тебя в руках и бьёт током. Продавец смеётся.", effects: {hp: -8}}
+    - label: Уйти
+      effects: {}
+      text: "Через десять минут на парковке начинается перестрелка за последний дрон."
+
+- id: pg_preacher
+  title: Проповедник ночи
+  category: street
+  weight: 1
+  forced_only: true
+  text: "На крыше машины стоит проповедник с мегафоном: «Очищение! Ночь освобождает нас от греха законов!» Вокруг него толпа, и толпа заводится."
+  choices:
+    - label: Сбить его с машины
+      violent: true
+      check: {stat: BODY, skill: melee, dv: 13}
+      success: {text: "Проповедник летит в лужу. Толпа на секунду замирает, а потом расходится, будто проснувшись.", effects: {humanity: 2, street_cred: 2}}
+      fail: {text: "Толпа защищает своего пророка. Кулаки, ботинки, асфальт.", effects: {hp: -15}}
+    - label: Послушать
+      effects: {mood: -3, humanity: -1}
+      text: "Слова липнут к голове. Через полчаса ты ловишь себя на том, что киваешь."
+    - label: Обчистить толпу
+      check: {stat: REF, skill: stealth, dv: 12}
+      success: {text: "Все смотрят на крышу машины. Карманы раскрыты, как их души.", effects: {eddies: 1600}}
+      fail: {text: "Кто-то хватает тебя за руку и кричит: «Грешник!» Толпа оборачивается.", effects: {hp: -10, eddies_pct: -5}}
+
+- id: pg_old_debt
+  title: Старый должник
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Должник с обрезом
+  text: "Из подъезда выходит человек, который год назад занял у тебя деньги и исчез. Он тоже тебя узнаёт. В руках у него обрез, а в глазах решимость закрыть долг навсегда."
+  choices:
+    - label: Выстрелить первым
+      violent: true
+      effects: {start_combat: 2, street_cred: 1}
+      text: "Он не ждал, что ты окажешься быстрее."
+    - label: Простить долг
+      check: {stat: EMP, skill: persuasion, dv: 12}
+      success: {text: "Ты говоришь, что забудешь. Он опускает обрез, плачет и отдаёт всё, что при нём есть.", effects: {eddies: 1000, humanity: 3}}
+      fail: {text: "Он не верит в прощение. Выстрел в упор мимо, но осколки витрины находят тебя.", effects: {hp: -12}}
+    - label: Уйти
+      effects: {mood: -2}
+      text: "Ты отворачиваешься. Спиной чувствуешь его взгляд до самого угла."
+
+- id: pg_burning_car
+  title: Горящая машина
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Машина врезалась в столб и горит. Внутри кто-то кричит. На заднем сиденье видна сумка с логотипом банка."
+  choices:
+    - label: Вытащить водителя
+      check: {stat: BODY, skill: null, dv: 13}
+      success: {text: "Дверь заклинило, но ты отрываешь её. Водитель жив. Сумку он отдаёт сам: «Это всё равно не моё».", effects: {eddies: 2500, humanity: 3, hp: -6}}
+      fail: {text: "Огонь быстрее. Ты успеваешь вытащить человека, но обжигаешь руки до мяса.", effects: {hp: -18, humanity: 3}}
+    - label: Взять только сумку
+      check: {stat: REF, skill: null, dv: 12}
+      success: {text: "Ты выхватываешь сумку через разбитое стекло. Крики сзади стихают раньше, чем ты успеваешь отойти.", effects: {eddies: 4000, humanity: -6}}
+      fail: {text: "Бак взрывается. Сумка горит, ты тоже немного.", effects: {hp: -15}}
+    - label: Пройти мимо
+      effects: {humanity: -2, mood: -3}
+      text: "Крики стихают за спиной. Это Судная ночь, говоришь ты себе."
+
+- id: pg_purge_stream
+  title: Стрим ночи
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Стример с охраной
+  foe_faction: valentinos
+  text: "Стример с дроном-камерой ведёт прямой эфир «Судная ночь в прямом эфире». Миллион зрителей. Он замечает тебя: «О, а вот и местный! Скажи что-нибудь страшное!»"
+  choices:
+    - label: Устроить шоу
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Ты рычишь в камеру, стреляешь в небо и уходишь в дым. Чат взрывается донатами, стример делится.", effects: {eddies: 1500, fame: 2, street_cred: 1}}
+      fail: {text: "Ты мямлишь и прячешь лицо. Клип «самый скучный житель Найт-Сити» набирает миллион просмотров.", effects: {mood: -4, fame: 1}}
+    - label: Отобрать дрон
+      violent: true
+      effects: {start_combat: 2, street_cred: 1}
+      text: "У стримера есть охрана, которой хорошо платят за рейтинги."
+    - label: Закрыть лицо и уйти
+      effects: {}
+      text: "Завтра в нарезке будет твоя спина. Пускай."

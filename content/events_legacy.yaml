@@ -1,0 +1,21 @@
+# Events of the legacy system (PLAN 7.3, DESIGN.md 13).
+# `engram_conflict` is forced_only: engine/week.py queues it every `legacy.engram.conflict_event_every_weeks` weeks
+# for a character who lives on an Arasaka engram (flag `engram`).
+
+- id: engram_conflict
+  title: Чужой голос
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Ночью тебя будит голос. Он говорит твоими словами, но помнит то, чего с тобой не было: чужую улицу, чужой выстрел, женщину, которую ты не знаешь. Слепок прежней жизни спорит с тем, кем ты стал."
+  choices:
+    - label: Уступить слепку
+      effects: {mood: -3, skill_xp:firearms: 2, skill_xp:melee: 2}
+      text: "Ты отпускаешь поводья. Утром руки делают то, чему ты не учился, а в зеркале на секунду чужое лицо. Навык вернулся, а ты чуть отошёл в сторону."
+    - label: Спорить до утра
+      check: {stat: COOL, dv: 15}
+      success: {text: "Ты говоришь вслух, пока в комнате не становится тихо. Слепок замолкает, как сосед, с которым наконец договорились о границах.", effects: {mood: 3}}
+      fail: {text: "Спор тянется до рассвета, и непонятно, кто из вас прав. Ты встаёшь разбитым и не уверен, чьи это мысли.", effects: {mood: -6}}
+    - label: Заглушить таблетками
+      effects: {eddies: -200, mood: 2}
+      text: "Знакомый аптекарь не задаёт вопросов и берёт двести. Голос затихает до шёпота, но по ночам ты всё равно слышишь, как он ждёт."

@@ -1,0 +1,99 @@
+- key: arasaka
+  name: "Arasaka"
+  description: "Японская мегакорпорация: безопасность, банки, частная армия. Самый влиятельный игрок в городе, даже когда её здесь нет."
+  kind: megacorp
+  disposition:
+    bribe_dv: 23
+    talk_dv: 19
+    bribe_cost_mult: 3.0
+    flee_mod: 1
+    surrender: {arrested: 8, vanished: 2}
+
+- key: militech
+  name: "Militech"
+  description: "Американский оружейный гигант, поставщик армии и полиции. Его контракты стоят дороже улиц, на которых их выполняют."
+  kind: megacorp
+  disposition:
+    bribe_dv: 23
+    talk_dv: 19
+    bribe_cost_mult: 3.0
+    flee_mod: 1
+    surrender: {arrested: 8, vanished: 2}
+
+- key: kang_tao
+  name: "Kang Tao"
+  description: "Китайский производитель оружия и техники. Дёшево копирует, дорого продаёт и долго помнит долги."
+  kind: megacorp
+  disposition:
+    bribe_dv: 23
+    talk_dv: 19
+    bribe_cost_mult: 3.0
+    flee_mod: 1
+    surrender: {arrested: 8, vanished: 2}
+  available_from: 2050
+
+- key: biotechnica
+  name: "Biotechnica"
+  description: "Генная инженерия, еда и импланты. Продаёт здоровье по подписке и отказывает в гарантии."
+  kind: megacorp
+  disposition:
+    bribe_dv: 23
+    talk_dv: 19
+    bribe_cost_mult: 3.0
+    flee_mod: 1
+    surrender: {arrested: 8, vanished: 2}
+
+- key: petrochem
+  name: "Petrochem"
+  description: "Топливо и пустыня. Держит Бэдлендс через буровые и караваны, которые возят горючее в город."
+  kind: megacorp
+  disposition:
+    bribe_dv: 23
+    talk_dv: 19
+    bribe_cost_mult: 3.0
+    flee_mod: 1
+    surrender: {arrested: 8, vanished: 2}
+
+- key: zetatech
+  name: "Zetatech"
+  description: "Компьютеры, сети и софт. Её нетраннеры работают на грани закона, а охрана стреляет, не дожидаясь вызова."
+  kind: megacorp
+  disposition:
+    bribe_dv: 23
+    talk_dv: 19
+    bribe_cost_mult: 3.0
+    flee_mod: 1
+    surrender: {arrested: 8, vanished: 2}
+
+- key: trauma_team
+  name: "Trauma Team"
+  description: "Частная скорая помощь по подписке. Если подписка оплачена, приезжают за минуты. Если нет, могут не приехать вовсе."
+  kind: service
+  disposition:
+    bribe_dv: 19
+    talk_dv: 15
+    bribe_cost_mult: 2.0
+    flee_mod: 2
+    surrender: {arrested: 6, released: 4}
+
+- key: netwatch
+  name: "NetWatch"
+  description: "Служба сетевой безопасности. Охотится на нетраннеров и чистит сети, а её агенты не объясняют, зачем пришли."
+  kind: service
+  disposition:
+    bribe_dv: 25
+    talk_dv: 23
+    bribe_cost_mult: 3.0
+    flee_mod: 0
+    surrender: {vanished: 7, arrested: 3}
+
+- key: ncpd
+  name: NCPD
+  description: "Полиция Найт-Сити. Продажная, перегруженная и всё равно появляется в самый неподходящий момент. Розыск значит, что тобой занялись именно они."
+  kind: law
+  disposition:
+    bribe_dv: 13
+    talk_dv: 15
+    bribe_cost_mult: 0.6
+    flee_mod: 1
+    surrender: {arrested: 1}

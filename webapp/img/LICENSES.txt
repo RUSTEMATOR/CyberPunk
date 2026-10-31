@@ -1,0 +1,22 @@
+City backgrounds of the Night City Life Mini App (webapp/img/city_<country>.webp).
+Free photos under CC0, public domain, CC BY or CC BY-SA. Resized to 1280 px and converted to WebP; no other changes.
+
+city_china.webp: "File:Pudong Shanghai November 2017 HDR panorama.jpg" by King of Hearts, CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0, source https://commons.wikimedia.org/wiki/File:Pudong_Shanghai_November_2017_HDR_panorama.jpg
+city_europe.webp: "File:Rainy night, rue de Turenne, Paris March 2020.jpg" by Francisco Anzola from United States, CC BY 2.0 https://creativecommons.org/licenses/by/2.0, source https://commons.wikimedia.org/wiki/File:Rainy_night,_rue_de_Turenne,_Paris_March_2020.jpg
+city_germany.webp: "File:Kreuzberg by night, Berlin, May 14th, 2025 - 05.jpg" by Plaksie, CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0, source https://commons.wikimedia.org/wiki/File:Kreuzberg_by_night,_Berlin,_May_14th,_2025_-_05.jpg
+city_hongkong.webp: "File:Mong Kok Neon Signs Night (48127904386).jpg" by Benh LIEU SONG from Torcy, France, CC BY-SA 2.0 https://creativecommons.org/licenses/by-sa/2.0, source https://commons.wikimedia.org/wiki/File:Mong_Kok_Neon_Signs_Night_(48127904386).jpg
+city_india.webp: "Mumbai Night City" by Vidur Malhotra, Public domain https://creativecommons.org/publicdomain/mark/1.0/, source https://www.flickr.com/photos/111661024@N07/18219784390
+city_italy.webp: "Night Street" by Sergei Gussev, CC0 https://creativecommons.org/publicdomain/zero/1.0/, source https://stocksnap.io/photo/night-street-TBVIZWFL6Q
+city_japan.webp: "File:Colorful neon street signs in Kabukichō, Shinjuku, Tokyo.jpg" by Basile Morin, CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0, source https://commons.wikimedia.org/wiki/File:Colorful_neon_street_signs_in_Kabukich%C5%8D,_Shinjuku,_Tokyo.jpg
+city_kazakhstan.webp: "File:Night Almaty city.jpg" by Edgarpo01, CC BY-SA 3.0 https://creativecommons.org/licenses/by-sa/3.0, source https://commons.wikimedia.org/wiki/File:Night_Almaty_city.jpg
+city_korea.webp: "File:Night view at Gangnam station bus stop 20251024.jpg" by *Youngjin, CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0, source https://commons.wikimedia.org/wiki/File:Night_view_at_Gangnam_station_bus_stop_20251024.jpg
+city_mexico.webp: "Guanajuato subterráneo" by Carlos ZGZ, CC0 https://creativecommons.org/publicdomain/zero/1.0/, source https://www.flickr.com/photos/31810462@N07/20744768329
+city_netherlands.webp: "File:Canal-In-Amsterdam-At-Night-2009.jpg" by Kham Tran - www.khamtran.com, CC BY-SA 3.0 https://creativecommons.org/licenses/by-sa/3.0, source https://commons.wikimedia.org/wiki/File:Canal-In-Amsterdam-At-Night-2009.jpg
+city_poland.webp: "Warsaw at Night" by unknown, CC0 https://creativecommons.org/publicdomain/zero/1.0/, source https://www.rawpixel.com/image/5969846/warsaw-night
+city_singapore.webp: "File:Puente Helix, museo ArtScience y hotel Marina Bay Sands, Marina Bay, Singapur, 2023-08-17, DD 67-69 HDR.jpg" by Diego Delso, CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0, source https://commons.wikimedia.org/wiki/File:Puente_Helix,_museo_ArtScience_y_hotel_Marina_Bay_Sands,_Marina_Bay,_Singapur,_2023-08-17,_DD_67-69_HDR.jpg
+city_sweden.webp: "Noche de invierno- Winter night" by hector melo, CC BY 2.0 https://creativecommons.org/licenses/by/2.0/, source https://www.flickr.com/photos/28885516@N00/365858745
+city_texas.webp: "Downtown Houston" by eflon, CC BY 2.0 https://creativecommons.org/licenses/by/2.0/, source https://www.flickr.com/photos/23094783@N03/2280454733
+city_thailand.webp: "busy intersection Bangkok night" by unknown, CC0 https://creativecommons.org/publicdomain/zero/1.0/, source https://www.rawpixel.com/image/3303338/free-photo-image-refinery-night-traffic-bangkok
+city_turkey.webp: "Under the Galata Bridge" by laszlo-photo, CC BY 2.0 https://creativecommons.org/licenses/by/2.0/, source https://www.flickr.com/photos/40467171@N00/3937361387
+city_uae.webp: "File:Dubai Marina Towers by night.jpg" by Gfilip, CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0, source https://commons.wikimedia.org/wiki/File:Dubai_Marina_Towers_by_night.jpg
+city_uk.webp: "Red Telephone Box" by mostaque, CC BY 2.0 https://creativecommons.org/licenses/by/2.0/, source https://www.flickr.com/photos/31626005@N04/5583991194

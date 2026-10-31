@@ -1,0 +1,14 @@
+Night City Life arcade: open-source HTML5 games, served as they are with small patches
+(trackers and ads removed, a score bridge ../nc.js added, mobile fixes). Each game folder keeps its own license file.
+
+hextris   https://github.com/Hextris/hextris                GPL-3.0
+2048      https://github.com/gabrielecirulli/2048           MIT
+dino      https://github.com/wayou/t-rex-runner             BSD-3-Clause (Chromium T-Rex)
+tower     https://github.com/iamkun/tower_game              MIT
+bird      https://github.com/ellisonleao/clumsy-bird        GPL-3.0
+pacman    https://github.com/daleharvey/pacman              WTFPL
+tetris    https://github.com/jakesgordon/javascript-tetris  MIT
+hexgl     https://github.com/BKcore/HexGL                   MIT; some resources CC BY-NC 3.0 (Thibaut Despoulain)
+
+The patched sources are the files in these folders; the patches are made by a build script kept with the bot's
+deploy notes (docs/PLAN_ARCADE_WEB.md).

@@ -1,0 +1,369 @@
+- key: kiroshi_hunter
+  name: "Оптика Kiroshi «Охотник»"
+  slot: eyes
+  exclusive_group: optics
+  price: 1800
+  humanity_cost: 3
+  description: "Сканер поверх прицела: видно, какой хром у врага и сколько у него патронов. Картинка рябит, и к вечеру болит голова."
+  tier: street
+  category: combat
+  abilities: [gear_read]
+  build: sniper
+  requires: []
+  mods: {skill.firearms: 1, enemy_scan: 1, mood_weekly: -1}
+  available_from: 2030
+
+- key: kiroshi_predator
+  name: "Оптика Kiroshi «Хищник»"
+  slot: eyes
+  exclusive_group: optics
+  price: 6500
+  humanity_cost: 5
+  description: "Тепловизор, захват цели и сканер чужого хрома в одном корпусе. Работает чисто и без побочек, если не считать цены."
+  tier: mid
+  category: combat
+  abilities: [chrome_scan]
+  build: hunter
+  requires: []
+  mods: {skill.firearms: 2, skill.stealth: 1, enemy_scan: 1, check.combat: 1}
+  available_from: 2045
+
+- key: militech_eagle
+  name: "Оптика Militech «Орлиный глаз»"
+  slot: eyes
+  exclusive_group: optics
+  price: 12500
+  humanity_cost: 8
+  description: "Армейская оптика: чужой хром как на ладони, цель не теряется даже на дальней дистанции. Её ставят те, кому человечность уже не дорога."
+  tier: military
+  category: combat
+  abilities: [eagle_scan]
+  build: sniper
+  requires: []
+  mods: {skill.firearms: 3, skill.stealth: 1, enemy_scan: 1, check.combat: 2}
+  available_from: 2060
+
+- key: smartlink_gun
+  name: "Смарт-линк"
+  slot: brain
+  price: 2200
+  humanity_cost: 3
+  description: "Связывает мозг с оружием: прицел наводится сам, отдача гасится. Без ствола в руке линк зудит, и настроение портится."
+  tier: street
+  category: combat
+  abilities: [link_trick]
+  build: sniper
+  requires: []
+  mods: {skill.firearms: 1, ranged_damage: 1, mood_weekly: -1}
+  available_from: 2030
+
+- key: ballistic_coprocessor
+  name: "Баллистический сопроцессор"
+  slot: brain
+  price: 6200
+  humanity_cost: 6
+  description: "Чип рассчитывает ветер, траекторию и отдачу раньше, чем ты решишь стрелять. Попадаешь чаще и больнее, без побочных эффектов."
+  tier: mid
+  category: combat
+  abilities: [ricochet_calc]
+  build: sniper
+  requires: []
+  mods: {skill.firearms: 2, ranged_damage: 1, check.combat: 1}
+  available_from: 2045
+
+- key: reflex_tuner
+  name: "Тюнер рефлексов"
+  slot: spine
+  price: 2600
+  humanity_cost: 4
+  description: "Микропровода вдоль позвоночника: руки успевают раньше глаз. Нервы всё время на взводе, и спится плохо."
+  tier: street
+  category: combat
+  abilities: [street_juggle]
+  build: duelist
+  requires: []
+  mods: {stat.REF: 1, mood_weekly: -2}
+  available_from: 2030
+
+- key: subdermal_grip
+  name: "Подкожные захваты"
+  slot: hands
+  price: 1100
+  humanity_cost: 2
+  description: "Пластины в ладонях держат рукоять мёртвой хваткой, отдача почти не чувствуется. Руки тяжелеют, и бегать с ними неудобно."
+  tier: street
+  category: combat
+  abilities: [dead_grip]
+  build: tank
+  requires: []
+  mods: {skill.firearms: 1, strength: 1, flee: -1}
+
+- key: dermal_laminate
+  name: "Бронеламинат"
+  slot: skin
+  exclusive_group: dermal_plating
+  price: 2000
+  humanity_cost: 3
+  description: "Ещё один слой поверх подкожной брони: пули держит лучше. Двигаешься тяжелее, и убегать сложнее."
+  tier: street
+  category: defense
+  abilities: [layered_hold]
+  build: tank
+  requires: [subdermal_armor]
+  mods: {armor: 2, flee: -1}
+
+- key: dermal_ablative
+  name: "Аблятивные пластины"
+  slot: skin
+  exclusive_group: dermal_plating
+  price: 13000
+  humanity_cost: 9
+  description: "Военные пластины поверх подкожной брони: гасят удар и делают тело крепче. Защищают лучше ламината и не сковывают движений."
+  tier: military
+  category: defense
+  abilities: [ablative_burn]
+  build: tank
+  requires: [subdermal_armor]
+  mods: {armor: 4, damage_reduction: 1, strength: 1}
+  available_from: 2060
+
+- key: reinforced_skeleton
+  name: "Армированный скелет"
+  slot: body
+  price: 8200
+  humanity_cost: 8
+  description: "Кости укреплены сплавом: держишь больше ударов и поднимаешь больше. Металла в теле становится много, и человечность это чувствует."
+  tier: mid
+  category: defense
+  abilities: [heavy_carry]
+  build: tank
+  requires: []
+  mods: {hp_max: 10, strength: 2}
+  available_from: 2030
+
+- key: blood_pump
+  name: "Кровяной насос"
+  slot: circulatory
+  price: 5400
+  humanity_cost: 6
+  description: "Гонит кровь быстрее: раны заживают скорее, а в бою кровотечение слабее. Надёжная вещь без побочных эффектов."
+  tier: mid
+  category: defense
+  abilities: [fast_blood]
+  build: medic
+  requires: []
+  mods: {hp_regen: 2, bleed: 2}
+  available_from: 2016
+
+- key: pain_editor
+  name: "Редактор боли"
+  slot: brain
+  price: 2700
+  humanity_cost: 4
+  description: "Глушит боль, и ты стоишь на ногах там, где другой бы упал. Потом боль возвращается разом, и настроение падает."
+  tier: street
+  category: combat
+  abilities: [pain_postpone]
+  build: berserk
+  requires: []
+  mods: {damage_reduction: 2, mood_weekly: -2}
+  available_from: 2030
+
+- key: lynx_paws
+  name: "Рысьи лапы"
+  slot: legs
+  price: 4300
+  humanity_cost: 5
+  description: "Амортизаторы в ногах: перепрыгиваешь заборы и ступаешь бесшумно. Пригодятся и для бегства, и для тихой работы."
+  tier: mid
+  category: combat
+  abilities: [fence_vault]
+  build: hunter
+  requires: []
+  mods: {flee: 2, check.gig_quiet: 1}
+  available_from: 2045
+
+- key: camo_ghost
+  name: "Оптический камуфляж «Призрак»"
+  slot: skin
+  price: 3300
+  humanity_cost: 6
+  description: "Делает тебя почти невидимым, и враги стреляют наугад. Включается только на полном заряде и не выключается, пока заряд не кончится."
+  tier: street
+  category: combat
+  abilities: [ghost_blink]
+  build: ninja
+  exclusive_group: camo
+  requires: []
+  active:
+    mode: duration
+    button: Маскировка
+    min_charge: 100
+    duration_ticks: 3
+    can_cancel: false
+    recharge_per_tick: 10
+    effects: {enemy_attack_penalty: 2}
+  available_from: 2045
+
+- key: camo_military
+  name: "Камуфляж Militech «Невидимка»"
+  slot: skin
+  price: 13800
+  humanity_cost: 11
+  description: "Военный камуфляж: включается от остатка заряда, выключается по команде, а каждое убийство его подзаряжает. Под ним и стреляешь увереннее."
+  tier: military
+  category: combat
+  abilities: [cloak]
+  build: ninja
+  exclusive_group: camo
+  requires: []
+  active:
+    mode: duration
+    button: Маскировка
+    min_charge: 20
+    duration_ticks: 4
+    can_cancel: true
+    recharge_per_tick: 12
+    recharge_on_kill: 10
+    effects: {enemy_attack_penalty: 3, check_bonus: 1}
+  available_from: 2060
+
+- key: spinal_cooler
+  name: "Охладитель позвоночника"
+  slot: spine
+  price: 1800
+  humanity_cost: 1
+  description: "Жидкий азот вдоль позвоночника: Сандевистан остывает и заряжается быстрее. Керензикову зато нужно больше заряда, чтобы сработать."
+  tier: street
+  category: booster
+  abilities: [nitrogen_chill]
+  build: duelist
+  requires: []
+  mods: {active.sandevistan.recharge_per_tick: 5, active.kerenzikov.min_charge: 10}
+  available_from: 2030
+
+- key: launcher_autoloader
+  name: "Автозагрузчик ракет"
+  slot: forearms
+  price: 2900
+  humanity_cost: 2
+  description: "Магазин на предплечье сам досылает ракеты, и установка перезаряжается быстрее. От постоянного грохота шалят нервы."
+  tier: street
+  category: booster
+  abilities: [reload_rush]
+  build: engineer
+  requires: []
+  mods: {active.projectile_launcher.recharge_per_tick: 10, mood_weekly: -1}
+  available_from: 2030
+
+- key: tactical_processor
+  name: "Тактический процессор"
+  slot: brain
+  price: 2400
+  humanity_cost: 2
+  description: "Чип подсказывает Керензикову, когда сработать, и тот тратит меньше заряда. Со временем начинаешь ждать подсказки и там, где её нет."
+  tier: street
+  category: booster
+  abilities: [predict]
+  build: duelist
+  requires: []
+  mods: {active.kerenzikov.cost: -10, mood_weekly: -1}
+  available_from: 2030
+
+- key: adrenaline_pump
+  name: "Адреналиновый насос"
+  slot: circulatory
+  price: 2700
+  humanity_cost: 3
+  description: "Каждое убийство подстёгивает Берсерк, и он заряжается быстрее. После боя долго трясёт, и сон не идёт."
+  tier: street
+  category: booster
+  abilities: [kill_charge]
+  build: berserk
+  requires: []
+  mods: {active.berserk.recharge_on_kill: 10, mood_weekly: -2}
+  available_from: 2016
+
+- key: takedown_coupler
+  name: "Модуль захвата"
+  slot: hands
+  price: 3200
+  humanity_cost: 2
+  description: "Сандевистан подзаряжается, когда берёшь врага живым. Чужую боль чувствуешь как свою, и новые импланты отнимают больше человечности."
+  tier: street
+  category: booster
+  abilities: [take_alive]
+  build: duelist
+  requires: []
+  mods: {active.sandevistan.recharge_on_takedown: 10, humanity_loss_pct: 10}
+  available_from: 2030
+
+- key: phase_shifter
+  name: "Фазовый модулятор"
+  slot: skin
+  price: 3300
+  humanity_cost: 3
+  description: "Камуфляж держится дольше. Только в тени всё чаще кажется, что кто-то дышит в затылок."
+  tier: street
+  category: booster
+  abilities: [shadow_hold]
+  build: ninja
+  requires: []
+  mods: {active.camo.duration_ticks: 1, mood_weekly: -1}
+  available_from: 2045
+
+- key: berserk_multiplexer
+  name: "Мультиплексор Берсерка"
+  slot: spine
+  price: 3800
+  humanity_cost: 4
+  description: "Берсерк работает дольше, но в бою заряжается медленнее. Выгодно, если включаешь его один раз и надолго."
+  tier: mid
+  category: booster
+  abilities: [long_rage]
+  build: berserk
+  requires: []
+  mods: {active.berserk.duration_ticks: 1, active.berserk.recharge_per_tick: -5}
+  available_from: 2045
+
+- key: capacitor
+  name: "Конденсатор"
+  slot: body
+  price: 7200
+  humanity_cost: 5
+  description: "Все активные импланты включаются от меньшего заряда. Простая деталь без побочек, которая в бою экономит время."
+  tier: mid
+  category: booster
+  abilities: [quick_spark]
+  build: engineer
+  requires: []
+  mods: {active.all.min_charge: -5}
+  available_from: 2045
+
+- key: power_core
+  name: "Ядро питания"
+  slot: body
+  price: 11500
+  humanity_cost: 9
+  description: "Все активные импланты в бою заряжаются быстрее. Тяжёлое, надёжное и без побочек, только дорогое."
+  tier: military
+  category: booster
+  abilities: [core_share]
+  build: engineer
+  requires: []
+  mods: {active.all.recharge_per_tick: 4}
+  available_from: 2060
+
+- key: synaptic_accelerator
+  name: "Синаптический ускоритель"
+  slot: brain
+  price: 14800
+  humanity_cost: 14
+  description: "Все длительные импланты работают дольше. Платишь за это человечностью, и немалой."
+  tier: military
+  category: booster
+  abilities: [synapse_cram]
+  build: duelist
+  requires: []
+  mods: {active.all.duration_ticks: 1}
+  available_from: 2060

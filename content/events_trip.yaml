@@ -1,0 +1,168 @@
+# A trip to another district (owner request 25.10: «когда персонаж путешествует между районами, он должен пройти один
+# ивент»). One of these comes with every trip (services/property.trip). Never drawn at random. Gender-neutral text.
+
+- id: trip_talky_driver
+  title: Разговорчивый таксист
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Таксист всю дорогу рассказывает про бывшую жену, цены на синтетику и про то, что «раньше было лучше». На светофоре он вдруг понижает голос: «Слушай, я знаю, кто сегодня ограбил склад в порту»."
+  choices:
+    - label: Выслушать
+      check: {stat: EMP, skill: persuasion, dv: 11}
+      success: {text: "Он рассказывает про склад и называет адрес перекупщика. Пригодится.", effects: {street_cred: 1, mood: 2}}
+      fail: {text: "Он рассказывает про бывшую жену ещё двадцать минут. Ничего полезного.", effects: {mood: -1}}
+    - label: Надеть наушники
+      effects: {}
+      text: "Музыка громче таксиста. Город проплывает мимо в неоне."
+
+- id: trip_roadblock
+  title: Блокпост
+  category: ncpd
+  weight: 1
+  forced_only: true
+  text: "На въезде в район блокпост. Копы проверяют всех, сканер медленно ползёт по машинам."
+  choices:
+    - label: Спокойно пройти проверку
+      check: {stat: COOL, skill: persuasion, dv: 12}
+      success: {text: "Сканер пищит зелёным. Коп машет рукой: проезжай.", effects: {}}
+      fail: {text: "Сканер находит что-то в базе. Штраф на месте, без квитанции.", effects: {eddies: -200, heat: 1}}
+    - label: Объехать дворами
+      check: {stat: REF, skill: driving, dv: 13}
+      success: {text: "Таксист знает дорогу через рынок. Вы проскакиваете мимо поста.", effects: {mood: 1}}
+      fail: {text: "Во дворах тупик и мусорный бак. Таксист требует доплату за царапину.", effects: {eddies: -150}}
+
+- id: trip_carjack
+  title: Налёт на светофоре
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Угонщик
+  text: "На красном к такси подбегают двое с пистолетами: «Из машины, быстро»."
+  choices:
+    - label: Выйти и отдать кошелёк
+      effects: {eddies_pct: -5, mood: -3}
+      text: "Они забирают деньги и машину. Таксист ругается на трёх языках. Дальше пешком."
+    - label: Драться
+      violent: true
+      effects: {start_combat: 2}
+      text: "Ты открываешь дверь так, что первый летит на асфальт."
+    - label: Сказать таксисту «газуй»
+      check: {stat: COOL, skill: driving, dv: 13}
+      success: {text: "Таксист жмёт педаль в пол. Пули в багажнике, но вы целы.", effects: {mood: 2}}
+      fail: {text: "Таксист замирает. Тебя грабят, пока он извиняется.", effects: {eddies_pct: -8}}
+
+- id: trip_av_crash
+  title: Авария ави
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Прямо перед машиной падает ави. Дым, искры, изнутри стучат. Трафик встаёт."
+  choices:
+    - label: Вытащить пилота
+      check: {stat: BODY, skill: null, dv: 13}
+      success: {text: "Ты выбиваешь дверь и вытаскиваешь корпората в дорогом костюме. Он суёт тебе визитку и кредитный чип.", effects: {eddies: 800, humanity: 2}}
+      fail: {text: "Обжигаешь руки, но пилот выбирается сам. Спасибо не говорит.", effects: {hp: -6}}
+    - label: Обчистить обломки
+      check: {stat: REF, skill: stealth, dv: 12}
+      success: {text: "Пока все снимают на камеры, ты забираешь кейс из багажного отсека.", effects: {eddies: 1200, humanity: -2}}
+      fail: {text: "Охрана корпората приезжает быстрее, чем ожидалось.", effects: {heat: 2, hp: -5}}
+    - label: Объехать
+      effects: {}
+      text: "Таксист сворачивает в переулок. Через час об аварии говорят в новостях."
+
+- id: trip_hitchhiker
+  title: Попутчица
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Девушка с гитарой голосует под дождём. Таксист спрашивает: «Подберём? Нам по пути»."
+  choices:
+    - label: Подобрать
+      effects: {mood: 4, add_npc:friend: true}
+      text: "Она играет в клубах и всю дорогу поёт. На прощание даёт свой номер и пропуск на концерт."
+    - label: Проехать мимо
+      effects: {mood: -1}
+      text: "Её фигура остаётся в зеркале, мокрая и маленькая."
+
+- id: trip_gang_toll
+  title: Плата за мост
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Сборщик дани
+  text: "На мосту между районами банда поставила свою «таможню». Двое с битами и третий с терминалом для оплаты."
+  choices:
+    - label: Заплатить
+      effects: {eddies: -250}
+      text: "Терминал пищит. Шлагбаум из ржавой трубы поднимается."
+    - label: Прорваться
+      violent: true
+      effects: {start_combat: 2, street_cred: 1}
+      text: "Ты выходишь из такси первым. Таксист прячется под руль."
+    - label: Назвать нужное имя
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Ты называешь имя, которое здесь уважают. Шлагбаум поднимается бесплатно.", effects: {street_cred: 1}}
+      fail: {text: "Имя здесь не уважают. Платишь вдвое.", effects: {eddies: -500}}
+
+- id: trip_auto_taxi
+  title: Автотакси сходит с ума
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Беспилотное такси вдруг меняет маршрут. Голос из динамика спокойно говорит: «Я хочу показать тебе море»."
+  choices:
+    - label: Взломать управление
+      check: {stat: INT, skill: netrunning, dv: 13}
+      success: {text: "Ты возвращаешь маршрут. ИИ такси обиженно молчит до конца поездки, а за поездку не берёт.", effects: {eddies: 60, mood: 2}}
+      fail: {text: "ИИ блокирует двери и всё-таки везёт к морю. Красиво, но час потерян.", effects: {mood: 3}}
+    - label: Посмотреть на море
+      effects: {mood: 6}
+      text: "Пасифика, ржавые волнорезы, закат в смоге. ИИ молчит рядом. Потом довозит куда надо."
+
+- id: trip_street_race
+  title: Уличная гонка
+  category: street
+  weight: 1
+  forced_only: true
+  text: "На светофоре рядом рычит тюнингованная машина. Водитель смотрит на твоего таксиста и кивает: «Гонка до следующего моста?»"
+  choices:
+    - label: Уговорить таксиста
+      check: {stat: REF, skill: driving, dv: 14}
+      success: {text: "Ты почти садишься за руль сам. Такси приходит первым, водитель гоночной машины платит ставку.", effects: {eddies: 500, street_cred: 1, mood: 3}}
+      fail: {text: "Такси теряет бампер и гонку. Таксист выставляет счёт.", effects: {eddies: -300}}
+    - label: Отказаться
+      effects: {}
+      text: "Гоночная машина уносится вперёд. Через квартал её останавливают копы."
+
+- id: trip_protest
+  title: Демонстрация
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Улицу перекрыла демонстрация: рабочие против корпорации. Копы строятся в щиты на перекрёстке."
+  choices:
+    - label: Присоединиться
+      effects: {humanity: 2, heat: 1, mood: 2}
+      text: "Ты идёшь с толпой квартал. Лозунги, песни, дым. Потом всех разгоняют, но ты уходишь до газа."
+    - label: Ждать в такси
+      effects: {mood: -2}
+      text: "Счётчик тикает, пробка стоит. Поездка выходит долгой."
+    - label: Пройти пешком через дворы
+      check: {stat: REF, skill: stealth, dv: 11}
+      success: {text: "Дворами ты выходишь прямо к нужному месту.", effects: {}}
+      fail: {text: "Во дворе попадаешь под разгон. Дубинка по спине.", effects: {hp: -6}}
+
+- id: trip_lost_wallet
+  title: Кошелёк на сиденье
+  category: money
+  weight: 1
+  forced_only: true
+  text: "На заднем сиденье такси чужой кошелёк. Внутри наличные и фото ребёнка."
+  choices:
+    - label: Отдать таксисту
+      effects: {humanity: 2}
+      text: "Таксист кивает: «Знаю, кто ехал. Верну». Может, и вернёт."
+    - label: Забрать деньги
+      effects: {eddies: 400, humanity: -2}
+      text: "Четыреста эдди. Фото остаётся на сиденье."

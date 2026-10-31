@@ -1,0 +1,1641 @@
+# Scenes of the chrome abilities (owner request 26.10, docs/PLAN_CHROME.md). Forced only: «⚙️ Возможности хрома» plays
+# one of them when an ability is used (balance.chrome_abilities.<key>.events). The choice with `ability:` is the
+# payoff of the chrome; the others are there for the cautious. Player text avoids gendered past tense.
+
+# ---------------------------------------------------------------- listen
+- id: ab_listen_1
+  title: Голоса за стеной
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [listen]}
+  text: "Ночь, тонкие стены мегабашни. За стеной двое шепчутся: «…груз в контейнере у восьмого пирса, охрана сменится в три»."
+  choices:
+    - label: Дослушать до конца
+      ability: listen
+      effects: {eddies: 1800, heat: 1}
+      text: "Номер контейнера, время, пароль охраны. Утром ты приходишь раньше хозяев. Контейнер пустеет на треть."
+    - label: Продать фиксеру
+      effects: {eddies: 600, street_cred: 1}
+      text: "Фиксер слушает пересказ и кивает. «Хорошее ухо стоит денег»."
+    - label: Не лезть
+      effects: {mood: 1}
+      text: "Ты включаешь музыку погромче. Чужие дела пусть остаются чужими."
+
+- id: ab_listen_2
+  title: Шаги за спиной
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [listen]}
+  text: "Ты идёшь домой и слышишь за два квартала: три пары ботинок, щелчок предохранителя, шёпот «это точно он»."
+  choices:
+    - label: Обойти засаду
+      ability: listen
+      effects: {street_cred: 1, skill_xp:stealth: 4}
+      text: "Ты сворачиваешь в переулок, о котором они не знают, и выходишь им за спины. Они ждут до утра. Тебя там нет."
+    - label: Встретить их
+      violent: true
+      effects: {start_combat: 3}
+      text: "Ты разворачиваешься первым. Они не ожидали, что их услышат."
+    - label: Переждать в баре
+      effects: {eddies: -60, mood: 2}
+      text: "Пара часов в баре, и шаги уходят искать кого-то другого."
+
+# ---------------------------------------------------------------- read
+- id: ab_read_1
+  title: Слишком гладкая сделка
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [read]}
+  text: "Корпоратив в дорогом костюме предлагает вложиться в «верное дело». Улыбка широкая, руки спокойные. Слишком спокойные."
+  choices:
+    - label: Прочитать его
+      ability: read
+      effects: {eddies: 1500, street_cred: 1}
+      text: "Зрачки дёргаются на слове «гарантия», пульс прыгает на сумме. Ты называешь его вслух мошенником, он платит за молчание."
+    - label: Вложиться
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "Дело и правда выгорает. Удивлены оба.", effects: {eddies: 2000}}
+      fail: {text: "Через неделю его номер не отвечает. Деньги тоже.", effects: {eddies: -1500}}
+    - label: Отказаться
+      effects: {}
+      text: "Ты вежливо уходишь. Через месяц его лицо крутят в новостях."
+
+- id: ab_read_2
+  title: Кто из них врёт
+  category: work
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [read]}
+  text: "Фиксер просит помочь на допросе: трое подозреваемых, один сдал склад полиции. «Ты же видишь людей насквозь, говорят»."
+  choices:
+    - label: Найти крысу
+      ability: read
+      effects: {eddies: 2200, street_cred: 1}
+      text: "Двое потеют от страха, третий — от вины. Разница видна в микродвижениях век. Фиксер платит двойную ставку."
+    - label: Угадать
+      effects: {eddies: 300, mood: -3}
+      text: "Ты показываешь на кого-то наугад. Фиксер платит, но смотрит странно."
+    - label: Не участвовать
+      effects: {}
+      text: "Ты не в этом бизнесе. Фиксер пожимает плечами."
+
+# ---------------------------------------------------------------- zoom
+- id: ab_zoom_1
+  title: Окно напротив
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [zoom]}
+  text: "В башне напротив, двадцатый этаж, кто-то оставил на столе открытый ноутбук с банковским терминалом."
+  choices:
+    - label: Приблизить экран
+      ability: zoom
+      effects: {eddies: 2500, heat: 1}
+      text: "Пароль вводят прямо у тебя на глазах. Через час часть чужих эдди уже твоя."
+    - label: Позвонить в его банк
+      effects: {street_cred: 1, mood: 2}
+      text: "Ты анонимно предупреждаешь банк. Странное чувство: быть хорошим человеком."
+    - label: Отвернуться
+      effects: {}
+      text: "Не твоё окно."
+
+- id: ab_zoom_2
+  title: Снайпер на крыше
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [zoom]}
+  text: "На встрече с клиентом ты замечаешь блик на крыше в трёх кварталах. Оптика подтверждает: прицел, и смотрит он на тебя."
+  choices:
+    - label: Сорвать засаду
+      ability: zoom
+      effects: {street_cred: 3}
+      text: "Ты сдвигаешь встречу за колонну и отправляешь координаты охране клиента. Снайпера снимают раньше выстрела."
+    - label: Сбежать
+      effects: {mood: -3}
+      text: "Ты уходишь не прощаясь. Клиент обижен, зато жив кто-то из вас."
+    - label: Сделать вид, что не заметно
+      effects: {hp: -12}
+      text: "Пуля проходит по касательной. Хорошо, что ты успеваешь наклониться."
+
+# ---------------------------------------------------------------- thermal
+- id: ab_thermal_1
+  title: Заложники в фургоне
+  category: ncpd
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [thermal]}
+  text: "Копы окружили фургон, банда внутри грозит заложниками. Никто не знает, сколько там людей и где кто сидит."
+  choices:
+    - label: Посмотреть сквозь стенки
+      ability: thermal
+      effects: {eddies: 1500, street_cred: 2, faction_rep:ncpd: 3}
+      text: "Четыре силуэта: двое с оружием у кабины, двое связанных сзади. Ты показываешь сержанту. Штурм занимает девять секунд."
+    - label: Отойти подальше
+      effects: {}
+      text: "Ты слышишь выстрелы уже из-за угла."
+    - label: Снять на камеру
+      effects: {fame: 1}
+      text: "Видео набирает просмотры. Чем всё кончилось, знают только копы."
+
+- id: ab_thermal_2
+  title: Кто-то в подъезде
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [thermal]}
+  text: "Темнота лестничной клетки. Тепловизор показывает силуэт за мусоропроводом, тёплый ствол в руке."
+  choices:
+    - label: Обойти и обезоружить
+      ability: thermal
+      effects: {street_cred: 1, item_grant:pistol: true}
+      text: "Он не понимает, как ты оказываешься сзади. Пистолет остаётся у тебя, он убегает без него."
+    - label: Подняться на лифте
+      effects: {eddies: -20}
+      text: "Лифт едет вечность, но едет мимо засады."
+    - label: Идти как обычно
+      violent: true
+      effects: {start_combat: 2}
+      text: "Он выходит из-за мусоропровода. Ты к этому готов."
+
+# ---------------------------------------------------------------- night
+- id: ab_night_1
+  title: Блэкаут
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [night]}
+  text: "Квартал гаснет целиком. Где-то бьют витрины, кто-то кричит, а ты видишь всё, как днём."
+  choices:
+    - label: Вывести людей
+      ability: night
+      effects: {street_cred: 2, mood: 4, humanity: 1}
+      text: "Ты ведёшь соседей по тёмной лестнице, обходя мародёров. Утром старушка с пятого этажа приносит пирог."
+    - label: Тоже помародёрствовать
+      ability: night
+      effects: {eddies: 2000, heat: 2, humanity: -1}
+      text: "В темноте никто не видит, кто выносит кассу из ломбарда. Кроме тебя самого."
+    - label: Переждать дома
+      effects: {}
+      text: "Свечи, тишина, далёкие сирены."
+
+- id: ab_night_2
+  title: Тоннели метро
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [night]}
+  text: "Старый тоннель метро, заброшенный со времён Красного. Говорят, там тайник контрабандистов. Говорят, там никто не возвращается."
+  choices:
+    - label: Спуститься без фонаря
+      ability: night
+      effects: {eddies: 3000, skill_xp:stealth: 4}
+      text: "Растяжки, ловушки, спящий охранник. Ты видишь их раньше, чем они тебя. Тайник лёгкий, но не пустой."
+    - label: Пойти с фонарём
+      check: {stat: REF, skill: stealth, dv: 16}
+      success: {text: "Ты проходишь, но тайник уже выпотрошен. Остаётся пара сотен.", effects: {eddies: 300}}
+      fail: {text: "Растяжка, вспышка, звон в ушах. Ты выползаешь обратно.", effects: {hp: -15}}
+    - label: Не ходить
+      effects: {}
+      text: "Пусть легенды остаются легендами."
+
+# ---------------------------------------------------------------- fly
+- id: ab_fly_1
+  title: Вид сверху
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [fly]}
+  text: "Крыша мегабашни, ветер, город под ногами. Отсюда можно уйти куда угодно, и никто не поймёт, откуда ты взялся."
+  choices:
+    - label: Пролететь над Сити-центром
+      ability: fly
+      effects: {mood: 12, fame: 2}
+      text: "Ты проходишь между башнями Арасаки и Милитеха. Кто-то снимает тебя на видео, к утру ролик смотрит полгорода."
+    - label: Доставка по воздуху
+      ability: fly
+      effects: {eddies: 2500, heat: 1}
+      text: "Посылка от фиксера, крыша к крыше, мимо блокпостов. Быстрее любого АВ и без вопросов."
+    - label: Просто посидеть
+      effects: {mood: 4}
+      text: "Ветер, неон, тишина. Иногда этого достаточно."
+
+- id: ab_fly_2
+  title: Погоня
+  category: ncpd
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [fly]}
+  text: "Сирены, прожектор дрона, патруль перекрывает улицу с двух сторон. Это по твою душу, и ты знаешь за что."
+  choices:
+    - label: Уйти вверх
+      ability: fly
+      effects: {heat: -2, mood: 5}
+      text: "Два шага, толчок, и улица внизу. Копы задирают головы. Дрон отстаёт на третьем повороте."
+    - label: Сдаться и договориться
+      effects: {eddies: -800, heat: -1}
+      text: "Сержант берёт конверт и делает вид, что ты не тот, кого искали."
+    - label: Бежать дворами
+      check: {stat: REF, skill: driving, dv: 15}
+      success: {text: "Ты уходишь через три двора и чужую кухню.", effects: {}}
+      fail: {text: "Тупик. Наручники. Долгая ночь в участке.", effects: {heat: 1, eddies: -500}}
+
+# ---------------------------------------------------------------- leap
+- id: ab_leap_1
+  title: Третий этаж
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [leap]}
+  text: "Окно третьего этажа открыто, внизу лестницы нет. Внутри, по слухам, склад банды, а охрана стоит у двери."
+  choices:
+    - label: Запрыгнуть в окно
+      ability: leap
+      effects: {eddies: 2000, heat: 1}
+      text: "Один толчок, хват за подоконник, и ты внутри. Охрана у двери так и не узнает, куда делась половина товара."
+    - label: Лезть по трубе
+      check: {stat: BODY, skill: stealth, dv: 15}
+      success: {text: "Труба держит. Ты берёшь немного и уходишь.", effects: {eddies: 700}}
+      fail: {text: "Труба срывается. Падение, шум, бег.", effects: {hp: -10, heat: 1}}
+    - label: Пройти мимо
+      effects: {}
+      text: "Не сегодня."
+
+- id: ab_leap_2
+  title: Крыши Кабуки
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [leap]}
+  text: "Паркурщики Кабуки бросают вызов: пробежка по крышам на время, ставки уже приняты."
+  choices:
+    - label: Прыгать через улицы
+      ability: leap
+      effects: {eddies: 1500, street_cred: 2, mood: 6}
+      text: "Ты перепрыгиваешь улицы, которые они обегают. Ставки сгорают, твоя — нет."
+    - label: Поставить на другого
+      effects: {eddies: 200}
+      text: "Ты ставишь на местного чемпиона и немного выигрываешь."
+    - label: Отказаться
+      effects: {}
+      text: "Пусть бегают без тебя."
+
+# ---------------------------------------------------------------- climb
+- id: ab_climb_1
+  title: Стена корпоративного склада
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [climb]}
+  text: "Гладкая бетонная стена, камеры смотрят на ворота, на стену никто не смотрит. Наверху вентиляция."
+  choices:
+    - label: Подняться по стене
+      ability: climb
+      effects: {eddies: 2400, heat: 1, skill_xp:stealth: 3}
+      text: "Когти входят в бетон, как в масло. Вентиляция ведёт прямо к складу. Утром охрана ищет предателя среди своих."
+    - label: Подкупить охранника
+      effects: {eddies: -500, mood: -1}
+      text: "Охранник берёт деньги и ничего не делает. Классика."
+    - label: Уйти
+      effects: {}
+      text: "Стена остаётся стеной."
+
+- id: ab_climb_2
+  title: Кошка на карнизе
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [climb]}
+  text: "Девочка внизу плачет: её кошка застряла на карнизе седьмого этажа. Пожарные не приедут, это Найт-Сити."
+  choices:
+    - label: Снять кошку
+      ability: climb
+      effects: {mood: 8, humanity: 2, street_cred: 1}
+      text: "Ты поднимаешься по стене, кошка шипит, царапает и всё равно цепляется за тебя. Девочка смотрит, как на супергероя."
+    - label: Дать денег на дрон
+      effects: {eddies: -100, mood: 2}
+      text: "Через час кошку снимает арендный дрон. Девочка машет тебе вслед."
+    - label: Пройти мимо
+      effects: {mood: -2}
+      text: "Плач слышен ещё полквартала."
+
+# ---------------------------------------------------------------- dive
+- id: ab_dive_1
+  title: Затонувший АВ
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [dive]}
+  text: "В заливе у Пасифики лежит корпоративный АВ, сбитый во время войны. Говорят, его так и не подняли."
+  choices:
+    - label: Нырнуть к обломкам
+      ability: dive
+      effects: {eddies: 4000, skill_xp:tech: 3}
+      text: "Двадцать метров, мутная вода, кабина в иле. Сейф чёрного ящика открывается твоими руками. Внутри старые, но рабочие чипы."
+    - label: Продать координаты
+      effects: {eddies: 800}
+      text: "Кочевники платят за координаты и не спрашивают, откуда они у тебя."
+    - label: Забыть
+      effects: {}
+      text: "Пусть лежит."
+
+- id: ab_dive_2
+  title: Коллекторы под Уотсоном
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [dive]}
+  text: "Затопленные коллекторы под Уотсоном: путь из района, который не перекроет ни одна банда и ни один блокпост."
+  choices:
+    - label: Проложить маршрут
+      ability: dive
+      effects: {eddies: 1800, street_cred: 2, heat: -1}
+      text: "Ты проходишь коллектор под водой и продаёшь маршрут контрабандистам. Теперь у тебя свой путь, о котором знают немногие."
+    - label: Пройти по верху
+      check: {stat: BODY, dv: 14}
+      success: {text: "Грязно, долго, но выходишь.", effects: {mood: -2}}
+      fail: {text: "Ты проваливаешься в люк и долго отмываешься.", effects: {hp: -6, mood: -4}}
+    - label: Не лезть
+      effects: {}
+      text: "Канализация может подождать."
+
+# ---------------------------------------------------------------- force
+- id: ab_force_1
+  title: Запертая дверь
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [force]}
+  text: "За стальной дверью кто-то кричит о помощи. Ключ у банды, банда ушла."
+  choices:
+    - label: Выломать дверь
+      ability: force
+      effects: {humanity: 2, street_cred: 2, mood: 5}
+      text: "Петли сдаются с третьего удара. Внутри двое пленников банды. Они уходят своими ногами и запоминают твоё лицо."
+    - label: Вызвать NCPD
+      effects: {faction_rep:ncpd: 1}
+      text: "Копы приезжают через два часа. Дверь открывают болгаркой."
+    - label: Уйти
+      effects: {humanity: -1}
+      text: "Крики стихают за спиной."
+
+- id: ab_force_2
+  title: Банкомат на колёсах
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [force]}
+  text: "Инкассаторский фургон заглох посреди улицы. Охрана ушла за эвакуатором. Борт, кажется, тонкий."
+  choices:
+    - label: Вскрыть борт руками
+      ability: force
+      effects: {eddies: 3500, heat: 2}
+      text: "Металл рвётся, как фольга. Пачка эдди, ещё одна. Сирены уже где-то рядом, но ты уже где-то не здесь."
+    - label: Посторожить за деньги
+      effects: {eddies: 300, street_cred: 1}
+      text: "Охранник возвращается и платит тебе за то, что ты стоял рядом."
+    - label: Пройти мимо
+      effects: {}
+      text: "Слишком много камер."
+
+# ---------------------------------------------------------------- blades
+- id: ab_blades_1
+  title: Разговор в переулке
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [blades]}
+  text: "Трое ганг-сосунков требуют «налог за проход». Ножи у них кухонные."
+  choices:
+    - label: Показать лезвия
+      ability: blades
+      effects: {street_cred: 2, mood: 3}
+      text: "Щелчок, блеск, и они вспоминают, что у них есть дела в другом районе. Один роняет нож."
+    - label: Заплатить
+      effects: {eddies: -100}
+      text: "Сто эдди за спокойствие."
+    - label: Драться
+      violent: true
+      effects: {start_combat: 1}
+      text: "Ты не в настроении торговаться."
+
+- id: ab_blades_2
+  title: Мастер-класс
+  category: work
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [blades]}
+  text: "Клуб боевых искусств ищет того, кто покажет ученикам бой с имплантными клинками. Платят хорошо."
+  choices:
+    - label: Провести занятие
+      ability: blades
+      effects: {eddies: 1500, skill_xp:melee: 5, street_cred: 1}
+      text: "Два часа демонстраций. Ученики смотрят с открытыми ртами. Тренер просит прийти ещё."
+    - label: Посмотреть со стороны
+      effects: {skill_xp:melee: 2}
+      text: "Ты учишься, глядя, как учатся другие."
+    - label: Отказаться
+      effects: {}
+      text: "Клинки не для шоу."
+
+# ---------------------------------------------------------------- cloak
+- id: ab_cloak_1
+  title: Совет директоров
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [cloak]}
+  text: "Мелкая корпорация собирает закрытый совет. Конкурент заплатит за запись того, что там скажут."
+  choices:
+    - label: Войти невидимым
+      ability: cloak
+      effects: {eddies: 4500, skill_xp:stealth: 4}
+      text: "Ты стоишь в углу переговорной два часа. Никто не замечает, что воздух в углу чуть плотнее. Запись уходит конкуренту."
+    - label: Подкупить секретаря
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "Секретарь сливает протокол.", effects: {eddies: 1500}}
+      fail: {text: "Секретарь сдаёт тебя охране.", effects: {heat: 2}}
+    - label: Отказаться
+      effects: {}
+      text: "Корпоративные игры не для тебя."
+
+- id: ab_cloak_2
+  title: Охотник за головами
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [cloak]}
+  text: "Охотник за головами сидит у тебя под окнами третий день. Он упорный, но смотрит только глазами."
+  choices:
+    - label: Пройти у него под носом
+      ability: cloak
+      effects: {heat: -1, mood: 5}
+      text: "Ты проходишь в метре от него и оставляешь на лобовом стекле записку: «Я был рядом». Охотник уезжает и больше не возвращается."
+    - label: Поговорить с ним
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Вы договариваетесь. Он уезжает с деньгами твоего врага и без твоей головы.", effects: {eddies: 300}}
+      fail: {text: "Разговор не клеится. Он решает поработать кулаками.", effects: {hp: -12}}
+    - label: Сидеть дома
+      effects: {mood: -3}
+      text: "Ещё три дня заточения."
+
+# ---------------------------------------------------------------- sprint
+- id: ab_sprint_1
+  title: Падающая витрина
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [sprint]}
+  text: "Взрыв в магазине напротив, стекло летит на ребёнка у входа. Секунда до удара."
+  choices:
+    - label: Успеть
+      ability: sprint
+      effects: {humanity: 2, fame: 2, mood: 6}
+      text: "Мир замирает, стекло висит в воздухе, как снег. Ты уносишь ребёнка за колонну. Видео с камеры смотрит весь район."
+    - label: Крикнуть
+      effects: {mood: -2}
+      text: "Ребёнок пригибается сам. Порезы, но живой."
+    - label: Закрыть лицо
+      effects: {hp: -5}
+      text: "Стекло задевает и тебя."
+
+- id: ab_sprint_2
+  title: Карманник
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [sprint]}
+  text: "На рынке у туристки срывают сумку. Карманник уже в толпе, уже далеко."
+  choices:
+    - label: Догнать
+      ability: sprint
+      effects: {eddies: 500, street_cred: 1, mood: 4}
+      text: "Ты оказываешься перед ним раньше, чем он понимает, что бежит. Туристка суёт тебе в руку чаевые."
+    - label: Подставить ногу
+      check: {stat: REF, dv: 14}
+      success: {text: "Он летит носом в лоток с лапшой.", effects: {street_cred: 1}}
+      fail: {text: "Ты промахиваешься, он смеётся на бегу.", effects: {}}
+    - label: Не вмешиваться
+      effects: {}
+      text: "Таков рынок."
+
+# ---------------------------------------------------------------- lockpick
+- id: ab_lockpick_1
+  title: Сейф в ломбарде
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [lockpick]}
+  text: "Владелец ломбарда умер, наследники не знают кода от сейфа. Предлагают долю тому, кто откроет."
+  choices:
+    - label: Договориться с замком
+      ability: lockpick
+      effects: {eddies: 2500, rel_npc:random: 1}
+      text: "Порт в пальце, пять секунд, щелчок. Наследники выдыхают, твоя доля уже на счету."
+    - label: Посоветовать болгарку
+      effects: {eddies: 100}
+      text: "Они дают сотню за совет и портят сейф."
+    - label: Отказаться
+      effects: {}
+      text: "Пусть разбираются сами."
+
+- id: ab_lockpick_2
+  title: Чужая машина
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [lockpick]}
+  text: "Дорогой седан брошен с работающей сигнализацией. На заднем сиденье кейс."
+  choices:
+    - label: Открыть тихо
+      ability: lockpick
+      effects: {eddies: 2000, heat: 1}
+      text: "Сигнализация замолкает, двери открываются, кейс уходит с тобой. Кому-то сегодня очень не повезло."
+    - label: Сдать копам
+      effects: {faction_rep:ncpd: 2}
+      text: "Копы находят в кейсе что-то интересное и благодарят тебя кивком."
+    - label: Пройти мимо
+      effects: {}
+      text: "Слишком очевидная ловушка."
+
+# ---------------------------------------------------------------- jackin
+- id: ab_jackin_1
+  title: Открытая точка
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [jackin]}
+  text: "Кафе, бесплатный вайфай и ноутбук корпоратива за соседним столиком, подключённый к той же сети."
+  choices:
+    - label: Зайти в его ноутбук
+      ability: jackin
+      effects: {eddies: 2200, skill_xp:netrunning: 4}
+      text: "Почта, пароли, внутренние отчёты. Ты берёшь только то, что можно продать, и уходишь, не допив кофе."
+    - label: Предупредить его
+      effects: {mood: 3, street_cred: 1}
+      text: "Корпоратив краснеет и оставляет тебе визитку."
+    - label: Пить кофе
+      effects: {mood: 2}
+      text: "Кофе неплохой."
+
+- id: ab_jackin_2
+  title: Чёрный рынок данных
+  category: work
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [jackin]}
+  text: "Брокер данных ищет того, кто зайдёт в архив районной клиники и достанет медкарту одного человека."
+  choices:
+    - label: Взять работу
+      ability: jackin
+      effects: {eddies: 3000, heat: 1, humanity: -1}
+      text: "Лёд клиники тонкий, как бумага. Карта уходит брокеру. Ты стараешься не думать, зачем она ему."
+    - label: Достать карту, но другую
+      ability: jackin
+      effects: {eddies: 1000, humanity: 1}
+      text: "Ты подсовываешь брокеру пустышку. Он заметит не сразу. А человек из медкарты так и не узнает, что его искали."
+    - label: Отказаться
+      effects: {}
+      text: "Медицинские данные — грязная работа."
+
+# ---------------------------------------------------------------- drone
+- id: ab_drone_1
+  title: Глаза над районом
+  category: work
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [drone]}
+  text: "Фиксеру нужно знать, когда банда меняет охрану на складе. Сидеть в засаде три ночи никто не хочет."
+  choices:
+    - label: Повесить дрона
+      ability: drone
+      effects: {eddies: 1800, street_cred: 1}
+      text: "Дрон висит над складом три ночи и пишет всё. Ты спишь дома. Фиксер получает расписание до минуты."
+    - label: Сидеть в засаде
+      effects: {eddies: 900, mood: -4}
+      text: "Три холодные ночи. Деньги те же, нервы хуже."
+    - label: Отказаться
+      effects: {}
+      text: "Пусть ищет другого."
+
+- id: ab_drone_2
+  title: Пропавший мальчик
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [drone]}
+  text: "Соседка в слезах: сын ушёл в Бэдлендс за кочевниками и не вернулся. Полиция туда не ездит."
+  choices:
+    - label: Отправить дрона искать
+      ability: drone
+      effects: {humanity: 2, mood: 6, rel_npc:random: 3}
+      text: "Дрон находит его к вечеру: живой, голодный, в разбитом трейлере. Кочевники привозят его домой за символическую плату."
+    - label: Дать денег на поиски
+      effects: {eddies: -500, mood: 2}
+      text: "Соседка нанимает следопыта. Мальчика находят через неделю."
+    - label: Посочувствовать
+      effects: {mood: -2}
+      text: "Ты не знаешь, что сказать."
+
+# ---------------------------------------------------------------- voice
+- id: ab_voice_1
+  title: Звонок от босса
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [voice]}
+  text: "Ты целую минуту слушаешь, как менеджер склада говорит по телефону. Голос запомнен. Склад звонков от него не проверяет."
+  choices:
+    - label: Позвонить его голосом
+      ability: voice
+      effects: {eddies: 2800, heat: 1}
+      text: "«Отгрузите партию курьеру у ворот». Курьер — ты. Партия уходит на чёрный рынок раньше, чем менеджер просыпается."
+    - label: Продать запись голоса
+      effects: {eddies: 700}
+      text: "Брокер покупает голосовой слепок не торгуясь."
+    - label: Забыть голос
+      effects: {}
+      text: "Ты стираешь запись из буфера."
+
+- id: ab_voice_2
+  title: Розыгрыш в эфире
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [voice]}
+  text: "Радио «Морро» принимает звонки в прямом эфире. Ведущий обожает знаменитостей."
+  choices:
+    - label: Позвонить голосом мэра
+      ability: voice
+      effects: {fame: 3, mood: 8, heat: 1}
+      text: "Мэр в прямом эфире признаётся в любви к уличной лапше. Город плачет от смеха, пресс-служба мэрии — от злости."
+    - label: Позвонить своим голосом
+      effects: {mood: 3}
+      text: "Ты передаёшь привет району. Ведущий даже не перебивает."
+    - label: Просто послушать
+      effects: {mood: 2}
+      text: "Хорошее шоу."
+
+# ---------------------------------------------------------------- face
+- id: ab_face_1
+  title: Чужое лицо
+  category: ncpd
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [face]}
+  text: "Твоё лицо висит на ориентировке в каждом участке. Каждый патруль — лотерея."
+  choices:
+    - label: Сменить лицо
+      ability: face
+      effects: {heat: -3, humanity: -1}
+      text: "Двадцать минут перед зеркалом, и из зеркала смотрит незнакомец. Ориентировка бесполезна. Немного жутко."
+    - label: Переждать дома
+      effects: {heat: -1, mood: -4}
+      text: "Неделя в четырёх стенах."
+    - label: Купить новую ID
+      effects: {eddies: -1500, heat: -2}
+      text: "Новые документы стоят дорого, но работают."
+
+- id: ab_face_2
+  title: Приём для своих
+  category: work
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [face]}
+  text: "Закрытый приём в пентхаусе, вход только по лицам из списка. Один гость из списка сегодня в больнице."
+  choices:
+    - label: Прийти его лицом
+      ability: face
+      effects: {eddies: 3500, street_cred: 1}
+      text: "Хозяин обнимает «старого друга». Ты уходишь с визитками, сплетнями и чужой выигранной ставкой."
+    - label: Сыграть официанта
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Пара подслушанных разговоров стоит денег.", effects: {eddies: 800}}
+      fail: {text: "Охрана вежливо выводит тебя через чёрный ход.", effects: {mood: -3}}
+    - label: Не ходить
+      effects: {}
+      text: "Пусть богатые развлекаются сами."
+
+# ---------------------------------------------------------------- pheromone
+- id: ab_pheromone_1
+  title: Неуступчивый арендодатель
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [pheromone]}
+  text: "Владелец квартиры поднимает аренду и не хочет слушать. Стоит слишком близко и слишком злится."
+  choices:
+    - label: Шагнуть ближе
+      ability: pheromone
+      effects: {eddies: 1500, mood: 3}
+      text: "Через минуту он смеётся, через пять — предлагает скидку на полгода. Сам не понимает, что на него нашло."
+    - label: Торговаться
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Сходитесь на середине.", effects: {eddies: 400}}
+      fail: {text: "Аренда растёт.", effects: {eddies: -400}}
+    - label: Согласиться
+      effects: {eddies: -600}
+      text: "Платишь."
+
+- id: ab_pheromone_2
+  title: Вечеринка
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [pheromone]}
+  text: "Вечеринка в клубе, полно незнакомых, и половине из них ты сразу нравишься. Химия работает."
+  choices:
+    - label: Стать центром вечера
+      ability: pheromone
+      effects: {mood: 10, street_cred: 2, add_npc:contact: true}
+      text: "К утру у тебя десяток новых номеров, и один из них действительно полезный."
+    - label: Держаться в стороне
+      effects: {mood: 3}
+      text: "Хорошая музыка, тихий угол."
+    - label: Уйти пораньше
+      effects: {}
+      text: "Слишком людно."
+
+# ---------------------------------------------------------------- toxin
+- id: ab_toxin_1
+  title: Заказ на отравление
+  category: work
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [toxin]}
+  text: "Фиксер шепчет: нужно не убить, а уложить в больницу на неделю одного торговца, чтобы он пропустил аукцион."
+  choices:
+    - label: Капля в бокал
+      ability: toxin
+      effects: {eddies: 3000, humanity: -2, heat: 1}
+      text: "Рукопожатие, бокал, улыбка. Через час торговца увозит скорая. Аукцион проходит без него."
+    - label: Подсыпать снотворное
+      check: {stat: REF, skill: stealth, dv: 15}
+      success: {text: "Он проспал аукцион. Платят половину.", effects: {eddies: 1200}}
+      fail: {text: "Бармен замечает, тебя выводят.", effects: {heat: 1}}
+    - label: Отказаться
+      effects: {humanity: 1}
+      text: "Яды — не твой стиль."
+
+- id: ab_toxin_2
+  title: Противоядие
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [toxin]}
+  text: "В баре человек падает с пеной у рта: в дозе была дрянь. Твои железы знают этот яд."
+  choices:
+    - label: Выработать противоядие
+      ability: toxin
+      effects: {humanity: 2, mood: 5, street_cred: 1}
+      text: "Укол из твоего же запястья, и человек начинает дышать ровнее. Бармен наливает тебе бесплатно до конца месяца."
+    - label: Вызвать скорую
+      effects: {eddies: -50}
+      text: "Скорая приезжает поздно, но успевает."
+    - label: Уйти
+      effects: {mood: -3}
+      text: "Ты уходишь, не оглядываясь."
+
+# ---------------------------------------------------------------- medic
+- id: ab_medic_1
+  title: Перестрелка во дворе
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [medic]}
+  text: "Во дворе после перестрелки двое раненых: ганг и случайный прохожий. Trauma Team никто не вызывал."
+  choices:
+    - label: Залатать обоих
+      ability: medic
+      effects: {humanity: 2, street_cred: 2, skill_xp:medicine: 4}
+      text: "Жгут, швы, стимулятор. Оба доживут до утра. Банда запомнит, кто спас их бойца."
+    - label: Помочь только прохожему
+      effects: {humanity: 1}
+      text: "Прохожий выживет. Ганг — как повезёт."
+    - label: Уйти
+      effects: {humanity: -1}
+      text: "Не твоя война."
+
+- id: ab_medic_2
+  title: Подпольная смена
+  category: work
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [medic]}
+  text: "Подпольная клиника зашивается: ночь пятницы, очередь до улицы. Риппер просит постоять смену."
+  choices:
+    - label: Отстоять смену
+      ability: medic
+      effects: {eddies: 1600, skill_xp:medicine: 5, mood: -2}
+      text: "Двенадцать часов, двадцать пациентов. Утром риппер платит наличными и предлагает скидку на следующий хром."
+    - label: Помочь пару часов
+      effects: {eddies: 300}
+      text: "Ты держишь фонарь и подаёшь инструменты."
+    - label: Отказаться
+      effects: {}
+      text: "Сегодня без тебя."
+
+# ---------------------------------------------------------------- chem
+- id: ab_chem_1
+  title: Подозрительный коктейль
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [chem]}
+  text: "Незнакомец угощает тебя коктейлем. Слишком дружелюбный."
+  choices:
+    - label: Проверить состав
+      ability: chem
+      effects: {street_cred: 1, mood: 2}
+      text: "Снотворное и что-то для сговорчивости. Ты меняешь бокалы, пока он отворачивается. Спит он хорошо."
+    - label: Выпить
+      effects: {hp: -10, eddies: -400}
+      text: "Ты просыпаешься в подворотне без кошелька."
+    - label: Отказаться
+      effects: {}
+      text: "Спасибо, не пью."
+
+- id: ab_chem_2
+  title: Партия синтетики
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [chem]}
+  text: "Дилер предлагает купить партию «чистой» синтетики оптом и перепродать. Клянётся, что без примесей."
+  choices:
+    - label: Проверить и сбить цену
+      ability: chem
+      effects: {eddies: 1400, street_cred: 1}
+      text: "Половина партии — мел. Ты называешь точный процент, и дилер отдаёт остальное за бесценок, лишь бы ты молчал."
+    - label: Купить вслепую
+      check: {stat: COOL, dv: 15}
+      success: {text: "Повезло, партия нормальная.", effects: {eddies: 800}}
+      fail: {text: "Мел. Покупатели недовольны.", effects: {eddies: -800, street_cred: -1}}
+    - label: Не связываться
+      effects: {}
+      text: "Чужие дела."
+
+# ---------------------------------------------------------------- scent
+- id: ab_scent_1
+  title: Пропавший пёс
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [scent]}
+  text: "У мальчишки с рынка пропал пёс. На ошейнике запах дешёвого мыла и машинного масла."
+  choices:
+    - label: Взять след
+      ability: scent
+      effects: {humanity: 2, mood: 6}
+      text: "След ведёт через три квартала в гараж живодёров. Пса ты выносишь на руках. Живодёры предпочитают не спорить."
+    - label: Расклеить объявления
+      effects: {eddies: -50, mood: 1}
+      text: "Пса находят через неделю. Худого, но живого."
+    - label: Пожать плечами
+      effects: {}
+      text: "Собак в городе много."
+
+- id: ab_scent_2
+  title: Должник
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [scent]}
+  text: "Фиксер ищет должника, который сбежал с деньгами. Есть его куртка. И всё."
+  choices:
+    - label: Найти по запаху
+      ability: scent
+      effects: {eddies: 2000, street_cred: 1}
+      text: "Пот, табак, дешёвый одеколон. К вечеру ты стоишь у двери его норы. Деньги возвращаются фиксеру, твоя доля — тебе."
+    - label: Поспрашивать
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Кто-то его видел.", effects: {eddies: 800}}
+      fail: {text: "Никто ничего не знает.", effects: {}}
+    - label: Отказаться
+      effects: {}
+      text: "Не твой должник."
+
+# ---------------------------------------------------------------- brace
+- id: ab_brace_1
+  title: Машина без тормозов
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [brace]}
+  text: "Грузовик без тормозов летит на остановку, где стоят люди."
+  choices:
+    - label: Встать на пути
+      ability: brace
+      effects: {fame: 3, humanity: 2, hp: -15}
+      text: "Удар, скрежет, грузовик останавливается о тебя. Ты встаёшь с асфальта. Люди на остановке целы. Видео в сети к ночи."
+    - label: Оттолкнуть кого успеешь
+      effects: {humanity: 1, hp: -5}
+      text: "Ты вытаскиваешь двоих. Остальным везёт меньше."
+    - label: Отпрыгнуть
+      effects: {mood: -5}
+      text: "Ты жив. Не все."
+
+- id: ab_brace_2
+  title: Бойцовский клуб
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [brace]}
+  text: "Подпольный клуб: кто выстоит три раунда против тяжеловеса, тот забирает банк."
+  choices:
+    - label: Стоять и держать
+      ability: brace
+      effects: {eddies: 2500, street_cred: 2, hp: -10}
+      text: "Он бьёт, ты стоишь. Он бьёт сильнее, ты стоишь. К третьему раунду он устал. Банк твой."
+    - label: Драться честно
+      check: {stat: BODY, skill: melee, dv: 17}
+      success: {text: "Ты побеждаешь на силе воли.", effects: {eddies: 1500, hp: -20}}
+      fail: {text: "Нокаут в первом раунде.", effects: {hp: -25}}
+    - label: Поставить на него
+      effects: {eddies: 200}
+      text: "Тяжеловес побеждает. Ты немного выигрываешь."
+
+# ---------------------------------------------------------------- emp
+- id: ab_emp_1
+  title: Дроны-коллекторы
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [emp]}
+  text: "Банковские дроны-коллекторы окружили соседа: описывают имущество прямо на улице."
+  choices:
+    - label: Импульс
+      ability: emp
+      effects: {street_cred: 2, heat: 1, mood: 4}
+      text: "Хлопок, и дроны падают, как подстреленные птицы. Сосед успевает спрятать всё, что можно спрятать."
+    - label: Одолжить ему денег
+      effects: {eddies: -800, rel_npc:random: 2}
+      text: "Ты закрываешь его долг. Дроны улетают."
+    - label: Пройти мимо
+      effects: {}
+      text: "Долги — дело каждого."
+
+- id: ab_emp_2
+  title: Камеры склада
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [emp]}
+  text: "Склад электроники, двадцать камер, сигнализация. Товара на сотни тысяч."
+  choices:
+    - label: Погасить всё разом
+      ability: emp
+      effects: {eddies: 3000, heat: 2}
+      text: "Импульс, темнота, тишина. Две минуты, пока система перезагружается. Тебе хватает."
+    - label: Резать провода
+      check: {stat: TECH, skill: tech, dv: 16}
+      success: {text: "Камеры гаснут по одной.", effects: {eddies: 1200}}
+      fail: {text: "Сигнализация. Бег.", effects: {heat: 2}}
+    - label: Не трогать
+      effects: {}
+      text: "Слишком много камер."
+
+# ---------------------------------------------------------------- radio
+- id: ab_radio_1
+  title: Частота NCPD
+  category: ncpd
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [radio]}
+  text: "В эфире NCPD суета: облава в твоём районе через час. Адреса называют открытым текстом."
+  choices:
+    - label: Предупредить своих
+      ability: radio
+      effects: {street_cred: 3, heat: -1}
+      text: "Десять сообщений, и к приезду облавы точки пусты. Район знает, кто предупредил."
+    - label: Продать информацию
+      ability: radio
+      effects: {eddies: 1500}
+      text: "Банда платит за адреса облавы. Не задаёт вопросов."
+    - label: Выключить
+      effects: {}
+      text: "Чужая облава."
+
+- id: ab_radio_2
+  title: Переговоры банды
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [radio]}
+  text: "Ты ловишь переговоры Мальстрёма: налёт на конкурентов сегодня ночью, точный адрес."
+  choices:
+    - label: Слить конкурентам
+      ability: radio
+      effects: {eddies: 2000, heat: 1}
+      text: "Конкуренты встречают Мальстрём засадой. Кто победил, тебе неважно. Тебе заплатили."
+    - label: Предупредить NCPD
+      effects: {faction_rep:ncpd: 2}
+      text: "Копы приезжают раньше всех."
+    - label: Не вмешиваться
+      effects: {}
+      text: "Бандитские разборки."
+
+# ---------------------------------------------------------------- recall
+- id: ab_recall_1
+  title: Знакомое лицо
+  category: ncpd
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [recall]}
+  text: "В метро напротив тебя сидит человек. Чип памяти подсказывает: это лицо с ориентировки трёхлетней давности, награда до сих пор висит."
+  choices:
+    - label: Вспомнить всё
+      ability: recall
+      effects: {eddies: 2500, faction_rep:ncpd: 2}
+      text: "Имя, приметы, номер дела. Ты звонишь по номеру из ориентировки. Награда приходит к вечеру."
+    - label: Поговорить с ним
+      effects: {mood: 2}
+      text: "Он оказывается просто похожим. Кажется."
+    - label: Отвернуться
+      effects: {}
+      text: "Мало ли похожих лиц."
+
+- id: ab_recall_2
+  title: Экзамен
+  category: work
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [recall]}
+  text: "Корпорация проводит экзамен на допуск: сто страниц регламента за час, потом тест."
+  choices:
+    - label: Запомнить всё
+      ability: recall
+      effects: {eddies: 1200, skill_xp:tech: 3, skill_xp:persuasion: 3}
+      text: "Сто страниц, каждая слово в слово. Экзаменатор проверяет результат дважды. Тебе предлагают подработку."
+    - label: Учить честно
+      check: {stat: INT, dv: 15}
+      success: {text: "Сдаёшь.", effects: {eddies: 500}}
+      fail: {text: "Не сдаёшь.", effects: {mood: -3}}
+    - label: Не идти
+      effects: {}
+      text: "Корпоративные экзамены — не твоё."
+
+# ---------------------------------------------------------------- calc
+- id: ab_calc_1
+  title: Стол для блэкджека
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [calc]}
+  text: "Казино в Сити-центре. Шесть колод, дилер-андроид. Сопроцессор уже считает карты."
+  choices:
+    - label: Считать карты
+      ability: calc
+      effects: {eddies: 3000, heat: 1}
+      text: "Два часа, и охрана начинает смотреть на тебя. Ты уходишь вовремя, с выигрышем, который не стыдно показать."
+    - label: Играть на удачу
+      check: {stat: LUCK, dv: 15}
+      success: {text: "Везёт.", effects: {eddies: 1000}}
+      fail: {text: "Не везёт.", effects: {eddies: -1000}}
+    - label: Только посмотреть
+      effects: {mood: 2}
+      text: "Красиво проигрывают другие."
+
+- id: ab_calc_2
+  title: Биржевой обвал
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [calc]}
+  text: "На бирже паника. Цифры летят быстрее, чем люди успевают думать. Ты успеваешь."
+  choices:
+    - label: Поймать отскок
+      ability: calc
+      effects: {eddies: 4000}
+      text: "Покупаешь на самом дне, продаёшь через сорок минут. Брокеры потом будут спорить, кто это был."
+    - label: Переждать
+      effects: {}
+      text: "Паника проходит без тебя."
+    - label: Купить наугад
+      check: {stat: LUCK, dv: 16}
+      success: {text: "Угадываешь.", effects: {eddies: 1500}}
+      fail: {text: "Не угадываешь.", effects: {eddies: -1500}}
+
+# ---------------------------------------------------------------- rider
+- id: ab_rider_1
+  title: Нелегальная гонка
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [rider]}
+  text: "Ночная гонка по эстакадам, ставки высокие, машины чужие. Тебе дают седан, на котором никто не умеет ехать."
+  choices:
+    - label: Слиться с машиной
+      ability: rider
+      effects: {eddies: 2800, street_cred: 2, skill_xp:driving: 4}
+      text: "Ты чувствуешь колёса как пальцы. Финиш на полкорпуса раньше всех."
+    - label: Ехать как обычно
+      check: {stat: REF, skill: driving, dv: 16}
+      success: {text: "Третье место, но живым.", effects: {eddies: 400}}
+      fail: {text: "Отбойник.", effects: {hp: -15, eddies: -500}}
+    - label: Смотреть с обочины
+      effects: {mood: 3}
+      text: "Хорошая гонка."
+
+- id: ab_rider_2
+  title: Перегон
+  category: work
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [rider]}
+  text: "Кочевникам нужно перегнать фуру через Бэдлендс ночью, без фар, мимо патрулей Милитеха."
+  choices:
+    - label: Вести вслепую
+      ability: rider
+      effects: {eddies: 3200, faction_rep:aldecaldos: 3}
+      text: "Ты ведёшь фуру по датчикам, а не по глазам. Патрули остаются далеко слева. Кочевники зовут тебя на костёр."
+    - label: Ехать с фарами
+      check: {stat: REF, skill: driving, dv: 17}
+      success: {text: "Доезжаешь, патруль не заметил.", effects: {eddies: 1500}}
+      fail: {text: "Патруль. Фура конфискована.", effects: {heat: 2}}
+    - label: Отказаться
+      effects: {}
+      text: "Пустыня ночью — не для тебя."
+
+# ---------------------------------------------------------------- fixit
+- id: ab_fixit_1
+  title: Мёртвый лифт
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [fixit]}
+  text: "Лифт мегабашни встал между этажами. Внутри старики и дети, мастер приедет к утру."
+  choices:
+    - label: Починить на месте
+      ability: fixit
+      effects: {humanity: 1, street_cred: 2, skill_xp:tech: 4}
+      text: "Панель, плата, пайка прямо пальцами. Лифт вздрагивает и едет. Управляющий башни предлагает работу."
+    - label: Раскрыть двери
+      effects: {hp: -5, humanity: 1}
+      text: "Ты вытаскиваешь людей по одному. Руки в масле и порезах."
+    - label: Ждать мастера
+      effects: {}
+      text: "Ночь будет долгой."
+
+- id: ab_fixit_2
+  title: Брошенный робот
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [fixit]}
+  text: "На свалке Кабуки лежит корпоративный робот-погрузчик. Сломанный, но почти целый."
+  choices:
+    - label: Оживить и продать
+      ability: fixit
+      effects: {eddies: 2600, skill_xp:tech: 3}
+      text: "Три часа работы, и робот встаёт на ноги. Барахольщик платит, не торгуясь."
+    - label: Разобрать на запчасти
+      effects: {eddies: 600}
+      text: "Запчасти тоже деньги."
+    - label: Оставить
+      effects: {}
+      text: "Пусть ржавеет."
+
+# ---------------------------------------------------------------- menace
+- id: ab_menace_1
+  title: Рэкетиры у лавки
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [menace]}
+  text: "Двое рэкетиров трясут старика-лапшичника. Ты стоишь в очереди за ужином."
+  choices:
+    - label: Просто посмотреть на них
+      ability: menace
+      effects: {street_cred: 2, mood: 4}
+      text: "Ты поворачиваешься. Хром блестит, глаза светятся. Рэкетиры вспоминают, что им пора. Лапша сегодня бесплатно."
+    - label: Заплатить за старика
+      effects: {eddies: -200, humanity: 1}
+      text: "Рэкетиры уходят с деньгами. Старик благодарит, не поднимая глаз."
+    - label: Не вмешиваться
+      effects: {}
+      text: "Ты берёшь лапшу и уходишь."
+
+- id: ab_menace_2
+  title: Переговоры о долге
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [menace]}
+  text: "Мелкий торговец должен тебе и делает вид, что не помнит."
+  choices:
+    - label: Напомнить хромом
+      ability: menace
+      effects: {eddies: 1500, street_cred: 1}
+      text: "Ты кладёшь хромированную ладонь на прилавок. Прилавок трескается. Память у торговца возвращается мгновенно."
+    - label: Поговорить по-хорошему
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Отдаёт половину.", effects: {eddies: 700}}
+      fail: {text: "Ничего не отдаёт.", effects: {}}
+    - label: Простить долг
+      effects: {mood: 2}
+      text: "Пусть живёт."
+
+# ---------------------------------------------------------------- neon
+- id: ab_neon_1
+  title: Открытый микрофон
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [neon]}
+  text: "Клуб в Джапантауне, открытая сцена, публика скучает."
+  choices:
+    - label: Зажечь кожу
+      ability: neon
+      effects: {eddies: 1200, fame: 2, mood: 8}
+      text: "Ты выходишь на сцену, и кожа загорается в такт басу. Публика сходит с ума. Владелец клуба зовёт выступать по пятницам."
+    - label: Спеть как есть
+      check: {stat: COOL, dv: 15}
+      success: {text: "Неплохо. Хлопают.", effects: {mood: 4}}
+      fail: {text: "Свистят.", effects: {mood: -4}}
+    - label: Остаться в зале
+      effects: {mood: 2}
+      text: "Хорошая музыка."
+
+- id: ab_neon_2
+  title: Реклама на теле
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [neon]}
+  text: "Рекламное агентство предлагает неделю носить на светящейся коже логотип энергетика."
+  choices:
+    - label: Согласиться
+      ability: neon
+      effects: {eddies: 2500, mood: -2}
+      text: "Неделю ты светишься логотипом на весь район. Деньги хорошие, гордость пострадала."
+    - label: Торговаться
+      ability: neon
+      effects: {eddies: 3500, street_cred: -1}
+      text: "Ты выбиваешь двойную ставку и светишься две недели."
+    - label: Отказаться
+      effects: {street_cred: 1}
+      text: "Ты не билборд."
+
+# ---------------------------------------------------------------- breath
+- id: ab_breath_1
+  title: Газовая атака
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [breath]}
+  text: "Банда пускает газ в вентиляцию клуба, чтобы ограбить отключившихся. Люди падают на танцполе."
+  choices:
+    - label: Задержать дыхание и действовать
+      ability: breath
+      effects: {street_cred: 3, humanity: 2}
+      text: "Пока все падают, ты открываешь аварийные двери и вырубаешь вентилятор. Бандиты в противогазах не понимают, почему кто-то ещё стоит."
+    - label: Выбежать
+      effects: {hp: -5}
+      text: "Ты выбегаешь, кашляя. Внутри остаются другие."
+    - label: Упасть со всеми
+      effects: {hp: -10, eddies: -500}
+      text: "Ты просыпаешься без кошелька."
+
+- id: ab_breath_2
+  title: Затопленный подвал
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [breath]}
+  text: "Подвал затопило, а в дальнем конце под водой сейф бывшего владельца дома."
+  choices:
+    - label: Нырнуть надолго
+      ability: breath
+      effects: {eddies: 2200}
+      text: "Пятнадцать минут под водой. Сейф открывается на десятой."
+    - label: Откачать воду
+      effects: {eddies: -300}
+      text: "Насос, день работы, сейф пуст — кто-то успел раньше."
+    - label: Не лезть
+      effects: {}
+      text: "Пусть сейф ржавеет."
+
+# ---------------------------------------------------------------- mend
+- id: ab_mend_1
+  title: После драки
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [mend]}
+  text: "Тебя хорошенько потрепали. Наноботы ждут команды."
+  choices:
+    - label: Затянуть раны
+      ability: mend
+      effects: {hp: 30, mood: 2}
+      text: "Кожа стягивается на глазах, кости встают на место. К вечеру ты как новенький."
+    - label: К рипперу
+      effects: {eddies: -500, hp: 20}
+      text: "Риппер штопает за деньги."
+    - label: Отлежаться
+      effects: {hp: 10, mood: -2}
+      text: "День в кровати."
+
+- id: ab_mend_2
+  title: Донор
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [mend]}
+  text: "Знакомому нужна кровь твоей группы, а у тебя кровь чинит себя сама."
+  choices:
+    - label: Сдать кровь с наноботами
+      ability: mend
+      effects: {humanity: 2, rel_npc:random: 5, hp: -5}
+      text: "Твои наноботы работают и в его венах. К утру он садится на кровати."
+    - label: Дать денег на донора
+      effects: {eddies: -600}
+      text: "Донор нашёлся за деньги."
+    - label: Отказать
+      effects: {}
+      text: "Не сегодня."
+
+# ---------------------------------------------------------------- wall
+- id: ab_wall_1
+  title: Голос из помех
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [wall]}
+  text: "Ты зовёшь, и все экраны в комнате заполняются помехами. Голос за Заслоном спрашивает, что тебе нужно."
+  choices:
+    - label: Попросить знание
+      ability: wall
+      effects: {skill_xp:netrunning: 6, humanity: -2}
+      text: "Знание вливается в голову, как ледяная вода. Ты понимаешь сеть так, как не понимал никто. Цена — частичка тебя."
+    - label: Попросить удачи
+      ability: wall
+      effects: {eddies: 3000, humanity: -2}
+      text: "На счёт падает сумма, которой там не было. Банк потом не сможет объяснить, откуда она."
+    - label: Прервать связь
+      effects: {mood: -3}
+      text: "Экраны гаснут. Ощущение, что за тобой ещё долго наблюдают."
+
+- id: ab_wall_2
+  title: Сбой в районе
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [wall]}
+  text: "За тобой гонится патруль. Ты можешь позвать помехи."
+  choices:
+    - label: Погасить квартал
+      ability: wall
+      effects: {heat: -2, humanity: -1}
+      text: "Свет, камеры, сигнализация: всё гаснет на минуту. Патруль теряет тебя навсегда."
+    - label: Бежать
+      check: {stat: REF, dv: 15}
+      success: {text: "Уходишь.", effects: {}}
+      fail: {text: "Ловят.", effects: {heat: 1, eddies: -400}}
+    - label: Сдаться
+      effects: {eddies: -800}
+      text: "Штраф."
+
+# ---------------------------------------------------------------- predict
+- id: ab_predict_1
+  title: Встреча в доках
+  category: work
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [predict]}
+  text: "Встреча с покупателем в доках. Тактический ИИ рисует вероятности: 74% засада."
+  choices:
+    - label: Переиграть засаду
+      ability: predict
+      effects: {eddies: 2500, street_cred: 2}
+      text: "Ты приходишь с другой стороны, на полчаса раньше. Засада ждёт тебя у ворот, ты забираешь деньги у их машины."
+    - label: Не ходить
+      effects: {}
+      text: "Сделка срывается. Ты жив."
+    - label: Идти как договорились
+      violent: true
+      effects: {start_combat: 3}
+      text: "74% оказываются правдой."
+
+- id: ab_predict_2
+  title: Ставка на бой
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [predict]}
+  text: "Подпольные бои. Тактический ИИ разбирает стойки бойцов до первого удара."
+  choices:
+    - label: Поставить по расчёту
+      ability: predict
+      effects: {eddies: 2000}
+      text: "Ты ставишь на аутсайдера. ИИ был прав: правое колено фаворита не держит."
+    - label: Поставить на фаворита
+      effects: {eddies: -500}
+      text: "Фаворит падает в третьем раунде."
+    - label: Не ставить
+      effects: {}
+      text: "Просто смотришь."
+
+# ---------------------------------------------------------------- hide
+- id: ab_hide_1
+  title: Рамка в лобби
+  category: work
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [hide]}
+  text: "Лобби корпорации, рамка-сканер на входе, охрана проверяет хром. Тебе нужно внутрь со всем, что у тебя есть."
+  choices:
+    - label: Пройти как чистый
+      ability: hide
+      effects: {eddies: 2200, skill_xp:stealth: 3}
+      text: "Рамка показывает человека без единого импланта. Охранник машет: проходите. Внутри тебя ждёт работа и деньги."
+    - label: Сдать хром на входе
+      effects: {mood: -3}
+      text: "Ты отключаешь всё, что можно отключить. Без хрома чувствуешь себя голым."
+    - label: Развернуться
+      effects: {}
+      text: "Не сегодня."
+
+- id: ab_hide_2
+  title: Облава на хром
+  category: ncpd
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [hide]}
+  text: "NCPD устраивает облаву на нелегальный хром: сканеры на каждом углу."
+  choices:
+    - label: Спрятать хром
+      ability: hide
+      effects: {heat: -1, mood: 3}
+      text: "Сканер видит обычного человека. Ты проходишь мимо облавы, улыбаясь сержанту."
+    - label: Обойти район
+      effects: {mood: -2}
+      text: "Крюк в полгорода."
+    - label: Пройти как есть
+      check: {stat: COOL, dv: 15}
+      success: {text: "Не заметили.", effects: {}}
+      fail: {text: "Штраф за нелегальный хром.", effects: {eddies: -1000, heat: 1}}
+
+# ---------------------------------------------------------------- magnet
+- id: ab_magnet_1
+  title: Ключи охранника
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [magnet]}
+  text: "Охранник склада дремлет, связка металлических ключей на поясе, в двух метрах от тебя."
+  choices:
+    - label: Притянуть ключи
+      ability: magnet
+      effects: {eddies: 1800, heat: 1}
+      text: "Ключи сами прыгают в ладонь, тихо, как кошка. Склад открыт, охранник спит дальше."
+    - label: Подкрасться
+      check: {stat: REF, skill: stealth, dv: 15}
+      success: {text: "Получилось.", effects: {eddies: 700}}
+      fail: {text: "Он просыпается.", effects: {heat: 1}}
+    - label: Уйти
+      effects: {}
+      text: "Пусть спит."
+
+- id: ab_magnet_2
+  title: Ствол в руке
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [magnet]}
+  text: "Нервный парень направляет на тебя пистолет. Металлический."
+  choices:
+    - label: Вырвать ствол на расстоянии
+      ability: magnet
+      effects: {street_cred: 2, item_grant:pistol: true}
+      text: "Пистолет вырывается из его пальцев и летит тебе в руку. Он бежит, не оглядываясь."
+    - label: Уговорить
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Он опускает ствол.", effects: {}}
+      fail: {text: "Выстрел.", effects: {hp: -15}}
+    - label: Отдать кошелёк
+      effects: {eddies: -300}
+      text: "Он уходит с кошельком."
+
+# ---------------------------------------------------------------- spores
+- id: ab_spores_1
+  title: Гниль в лаборатории
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [spores]}
+  text: "Корпоративная лаборатория биоформ хочет купить образцы того, что растёт у тебя под кожей. Ты не уверен в своих чувствах по этому поводу."
+  choices:
+    - label: Дать образец
+      ability: spores
+      effects: {eddies: 3500, humanity: -2}
+      text: "Пробирка мутнеет за секунды. Учёные переглядываются и платят больше, чем обещали."
+    - label: Продать подделку
+      effects: {eddies: 800, heat: 1}
+      text: "Они заметят, но не сразу."
+    - label: Отказаться
+      effects: {humanity: 1}
+      text: "Это твоё. Как бы оно ни выглядело."
+
+- id: ab_spores_2
+  title: Ржавая стая
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [spores]}
+  text: "Стая бездомных борг-собак окружает тебя в промзоне. Ржавые челюсти, красные диоды."
+  choices:
+    - label: Выпустить споры
+      ability: spores
+      effects: {street_cred: 2, mood: 3}
+      text: "Облако спор, запах гнили. Собаки скулят и уходят. Похоже, они приняли тебя за своего."
+    - label: Отбиваться
+      violent: true
+      effects: {start_combat: 2}
+      text: "Ржавые челюсти, крепкий металл."
+    - label: Залезть на контейнер
+      effects: {mood: -3}
+      text: "Ты ждёшь три часа, пока стая уйдёт."
+
+# ---------------------------------------------------------------- netsense
+- id: ab_netsense_1
+  title: Скрытая сеть
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [netsense]}
+  text: "Ты чувствуешь кожей: в этом невзрачном доме есть сеть, которой не должно быть. Мощная, холодная."
+  choices:
+    - label: Найти точку доступа
+      ability: netsense
+      effects: {eddies: 2400, skill_xp:netrunning: 3}
+      text: "Подвал, кабель, сервер подпольной биржи. Ты продаёшь адрес конкурентам биржи."
+    - label: Сообщить NetWatch
+      effects: {eddies: 500, faction_rep:netwatch: 2}
+      text: "NetWatch платит за наводку без вопросов."
+    - label: Забыть
+      effects: {}
+      text: "Не твоя сеть."
+
+- id: ab_netsense_2
+  title: Жучок в квартире
+  category: ncpd
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [netsense]}
+  text: "Дома что-то не так: кожа ловит слабый сигнал из розетки."
+  choices:
+    - label: Найти и перевернуть
+      ability: netsense
+      effects: {heat: -1, street_cred: 1}
+      text: "Жучок NCPD. Ты перенастраиваешь его транслировать запись твоего пустого дивана. Пусть смотрят."
+    - label: Выбросить
+      effects: {heat: 1}
+      text: "Копы понимают, что их раскрыли."
+    - label: Ничего не делать
+      effects: {}
+      text: "Пусть слушают."
+
+# ---------------------------------------------------------------- trance
+- id: ab_trance_1
+  title: Арена Пасифики
+  category: money
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [trance]}
+  text: "Арена в Пасифике ищет бойца на вечер: против двоих сразу."
+  choices:
+    - label: Войти в транс и выйти на ринг
+      ability: trance
+      effects: {eddies: 3000, street_cred: 2, hp: -15}
+      text: "Боль выключена. Через две минуты оба лежат. Ты замечаешь сломанную руку только в раздевалке."
+    - label: Драться честно
+      violent: true
+      effects: {start_combat: 3}
+      text: "Ринг, свет, двое."
+    - label: Посмотреть
+      effects: {mood: 3}
+      text: "Хороший бой."
+
+- id: ab_trance_2
+  title: Засада на трассе
+  category: street
+  weight: 1
+  forced_only: true
+  conditions: {abilities: [trance]}
+  text: "Тебя прижимают на трассе: четверо, биты, цепи. Боль сейчас — лишняя роскошь."
+  choices:
+    - label: Транс
+      ability: trance
+      effects: {street_cred: 3, hp: -10}
+      text: "Ярость, тишина, красное. Когда ты приходишь в себя, четверо лежат, а у тебя разбиты костяшки."
+    - label: Драться
+      violent: true
+      effects: {start_combat: 3}
+      text: "Ну давайте."
+    - label: Откупиться
+      effects: {eddies: -500}
+      text: "Они уходят с деньгами."

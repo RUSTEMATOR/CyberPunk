@@ -1,0 +1,661 @@
+# Corporate and law enemy archetypes: Arasaka, Militech, Kang Tao, NCPD (patrol, detectives, tactical units),
+# plus one or two each for Biotechnica, Petrochem, Zetatech and NetWatch.
+#
+# Periods (inclusive years):
+#   crude  2013-2029  first-generation chrome (*_early items that leave the catalog in 2029/2015)
+#   early  2013-2044  chrome with no year limit on the shelf (kerenzikov, sandevistan_zetatech, berserk_zetatech)
+#   modern 2045-      2045 models (kerenzikov_boosted, sandevistan_dynalar, kiroshi_predator, netdriver)
+#   late   2070-      Apogee and power core
+# Kang Tao exists from 2050 (corps.yaml), so its single set starts in 2050.
+# Every faction has danger 2-5 in each period it exists. Hard references (weapon, armor, cyberware,
+# quickhacks) are chosen to exist in all years of the archetype's window.
+# Attack and defense follow 8 + 2 * danger and 11 + 2 * danger within +-3.
+
+# ---------------------------------------------------------------------------
+# Arasaka: expensive flexible models, tactical AI, netrunners with ICE.
+# ---------------------------------------------------------------------------
+
+- key: arasaka_guard_crude
+  name: "Часовой Arasaka"
+  factions: [arasaka]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: pistol
+  armor: kevlar_jacket
+  cyberware: [cyberoptic_early, subdermal_armor]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2013
+  available_until: 2029
+
+- key: arasaka_guard_early
+  name: "Охранник Arasaka"
+  factions: [arasaka]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: pistol
+  armor: kevlar_jacket
+  cyberware: [subdermal_armor, biomonitor]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2013
+  available_until: 2044
+
+- key: arasaka_enforcer_early
+  name: "Боец Arasaka"
+  factions: [arasaka]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: smg
+  armor: medium_armorjack
+  cyberware: [kerenzikov, subdermal_armor]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2013
+  available_until: 2044
+
+- key: arasaka_netrunner_early
+  name: "Нетраннер Arasaka"
+  factions: [arasaka]
+  danger: 3
+  attack: 11
+  defense: 20
+  weapon: pistol
+  armor: light_vest
+  cyberware: [neural_link, cyberdeck_street_garage, subdermal_firewall]
+  quickhacks: [short_circuit, reboot_optics, cripple_movement]
+  ai: netrunner
+  leader: false
+  available_from: 2013
+  available_until: 2044
+
+- key: arasaka_officer_early
+  name: "Офицер Arasaka"
+  factions: [arasaka]
+  danger: 4
+  attack: 15
+  defense: 19
+  weapon: assault_rifle
+  armor: medium_armorjack
+  cyberware: [sandevistan_zetatech, kerenzikov, subdermal_armor, reinforced_tendons]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2013
+  available_until: 2044
+
+- key: arasaka_leader_early
+  name: "Командир Arasaka"
+  factions: [arasaka]
+  danger: 5
+  attack: 18
+  defense: 21
+  weapon: sniper_rifle
+  armor: heavy_armorjack
+  cyberware: [sandevistan_zetatech, kerenzikov, subdermal_armor, biomonitor]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2013
+  available_until: 2044
+
+- key: arasaka_guard_modern
+  name: "Охранник Arasaka"
+  factions: [arasaka]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: pistol
+  armor: kevlar_jacket
+  cyberware: [kiroshi_optics, subdermal_armor]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2045
+
+- key: arasaka_enforcer_modern
+  name: "Боец Arasaka"
+  factions: [arasaka]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: smg
+  armor: medium_armorjack
+  cyberware: [kerenzikov, kiroshi_stalker, subdermal_armor, reinforced_tendons]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2045
+
+- key: arasaka_netrunner_modern
+  name: "Старший нетраннер Arasaka"
+  factions: [arasaka]
+  danger: 4
+  attack: 14
+  defense: 19
+  weapon: pistol
+  armor: light_vest
+  cyberware: [neural_link, cyberdeck_netdriver, cerberus_shield, subdermal_firewall]
+  quickhacks: [overheat, implant_drain, cyberware_malfunction]
+  ai: netrunner
+  leader: false
+  available_from: 2045
+
+- key: arasaka_officer_modern
+  name: "Офицер Arasaka"
+  factions: [arasaka]
+  danger: 4
+  attack: 15
+  defense: 19
+  weapon: assault_rifle
+  armor: medium_armorjack
+  cyberware: [sandevistan_dynalar, kiroshi_predator, subdermal_armor, reinforced_tendons]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2045
+
+- key: arasaka_leader_modern
+  name: "Командир Arasaka"
+  factions: [arasaka]
+  danger: 5
+  attack: 18
+  defense: 21
+  weapon: sniper_rifle
+  armor: heavy_armorjack
+  cyberware: [sandevistan_dynalar, kerenzikov_boosted, kiroshi_predator, subdermal_armor, dermal_laminate]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2045
+
+- key: arasaka_leader_late
+  name: "Полковник Arasaka"
+  factions: [arasaka]
+  danger: 5
+  attack: 18
+  defense: 21
+  weapon: sniper_rifle
+  armor: heavy_armorjack
+  cyberware: [sandevistan_dynalar, kerenzikov_boosted, kiroshi_predator, subdermal_armor, dermal_ablative, power_core]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2070
+
+# ---------------------------------------------------------------------------
+# Militech: heavy armor, smart weapons, berserk and Apogee at the top.
+# ---------------------------------------------------------------------------
+
+- key: militech_smartgunner_crude
+  name: "Стрелок Militech"
+  factions: [militech]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: assault_rifle
+  armor: medium_armorjack
+  cyberware: [smartgun_link_early, cyberoptic_early, subdermal_armor]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2013
+  available_until: 2029
+
+- key: militech_trooper_early
+  name: "Солдат Militech"
+  factions: [militech]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: smg
+  armor: medium_armorjack
+  cyberware: [subdermal_armor, reinforced_tendons]
+  quickhacks: []
+  ai: brute
+  leader: false
+  available_from: 2013
+  available_until: 2044
+
+- key: militech_sergeant_early
+  name: "Сержант Militech"
+  factions: [militech]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: shotgun
+  armor: heavy_armorjack
+  cyberware: [kerenzikov, subdermal_armor, reinforced_tendons]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2013
+  available_until: 2044
+
+- key: militech_heavy_early
+  name: "Штурмовик Militech"
+  factions: [militech]
+  danger: 4
+  attack: 15
+  defense: 19
+  weapon: assault_rifle
+  armor: heavy_armorjack
+  cyberware: [berserk_zetatech, subdermal_armor, reinforced_tendons]
+  quickhacks: []
+  ai: brute
+  leader: false
+  available_from: 2013
+  available_until: 2044
+
+- key: militech_officer_early
+  name: "Офицер Militech"
+  factions: [militech]
+  danger: 5
+  attack: 18
+  defense: 21
+  weapon: assault_rifle
+  armor: heavy_armorjack
+  cyberware: [sandevistan_zetatech, berserk_zetatech, subdermal_armor, biomonitor]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2013
+  available_until: 2044
+
+- key: militech_trooper_modern
+  name: "Солдат Militech"
+  factions: [militech]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: smg
+  armor: medium_armorjack
+  cyberware: [smartlink_gun, subdermal_armor]
+  quickhacks: []
+  ai: brute
+  leader: false
+  available_from: 2045
+
+- key: militech_sergeant_modern
+  name: "Сержант Militech"
+  factions: [militech]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: assault_rifle
+  armor: heavy_armorjack
+  cyberware: [smartlink_gun, kiroshi_hunter, subdermal_armor, ballistic_coprocessor]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2045
+
+- key: militech_heavy_modern
+  name: "Штурмовик Militech"
+  factions: [militech]
+  danger: 4
+  attack: 15
+  defense: 19
+  weapon: assault_rifle
+  armor: heavy_armorjack
+  cyberware: [berserk_militech, subdermal_armor, dermal_laminate, reinforced_skeleton]
+  quickhacks: []
+  ai: brute
+  leader: false
+  available_from: 2045
+
+- key: militech_officer_modern
+  name: "Офицер Militech"
+  factions: [militech]
+  danger: 5
+  attack: 18
+  defense: 21
+  weapon: assault_rifle
+  armor: heavy_armorjack
+  cyberware: [sandevistan_dynalar, berserk_militech, kiroshi_predator, subdermal_armor, dermal_laminate]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2045
+
+- key: militech_leader_late
+  name: "Командир Militech"
+  factions: [militech]
+  danger: 5
+  attack: 18
+  defense: 21
+  weapon: sniper_rifle
+  armor: heavy_armorjack
+  cyberware: [sandevistan_apogee, militech_eagle, subdermal_armor, dermal_ablative, power_core]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2070
+
+# ---------------------------------------------------------------------------
+# Kang Tao: cheap copies with smart tech, netrunners on paraline decks. Exists from 2050.
+# ---------------------------------------------------------------------------
+
+- key: kang_tao_guard
+  name: "Охранник Kang Tao"
+  factions: [kang_tao]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: smg
+  armor: kevlar_jacket
+  cyberware: [smartlink_gun, biomonitor]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2050
+
+- key: kang_tao_enforcer
+  name: "Боец Kang Tao"
+  factions: [kang_tao]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: shotgun
+  armor: medium_armorjack
+  cyberware: [smartlink_gun, kiroshi_hunter, reflex_tuner, subdermal_armor]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2050
+
+- key: kang_tao_netrunner
+  name: "Нетраннер Kang Tao"
+  factions: [kang_tao]
+  danger: 3
+  attack: 11
+  defense: 20
+  weapon: pistol
+  armor: light_vest
+  cyberware: [neural_link, cyberdeck_paraline, subdermal_firewall]
+  quickhacks: [sonic_shock, cyberware_malfunction]
+  ai: netrunner
+  leader: false
+  available_from: 2050
+
+- key: kang_tao_squad_leader
+  name: "Командир Kang Tao"
+  factions: [kang_tao]
+  danger: 4
+  attack: 15
+  defense: 19
+  weapon: assault_rifle
+  armor: medium_armorjack
+  cyberware: [kerenzikov_boosted, tactical_processor, kiroshi_predator, smartlink_gun, subdermal_armor]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2050
+
+- key: kang_tao_bodyguard
+  name: "Телохранитель Kang Tao"
+  factions: [kang_tao]
+  danger: 5
+  attack: 18
+  defense: 21
+  weapon: sniper_rifle
+  armor: heavy_armorjack
+  cyberware: [neural_link, sandevistan_dynalar, kiroshi_predator, cerberus_shield, subdermal_armor, smartlink_gun]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2050
+
+# ---------------------------------------------------------------------------
+# NCPD: ordinary cops at danger 2-3, tactical units at 4-5. Not MaxTac (see enemies_maxtac.yaml).
+# ---------------------------------------------------------------------------
+
+- key: ncpd_patrol_early
+  name: "Патрульный NCPD"
+  factions: [ncpd]
+  danger: 2
+  attack: 10
+  defense: 14
+  weapon: pistol
+  armor: kevlar_jacket
+  cyberware: [ncpd_badge]
+  quickhacks: []
+  ai: coward
+  leader: false
+  available_from: 2013
+  available_until: 2044
+
+- key: ncpd_detective_early
+  name: "Детектив NCPD"
+  factions: [ncpd]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: heavy_pistol
+  armor: light_vest
+  cyberware: [ncpd_badge, neuro_journal]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2013
+  available_until: 2044
+
+- key: ncpd_sergeant_early
+  name: "Сержант NCPD"
+  factions: [ncpd]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: smg
+  armor: medium_armorjack
+  cyberware: [ncpd_badge, subdermal_armor, reinforced_tendons]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2013
+  available_until: 2044
+
+- key: ncpd_tactical_early
+  name: "Боец спецназа NCPD"
+  factions: [ncpd]
+  danger: 4
+  attack: 15
+  defense: 19
+  weapon: assault_rifle
+  armor: heavy_armorjack
+  cyberware: [ncpd_badge, kerenzikov, subdermal_armor, reinforced_tendons]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2013
+  available_until: 2044
+
+- key: ncpd_swat_early
+  name: "Командир спецназа NCPD"
+  factions: [ncpd]
+  danger: 5
+  attack: 18
+  defense: 21
+  weapon: shotgun
+  armor: heavy_armorjack
+  cyberware: [ncpd_badge, sandevistan_zetatech, kerenzikov, subdermal_armor]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2013
+  available_until: 2044
+
+- key: ncpd_patrol_modern
+  name: "Патрульный NCPD"
+  factions: [ncpd]
+  danger: 2
+  attack: 10
+  defense: 14
+  weapon: pistol
+  armor: kevlar_jacket
+  cyberware: [ncpd_badge, kiroshi_optics]
+  quickhacks: []
+  ai: coward
+  leader: false
+  available_from: 2045
+
+- key: ncpd_detective_modern
+  name: "Детектив NCPD"
+  factions: [ncpd]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: heavy_pistol
+  armor: medium_armorjack
+  cyberware: [ncpd_badge, lie_detector, kiroshi_stalker]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2045
+
+- key: ncpd_sergeant_modern
+  name: "Сержант NCPD"
+  factions: [ncpd]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: smg
+  armor: medium_armorjack
+  cyberware: [ncpd_badge, kiroshi_hunter, subdermal_armor, reflex_tuner]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2045
+
+- key: ncpd_swat_modern
+  name: "Боец спецназа NCPD"
+  factions: [ncpd]
+  danger: 4
+  attack: 15
+  defense: 19
+  weapon: assault_rifle
+  armor: heavy_armorjack
+  cyberware: [ncpd_badge, kerenzikov_boosted, kiroshi_predator, subdermal_armor, dermal_laminate]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2045
+
+- key: ncpd_swat_leader_modern
+  name: "Командир спецназа NCPD"
+  factions: [ncpd]
+  danger: 5
+  attack: 18
+  defense: 21
+  weapon: shotgun
+  armor: heavy_armorjack
+  cyberware: [ncpd_badge, sandevistan_dynalar, kiroshi_predator, subdermal_armor, dermal_laminate, ballistic_coprocessor]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2045
+
+# ---------------------------------------------------------------------------
+# Secondary corporations: one or two archetypes each.
+# ---------------------------------------------------------------------------
+
+- key: biotechnica_courier
+  name: "Курьер Biotechnica"
+  factions: [biotechnica]
+  danger: 2
+  attack: 10
+  defense: 14
+  weapon: pistol
+  armor: light_vest
+  cyberware: [immune_booster, dust_filter]
+  quickhacks: []
+  ai: coward
+  leader: false
+  available_from: 2016
+
+- key: biotechnica_guard
+  name: "Охранник Biotechnica"
+  factions: [biotechnica]
+  danger: 4
+  attack: 15
+  defense: 19
+  weapon: assault_rifle
+  armor: medium_armorjack
+  cyberware: [blood_pump, endocrine_regulator, subdermal_armor, reinforced_tendons]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2016
+
+- key: petrochem_convoy_guard
+  name: "Охранник конвоя Petrochem"
+  factions: [petrochem]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: shotgun
+  armor: medium_armorjack
+  cyberware: [subdermal_armor, reinforced_tendons, berserk_zetatech]
+  quickhacks: []
+  ai: brute
+  leader: false
+
+- key: zetatech_netrunner
+  name: "Нетраннер Zetatech"
+  factions: [zetatech]
+  danger: 3
+  attack: 11
+  defense: 20
+  weapon: pistol
+  armor: light_vest
+  cyberware: [neural_link, cyberdeck_street_garage, subdermal_firewall]
+  quickhacks: [distraction, short_circuit, reboot_optics]
+  ai: netrunner
+  leader: false
+
+- key: zetatech_bodyguard
+  name: "Телохранитель Zetatech"
+  factions: [zetatech]
+  danger: 4
+  attack: 15
+  defense: 19
+  weapon: smg
+  armor: medium_armorjack
+  cyberware: [sandevistan_zetatech, subdermal_armor, biomonitor]
+  quickhacks: []
+  ai: tactical
+  leader: false
+
+- key: netwatch_hunter
+  name: "Оперативник NetWatch"
+  factions: [netwatch]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: smg
+  armor: medium_armorjack
+  cyberware: [kiroshi_hunter, subdermal_armor, smartlink_gun]
+  quickhacks: []
+  ai: tactical
+  leader: false
+  available_from: 2045
+
+- key: netwatch_agent
+  name: "Агент NetWatch"
+  factions: [netwatch]
+  danger: 4
+  attack: 13
+  defense: 19
+  weapon: heavy_pistol
+  armor: medium_armorjack
+  cyberware: [neural_link, cyberdeck_netdriver, neural_ice_military]
+  quickhacks: [implant_drain, cyberware_malfunction, system_collapse]
+  ai: netrunner
+  leader: false
+  available_from: 2045

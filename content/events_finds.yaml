@@ -1,0 +1,213 @@
+# Street finds (owner request: many items). Random events where the city hands you a thing: a weapon, armor or an
+# implant, usually with a catch. Each fires at most once per life (a flag of its own).
+
+- id: find_locker
+  title: Камера хранения
+  category: street
+  weight: 2
+  conditions:
+    flags_none: [find_locker]
+  text: "На вокзале мигает камера хранения: срок аренды истёк, дверца приоткрыта. Внутри спортивная сумка."
+  choices:
+    - label: Заглянуть в сумку
+      check: {stat: LUCK, dv: 12}
+      success: {text: "В сумке армейский пистолет, разобранный и смазанный, и записка: «Не для тебя». Теперь — для тебя.", effects: {flag_set:find_locker: true, item_grant:militech_avenger: true}}
+      fail: {text: "В сумке грязные носки и бутерброд недельной давности. Охранник смотрит на тебя с подозрением.", effects: {flag_set:find_locker: true, mood: -2}}
+    - label: Закрыть дверцу
+      effects: {flag_set:find_locker: true, humanity: 1}
+      text: "Ты захлопываешь дверцу. Чужие сумки — чужие проблемы."
+    - label: "Открыть соседние"
+      ability: lockpick
+      effects: {flag_set:find_locker: true, eddies: 900, heat: 1}
+      text: "Порт в пальце договаривается и с соседними ячейками. В одной оказываются наличные."
+
+- id: find_dead_drop
+  title: Тайник под мостом
+  category: rare
+  weight: 1
+  conditions:
+    min_street_cred: 5
+    flags_none: [find_dead_drop]
+  text: "Под мостом ты замечаешь кирпич, который лежит не так, как остальные. За ним тайник: пакет в целлофане. Кто-то за ним вернётся."
+  choices:
+    - label: Забрать пакет
+      effects: {flag_set:find_dead_drop: true, cyberware_grant:lockpick_finger: true, heat: 1}
+      text: "В пакете имплант-отмычка и инструкция по самоустановке. Через неделю под мостом кто-то долго ругается."
+    - label: Оставить и проследить
+      check: {stat: COOL, skill: stealth, dv: 13}
+      success: {text: "Ночью за пакетом приходит курьер Валентинос. Ты продаёшь информацию их соперникам.", effects: {flag_set:find_dead_drop: true, eddies: 900}}
+      fail: {text: "Курьер замечает слежку и стреляет в темноту. Мимо, но близко.", effects: {flag_set:find_dead_drop: true, hp: -4}}
+
+- id: find_crashed_drone
+  title: Упавший дрон
+  category: street
+  weight: 2
+  conditions:
+    flags_none: [find_crashed_drone]
+  text: "Прямо перед тобой на тротуар падает охранный дрон корпорации. Дымит, пищит и пытается взлететь. На брюхе закреплён шоковый пистолет."
+  choices:
+    - label: Открутить пистолет
+      check: {stat: TECH, skill: tech, dv: 12}
+      success: {text: "Пистолет отходит с крепления за минуту. Дрон печально пищит и затихает.", effects: {flag_set:find_crashed_drone: true, item_grant:taser_gun: true}}
+      fail: {text: "Дрон бьёт током на прощание. Пистолет так и остаётся на нём.", effects: {flag_set:find_crashed_drone: true, hp: -3}}
+    - label: Вернуть корпорации
+      effects: {flag_set:find_crashed_drone: true, eddies: 300}
+      text: "Корпоративный курьер забирает дрон и выдаёт «вознаграждение за содействие». Триста эдди и анкету клиента."
+
+- id: find_dumpster_armor
+  title: Мусорный бак у клиники
+  category: street
+  weight: 2
+  conditions:
+    flags_none: [find_dumpster_armor]
+  text: "У задней двери частной клиники выбрасывают списанную форму охраны. В баке торчит рукав бронежилета."
+  choices:
+    - label: Вытащить жилет
+      effects: {flag_set:find_dumpster_armor: true, item_grant:light_vest: true, mood: -1}
+      text: "Жилет пахнет антисептиком и чужим потом. Но пули держит."
+    - label: Порыться глубже
+      check: {stat: LUCK, dv: 13}
+      success: {text: "Под формой лежит почти новый медицинский жакет. Кто-то выкинул его по ошибке.", effects: {flag_set:find_dumpster_armor: true, item_grant:medic_jacket: true}}
+      fail: {text: "Глубже — только использованные шприцы. Ты колешь палец и неделю ждёшь результатов анализов.", effects: {flag_set:find_dumpster_armor: true, hp: -2, mood: -4}}
+    - label: "Найти по запаху"
+      ability: scent
+      effects: {flag_set:find_dumpster_armor: true, item_grant:pistol: true}
+      text: "Пахнет оружейным маслом. В соседнем баке лежит то, что выбросили по ошибке: пистолет охраны."
+
+- id: find_pawn_chrome
+  title: Хром в ломбарде
+  category: implants
+  weight: 2
+  conditions:
+    flags_none: [find_pawn_chrome]
+  text: "Хозяин ломбарда показывает из-под прилавка кибер-ухо: «Сняли с одного должника. Работает. Отдам за полцены, только не спрашивай, где он сейчас»."
+  choices:
+    - label: Купить и поставить
+      effects: {flag_set:find_pawn_chrome: true, eddies: -700, cyberware_grant:cyber_ear_dog: true, humanity: -1}
+      text: "Риппер ставит ухо за полчаса. Первую ночь ты слышишь, как в соседнем доме кто-то плачет."
+    - label: Не брать
+      effects: {flag_set:find_pawn_chrome: true}
+      text: "Хозяин пожимает плечами и убирает ухо обратно."
+
+- id: find_old_trunk
+  title: Сундук деда
+  category: relationships
+  weight: 1
+  available_until: 2040
+  conditions:
+    flags_none: [find_old_trunk]
+  text: "Соседка разбирает квартиру покойного деда и выносит на помойку старый сундук. Внутри винтовка, обёрнутая в одеяло, и пачка писем."
+  choices:
+    - label: Забрать винтовку
+      effects: {flag_set:find_old_trunk: true, item_grant:hunting_carbine: true}
+      text: "Соседка машет рукой: «Бери, он бы хотел, чтобы она стреляла». Письма ты отдаёшь ей."
+    - label: Прочитать письма
+      effects: {flag_set:find_old_trunk: true, humanity: 2, mood: 4}
+      text: "Письма с войны, которая кончилась задолго до тебя. Ты читаешь их соседке вслух до полуночи."
+
+- id: find_gang_stash
+  title: Оружейный тайник банды
+  category: street
+  weight: 1
+  conditions:
+    min_street_cred: 8
+    flags_none: [find_gang_stash]
+  text: "Мальчишка за двадцать эдди показывает тебе люк в подвале, где банда прячет оружие. Охраны нет, замок ржавый."
+  choices:
+    - label: Взять дробовик
+      check: {stat: REF, skill: stealth, dv: 14}
+      success: {text: "Ты уходишь с дробовиком, никого не встретив. Банда ещё неделю допрашивает своих.", effects: {flag_set:find_gang_stash: true, eddies: -20, item_grant:auto_shotgun: true, heat: 1}}
+      fail: {text: "На выходе тебя встречают двое. Дробовик остаётся, ты уходишь через окно.", effects: {flag_set:find_gang_stash: true, eddies: -20, hp: -8}}
+    - label: Продать наводку банде соперников
+      effects: {flag_set:find_gang_stash: true, eddies: 600, street_cred: 1}
+      text: "Соперники платят шестьсот и выносят тайник той же ночью."
+    - label: "Вынести всё"
+      ability: force
+      effects: {flag_set:find_gang_stash: true, item_grant:shotgun: true, eddies: 800, heat: 1}
+      text: "Ты срываешь крышку люка вместе с петлями и выносишь половину тайника."
+
+- id: find_lost_suitcase
+  title: Чемодан в такси
+  category: money
+  weight: 2
+  conditions:
+    flags_none: [find_lost_suitcase]
+  text: "На заднем сиденье такси кто-то забыл чемодан. Таксист не замечает. На бирке название отеля в Сити-центре."
+  choices:
+    - label: Вернуть в отель
+      effects: {flag_set:find_lost_suitcase: true, eddies: 500, status: 1}
+      text: "Хозяйка чемодана, корпоратка из Биотехники, даёт пятьсот на чай и визитку."
+    - label: Открыть чемодан
+      effects: {flag_set:find_lost_suitcase: true, item_grant:party_jumpsuit: true, humanity: -1}
+      text: "Внутри вечерний комбинезон с кевларом и косметичка. Комбинезон ты оставляешь, косметичку продаёшь."
+
+- id: find_fallen_cop
+  title: Брошенная машина NCPD
+  category: ncpd
+  weight: 1
+  available_until: 2045
+  conditions:
+    flags_none: [find_fallen_cop]
+  text: "После перестрелки на перекрёстке осталась пустая патрульная машина с открытым багажником. Вдалеке воют сирены."
+  choices:
+    - label: Заглянуть в багажник
+      check: {stat: REF, dv: 13}
+      success: {text: "Ты успеваешь схватить полицейскую дубинку и бронежилет до приезда подкрепления.", effects: {flag_set:find_fallen_cop: true, item_grant:police_baton: true, item_grant:police_vest_old: true, heat: 1}}
+      fail: {text: "Подкрепление приезжает раньше. Ты уходишь с пустыми руками и лицом на камере.", effects: {flag_set:find_fallen_cop: true, heat: 2}}
+    - label: Уйти
+      effects: {flag_set:find_fallen_cop: true}
+      text: "Ты переходишь на другую сторону улицы и не оглядываешься."
+
+- id: find_ripper_sale
+  title: Распродажа у риппера
+  category: implants
+  weight: 2
+  conditions:
+    flags_none: [find_ripper_sale]
+  text: "Риппер закрывает клинику и распродаёт остатки. На подносе лежат хромированные зубы, светящиеся тату и внутренние часы. Всё за бесценок."
+  choices:
+    - label: Хромированные зубы
+      effects: {flag_set:find_ripper_sale: true, eddies: -300, cyberware_grant:chrome_teeth: true}
+      text: "Улыбка теперь блестит, как бампер. Собеседники смотрят тебе в рот."
+    - label: Внутренние часы
+      effects: {flag_set:find_ripper_sale: true, eddies: -200, cyberware_grant:internal_clock: true}
+      text: "Ты больше никогда не опаздываешь. Почти."
+    - label: Ничего
+      effects: {flag_set:find_ripper_sale: true}
+      text: "Риппер уговаривает минут десять. Ты держишься."
+
+- id: find_rooftop_bag
+  title: Сумка на крыше
+  category: street
+  weight: 1
+  conditions:
+    flags_none: [find_rooftop_bag]
+  text: "На крыше соседнего дома после ночной перестрелки валяется сумка снайпера. Сам снайпер, судя по крови, ушёл не своими ногами."
+  choices:
+    - label: Забрать сумку
+      effects: {flag_set:find_rooftop_bag: true, item_grant:marksman_rifle: true, heat: 1, humanity: -1}
+      text: "В сумке разобранная винтовка с оптикой. Ты собираешь её за вечер, стараясь не думать о хозяине."
+    - label: Сообщить в NCPD
+      effects: {flag_set:find_rooftop_bag: true, faction_rep:ncpd: 2, heat: -1}
+      text: "Копы забирают сумку и благодарят. Впервые за долгое время — искренне."
+    - label: "Проверить крышу"
+      ability: thermal
+      effects: {flag_set:find_rooftop_bag: true, item_grant:marksman_rifle: true, street_cred: 1}
+      text: "Тепловизор показывает ещё одного снайпера за вентиляцией. Ты обходишь его и уносишь сумку с двух сторон крыши."
+
+- id: find_scrap_robot
+  title: Сломанный робот-охранник
+  category: rare
+  weight: 1
+  available_from: 2030
+  conditions:
+    flags_none: [find_scrap_robot]
+  text: "На свалке за промзоной лежит списанный робот-охранник. Корпус смят, но рука с силовым молотом целая."
+  choices:
+    - label: Снять молот
+      check: {stat: TECH, skill: tech, dv: 14}
+      success: {text: "Ты снимаешь силовой молот и переделываешь его под ручной хват. Тяжело, но бьёт как пресс.", effects: {flag_set:find_scrap_robot: true, item_grant:power_hammer: true, skill_xp:tech: 2}}
+      fail: {text: "Робот дёргается в последний раз и придавливает тебе ногу.", effects: {flag_set:find_scrap_robot: true, hp: -6}}
+    - label: Сдать на запчасти
+      effects: {flag_set:find_scrap_robot: true, eddies: 700}
+      text: "Скупщик платит семьсот и забирает робота целиком."

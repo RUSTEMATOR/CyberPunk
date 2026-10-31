@@ -1,0 +1,115 @@
+# Нетраннинг: кибердеки, защитные ICE-импланты, импланты поддержки деки.
+# Ключи уникальны во всех cyberware*.yaml. Группа cyberdeck требует блок deck.
+
+- key: cyberdeck_street_garage
+  name: Уличная дека «Гараж»
+  slot: brain
+  price: 1200
+  humanity_cost: 3
+  description: "Собрана на барахолке из чужих плат: памяти мало, зато дёшево. С ней каждый новый имплант сильнее бьёт по человечности."
+  tier: street
+  category: netrun
+  abilities: [garage_hack]
+  build: ghost
+  exclusive_group: cyberdeck
+  requires: [neural_link]
+  mods: {skill.netrunning: 1, humanity_loss_pct: 15}
+  deck: {ram_max: 4, ram_recharge: 1, hack_bonus: 0}
+
+- key: cyberdeck_military_harpoon
+  name: Армейская дека «Гарпун»
+  slot: brain
+  price: 14000
+  humanity_cost: 9
+  description: "Армейская дека с полевым шифрованием: памяти хватает на весь бой, подзаряжается быстро. Помогает и во взломах на заказах."
+  tier: military
+  category: netrun
+  abilities: [harpoon_hook]
+  build: ghost
+  exclusive_group: cyberdeck
+  requires: [neural_link]
+  mods: {skill.netrunning: 4, check.gig_hack: 1}
+  deck: {ram_max: 16, ram_recharge: 3, hack_bonus: 2}
+  available_from: 2045
+
+- key: subdermal_firewall
+  name: Подкожный файрвол
+  slot: brain
+  price: 900
+  humanity_cost: 2
+  description: "Дешёвый файрвол с самодельной прошивкой отсекает самые простые атаки. Голова от него гудит весь день."
+  tier: street
+  category: defense
+  abilities: [cheap_wall]
+  build: tank
+  requires: [neural_link]
+  mods: {ice: 2, mood_weekly: -1}
+
+- key: cerberus_shield
+  name: Щит «Цербер»
+  slot: brain
+  price: 5000
+  humanity_cost: 4
+  description: "Фильтр в затылке перехватывает чужие скрипты раньше, чем они доберутся до мозга. Надёжная защита без побочек."
+  tier: mid
+  category: defense
+  abilities: [script_catch]
+  build: tank
+  requires: [neural_link]
+  mods: {ice: 4}
+  available_from: 2045
+
+- key: neural_ice_military
+  name: Военный нейро-ICE
+  slot: brain
+  price: 13000
+  humanity_cost: 7
+  description: "Защита записана прямо в нейроны, и чужой нетраннер получает ответный удар. Заодно помогает взламывать на заказах."
+  tier: military
+  category: defense
+  abilities: [ice_backlash]
+  build: ghost
+  requires: [neural_link]
+  mods: {ice: 6, check.gig_hack: 1}
+  available_from: 2045
+
+- key: ram_expander
+  name: Расширитель ОЗУ
+  slot: brain
+  price: 1500
+  humanity_cost: 2
+  description: "Дополнительная плата памяти для деки: больше места под программы. Плата греется, и голова вместе с ней."
+  tier: street
+  category: netrun
+  abilities: [ram_lend]
+  build: ghost
+  requires: [neural_link]
+  mods: {ram_max: 3, mood_weekly: -1}
+
+- key: quickhack_compiler
+  name: Компилятор скриптов
+  slot: brain
+  price: 4000
+  humanity_cost: 3
+  description: "Сжимает программы взлома: эффект тот же, а памяти уходит меньше."
+  tier: mid
+  category: netrun
+  abilities: [script_compress]
+  build: ghost
+  requires: [neural_link]
+  mods: {quickhack_cost: -2}
+  available_from: 2030
+
+- key: multithread_chip
+  name: Многопоточный чип
+  slot: brain
+  price: 10500
+  humanity_cost: 4
+  description: "Отправляет один взлом сразу по двум адресам. Заодно экономит память и ускоряет подзарядку деки."
+  tier: military
+  category: netrun
+  abilities: [split_hack]
+  build: ghost
+  requires: [neural_link]
+  mods: {quickhack_targets: 1, quickhack_cost: -1, ram_recharge: 1}
+  available_from: 2045

@@ -1,0 +1,341 @@
+# Story arcs, batch 3 (owner request: many quests and items). Same rules as events_arcs.yaml: the first step is a
+# random event once per life (flags_none on the arc flag), every next step is forced_only and comes with the next week.
+# These arcs end with legendary rides (vehicle_grant) and workshop items.
+
+# ======================================================================== «Сарай с сокровищем»
+
+- id: arc_barn_1
+  title: Сарай на окраине
+  category: money
+  weight: 3
+  conditions:
+    flags_none: [arc_barn]
+  text: "Старуха с окраины Санто-Доминго продаёт участок. В сарае под брезентом стоит машина: спущенные колёса, мыши в салоне, вишнёвая краска под слоем пыли. «Муж её сорок лет собирал. Забирай за пятьсот, только увези»."
+  choices:
+    - label: Забрать за 500
+      effects: {flag_set:arc_barn: true, eddies: -500, queue_event:arc_barn_2: true}
+      text: "Эвакуатор стоит ещё двести, но ты не жалуешься. Под капотом оригинальный мотор. Его надо оживить."
+    - label: Не связываться
+      effects: {flag_set:arc_barn: true}
+      text: "Через месяц ты видишь эту машину в новостях: коллекционер продал её за сумму с пятью нулями."
+
+- id: arc_barn_2
+  title: Мотор, который не заводится
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Неделю ты сидишь в гараже с мануалом сорокалетней давности. Мотор чихает, кашляет и молчит. Местный механик предлагает помочь за деньги. Можно разобраться самому."
+  choices:
+    - label: Разобраться самому
+      check: {stat: TECH, skill: tech, dv: 14}
+      success: {text: "На третью ночь мотор рычит. Соседи выходят на балконы посмотреть, что за зверь проснулся.", effects: {skill_xp:tech: 3, queue_event:arc_barn_3: true}}
+      fail: {text: "Ты ломаешь карбюратор и идёшь к механику с повинной. Он чинит, но берёт вдвое.", effects: {eddies: -1500, skill_xp:tech: 1, queue_event:arc_barn_3: true}}
+    - label: Заплатить механику
+      effects: {eddies: -1000, queue_event:arc_barn_3: true}
+      text: "Механик ругается на старые болты, но к пятнице мотор работает."
+
+- id: arc_barn_3
+  title: Роспись на капоте
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Машина едет. Осталась краска. Под пылью на капоте ты находишь старую роспись: женщина с луной в волосах. Художник из Кабуки берётся её восстановить. Коллекционер из Сити-центра предлагает купить машину как есть."
+  choices:
+    - label: Восстановить и ездить
+      effects: {eddies: -800, vehicle_grant:lg_miss_midnight: true, fame: 1, mood: 10}
+      text: "Через неделю «Мисс Полночь» выезжает из гаража. На светофорах на тебя оборачиваются все, даже копы."
+    - label: Продать коллекционеру
+      effects: {eddies: 12000, mood: -3}
+      text: "Коллекционер платит не торгуясь. Иногда ты видишь вишнёвое купе в рекламе его фонда."
+
+# ======================================================================== «Последний караван»
+
+- id: arc_caravan_1
+  title: Застрявший караван
+  category: work
+  weight: 3
+  conditions:
+    flags_none: [arc_caravan]
+  text: "На трассе за городом стоит колонна кочевников: головная фура заглохла, а у дороги кружат Мусорщики. Старший клана машет тебе рукой: «Поможешь — не забудем»."
+  choices:
+    - label: Помочь с фурой
+      check: {stat: TECH, skill: tech, dv: 13}
+      success: {text: "Ты находишь перебитый шланг за двадцать минут. Колонна трогается, старший записывает твоё имя в блокнот.", effects: {flag_set:arc_caravan: true, faction_rep:aldecaldos: 3, queue_event:arc_caravan_2: true}}
+      fail: {text: "Фура не заводится, Мусорщики подходят ближе. Приходится толкать её всем кланом.", effects: {flag_set:arc_caravan: true, hp: -5, faction_rep:aldecaldos: 1, queue_event:arc_caravan_2: true}}
+    - label: Проехать мимо
+      effects: {flag_set:arc_caravan: true}
+      text: "В зеркале заднего вида колонна становится точкой. Что с ней было дальше, ты не узнаешь."
+
+- id: arc_caravan_2
+  title: Ночной перегон
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Клан зовёт тебя в перегон через Пустоши: груз медикаментов для дальнего лагеря. На полпути их ждут Мусорщики, и кто-то должен ехать первым."
+  choices:
+    - label: Ехать первым
+      check: {stat: REF, skill: driving, dv: 15}
+      success: {text: "Ты прорываешься через засаду, тараня пикап Мусорщиков. Колонна идёт за тобой след в след.", effects: {skill_xp:driving: 3, street_cred: 2, queue_event:arc_caravan_3: true}}
+      fail: {text: "Засада бьёт по головной машине. Ты вылезаешь из перевёрнутого кузова, но колонна проходит.", effects: {hp: -10, queue_event:arc_caravan_3: true}}
+    - label: Прикрывать с тыла
+      effects: {skill_xp:firearms: 2, hp: -4, queue_event:arc_caravan_3: true}
+      text: "Ты отстреливаешься из последней машины до рассвета. Лагерь получает лекарства."
+
+- id: arc_caravan_3
+  title: Имя на борту
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Старший клана ведёт тебя к старой бронированной фуре. На борту выцарапаны имена. «Её водитель погиб на прошлой неделе. Клан решил, что следующим будешь ты». Можно отказаться и взять деньги."
+  choices:
+    - label: Сесть за руль
+      effects: {vehicle_grant:lg_last_caravan: true, faction_rep:aldecaldos: 6, humanity: 1}
+      text: "Ты выцарапываешь своё имя под остальными. Фура рычит, будто узнаёт нового хозяина."
+    - label: Взять деньги
+      effects: {eddies: 6000, faction_rep:aldecaldos: 2}
+      text: "Старший кивает без обиды: «Не каждый создан для дороги». Конверт толстый."
+
+# ======================================================================== «Красный дракон»
+
+- id: arc_dragon_1
+  title: Вызов на гонку
+  category: street
+  weight: 3
+  conditions:
+    min_street_cred: 8
+    flags_none: [arc_dragon]
+  text: "Чемпион Тигриных когтей на красном спортбайке перегораживает тебе дорогу: «Говорят, ты быстрый. Три гонки. Выиграешь все — байк твой. Проиграешь — отдашь всё, на чём ездишь»."
+  choices:
+    - label: Принять вызов
+      check: {stat: REF, skill: driving, dv: 14}
+      success: {text: "Первая гонка твоя на полкорпуса. Чемпион снимает шлем и впервые смотрит на тебя серьёзно.", effects: {flag_set:arc_dragon: true, skill_xp:driving: 2, queue_event:arc_dragon_2: true}}
+      fail: {text: "Ты проигрываешь первую гонку. Чемпион смеётся и даёт вторую попытку: «Мне скучно побеждать так быстро»", effects: {flag_set:arc_dragon: true, mood: -3, queue_event:arc_dragon_2: true}}
+    - label: Отказаться
+      effects: {flag_set:arc_dragon: true, street_cred: -1}
+      text: "Чемпион плюёт тебе под ноги и уезжает. На районе об этом говорят неделю."
+
+- id: arc_dragon_2
+  title: Гонка по эстакаде
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Вторая гонка идёт по недостроенной эстакаде: дыры в полотне, обрыв без ограждений. Половина Когтей стоит внизу и делает ставки."
+  choices:
+    - label: Гнать на пределе
+      check: {stat: REF, skill: driving, dv: 16}
+      success: {text: "Ты перелетаешь дыру в полотне, а чемпион тормозит. Когти внизу ревут.", effects: {skill_xp:driving: 3, street_cred: 2, queue_event:arc_dragon_3: true}}
+      fail: {text: "Колесо уходит в дыру. Ты вылетаешь на бетон, но поднимаешься. Чемпион ждёт на финише: «Последняя решит»", effects: {hp: -12, queue_event:arc_dragon_3: true}}
+    - label: Подкупить механика чемпиона
+      effects: {eddies: -1500, humanity: -1, queue_event:arc_dragon_3: true}
+      text: "Байк чемпиона глохнет на старте. Он ничего не говорит, но всё понимает."
+
+- id: arc_dragon_3
+  title: Последний заезд
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Финальная гонка через весь Джапантаун. Без правил, без светофоров, без второго шанса. Чемпион садится на красного дракона и надевает шлем."
+  choices:
+    - label: Ехать за байк
+      check: {stat: REF, skill: driving, dv: 17}
+      success: {text: "Ты пересекаешь финиш первым. Чемпион бросает тебе ключи: «Дракон выбирает быстрейшего. Береги его»", effects: {vehicle_grant:lg_red_dragon: true, street_cred: 4, fame: 2, faction_rep:tyger_claws: 3}}
+      fail: {text: "Чемпион выигрывает на последнем повороте. Твою машину он не берёт: «Гонка была честной. Оставь себе»", effects: {street_cred: 2, faction_rep:tyger_claws: 2, mood: -4}}
+    - label: Сойти с дистанции
+      effects: {street_cred: -2}
+      text: "Ты сворачиваешь в переулок на середине трассы. Без травм, но про гонки на районе тебе больше не напомнят."
+
+# ======================================================================== «Собери сам»
+
+- id: arc_junk_1
+  title: Три развалюхи
+  category: money
+  weight: 3
+  conditions:
+    flags_none: [arc_junk]
+  text: "На свалке за Нортсайдом три мёртвые машины: у одной целый мотор, у другой рама, у третьей колёса. Сторож говорит, что их всё равно отправят в пресс в конце месяца."
+  choices:
+    - label: Собрать из трёх одну
+      effects: {flag_set:arc_junk: true, eddies: -300, queue_event:arc_junk_2: true}
+      text: "Сторож берёт триста за то, чтобы смотреть в другую сторону. У тебя есть месяц и гаечный ключ."
+    - label: Сдать на металл
+      effects: {flag_set:arc_junk: true, eddies: 250}
+      text: "Скупщик платит за вес. Двести пятьдесят эдди и чёрные руки."
+
+- id: arc_junk_2
+  title: Франкенштейн на колёсах
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Мотор встал на раму, но не хочет дружить с коробкой передач. Мотор от лодки, говорят, подойдёт идеально. Где его взять — вопрос."
+  choices:
+    - label: Выточить переходник
+      check: {stat: TECH, skill: tech, dv: 13}
+      success: {text: "Переходник из старой сковородки держит идеально. Машина делает первый круг по свалке под аплодисменты сторожа.", effects: {skill_xp:tech: 3, vehicle_grant:lg_rusty_hope: true, mood: 8}}
+      fail: {text: "Переходник лопается на первом круге. Сторож сочувственно приносит пиво. Через неделю попробуешь ещё.", effects: {skill_xp:tech: 2, queue_event:arc_junk_3: true}}
+    - label: Купить лодочный мотор
+      effects: {eddies: -900, vehicle_grant:lg_rusty_hope: true, mood: 6}
+      text: "Мотор от лодки встаёт как родной. Машина ревёт, как катер, и едет, как катер. Ты называешь её «Надеждой»."
+
+- id: arc_junk_3
+  title: Вторая попытка
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Сторож говорит, что пресс приезжает завтра. Последняя ночь, чтобы машина поехала."
+  choices:
+    - label: Работать до утра
+      effects: {skill_xp:tech: 2, vehicle_grant:lg_rusty_hope: true, hp: -2, mood: 10}
+      text: "На рассвете машина выезжает за ворота свалки своим ходом. Пресс приезжает за пустым местом."
+    - label: Бросить
+      effects: {mood: -5}
+      text: "Ты смотришь, как пресс превращает твой проект в кубик. Сторож отдаёт тебе на память зеркало заднего вида."
+
+# ======================================================================== «Призрак в небе»
+
+- id: arc_ghost_1
+  title: Аэродин на крыше
+  category: rare
+  weight: 2
+  available_from: 2050
+  conditions:
+    min_street_cred: 20
+    flags_none: [arc_ghost]
+  text: "На крыше заброшенного отеля стоит чёрный аэродин без опознавательных знаков. Внутри никого. На приборной панели мигает сообщение: «Пилоту. Ждать дальнейших указаний»."
+  choices:
+    - label: Сесть за штурвал
+      check: {stat: TECH, skill: driving, dv: 15}
+      success: {text: "Ты взламываешь автопилот и поднимаешь машину в воздух. Через минуту приходит сообщение: «Добро пожаловать, пилот. Задание на следующей неделе»", effects: {flag_set:arc_ghost: true, skill_xp:driving: 3, queue_event:arc_ghost_2: true}}
+      fail: {text: "Система защиты бьёт током. Ты падаешь на крышу. Аэродин улетает сам, а на твой номер приходит: «Попробуем ещё раз»", effects: {flag_set:arc_ghost: true, hp: -8, queue_event:arc_ghost_2: true}}
+    - label: Уйти, пока не заметили
+      effects: {flag_set:arc_ghost: true}
+      text: "Ты спускаешься по пожарной лестнице. Через час крыша оцеплена корпоративной охраной."
+
+- id: arc_ghost_2
+  title: Ночной рейс
+  category: rare
+  available_from: 2050
+  weight: 1
+  forced_only: true
+  text: "Указания приходят ровно в полночь: забрать человека с крыши Militech и доставить в Пасифику. Никаких вопросов. Аэродин ждёт тебя на той же крыше."
+  choices:
+    - label: Выполнить рейс
+      check: {stat: COOL, skill: driving, dv: 16}
+      success: {text: "Охрана Militech стреляет вслед, но радары аэродин не видят. Пассажир выходит в Пасифике и оставляет тебе кейс с деньгами.", effects: {eddies: 5000, heat: 1, queue_event:arc_ghost_3: true}}
+      fail: {text: "Пассажир ранен, аэродин изрешечён, но вы долетаете. Пассажир шепчет: «Мы долетели». Сознание теряет уже в Пасифике.", effects: {hp: -10, heat: 2, queue_event:arc_ghost_3: true}}
+    - label: Сдать аэродин NCPD
+      effects: {eddies: 3000, faction_rep:ncpd: 3}
+      text: "Полиция забирает аэродин и платит за находку. Через день он исчезает со штрафстоянки."
+
+- id: arc_ghost_3
+  title: Пилот без хозяина
+  category: rare
+  available_from: 2050
+  weight: 1
+  forced_only: true
+  text: "Последнее сообщение: «Заказчик мёртв. Аэродин больше никому не принадлежит. Он ваш, если хотите». На приборной панели мигает одна кнопка: «Принять»."
+  choices:
+    - label: Принять
+      effects: {vehicle_grant:lg_black_ghost: true, fame: 1, heat: 1}
+      text: "Аэродин стирает прошлые маршруты и записывает тебя пилотом. В реестрах его по-прежнему нет."
+    - label: Сбросить в залив
+      effects: {humanity: 1, heat: -2}
+      text: "Ты направляешь аэродин в залив и прыгаешь на парашюте. Призрак уходит под воду вместе со своими тайнами."
+
+# ======================================================================== «Старый оружейник»
+
+- id: arc_gunsmith_1
+  title: Мастерская в подвале
+  category: work
+  weight: 3
+  conditions:
+    flags_none: [arc_gunsmith]
+  text: "Старый оружейник из Уотсона ищет того, кто будет таскать ящики и слушать его истории. Платит мало, зато учит всему, что знает о стволах."
+  choices:
+    - label: Пойти в подмастерья
+      effects: {flag_set:arc_gunsmith: true, skill_xp:tech: 2, skill_xp:firearms: 1, queue_event:arc_gunsmith_2: true}
+      text: "Первую неделю ты чистишь стволы и слушаешь про войну в Мексике. На вторую тебе доверяют напильник."
+    - label: Отказаться
+      effects: {flag_set:arc_gunsmith: true}
+      text: "Оружейник пожимает плечами: «Молодые всегда торопятся»."
+
+- id: arc_gunsmith_2
+  title: Заказ от банды
+  category: work
+  weight: 1
+  forced_only: true
+  text: "В мастерскую приходят Мальстрёмовцы: им нужен ствол, который пробивает броню NCPD. Старик смотрит на тебя: решать тебе, мастерская скоро будет твоей."
+  choices:
+    - label: Взять заказ
+      check: {stat: TECH, skill: tech, dv: 14}
+      success: {text: "Ствол получается злым и точным. Мальстрёмовцы платят щедро, но старик неделю с тобой не разговаривает.", effects: {eddies: 3000, humanity: -1, faction_rep:maelstrom: 3, queue_event:arc_gunsmith_3: true}}
+      fail: {text: "Ствол клинит на пробном выстреле. Мальстрёмовцы забирают задаток и твою гордость.", effects: {eddies: -500, hp: -4, queue_event:arc_gunsmith_3: true}}
+    - label: Отказать
+      check: {stat: COOL, dv: 13}
+      success: {text: "Ты отказываешь так спокойно, что Мальстрёмовцы уходят без скандала. Старик впервые улыбается.", effects: {street_cred: 1, queue_event:arc_gunsmith_3: true}}
+      fail: {text: "Мальстрёмовцы разбивают витрину на прощание.", effects: {eddies: -800, queue_event:arc_gunsmith_3: true}}
+
+- id: arc_gunsmith_3
+  title: Последний ствол мастера
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Старик закрывает мастерскую. На верстаке два ствола, над которыми он работал последние годы: револьвер с гравировкой и рычажная винтовка. Он говорит взять один."
+  choices:
+    - label: Револьвер
+      effects: {item_grant:heavy_revolver: true, skill_xp:firearms: 2, humanity: 1}
+      text: "На барабане выгравировано твоё имя. Старик сделал его заранее."
+    - label: Винтовку
+      effects: {item_grant:lever_rifle: true, skill_xp:firearms: 2, humanity: 1}
+      text: "Рычаг ходит мягко, как часы. «Она переживёт и тебя», — говорит старик."
+    - label: Попросить мастерскую
+      effects: {eddies: 2500, skill_xp:tech: 3}
+      text: "Старик отдаёт ключи. По выходным ты чинишь стволы соседям и вспоминаешь его истории."
+
+# ======================================================================== «Бронник из Кабуки»
+
+- id: arc_armorer_1
+  title: Портной с кевларом
+  category: work
+  available_from: 2020
+  weight: 3
+  conditions:
+    flags_none: [arc_armorer]
+  text: "Портной из Кабуки шьёт куртки с кевларовой подкладкой. У него украли рулон экспериментальной ткани, и он подозревает соседа по рынку."
+  choices:
+    - label: Найти ткань
+      check: {stat: INT, skill: persuasion, dv: 13}
+      success: {text: "Рулон у соседа под прилавком. Ты возвращаешь его, сосед уезжает из района.", effects: {flag_set:arc_armorer: true, street_cred: 1, queue_event:arc_armorer_2: true}}
+      fail: {text: "Ты обвиняешь не того. Скандал на весь рынок, а ткань находится сама: её спрятала кошка портного.", effects: {flag_set:arc_armorer: true, street_cred: -1, queue_event:arc_armorer_2: true}}
+    - label: Не лезть
+      effects: {flag_set:arc_armorer: true}
+      text: "Через неделю у портного новая вывеска: «Закрыто навсегда»."
+
+- id: arc_armorer_2
+  title: Примерка
+  category: work
+  available_from: 2020
+  weight: 1
+  forced_only: true
+  text: "Портной шьёт из новой ткани первую вещь и хочет испытать её. Испытание простое: в тебя стреляют, а ты стоишь в куртке."
+  choices:
+    - label: Встать под выстрел
+      effects: {hp: -3, mood: -2, queue_event:arc_armorer_3: true}
+      text: "Пуля ложится в грудь, а ты только кашляешь. Портной плачет от счастья. Ты — от боли."
+    - label: Повесить на манекен
+      effects: {queue_event:arc_armorer_3: true}
+      text: "Манекен остаётся цел. Портной ворчит, что манекены не жалуются и потому ничего не доказывают."
+
+- id: arc_armorer_3
+  title: Куртка на заказ
+  category: work
+  available_from: 2020
+  weight: 1
+  forced_only: true
+  text: "Портной снимает мерки: «Шью тебе. Бесплатно. Выбирай»."
+  choices:
+    - label: Плащ с бронёй
+      effects: {item_grant:ballistic_trench: true}
+      text: "Плащ сидит как влитой. Никто не догадается, что под тканью кевлар."
+    - label: Кимоно с драконом
+      effects: {item_grant:dragon_kimono: true, fame: 1}
+      text: "Красный дракон по спине и кевлар внутри. В Кабуки на тебя показывают пальцем, но с уважением."

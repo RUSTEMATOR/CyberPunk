@@ -1,0 +1,188 @@
+# A fugitive cyberpsycho's way into legend (owner request 24.10: «стать легендой Найт-Сити, взорвать Арасаку»).
+# Never drawn at random: the fugitive screen «Легенда Найт-Сити» (app/bot/handlers/psychosis.py) plays them. Every
+# deed sets its flag psyleg_<deed>; the count of those flags is the legend. The tower of Arasaka needs three deeds
+# and goes in three stages. Player text avoids gendered past tense.
+
+- id: psyleg_studio
+  title: Прямой эфир
+  category: rare
+  weight: 1
+  forced_only: true
+  public: true
+  text: "Студия «Новостей 54» на сорок втором этаже. Охрана видит твои глаза и разбегается раньше, чем ты успеваешь подумать. Ведущая замирает с микрофоном. Красная лампа горит: в прямом эфире весь Найт-Сити."
+  choices:
+    - label: Сказать всё, что думаешь
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Ты говоришь пять минут. Про хром, который жрёт людей, про корпорации, которые продают его как лекарство. Эфир не обрывают: режиссёр плачет за пультом. Запись крутят по всему городу до утра.", effects: {fame: 5, street_cred: 3, humanity: 2, flag_set:psyleg_studio: true}}
+      fail: {text: "Слова рассыпаются в шум, голоса в голове перебивают тебя прямо в эфире. Город видит монстра. Но запомнит.", effects: {fame: 3, humanity: -2, flag_set:psyleg_studio: true}}
+    - label: Взять ведущую в заложники
+      violent: true
+      effects: {fame: 4, street_cred: 2, humanity: -4, heat: 2, flag_set:psyleg_studio: true}
+      text: "Ты держишь её перед камерой, пока над крышей не начинают кружить ави. Требований у тебя нет. Это пугает город сильнее всего."
+    - label: Уйти, не тронув никого
+      effects: {mood: 2}
+      text: "Ты смотришь в камеру, кладёшь микрофон и уходишь. Охрана не решается встать у двери."
+
+- id: psyleg_vault
+  title: Хранилище «Милитеха»
+  category: rare
+  weight: 1
+  forced_only: true
+  public: true
+  faction: militech
+  text: "Подземное хранилище «Милитеха» под доками: наличные для чёрных операций и прототипы. Двадцать охранников, две турели, одна дверь толщиной в метр. Ты слышишь, как за дверью гудит сигнализация, которая ещё не знает про тебя."
+  choices:
+    - label: Пройти сквозь охрану
+      violent: true
+      effects: {start_combat: 5, eddies: 30000, fame: 3, street_cred: 3, faction_rep:militech: -10, flag_set:psyleg_vault: true}
+      text: "Ты идёшь прямо на турели. Дверь потом откроется сама, когда некому будет её держать."
+    - label: Вскрыть дверь тихо
+      check: {stat: TECH, skill: tech, dv: 18}
+      success: {text: "Сорок минут в вентиляции, двенадцать секунд у панели. Дверь открывается беззвучно. Ты уносишь столько, сколько можешь поднять.", effects: {eddies: 25000, fame: 2, street_cred: 2, flag_set:psyleg_vault: true}}
+      fail: {text: "Панель пищит. Через минуту коридор заполняет охрана, и тихий план становится громким.", effects: {start_combat: 4, eddies: 10000, flag_set:psyleg_vault: true}}
+    - label: Отступить
+      effects: {}
+      text: "Голоса в голове смеются над тобой, но ты уходишь. Хранилище подождёт."
+
+- id: psyleg_lab
+  title: Подопытные «Биотехники»
+  category: rare
+  weight: 1
+  forced_only: true
+  public: true
+  faction: biotechnica
+  text: "Закрытый корпус «Биотехники» в Санто-Доминго. Здесь на людях испытывают новый хром — на таких же, как ты, только пристёгнутых к столам. Охрана — две смены, учёные работают ночью."
+  choices:
+    - label: Освободить подопытных
+      violent: true
+      effects: {start_combat: 4, humanity: 5, fame: 3, street_cred: 4, faction_rep:biotechnica: -10, flag_set:psyleg_lab: true}
+      text: "Ты выламываешь двери палат одну за другой. Люди в больничных рубашках бегут к выходу. Кто-то из них потом расскажет, что их спас киберпсих."
+    - label: Слить данные журналистам
+      check: {stat: INT, skill: netrunning, dv: 16}
+      success: {text: "Протоколы опытов уходят в Сеть. Утром у корпуса толпа, к обеду — полиция с ордером. Корпорации придётся объясняться.", effects: {humanity: 3, fame: 4, flag_set:psyleg_lab: true}}
+      fail: {text: "ЛЕД корпуса выжигает тебе пол-деки. Данные не ушли, а охрана уже знает, кто приходил.", effects: {hp: -10, heat: 2}}
+    - label: Забрать хром для себя
+      effects: {eddies: 12000, humanity: -5, flag_set:psyleg_lab: true}
+      text: "Ты выносишь ящик экспериментальных имплантов. Подопытные смотрят из-за стекла. Ты не оборачиваешься."
+
+- id: psyleg_precinct
+  title: Участок NCPD
+  category: rare
+  weight: 1
+  forced_only: true
+  public: true
+  faction: ncpd
+  text: "Участок NCPD в Уотсоне, где когда-то держали тебя в камере. Дежурный за стеклом тянется к тревожной кнопке. В оружейке за его спиной — всё, что город выдаёт своим копам."
+  choices:
+    - label: Взять участок штурмом
+      violent: true
+      effects: {start_combat: 5, fame: 4, street_cred: 5, humanity: -3, flag_set:psyleg_precinct: true}
+      text: "Ты заходишь через главный вход. Дальше всё, как в плохом сне, который снится всему участку."
+    - label: Сжечь архив
+      check: {stat: REF, skill: stealth, dv: 16}
+      success: {text: "Пока дежурный звонит в МаксТак, ты поджигаешь архив. Дела сотен людей с улицы горят вместе с твоим. Улица не забудет.", effects: {street_cred: 6, fame: 3, heat: -3, flag_set:psyleg_precinct: true}}
+      fail: {text: "Тебя замечают в коридоре. Приходится прорываться с боем.", effects: {start_combat: 4, flag_set:psyleg_precinct: true}}
+    - label: Пройти мимо
+      effects: {}
+      text: "Ты смотришь на окна участка и идёшь дальше. Не сегодня."
+
+- id: psyleg_gang
+  title: Логово Мальстрёма
+  category: rare
+  weight: 1
+  forced_only: true
+  public: true
+  faction: maelstrom
+  text: "Мальстрём держит заброшенный завод в Норт-Оуке. Хромированные фанатики, которые считают таких, как ты, святыми. Их вожак предлагает: «Присоединяйся. Или стань нашей иконой — на стене»."
+  choices:
+    - label: Вырезать логово
+      violent: true
+      effects: {start_combat: 5, fame: 4, street_cred: 5, faction_rep:maelstrom: -20, flag_set:psyleg_gang: true}
+      text: "Ты отвечаешь вожаку без слов. Завод заполняется искрами и криками."
+    - label: Стать их богом
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Ты говоришь с ними на языке хрома и боли. Мальстрём встаёт на колени. Теперь у тебя есть армия фанатиков, которые прикроют от МаксТака.", effects: {faction_rep:maelstrom: 20, street_cred: 4, fame: 3, humanity: -3, flag_set:psyleg_gang: true}}
+      fail: {text: "Вожак смеётся. Фанатики бросаются на тебя.", effects: {start_combat: 4, flag_set:psyleg_gang: true}}
+    - label: Отступить
+      effects: {}
+      text: "Ты уходишь в темноту. Это не трусость — просто не сегодня."
+
+- id: psyleg_exec
+  title: Вице-президент «Арасаки»
+  category: rare
+  weight: 1
+  forced_only: true
+  public: true
+  faction: arasaka
+  text: "Вице-президент «Арасаки» по безопасности каждый вечер ужинает в ресторане на крыше Корпо-плазы. Два телохранителя, бронированный ави на площадке. Человек, который подписал приказ о хроме, сделавшем тебя таким."
+  choices:
+    - label: Похитить ради выкупа
+      violent: true
+      effects: {start_combat: 4, eddies: 60000, fame: 5, faction_rep:arasaka: -15, flag_set:psyleg_exec: true}
+      text: "Ты забираешь его прямо из-за стола. Выкуп «Арасака» платит быстро — и запоминает."
+    - label: Заставить говорить в камеру
+      check: {stat: COOL, skill: persuasion, dv: 17}
+      success: {text: "Он говорит. Про испытания, про списанных людей, про цифры смертности в отчётах. Видео уходит в Сеть. Акции «Арасаки» падают на девять пунктов за час.", effects: {fame: 7, street_cred: 4, humanity: 2, faction_rep:arasaka: -20, flag_set:psyleg_exec: true}}
+      fail: {text: "Он молчит и улыбается. Через минуту над рестораном зависает ави охраны.", effects: {start_combat: 5, flag_set:psyleg_exec: true}}
+
+# ======================================================================== the tower of Arasaka, three stages
+    - label: Отступить
+      effects: {}
+      text: "Ты уходишь в темноту. Это не трусость — просто не сегодня."
+
+- id: psyleg_tower_1
+  title: "Башня: заряд"
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Кочевники из Бесплодных земель знают, где лежит то, что осталось с Четвёртой корпоративной войны. Тактический заряд в свинцовом ящике. Они продадут его только тому, о ком уже ходят легенды. О тебе ходят."
+  choices:
+    - label: Выкупить заряд
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Старейшина клана долго смотрит тебе в глаза, потом кивает. Ящик грузят в твой фургон. «Мы ничего не видели», — говорит он.", effects: {eddies: -20000, flag_set:psyleg_tower_1: true}}
+      fail: {text: "Цена выросла вдвое: кочевники видят, как сильно тебе это нужно. Ты платишь.", effects: {eddies: -40000, flag_set:psyleg_tower_1: true}}
+    - label: Отобрать силой
+      violent: true
+      effects: {start_combat: 4, humanity: -5, flag_set:psyleg_tower_1: true}
+      text: "Кочевники не продают тем, кто пришёл с оружием. Ты и не спрашиваешь."
+    - label: Ещё не время
+      effects: {}
+      text: "Ты уезжаешь без ящика. Кочевники провожают тебя взглядом, в котором нет облегчения."
+
+- id: psyleg_tower_2
+  title: "Башня: проникновение"
+  category: rare
+  weight: 1
+  forced_only: true
+  faction: arasaka
+  text: "Подземный гараж башни «Арасаки» в Сити-центре. Шесть уровней вниз, грузовой лифт, охрана в экзоскелетах. Ящик в фургоне весит как гроб. Его нужно довезти до опорных колонн."
+  choices:
+    - label: Прорваться с боем
+      violent: true
+      effects: {start_combat: 5, flag_set:psyleg_tower_2: true}
+      text: "Шлагбаум разлетается. Охрана открывает огонь по фургону. Ты выходишь им навстречу."
+    - label: Проехать по чужому пропуску
+      check: {stat: COOL, skill: stealth, dv: 18}
+      success: {text: "Пропуск поставщика кофе, улыбка, кивок охраннику. Фургон спускается на шестой уровень, и ящик встаёт у колонны. Таймер тикает.", effects: {flag_set:psyleg_tower_2: true}}
+      fail: {text: "Сканер находит в фургоне то, чего там не должно быть. Сирена.", effects: {start_combat: 5, flag_set:psyleg_tower_2: true}}
+    - label: Отступить
+      effects: {}
+      text: "Ты уходишь в темноту. Это не трусость — просто не сегодня."
+
+- id: psyleg_tower_3
+  title: Рассвет над Найт-Сити
+  category: rare
+  weight: 1
+  forced_only: true
+  public: true
+  text: "Ты стоишь на крыше в Уотсоне. В руке детонатор. Башня «Арасаки» светится над городом, как всегда. Через секунду так больше не будет. Город проснётся другим — и с твоим именем."
+  choices:
+    - label: Нажать и уйти в легенду
+      effects: {fame: 20, street_cred: 10, faction_rep:arasaka: -50, flag_set:psyleg_tower: true, flag_set:psyleg_tower_3: true, death:legend: true}
+      text: "Вспышка, звук приходит позже. Башня складывается внутрь себя. Город смотрит в небо. Тебя больше никто не видит — ни МаксТак, ни друзья. Остаётся только имя."
+    - label: Нажать и остаться в городе
+      effects: {fame: 20, street_cred: 10, faction_rep:arasaka: -50, humanity: -5, flag_set:psyleg_tower: true, flag_set:psyleg_tower_3: true}
+      text: "Вспышка. Башня падает. Ты смотришь на огонь до рассвета, потом спускаешься в метро. МаксТак теперь ищет не киберпсиха, а легенду. Найти будет сложнее."
+    - label: Не нажимать
+      effects: {humanity: 5, mood: 3}
+      text: "Палец не двигается. Голоса кричат, а ты смотришь на огни города и думаешь о людях внутри. Детонатор летит в залив. Может быть, это самое человечное, что было в этой жизни."

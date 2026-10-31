@@ -1,0 +1,433 @@
+# Events of the city crises (owner request 24.10; content/crises.yaml). Forced only: while a crisis lasts, one of its
+# events joins every press of every living player (services/crisis.py). `crisis_pts: N` is the character's
+# contribution to its side (war) or to the shared goal (common); `flag_set:cr_side_a` / `cr_side_b` picks a side
+# of a war (the crisis service turns it into the side and sets the flag `cr_side`). Player text avoids gendered past tense.
+
+# -- corporate war ------------------------------------------------------------------------------------------------------
+
+- id: cr_corp_draft
+  title: Вербовщики
+  category: work
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_none: [cr_side]
+  text: "У подъезда два вербовочных пункта: красный шатёр Арасаки и серый фургон Милитеха. Обе стороны платят аванс и обещают, что война кончится быстро. Обе врут."
+  choices:
+    - label: Записаться в Арасаку
+      effects: {flag_set:cr_side_a: true, eddies: 800, crisis_pts: 2}
+      text: "Вежливый офицер вручает тебе пропуск с красным кругом. «Арасака помнит верных». Аванс уже на счету."
+    - label: Записаться в Милитех
+      effects: {flag_set:cr_side_b: true, eddies: 800, crisis_pts: 2}
+      text: "Сержант с бульдожьей челюстью хлопает по плечу. «Добро пожаловать в Милитех. Стрелять умеешь? Научим»."
+    - label: Остаться в стороне
+      effects: {mood: -2}
+      text: "Ты проходишь мимо обоих. Нейтральным в этой войне тоже достанется, просто без аванса."
+
+- id: cr_corp_bombing
+  title: Удар по кварталу
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Ночью над районом проходят ави. Взрыв в соседнем квартале выбивает стёкла. Под завалами кто-то кричит."
+  choices:
+    - label: Разбирать завалы
+      check: {stat: BODY, skill: null, dv: 13}
+      success: {text: "Ты вытаскиваешь двоих живыми. Утром о тебе говорят в новостях района.", effects: {crisis_pts: 2, fame: 2, humanity: 2}}
+      fail: {text: "Бетон проседает. Ты выбираешься с разбитыми руками, людей вытаскивают другие.", effects: {hp: -10, crisis_pts: 1}}
+    - label: Спуститься в убежище
+      effects: {mood: -3}
+      text: "Ночь в подвале с соседями. Кто-то молится, кто-то пьёт. Под утро затихает."
+    - label: Мародёрить
+      effects: {eddies: 1200, humanity: -3, heat: 1}
+      text: "Пока все бегут, ты выносишь из разбитого магазина то, что уцелело. Никто не видел. Почти."
+
+- id: cr_corp_profit
+  title: Военная лихорадка
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Барыга с рынка предлагает сделку: перепродавать армейские пайки и патроны обеим сторонам. Деньги быстрые, совесть дорогая."
+  choices:
+    - label: Торговать с обеими
+      effects: {eddies: 2500, street_cred: 1, humanity: -2}
+      text: "Ты продаёшь утром одним, вечером другим. Война кормит тех, кто не воюет."
+    - label: Отдать своей стороне
+      effects: {eddies: -500, crisis_pts: 3}
+      text: "Ящики уходят на склад твоей стороны. Без наценки."
+    - label: Отказаться
+      effects: {mood: 1}
+      text: "Ты отказываешься. Барыга пожимает плечами: найдёт другого."
+
+- id: cr_corp_refugees
+  title: Беженцы с окраин
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "С окраин, где идут бои, бегут люди. Семья с двумя детьми спит в твоём подъезде на картонках."
+  choices:
+    - label: Пустить к себе
+      effects: {eddies: -300, humanity: 3, mood: 2, crisis_pts: 1}
+      text: "Неделю в квартире тесно и шумно. Зато утром пахнет чужой едой, и это неожиданно хорошо."
+    - label: Дать денег
+      effects: {eddies: -500, humanity: 1}
+      text: "Ты суёшь им эдди и уходишь, не оглядываясь."
+    - label: Вызвать охрану
+      effects: {humanity: -2}
+      text: "Охрана блока выводит их под дождь. Подъезд снова твой."
+
+# -- gang war -----------------------------------------------------------------------------------------------------------
+
+- id: cr_gang_choose
+  title: Под кем твой квартал
+  category: street
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_none: [cr_side]
+  text: "Вечером к тебе стучат. На пороге двое: один с хромированной челюстью Мэлстрома, другой в неоне Тигриных когтей. Они пришли одновременно и смотрят друг на друга. «Квартал выбирает, — говорит хромированный. — И ты тоже»."
+  choices:
+    - label: За Мэлстром
+      effects: {flag_set:cr_side_a: true, crisis_pts: 2, street_cred: 1}
+      text: "Хромированный ухмыляется, Когти уходят. Утром на твоей двери метка Мэлстрома."
+    - label: За Тигриных когтей
+      effects: {flag_set:cr_side_b: true, crisis_pts: 2, street_cred: 1}
+      text: "Тигр кланяется, хромированный сплёвывает и уходит. Утром на двери иероглиф."
+    - label: Ни за кого
+      effects: {eddies_pct: -5, mood: -2}
+      text: "Обоим это не нравится. На следующий день у тебя пропадает часть денег, и никто ничего не видел."
+
+- id: cr_gang_crossfire
+  title: Перекрёстный огонь
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Стрелок банды
+  text: "Посреди улицы начинается перестрелка. Ты оказываешься ровно посередине, за мусорным баком."
+  choices:
+    - label: Стрелять в ответ
+      violent: true
+      effects: {start_combat: 3, crisis_pts: 3}
+      text: "Бак не спасёт. Ты высовываешься и стреляешь первым."
+    - label: Переждать
+      check: {stat: REF, skill: stealth, dv: 13}
+      success: {text: "Ты лежишь, пока всё не стихнет, и уходишь дворами.", effects: {mood: -2}}
+      fail: {text: "Шальная пуля находит тебя через пластик бака.", effects: {hp: -12}}
+
+- id: cr_gang_tribute
+  title: Налог на войну
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Бойцы твоей стороны обходят квартал и собирают «на войну». Те, кто не платит, потом жалеют."
+  choices:
+    - label: Заплатить
+      effects: {eddies: -1000, crisis_pts: 2}
+      text: "Эдди уходят на стволы и патроны. Тебе кивают уважительно."
+    - label: Отказать
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Ты объясняешь, что уже сделал для войны больше, чем они. Отстают.", effects: {street_cred: 1}}
+      fail: {text: "Тебе ломают нос и всё равно забирают деньги.", effects: {hp: -8, eddies: -1000}}
+
+# -- plague -------------------------------------------------------------------------------------------------------------
+
+- id: cr_plague_neighbor
+  title: Сосед кашляет
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Сосед по площадке кашляет кровью и не открывает дверь. В клинику он не пойдёт: нет денег, нет страховки."
+  choices:
+    - label: Оплатить ему лечение
+      effects: {eddies: -1500, humanity: 3, crisis_pts: 2}
+      text: "Через неделю он снова курит на площадке. Говорит спасибо и отводит глаза."
+    - label: Лечить самому
+      check: {stat: TECH, skill: medicine, dv: 14}
+      success: {text: "Антибиотики, капельница из подручного, три ночи у его кровати. Он выживает.", effects: {crisis_pts: 3, skill_xp:medicine: 4}}
+      fail: {text: "Ты заражаешься сам. Неделя лихорадки.", effects: {hp: -12, crisis_pts: 1}}
+    - label: Заклеить дверь
+      effects: {humanity: -3, mood: -3}
+      text: "Ты заклеиваешь щели скотчем. Кашель за стеной затихает через четыре дня."
+
+- id: cr_plague_black_vaccine
+  title: Вакцина с чёрного рынка
+  category: implants
+  weight: 1
+  forced_only: true
+  text: "Риппер из подворотни продаёт «вакцину». Мутная ампула, честные глаза, цена вдвое ниже, чем у Биотехники."
+  choices:
+    - label: Уколоться
+      check: {stat: LUCK, dv: 12}
+      success: {text: "Работает. Ты не знаешь, что это было, но кашель уходит и больше не возвращается.", effects: {eddies: -800, hp: 10}}
+      fail: {text: "Это был физраствор с красителем. Через два дня ты горишь от температуры.", effects: {eddies: -800, hp: -15}}
+    - label: Сдать его NCPD
+      effects: {street_cred: -1, eddies: 500, crisis_pts: 1}
+      text: "Риппера уводят. Ампулы оказываются водой, и ты, кажется, спас пару жизней."
+    - label: Пройти мимо
+      effects: {mood: -1}
+      text: "Ты проходишь мимо. Очередь к рипперу растёт."
+
+- id: cr_plague_quarantine
+  title: Карантин
+  category: ncpd
+  weight: 1
+  forced_only: true
+  text: "Твой блок закрывают на карантин. Солдаты Биотехники у дверей, еду спускают на верёвках. Внутри растёт паника."
+  choices:
+    - label: Организовать соседей
+      check: {stat: EMP, skill: persuasion, dv: 13}
+      success: {text: "Ты расписываешь дежурства, делишь еду, усаживаешь больных отдельно. Блок держится. Заражённых меньше, чем в соседних.", effects: {crisis_pts: 3, humanity: 2}}
+      fail: {text: "Тебя не слушают. Драка за посылку с едой, пара разбитых голов.", effects: {mood: -4, hp: -4}}
+    - label: Сбежать через крышу
+      effects: {heat: 2, mood: -2}
+      text: "Ночью ты уходишь по крышам. Внизу кричат в мегафон. Теперь ты в розыске."
+    - label: Ждать
+      effects: {mood: -4}
+      text: "Неделя в четырёх стенах. Через неделю карантин снимают, но пустых квартир в блоке стало больше."
+
+# -- blackout -----------------------------------------------------------------------------------------------------------
+
+- id: cr_blackout_elevator
+  title: Застрявший лифт
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Свет гаснет, лифт встаёт между этажами. В кабине ты и ещё пятеро, у одной женщины начинается паническая атака."
+  choices:
+    - label: Вскрыть люк
+      check: {stat: TECH, skill: tech, dv: 13}
+      success: {text: "Ты вскрываешь люк и по одному вытаскиваешь всех на этаж. Женщина обнимает тебя и плачет.", effects: {crisis_pts: 2, humanity: 2}}
+      fail: {text: "Люк заклинило. Вы сидите в темноте четыре часа, пока не приходят пожарные.", effects: {mood: -4}}
+    - label: Успокоить всех
+      effects: {mood: -1, humanity: 1}
+      text: "Ты рассказываешь анекдоты в темноте. Четыре часа. Когда двери открываются, все смеются."
+
+- id: cr_blackout_looting
+  title: Тёмный квартал
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Мародёр
+  text: "Без света и камер квартал становится чужим. Витрины бьют, магазины выносят. Мимо проходит компания с ломами и смотрит на тебя."
+  choices:
+    - label: Защитить лавку соседа
+      violent: true
+      effects: {start_combat: 2, crisis_pts: 3}
+      text: "Ты встаёшь у дверей лавки. Мародёры решают проверить, насколько ты серьёзен."
+    - label: Присоединиться
+      effects: {eddies: 1500, humanity: -3, heat: 2}
+      text: "Ты выносишь ящик дорогой электроники. Камеры не работают. Совесть работает."
+    - label: Запереться дома
+      effects: {mood: -2}
+      text: "Ты баррикадируешь дверь и слушаешь звон стекла до утра."
+
+- id: cr_blackout_ghost
+  title: Голос в мёртвой сети
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Сеть мертва, но твой комм вдруг принимает сообщение. Без номера. «Я знаю, где вирус. Помоги мне, и свет вернётся»."
+  choices:
+    - label: Помочь
+      check: {stat: INT, skill: netrunning, dv: 14}
+      success: {text: "Ты подключаешься, и кто-то ведёт тебя по мёртвой сети к узлу вируса. Вы выжигаете его вместе. Голос исчезает, не попрощавшись.", effects: {crisis_pts: 4, skill_xp:netrunning: 4}}
+      fail: {text: "Это ловушка. Обратная связь бьёт по мозгу, и голос смеётся.", effects: {hp: -10, bw_rot: 3}}
+    - label: Выключить комм
+      effects: {mood: -1}
+      text: "Ты выключаешь комм. Через минуту он включается сам и показывает одно слово: «зря»."
+
+# -- psycho wave --------------------------------------------------------------------------------------------------------
+
+- id: cr_psycho_neighbor
+  title: Сосед с хромом
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Сосед-монтажник неделю не спит. Его хромированные руки дрожат, он разговаривает с кем-то в пустой комнате. Вчера он разбил дверь лифта кулаком."
+  choices:
+    - label: Поговорить с ним
+      check: {stat: EMP, skill: persuasion, dv: 14}
+      success: {text: "Ты сидишь с ним до утра. Он плачет и соглашается пойти к рипперу. Сегодня никто не умер.", effects: {crisis_pts: 3, humanity: 2}}
+      fail: {text: "Он не слышит тебя. Ты уходишь, когда он начинает кричать.", effects: {mood: -4}}
+    - label: Позвонить в МаксТак
+      effects: {crisis_pts: 1, humanity: -1}
+      text: "МаксТак приезжает через двадцать минут. Выстрел, тишина. Квартира соседа опечатана."
+    - label: Не вмешиваться
+      effects: {mood: -3}
+      text: "Ты делаешь музыку громче. Через три дня соседа увозят. Неизвестно куда."
+
+- id: cr_psycho_chrome_check
+  title: Проверь свой хром
+  category: implants
+  weight: 1
+  forced_only: true
+  text: "По новостям говорят: бракованная партия имплантов с вирусом. Номера партий бегут по экрану. Один из них очень похож на твой."
+  choices:
+    - label: Проверить у риппера
+      effects: {eddies: -600, scan_tolerance: true, mood: 2}
+      text: "Риппер сканирует хром. Чисто. Ты платишь и уходишь с лёгким сердцем."
+    - label: Надеяться на лучшее
+      check: {stat: LUCK, dv: 12}
+      success: {text: "Номер не совпал. Ты выдыхаешь.", effects: {mood: 1}}
+      fail: {text: "Ночью рука двигается сама. Утром ты не помнишь, откуда царапины на стене.", effects: {humanity: -4, mood: -3}}
+
+- id: cr_psycho_maxtac
+  title: Призыв МаксТака
+  category: ncpd
+  weight: 1
+  forced_only: true
+  foe: Киберпсих
+  text: "МаксТак не справляется и раздаёт гражданским временные жетоны. Сержант в тяжёлой броне протягивает тебе жетон: «На пару часов. Ты нужен»."
+  choices:
+    - label: Взять жетон
+      violent: true
+      effects: {start_combat: 3, crisis_pts: 4, street_cred: 2}
+      text: "Через десять минут вы в коридоре заброшенной больницы. Впереди визг металла."
+    - label: Отказаться
+      effects: {mood: -1}
+      text: "Сержант кивает и идёт к следующему. Он не осуждает. У него нет времени."
+
+# -- blackwall breach ---------------------------------------------------------------------------------------------------
+
+- id: cr_bw_side
+  title: Голоса над городом
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_none: [cr_side]
+  text: "На площади два лагеря. Агенты NetWatch раздают глушилки и записывают добровольцев. Напротив люди в серых балахонах поют вместе с экранами. Обе стороны смотрят на тебя."
+  choices:
+    - label: Встать с NetWatch
+      effects: {flag_set:cr_side_a: true, crisis_pts: 2, bw_rot: -3}
+      text: "Агент вешает тебе на ухо глушилку. Шёпот в голове стихает. «Держи разлом закрытым»."
+    - label: Встать с Заслоном
+      effects: {flag_set:cr_side_b: true, crisis_pts: 2, bw_rot: 5}
+      text: "Серые балахоны расступаются. Песня экранов становится громче, и в ней есть твоё имя."
+    - label: Уйти с площади
+      effects: {mood: -2}
+      text: "Ты уходишь. Экраны поворачиваются тебе вслед."
+
+- id: cr_bw_screens
+  title: Экраны не гаснут
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Все экраны квартиры включились сами. На каждом одно и то же лицо, и оно ждёт ответа."
+  choices:
+    - label: Ответить ему
+      effects: {bw_rot: 4, crisis_pts: 2, mood: -3}
+      text: "Ты говоришь с лицом до рассвета. Ты не помнишь, о чём. Помнишь, что согласились."
+    - label: Обесточить квартиру
+      effects: {mood: -2}
+      text: "Ты рубишь автомат. В темноте экраны ещё секунду светятся сами."
+
+- id: cr_bw_cult_march
+  title: Шествие Церкви
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Агент NetWatch
+  text: "Через квартал идёт шествие Церкви Тихого Шума: сотни людей, динамики на плечах, белый шум вместо гимна. На перекрёстке их ждёт кордон NetWatch."
+  choices:
+    - label: Прорывать кордон
+      violent: true
+      effects: {start_combat: 3, crisis_pts: 3, bw_rot: 3}
+      text: "Ты идёшь в первом ряду. Кордон стреляет."
+    - label: Держать кордон
+      violent: true
+      effects: {start_combat: 3, crisis_pts: 3}
+      text: "Ты встаёшь рядом с агентами. Толпа идёт на вас."
+    - label: Смотреть из окна
+      effects: {mood: -2}
+      text: "Ты смотришь, как два потока сходятся на перекрёстке. Потом закрываешь штору."
+
+# -- famine -------------------------------------------------------------------------------------------------------------
+
+- id: cr_famine_line
+  title: Очередь за едой
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Очередь к раздаче тянется на три квартала. Впереди кто-то упал в обморок, сзади начинается драка."
+  choices:
+    - label: Навести порядок
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Ты встаёшь на ящик и говоришь. Очередь выравнивается, пайки получают все, кто стоял.", effects: {crisis_pts: 3, fame: 1}}
+      fail: {text: "Тебя никто не слушает. Ты уходишь с синяком и без пайка.", effects: {hp: -5, mood: -2}}
+    - label: Отдать свой паёк
+      effects: {hp: -3, humanity: 2, crisis_pts: 1}
+      text: "Ты отдаёшь паёк старику, который стоял за тобой. Вечером живот сводит, зато спится спокойно."
+    - label: Купить без очереди
+      effects: {eddies: -800}
+      text: "За эдди всегда найдётся еда. Просто не у всех есть эдди."
+
+- id: cr_famine_convoy
+  title: Конвой
+  category: work
+  weight: 1
+  forced_only: true
+  foe: Налётчик
+  text: "Фиксер собирает водителей и стрелков для конвоя с едой через блокаду. Платит мало. Едет кто-то должен."
+  choices:
+    - label: Ехать стрелком
+      violent: true
+      effects: {start_combat: 3, crisis_pts: 4, eddies: 600}
+      text: "На сороковом километре из пустоши выезжают налётчики."
+    - label: Ехать водителем
+      check: {stat: REF, skill: driving, dv: 14}
+      success: {text: "Ты проводишь фуру по старой дороге через развалины. Налётчики ждали на трассе.", effects: {crisis_pts: 4, eddies: 600}}
+      fail: {text: "Фура вязнет в песке. Груз приходится бросить.", effects: {mood: -3}}
+    - label: Отказаться
+      effects: {mood: -1}
+      text: "Ты отказываешься. Конвой уходит без тебя."
+
+- id: cr_famine_hoarder
+  title: Склад барыги
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Ты узнаёшь, что местный барыга держит полный склад консервов и ждёт, пока цены вырастут ещё."
+  choices:
+    - label: Открыть склад людям
+      check: {stat: BODY, skill: melee, dv: 14}
+      success: {text: "Охрана склада решает, что умирать за консервы глупо. Квартал ест неделю.", effects: {crisis_pts: 4, heat: 1, street_cred: 2}}
+      fail: {text: "Охрана оказывается злее. Ты уходишь с пустыми руками и разбитым лицом.", effects: {hp: -10}}
+    - label: Шантажировать барыгу
+      effects: {eddies: 2000, humanity: -2}
+      text: "Барыга платит за молчание. Склад остаётся закрытым."
+    - label: Сообщить в новости
+      effects: {crisis_pts: 2, fame: 1}
+      text: "Через день у склада толпа и камеры. Барыга открывает двери «из гуманитарных соображений»."
+
+# -- the last night of a season (owner request 26.10) ----------------------------------------------------------------
+
+- id: cr_season_rooftop
+  title: Костёр на крыше
+  category: street
+  weight: 1
+  forced_only: true
+  text: "На крыше мегабашни костёр из старых вывесок. Соседи, которых ты видишь впервые, передают по кругу бутылку и спорят, кто в этом сезоне сделал для района больше всех."
+  choices:
+    - label: Рассказать свою историю
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Тебя слушают молча, а потом поднимают бутылки. Утром эту историю будет пересказывать весь квартал.", effects: {mood: 5, street_cred: 1, crisis_pts: 2}}
+      fail: {text: "История выходит путаной. Над тобой смеются, но беззлобно.", effects: {mood: 2}}
+    - label: Позвать всех на улицы
+      effects: {crisis_pts: 3, heat: 1}
+      text: "Через час внизу толпа. Этой ночью район не отдаст ни метра."
+
+- id: cr_season_call
+  title: Звонок фиксера
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Фиксер звонит после полуночи: «Последняя ночь сезона, чумба. Есть работа, о которой потом будут говорить. Есть работа, за которую просто заплатят. Выбирай»."
+  choices:
+    - label: Работа для истории
+      effects: {crisis_pts: 4, hp: -8}
+      text: "Ты возвращаешься под утро с порезом на щеке и знаешь: этот сезон запомнят."
+    - label: Работа за деньги
+      effects: {eddies: 3000}
+      text: "Чистая работа, чистые эдди. История подождёт до следующего сезона."
+

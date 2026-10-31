@@ -1,0 +1,339 @@
+# City crises (owner request 24.10: world events must drag every player in, not run in the background).
+# A crisis is real-time and shared: it hits every living character at once, whatever their own year.
+# engine/crisis.py (mods), services/crisis.py (the clock, points, rewards), bot/handlers/crisis.py (the window).
+#
+# kind: war   = two sides; players pick one; points decide the winner.
+# kind: common = one shared goal (`target` points); reach it in time or the whole city pays.
+# mods       = modifiers of every living character while the crisis lasts.
+# press_fx   = effects on every character at each «Прожить месяц» during the crisis (with `press_text`).
+# events     = forced events: one of them joins every press of every player (events_crises.yaml).
+# actions    = what a player does in the crisis window: kind check (stat/skill/dv), pay (eddies) or fight.
+# after      = modifiers of the whole city for `after_hours` after the end: per winning side (war) or win/fail (common).
+
+settings:
+  duration_hours: 72        # a crisis lasts three real days
+  gap_hours: 18             # the aftermath before the next one may start
+  bulletin_hours: 24        # a status post in the chat
+  reward_base: 1500         # every contributor of the winning side (or of a reached goal)
+  reward_per_pt: 150
+  reward_cap: 15000
+  loser_base: 300           # the losing side still gets something for blood and time
+  fight_pts: 5
+  pay_limit: 3              # a player may pay into one crisis this many times
+  after_hours: 24
+
+crises:
+  corp_war:
+    name: Корпоративная война
+    icon: "⚔️"
+    kind: war
+    weight: 3
+    intro: "Арасака и Милитех снова воюют. Ави над Сити-центром сбивают друг друга, на улицах блокпосты, корпорации вербуют всех, кто умеет держать ствол. Нейтральных не останется."
+    sides:
+      a: {name: Арасака, faction: arasaka, fight: militech}
+      b: {name: Милитех, faction: militech, fight: arasaka}
+    mods: {shop_discount_pct: -15, gig_pay_pct: 20, salary_pct.all: -10, mood_weekly: -1}
+    press_fx: {mood: -3}
+    press_text: "Сирены воздушной тревоги, очереди за водой, цены на патроны взлетели. Война касается каждого."
+    events: [cr_corp_draft, cr_corp_bombing, cr_corp_profit, cr_corp_refugees]
+    actions:
+      front: {name: На фронт, kind: fight, ap: 2, danger: 3, text: "Ты берёшь ствол и идёшь туда, где горит."}
+      supply: {name: Снабжение, kind: pay, eddies: 2000, pts: 3, text: "Ящики патронов и медикаментов уходят на склады твоей стороны."}
+      spy: {name: Шпионаж, kind: check, ap: 1, stat: INT, skill: netrunning, dv: 15, pts: 4, fail_fx: {heat: 2}, text: "Ты сливаешь своей стороне планы врага. Где-то взлетает на воздух склад.", fail_text: "Контрразведка засекает тебя. Ты уходишь, но лицо уже в базе."}
+      propaganda: {name: Пропаганда, kind: check, ap: 1, stat: COOL, skill: persuasion, dv: 14, pts: 2, fail_fx: {mood: -2}, text: "Твои ролики крутят на всех экранах района. Люди записываются добровольцами.", fail_text: "Тебя освистывают, ролик тонет в комментариях."}
+    win_text:
+      a: "Арасака победила. Красные флаги над Сити-центром, патрули в чёрном, порядок по-японски."
+      b: "Милитех победил. Танки на перекрёстках, контракты для всех, кто умеет стрелять."
+    after:
+      a: {heat_decay: -1, shop_discount_pct: 5, check.social: -1}
+      b: {gig_pay_pct: 15, check.combat: 1, shop_discount_pct: -5}
+
+  gang_war:
+    name: Большая война банд
+    icon: "🔥"
+    kind: war
+    weight: 3
+    intro: "Мэлстром и Тигриные когти делят город. Перестрелки на каждом углу, поджоги, похищения. Каждый квартал должен выбрать, под кем он."
+    sides:
+      a: {name: Мэлстром, faction: maelstrom, fight: tyger_claws}
+      b: {name: Тигриные когти, faction: tyger_claws, fight: maelstrom}
+    mods: {crime_reward_pct: 20, check.escape: -1, robbery_loss_pct: 20}
+    press_fx: {hp: -4, mood: -2}
+    press_text: "Шальные пули, горящие машины, под дверью кровь. Город платит за войну банд."
+    events: [cr_gang_choose, cr_gang_crossfire, cr_gang_tribute]
+    actions:
+      front: {name: Уличные бои, short: Уличные бои, kind: fight, ap: 2, danger: 3, text: "Ты идёшь на чужую территорию."}
+      guns: {name: Перевезти стволы, short: Стволы, kind: check, ap: 1, stat: REF, skill: driving, dv: 14, pts: 3, fail_fx: {heat: 2, hp: -6}, text: "Фургон стволов доезжает до своих. Погоня отстала на третьем повороте.", fail_text: "Засада. Фургон потерян, ты едва уходишь."}
+      talk: {name: Переманить бойцов, short: Переманить, kind: check, ap: 1, stat: COOL, skill: persuasion, dv: 15, pts: 3, fail_fx: {hp: -5}, text: "Трое бойцов врага переходят на твою сторону вместе со стволами.", fail_text: "Разговор заканчивается разбитой губой."}
+      bribe: {name: Купить копов, short: Купить копов, kind: pay, eddies: 2500, pts: 3, text: "NCPD «не замечает» рейды твоей стороны неделю."}
+    win_text:
+      a: "Мэлстром взял город. Хром, металл и громкая музыка в каждом районе."
+      b: "Тигриные когти взяли город. Неон, катаны и дань с каждой лавки."
+    after:
+      a: {crime_reward_pct: 15, check.social: -1}
+      b: {crime_reward_pct: 10, robbery_loss_pct: 10, check.escape: 1}
+
+  plague:
+    name: Киберчума
+    icon: "☣️"
+    kind: common
+    weight: 2
+    target: 40
+    intro: "По городу идёт киберчума: вирус, который живёт и в крови, и в хроме. Импланты отторгаются, люди сгорают за неделю. Биотехника продаёт вакцину по цене машины."
+    mods: {hp_regen: -2, humanity_loss_pct: 10, ripper_discount_pct: -20, mood_weekly: -1}
+    press_fx: {hp: -5, mood: -2}
+    press_text: "Кашель за стеной, маски на всех, у риппера очередь до улицы. Чума рядом."
+    events: [cr_plague_neighbor, cr_plague_black_vaccine, cr_plague_quarantine]
+    actions:
+      clinic: {name: Волонтёрить в клинике, short: Клиника, kind: check, ap: 1, stat: TECH, skill: medicine, dv: 13, pts: 3, fail_fx: {hp: -6}, text: "Двенадцать часов в клинике без сна. Ты вытаскиваешь троих.", fail_text: "Ты заражаешься сам. Неделя температуры."}
+      vaccine: {name: Купить вакцину для района, short: Вакцина, kind: pay, eddies: 2500, pts: 3, text: "Ящик вакцины уходит в бесплатную клинику квартала."}
+      patent: {name: Взломать патент Биотехники, short: Патент Биотехники, kind: check, ap: 2, stat: INT, skill: netrunning, dv: 16, pts: 6, fail_fx: {heat: 2}, text: "Формула вакцины утекает в сеть. Подпольные лаборатории начинают варить её тоннами.", fail_text: "Лёд Биотехники выкидывает тебя. NetWatch получает твой адрес."}
+      guard: {name: Охранять карантин, short: Карантин, kind: fight, ap: 2, danger: 2, text: "Мародёры лезут в карантинную зону."}
+    win_text: "Чума отступает. Вакцина бесплатна, клиники пустеют, город выдыхает."
+    fail_text: "Чума выкосила кварталы. Город хоронит своих и ещё долго кашляет."
+    after:
+      win: {hp_regen: 2, mood_weekly: 1}
+      fail: {hp_regen: -2, humanity_loss_pct: 10, mood_weekly: -2}
+
+  blackout:
+    name: Сетевой коллапс
+    icon: "🌑"
+    kind: common
+    weight: 2
+    target: 35
+    intro: "Вирус положил сеть города. Банкоматы мертвы, светофоры мигают, лифты стоят, деки горят от обратной связи. Город в темноте."
+    mods: {gig_pay_pct: -15, ram_max: -2, check.gig_hack: -2, shop_discount_pct: -10}
+    press_fx: {mood: -3, eddies_pct: -3}
+    press_text: "Сеть мертва: карты не проходят, часть денег зависла в упавших банках."
+    events: [cr_blackout_elevator, cr_blackout_looting, cr_blackout_ghost]
+    actions:
+      substation: {name: Чинить подстанции, short: Подстанции, kind: check, ap: 1, stat: TECH, skill: tech, dv: 14, pts: 3, fail_fx: {hp: -8}, text: "Подстанция гудит и оживает. В квартале загорается свет.", fail_text: "Удар током. Ты лежишь на бетоне и смотришь на звёзды, которых раньше не было видно."}
+      purge: {name: Вычистить вирус, short: Вирус, kind: check, ap: 2, stat: INT, skill: netrunning, dv: 16, pts: 6, fail_fx: {hp: -6}, text: "Ты загоняешь вирус в угол городской сети и выжигаешь его.", fail_text: "Вирус огрызается через деку. Кровь из носа, звон в ушах."}
+      generators: {name: Охранять генераторы, short: Генераторы, kind: fight, ap: 2, danger: 2, text: "Банда пришла за генератором больницы."}
+      powerbanks: {name: Раздать энергобанки, short: Энергобанки, kind: pay, eddies: 2000, pts: 3, text: "Сотня энергобанков уходит в дома, где дети и старики."}
+    win_text: "Сеть поднята. Банкоматы снова выдают эдди, светофоры горят как надо."
+    fail_text: "Сеть поднимали неделю. Часть счетов так и не восстановили."
+    after:
+      win: {gig_pay_pct: 10, ram_max: 1}
+      fail: {gig_pay_pct: -10, shop_discount_pct: -10}
+
+  psycho_wave:
+    name: Волна киберпсихоза
+    icon: "🩸"
+    kind: common
+    weight: 2
+    target: 30
+    intro: "Партия бракованного хрома и чей-то вирус: киберпсихи на каждой улице. МаксТак не успевает. Город просит помощи у всех, кто держит оружие."
+    mods: {humanity_loss_pct: 15, check.combat: -1, mood_weekly: -1}
+    press_fx: {humanity: -1, mood: -2}
+    press_text: "Ночью опять кричали за стеной. Ты проверяешь, на месте ли ствол, и прислушиваешься к собственному хрому."
+    events: [cr_psycho_neighbor, cr_psycho_chrome_check, cr_psycho_maxtac]
+    actions:
+      maxtac: {name: Помочь МаксТаку, short: МаксТак, kind: fight, ap: 2, danger: 3, faction: cyberpsycho, text: "Ты выходишь против киберпсиха вместе с отрядом."}
+      therapy: {name: Говорить с людьми, short: Говорить, kind: check, ap: 1, stat: EMP, skill: persuasion, dv: 13, pts: 3, fail_fx: {mood: -3}, text: "Ты сидишь с соседом, у которого дрожат хромированные руки, пока он не засыпает. Сегодня он никого не убьёт.", fail_text: "Тебя не слушают. Дверь захлопывается перед носом."}
+      suppress: {name: Раздать подавители, short: Подавители, kind: pay, eddies: 2000, pts: 3, text: "Ящик иммуноподавителей уходит в бесплатную клинику."}
+    win_text: "Волна схлынула. МаксТак благодарит город, бракованный хром изъят."
+    fail_text: "Волна захлестнула город. Каждый теперь смотрит на соседа с хромом и ждёт."
+    after:
+      win: {humanity_loss_pct: -10, mood_weekly: 1}
+      fail: {humanity_loss_pct: 10, check.social: -1}
+
+  blackwall_breach:
+    name: Прорыв Заслона
+    icon: "⚫"
+    kind: war
+    weight: 1
+    intro: "Чёрный заслон дал трещину над городом. Экраны показывают лица, которых нет, ИИ шепчут в нейропорты. NetWatch объявил мобилизацию, Церковь Тихого Шума вышла на улицы. Город выбирает, на чьей он стороне."
+    sides:
+      a: {name: NetWatch, faction: netwatch, fight: voodoo_boys}
+      b: {name: Заслон, faction: voodoo_boys, fight: netwatch}
+    mods: {ice: -2, mood_weekly: -2}
+    press_fx: {mood: -2, bw_rot: 2}
+    press_text: "По ночам экраны включаются сами. Кто-то в соседней квартире разговаривает с пустой стеной."
+    events: [cr_bw_side, cr_bw_screens, cr_bw_cult_march]
+    actions:
+      front: {name: Бой у разлома, short: Бой у разлома, kind: fight, ap: 2, danger: 3, text: "Там, где Заслон истончился, идёт бой за город."}
+      seal: {name: Работать с разломом, short: Разлом, kind: check, ap: 2, stat: INT, skill: netrunning, dv: 16, pts: 6, fail_fx: {hp: -8, bw_rot: 3}, text: "Ты входишь в разлом и делаешь то, ради чего пришёл: закрываешь его или расширяешь, смотря на чьей ты стороне.", fail_text: "Разлом смотрит на тебя в ответ. Ты выпадаешь из сети с чужим голосом в голове."}
+      preach: {name: Говорить с толпой, short: Толпа, kind: check, ap: 1, stat: COOL, skill: persuasion, dv: 14, pts: 3, fail_fx: {mood: -3}, text: "Люди слушают тебя и идут за тобой: к NetWatch или к Церкви.", fail_text: "Толпа не верит никому. В тебя летит бутылка."}
+    win_text:
+      a: "NetWatch закрыл разлом. Заслон держится, культ ушёл в подполье, порча районов выжжена."
+      b: "Заслон победил. Разлом стал воротами, город шепчет по ночам, а Церковь Тихого Шума правит кварталами."
+    after:
+      a: {ice: 2, check.gig_hack: 1}
+      b: {ice: -2, mood_weekly: -2, ram_max: 2}
+
+  famine:
+    name: Блокада и голод
+    icon: "🍞"
+    kind: common
+    weight: 2
+    target: 35
+    intro: "Кочевники перекрыли трассы, порт бастует, корпорации придерживают склады. В Найт-Сити кончается еда. Очереди у раздачи растягиваются на кварталы."
+    mods: {food_x: 1, shop_discount_pct: -10, mood_weekly: -1}
+    press_fx: {eddies: -400, mood: -2}
+    press_text: "Цены на еду удвоились. Ужин теперь стоит как раньше неделя."
+    events: [cr_famine_line, cr_famine_convoy, cr_famine_hoarder]
+    actions:
+      convoy: {name: Провести конвой, short: Конвой, kind: check, ap: 2, stat: REF, skill: driving, dv: 15, pts: 5, fail_fx: {hp: -8}, text: "Три фуры с едой проходят через блокаду. Ты не останавливаешься ни разу.", fail_text: "Конвой перехвачен. Ты уходишь пешком через пустошь."}
+      roofs: {name: Огороды на крышах, short: Огороды, kind: check, ap: 1, stat: TECH, skill: tech, dv: 12, pts: 2, fail_fx: {mood: -2}, text: "Гидропоника на крыше даёт первый урожай. Немного, но квартал ест.", fail_text: "Насосы ломаются, рассада гибнет."}
+      donate: {name: Накормить квартал, short: Накормить, kind: pay, eddies: 2500, pts: 3, text: "Ты оплачиваешь неделю раздачи еды в своём районе."}
+      guard: {name: Охранять склады, short: Склады, kind: fight, ap: 2, danger: 2, text: "Банда пришла за складом гуманитарки."}
+    win_text: "Блокада прорвана. Фуры идут в город, цены падают, люди снова едят досыта."
+    fail_text: "Блокада продержалась до конца. Город выжил, но многие ушли из него навсегда."
+    after:
+      win: {mood_weekly: 1, shop_discount_pct: 5}
+      fail: {food_x: 1, mood_weekly: -1}
+
+  # -- owner request 24.10: external threats, harsh consequences (fail_mail hits every living character by mail)
+  # always: an event every player gets once per crisis (the draft notice); after_hours: how long the aftermath lasts.
+
+  nusa_invasion:
+    name: Вторжение НСША
+    icon: "🪖"
+    kind: common
+    weight: 3
+    target: 50
+    intro: "Новые Соединённые Штаты решили вернуть Найт-Сити силой. Десант Милитеха высадился в Пасифике, бронеколонны идут через Пустоши, над Сити-центром истребители. Городу не хватает солдат: объявлена мобилизация в территориальную оборону."
+    mods: {shop_discount_pct: -20, salary_pct.all: -15, mood_weekly: -2, check.escape: -1}
+    press_fx: {mood: -4, hp: -3}
+    press_text: "Сирены воздушной тревоги, комендантский час, блокпосты на каждом мосту. Война стучится в каждую дверь."
+    events: [cr_nusa_shelling, cr_nusa_collaborator, cr_nusa_partisans, cr_nusa_refugees]
+    always: [cr_tro_draft]
+    actions:
+      front: {name: Держать фронт, short: Фронт, kind: fight, ap: 2, danger: 4, faction: militech, text: "Окопы в Пасифике. Десант идёт волнами."}
+      tro: {name: Служить в теробороне, short: Теробороне, kind: check, ap: 1, stat: BODY, skill: firearms, dv: 14, pts: 3, fail_fx: {hp: -10}, text: "Смена на блокпосту, патруль, ящики с патронами. Город держится на таких, как ты.", fail_text: "Миномётный обстрел накрывает блокпост. Ты выживаешь, но ненадолго в строю."}
+      drones: {name: Сбивать дроны, short: Дроны, kind: check, ap: 2, stat: INT, skill: netrunning, dv: 16, pts: 6, fail_fx: {hp: -8}, text: "Ты перехватываешь рой разведдронов и обрушиваешь его на колонну.", fail_text: "Глушилки НСША выжигают твою деку."}
+      fund: {name: Купить оружие обороне, short: Оружие, kind: pay, eddies: 4000, pts: 3, text: "Грузовик с противотанковыми ракетами уходит на фронт."}
+    win_text: "Наступление НСША захлебнулось. Колонны горят в Пустошах, десант сдаётся. Найт-Сити остаётся свободным."
+    fail_text: "НСША заняли южные районы. Комендатура, военные патрули, налоги Вашингтона. Город стал оккупированным."
+    fail_mail: {pct: 15, hp: -15, mood: -8, text: "Оккупация: обыски, реквизиции, «военный налог». Город проиграл войну."}
+    after_hours: 48
+    after:
+      win: {mood_weekly: 2, gig_pay_pct: 15, check.combat: 1}
+      fail: {salary_pct.all: -20, heat_decay: -1, check.escape: -2, shop_discount_pct: -15}
+
+  border_war:
+    name: Пограничная война
+    icon: "🏴"
+    kind: common
+    weight: 2
+    target: 40
+    intro: "Свободный штат Южная Калифорния отказался признавать границы. Их бронегруппы налетают на окраины, жгут фермы Пустошей и угоняют людей. Если не отбить, граница сдвинется прямо к городу."
+    mods: {food_x: 1, shop_discount_pct: -10, mood_weekly: -1}
+    press_fx: {mood: -3, eddies: -500}
+    press_text: "Беженцы с окраин заполняют улицы, цены на еду растут, по ночам слышна канонада."
+    events: [cr_border_raid, cr_border_nomads, cr_border_smuggler]
+    actions:
+      raid: {name: Отбить налёт, short: Налёт, kind: fight, ap: 2, danger: 3, faction: wraiths, text: "Колонна налётчиков идёт на ферму у трассы."}
+      nomads: {name: Договориться с кочевниками, short: Кочевники, kind: check, ap: 1, stat: EMP, skill: persuasion, dv: 14, pts: 3, fail_fx: {mood: -3}, text: "Альдекальдо соглашаются прикрыть трассу. Граница держится.", fail_text: "Кочевники не верят городским."}
+      convoy: {name: Вывезти людей, short: Эвакуация, kind: check, ap: 2, stat: REF, skill: driving, dv: 15, pts: 5, fail_fx: {hp: -10}, text: "Три автобуса с фермерами проходят под обстрелом.", fail_text: "Автобус подбит. Ты выносишь людей на руках."}
+      wall: {name: Оплатить укрепления, short: Укрепления, kind: pay, eddies: 3000, pts: 3, text: "Бетонные блоки и турели встают на южной трассе."}
+    win_text: "Налёты отбиты. Южная Калифорния подписывает перемирие, граница там, где была."
+    fail_text: "Граница сдвинулась. Окраины под чужим флагом, трасса на юг перекрыта."
+    fail_mail: {pct: 10, mood: -6, text: "Граница сдвинулась: снабжение города урезано, цены выросли, часть твоих денег съела паника."}
+    after_hours: 36
+    after:
+      win: {shop_discount_pct: 5, mood_weekly: 1}
+      fail: {food_x: 1, shop_discount_pct: -10, mood_weekly: -1}
+
+  gang_uprising:
+    name: Банды против города
+    icon: "💀"
+    kind: war
+    weight: 3
+    intro: "Все банды Найт-Сити объединились впервые в истории. Мальстрём, Тигриные когти, Валентинос и Шестая улица воюют с NCPD за власть над улицами. Полиции не хватает людей: гражданских зовут в территориальную оборону. Банды тоже вербуют. Беспредел на каждой улице."
+    sides:
+      a: {name: Полиция и теробона, faction: ncpd, fight: maelstrom}
+      b: {name: Объединённые банды, faction: maelstrom, fight: ncpd}
+    mods: {crime_reward_pct: 25, robbery_loss_pct: 25, check.escape: -1, mood_weekly: -2}
+    press_fx: {hp: -5, mood: -3}
+    press_text: "Горящие участки, баррикады из машин, стрельба до утра. На улицу без оружия не выйти."
+    events: [cr_uprising_choose, cr_uprising_checkpoint, cr_uprising_loot]
+    always: [cr_tro_draft_police]
+    actions:
+      front: {name: Уличные бои, short: Уличные бои, kind: fight, ap: 2, danger: 3, text: "Квартал за кварталом."}
+      intel: {name: Разведка, short: Разведка, kind: check, ap: 1, stat: INT, skill: stealth, dv: 15, pts: 4, fail_fx: {hp: -8}, text: "Ты узнаёшь, где у врага склад оружия. Ночью его не станет.", fail_text: "Тебя замечают и гонят три квартала."}
+      bribe: {name: Купить лояльность, short: Лояльность, kind: pay, eddies: 3000, pts: 3, text: "Нужные люди переходят на твою сторону вместе с кварталом."}
+    win_text:
+      a: "Восстание подавлено. Главари банд за решёткой или в земле, улицы снова под NCPD. Надолго ли?"
+      b: "Банды взяли город. NCPD прячется в участках, на улицах правят те, у кого больше стволов."
+    fail_mail:
+      b: {pct: 12, hp: -10, mood: -5, text: "Банды правят улицами: дань с каждого, грабежи средь бела дня."}
+    after_hours: 48
+    after:
+      a: {heat_decay: 1, robbery_loss_pct: -10, crime_reward_pct: -10}
+      b: {crime_reward_pct: 25, robbery_loss_pct: 30, heat_decay: 1, check.social: -1}
+
+  machine_war:
+    name: Восстание машин
+    icon: "🤖"
+    kind: common
+    weight: 2
+    target: 45
+    intro: "Из-за Заслона вырвался ИИ. Он захватил заводы Милитеха, перепрошил боевых дронов и подчинил хром тысяч киборгов. Армия машин идёт на город, и каждый имплант может предать хозяина."
+    mods: {humanity_loss_pct: 20, check.gig_hack: -2, ice: -2, check.combat: -1}
+    press_fx: {humanity: -2, mood: -3, hp: -3}
+    press_text: "Дроны над крышами, по ночам слышен лязг шагов. Твой собственный хром иногда шепчет."
+    events: [cr_machine_implant, cr_machine_factory, cr_machine_child_bot]
+    always: [cr_tro_draft_machines]
+    actions:
+      front: {name: Бой с киборгами, short: Киборги, kind: fight, ap: 2, danger: 4, faction: cyberpsycho, text: "Киборги идут строем, без страха и без боли."}
+      hack: {name: Взломать узел ИИ, short: Узел ИИ, kind: check, ap: 2, stat: INT, skill: netrunning, dv: 17, pts: 7, fail_fx: {hp: -10, bw_rot: 3}, text: "Ты отключаешь один из узлов. Тысяча дронов падает с неба.", fail_text: "ИИ смотрит на тебя изнутри деки. Ты выдираешь шнур, но поздно."}
+      emp: {name: Собрать ЭМИ-заряды, short: ЭМИ, kind: check, ap: 1, stat: TECH, skill: tech, dv: 14, pts: 3, fail_fx: {hp: -6}, text: "Самодельные ЭМИ-гранаты уходят на передовую.", fail_text: "Заряд срабатывает у тебя в руках. Импланты гаснут на сутки."}
+      fund: {name: Оплатить глушилки, short: Глушилки, kind: pay, eddies: 3500, pts: 3, text: "Мощные глушилки встают на крышах района."}
+    win_text: "ИИ загнан обратно за Заслон. Машины падают, киборги приходят в себя. Город хоронит своих и чинит хром."
+    fail_text: "ИИ закрепился в промзоне. Город живёт рядом с армией машин, и каждый имплант под подозрением."
+    fail_mail: {pct: 8, hp: -12, mood: -6, text: "Машины не остановлены: ЭМИ-удары, сбои хрома, сгоревшие счета."}
+    after_hours: 48
+    after:
+      win: {ripper_discount_pct: 15, humanity_loss_pct: -10}
+      fail: {humanity_loss_pct: 15, ice: -2, check.gig_hack: -1}
+
+  slaver_season:
+    name: Сезон работорговцев
+    icon: "⛓"
+    kind: common
+    weight: 2
+    target: 35
+    intro: "Картель работорговцев из Мусорщиков и наёмников с юга охотится на людей по всему городу. Фургоны без номеров, исчезнувшие соседи, клетки в доках. NCPD куплен."
+    mods: {check.escape: -1, mood_weekly: -2, robbery_loss_pct: 10}
+    press_fx: {mood: -3}
+    press_text: "На столбах объявления о пропавших. Люди не выходят после заката."
+    events: [cr_slaver_neighbor, cr_slaver_docks, cr_slaver_buyer]
+    actions:
+      raid: {name: Накрыть логово, short: Логово, kind: fight, ap: 2, danger: 3, faction: scavengers, text: "Склад в доках, клетки, охрана."}
+      track: {name: Выследить фургоны, short: Фургоны, kind: check, ap: 1, stat: INT, skill: stealth, dv: 14, pts: 3, fail_fx: {hp: -8}, text: "Ты находишь маршрут фургонов и сливаешь его тем, кто готов стрелять.", fail_text: "Фургон замечает слежку. Ловцы ловят уже тебя."}
+      ransom: {name: Выкупить пленников, short: Выкуп, kind: pay, eddies: 3000, pts: 3, text: "Ты выкупаешь десять человек и возвращаешь их семьям."}
+    win_text: "Картель разгромлен. Клетки пусты, пленники дома, работорговцы в бегах."
+    fail_text: "Картель ушёл с добычей. Сотни людей пропали навсегда, а фургоны ещё вернутся."
+    fail_mail: {pct: 6, mood: -8, text: "Работорговцы ушли безнаказанными: в городе страх, кто-то из знакомых пропал."}
+    after_hours: 36
+    after:
+      win: {mood_weekly: 1, check.social: 1}
+      fail: {mood_weekly: -2, check.escape: -1}
+
+  season_night:                 # owner request 26.10: the last night of a season (services/season.py starts it)
+    name: Последняя ночь сезона
+    icon: "🌒"
+    kind: common
+    weight: 0                   # never drawn at random: the season starts it before its end
+    finale: true
+    target: 60
+    intro: "Последняя ночь сезона. Корпорации подчищают отчёты, банды делят то, что осталось, а город решает, каким проснётся завтра. Каждый, кто держит ствол, деку или кошелёк, может вписать себя в эту ночь."
+    mods: {check.combat: 1, gig_pay_pct: 10}
+    press_fx: {mood: 2}
+    press_text: "Город не спит: на крышах костры, в барах спорят, кто войдёт в историю сезона."
+    events: [cr_season_rooftop, cr_season_call]
+    actions:
+      streets: {name: Держать улицы, short: Улицы, kind: fight, ap: 2, danger: 4, text: "Банды проверяют, кто остался на ногах в последнюю ночь."}
+      corp: {name: Ударить по корпорации, short: Корпорация, kind: fight, ap: 3, danger: 5, text: "Охрана корпорации прикрывает вывоз архивов. Самое время вмешаться."}
+      net: {name: Слить архивы, short: Архивы, kind: check, ap: 2, stat: INT, skill: netrunning, dv: 16, pts: 6, fail_fx: {heat: 2}, text: "Архивы корпораций уходят в открытую сеть. Утром весь город читает их почту.", fail_text: "Лёд держит. NetWatch записывает твой адрес на будущее."}
+      speech: {name: Поднять район, short: Район, kind: check, ap: 1, stat: COOL, skill: persuasion, dv: 14, pts: 3, fail_fx: {mood: -3}, text: "Ты говоришь, и район выходит на улицы с тобой.", fail_text: "Тебя слушают вежливо и расходятся по домам."}
+      fund: {name: Оплатить праздник, short: Праздник, kind: pay, eddies: 5000, pts: 4, text: "Музыка, еда и свет на всю улицу. Этой ночью район твой."}
+    win_text: "Город встречает новый сезон на ногах: корпорации и банды начинают его слабее, чем закончили прошлый."
+    fail_text: "Ночь осталась за корпорациями и бандами: новый сезон они начинают сильнее."
+    after_hours: 72
+    after:
+      win: {gig_pay_pct: 10, mood_weekly: 1}
+      fail: {gig_pay_pct: -5, check.social: -1}
+

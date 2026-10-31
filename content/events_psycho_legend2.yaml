@@ -1,0 +1,187 @@
+# More deeds of a fugitive cyberpsycho's legend (owner request 24.10: «добавь ещё»). Same rules as
+# events_psycho_legend.yaml: forced only, played from «Легенда Найт-Сити», every deed sets its flag psyleg_<deed>
+# and gets a permanent post in the group (app/services/psylegend.py). Player text avoids gendered past tense.
+
+- id: psyleg_graffiti
+  title: Надпись на Мегабашне
+  category: rare
+  weight: 1
+  forced_only: true
+  public: true
+  text: "Мегабашня H8, сто этажей бетона над Уотсоном. Строительная люлька на тридцать шестом, двести литров краски, ночь без ветра. К утру город увидит то, что ты напишешь."
+  choices:
+    - label: Писать всю ночь
+      check: {stat: TECH, skill: tech, dv: 14}
+      success: {text: "К рассвету буквы высотой в этаж сохнут на фасаде. Жильцы фотографируют их из окон напротив. Коммунальщики говорят, что отмыть это будет стоить дороже, чем сам дом.", effects: {fame: 4, street_cred: 4, mood: 6, flag_set:psyleg_graffiti: true}}
+      fail: {text: "Трос люльки рвётся на двадцатом этаже. Ты висишь на одной руке над пустотой и дописываешь. Буквы вышли кривые, зато их видно с моста.", effects: {fame: 3, street_cred: 3, hp: -8, flag_set:psyleg_graffiti: true}}
+    - label: Позвать уличных художников
+      effects: {fame: 3, street_cred: 5, humanity: 2, eddies: -3000, flag_set:psyleg_graffiti: true}
+      text: "Ты платишь десятку райтеров из Кабуки. Они пишут твои слова и добавляют вокруг огонь, хром и глаза. К утру это уже не надпись, а фреска."
+    - label: Оставить краску на крыше
+      effects: {}
+      text: "Ты смотришь вниз на огни Уотсона. Слова не идут. Краска остаётся на крыше до следующего раза."
+
+- id: psyleg_afterlife
+  title: Коктейль в «Афтерлайфе»
+  category: rare
+  weight: 1
+  forced_only: true
+  public: true
+  text: "«Афтерлайф», бар легенд наёмников. Коктейли здесь называют в честь мёртвых и тех, кто скоро будет. Бармен ставит перед тобой пустой стакан: «Говорят, у тебя есть история. Расскажи — и решим, достоин ли»."
+  choices:
+    - label: Рассказать свою историю
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Ты рассказываешь. Бар затихает, кто-то из старых наёмников медленно ставит стакан. Бармен мешает что-то крепкое, зелёное и злое. Твоё имя пишут мелом на доске.", effects: {fame: 4, street_cred: 5, mood: 8, flag_set:psyleg_afterlife: true}}
+      fail: {text: "История сбивается, голоса в голове путают даты. Бармен всё равно пишет имя на доске: «Таких, как ты, лучше помнить, чем злить».", effects: {fame: 2, street_cred: 3, flag_set:psyleg_afterlife: true}}
+    - label: Угостить весь бар
+      effects: {eddies: -8000, fame: 3, street_cred: 6, mood: 10, flag_set:psyleg_afterlife: true}
+      text: "Ты кладёшь на стойку пачку эдди: «Всем». К утру половина наёмников города знает твоё имя и твой коктейль."
+    - label: Допить и уйти
+      effects: {mood: 2}
+      text: "Ты допиваешь и уходишь. Доска с именами подождёт."
+
+- id: psyleg_pacifica
+  title: Король Боевой зоны
+  category: rare
+  weight: 1
+  forced_only: true
+  public: true
+  faction: voodoo_boys
+  text: "Пасифика. Недостроенные отели, мародёры, Вудуисты в заброшенной церкви. Здесь нет копов и нет правил, а значит, нет и хозяина. Пока."
+  choices:
+    - label: Пройти зону с оружием
+      violent: true
+      effects: {start_combat: 5, fame: 4, street_cred: 6, faction_rep:voodoo_boys: -15, flag_set:psyleg_pacifica: true}
+      text: "Ты идёшь по главной улице посреди дня. Мародёры сначала смеются, потом стреляют, потом бегут."
+    - label: Договориться с Вудуистами
+      check: {stat: INT, skill: netrunning, dv: 16}
+      success: {text: "Ты говоришь с их нетраннерами на их языке: через Сеть, без слов. Вудуисты признают тебя. Боевая зона теперь платит тебе дань едой, патронами и тишиной.", effects: {faction_rep:voodoo_boys: 15, street_cred: 5, fame: 3, eddies: 8000, flag_set:psyleg_pacifica: true}}
+      fail: {text: "Их ЛЕД бьёт по тебе прямо в голове. Ты приходишь в себя посреди улицы, а вокруг уже собираются мародёры.", effects: {hp: -12, start_combat: 4, flag_set:psyleg_pacifica: true}}
+    - label: Раздать людям еду
+      effects: {eddies: -6000, humanity: 5, street_cred: 4, fame: 2, flag_set:psyleg_pacifica: true}
+      text: "Три грузовика с едой и водой посреди Пасифики. Люди сначала прячутся, потом выходят. Киберпсих, который кормит Боевую зону, — такого здесь ещё не видели."
+
+- id: psyleg_bridge
+  title: Мост в час пик
+  category: rare
+  weight: 1
+  forced_only: true
+  public: true
+  faction: ncpd
+  text: "Мост в Уотсон, шесть полос, вечерний час пик. Ты ставишь поперёк дороги горящий грузовик. Через минуту за ним стоят десять тысяч машин, а над ним — первые дроны новостей."
+  choices:
+    - label: Говорить с толпой
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Люди выходят из машин. Ты говоришь про хром, долги и город, который жрёт своих. Кто-то кричит в ответ, кто-то снимает. Когда приезжает NCPD, толпа не даёт им пройти.", effects: {fame: 5, street_cred: 4, humanity: 2, flag_set:psyleg_bridge: true}}
+      fail: {text: "Толпа злится на тебя, а не на город. В тебя летят бутылки. Сирены всё ближе.", effects: {fame: 3, heat: 2, mood: -5, flag_set:psyleg_bridge: true}}
+    - label: Встретить NCPD
+      violent: true
+      effects: {start_combat: 4, fame: 4, street_cred: 5, heat: 3, flag_set:psyleg_bridge: true}
+      text: "Патрульные машины тормозят у грузовика. Ты стоишь в дыму и ждёшь."
+    - label: Уйти по фермам моста
+      effects: {fame: 2, flag_set:psyleg_bridge: true}
+      text: "Ты исчезаешь по фермам под мостом раньше, чем садится первый ави. Город стоит три часа и обсуждает только тебя."
+
+- id: psyleg_concert
+  title: Чужая сцена
+  category: rare
+  weight: 1
+  forced_only: true
+  public: true
+  text: "Стадион в Пасифике, сорок тысяч зрителей, звезда из корпоративного лейбла под фонограмму. Охрана у сцены смотрит на толпу, а не на служебный проход. Через три минуты в проходе стоишь ты."
+  choices:
+    - label: Забрать микрофон
+      check: {stat: EMP, skill: persuasion, dv: 14}
+      success: {text: "Фонограмма обрывается. Ты говоришь, потом кто-то из музыкантов даёт гитарный рифф, и сорок тысяч орут вместе с тобой. Лейбл потом попытается удалить записи. Не выйдет.", effects: {fame: 6, street_cred: 4, mood: 10, flag_set:psyleg_concert: true}}
+      fail: {text: "Микрофон фонит, толпа освистывает. Но кадры, где охрана бежит от тебя через сцену, город пересматривает всю ночь.", effects: {fame: 3, mood: -3, flag_set:psyleg_concert: true}}
+    - label: Сломать сцену
+      violent: true
+      effects: {fame: 4, street_cred: 4, humanity: -4, heat: 2, flag_set:psyleg_concert: true}
+      text: "Ты рушишь светофермы и колонки. Звезда лейбла плачет под столом пульта. Толпа не знает, бояться или снимать, и делает и то, и другое."
+    - label: Послушать и уйти
+      effects: {mood: 4}
+      text: "Ты слушаешь одну песню из служебного прохода и уходишь. Даже фонограмма иногда звучит неплохо."
+
+- id: psyleg_av
+  title: Ави NCPD
+  category: rare
+  weight: 1
+  forced_only: true
+  public: true
+  faction: ncpd
+  text: "Площадка на крыше участка в Хейвуде. Патрульный ави с открытой дверью, пилот курит у ограждения. Пятнадцать метров до кабины."
+  choices:
+    - label: Угнать и поднять в небо
+      check: {stat: REF, skill: driving, dv: 16}
+      success: {text: "Ты поднимаешь ави над Сити-центром и выключаешь маяки. Час круг за кругом над башнями, пока весь город смотрит вверх. Потом ави садится на крышу «Новостей 54», пустой.", effects: {fame: 5, street_cred: 5, heat: 2, flag_set:psyleg_av: true}}
+      fail: {text: "Ави срывается в штопор над Хейвудом. Ты сажаешь его на крышу супермаркета, ломая шасси и рёбра.", effects: {fame: 3, hp: -12, heat: 2, flag_set:psyleg_av: true}}
+    - label: Забрать с боем
+      violent: true
+      effects: {start_combat: 4, fame: 4, street_cred: 4, heat: 3, flag_set:psyleg_av: true}
+      text: "Пилот успевает нажать тревогу. Крышу заполняют копы. Ави подождёт, пока ты закончишь."
+    - label: Отступить
+      effects: {}
+      text: "Пилот докуривает и улетает. Ты провожаешь ави взглядом."
+
+- id: psyleg_council
+  title: Городской совет
+  category: rare
+  weight: 1
+  forced_only: true
+  public: true
+  faction: ncpd
+  text: "Мэрия, заседание городского совета, прямая трансляция. Депутаты обсуждают бюджет МаксТака. Ты входишь через дверь для прессы."
+  choices:
+    - label: Выступить перед советом
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "Ты говоришь десять минут, и никто не решается тебя перебить. Про рипперов без лицензии, про хром в долг, про людей, которых город списал. Бюджет МаксТака в тот день не утверждают.", effects: {fame: 6, street_cred: 3, humanity: 3, flag_set:psyleg_council: true}}
+      fail: {text: "Депутаты прячутся под столами, трансляцию обрывают. Город запомнит не слова, а глаза.", effects: {fame: 3, heat: 2, flag_set:psyleg_council: true}}
+    - label: Взять зал под контроль
+      violent: true
+      effects: {start_combat: 5, fame: 5, street_cred: 4, humanity: -5, heat: 3, flag_set:psyleg_council: true}
+      text: "Охрана мэрии открывает огонь первой. Депутаты ползут к выходам."
+    - label: Оставить записку на трибуне
+      effects: {fame: 2, flag_set:psyleg_council: true}
+      text: "Ты кладёшь на трибуну записку и уходишь, пока охрана смотрит в другую сторону. Её зачитывают в вечерних новостях."
+
+- id: psyleg_net
+  title: Имя в Сети
+  category: rare
+  weight: 1
+  forced_only: true
+  public: true
+  faction: netwatch
+  text: "Узел NetWatch, через который идёт весь трафик рекламных экранов Найт-Сити. Один взлом — и каждый экран города на минуту твой. Агенты NetWatch уже смотрят на твой след."
+  choices:
+    - label: Прорваться через ЛЕД
+      check: {stat: INT, skill: netrunning, dv: 18}
+      success: {text: "Минута. Ровно минута на каждом экране города — от вывесок в Кабуки до билбордов на Корпо-плазе — горит одно имя. NetWatch вычищает его ещё неделю.", effects: {fame: 6, street_cred: 4, flag_set:psyleg_net: true}}
+      fail: {text: "ЛЕД вцепляется в нервы. Экраны мигают твоим именем на секунду, а потом ты приходишь в себя с кровью из носа.", effects: {hp: -15, fame: 3, flag_set:psyleg_net: true}}
+    - label: Встретить агентов вживую
+      violent: true
+      effects: {start_combat: 4, fame: 4, street_cred: 4, flag_set:psyleg_net: true}
+      text: "Агенты NetWatch находят твоё тело в серверной раньше, чем ты выходишь из Сети. Ты выходишь им навстречу."
+    - label: Отступить
+      effects: {}
+      text: "Ты отключаешься. Экраны города продолжают продавать газировку."
+
+- id: psyleg_smasher
+  title: Вызов Смэшеру
+  category: rare
+  weight: 1
+  forced_only: true
+  public: true
+  faction: arasaka
+  text: "Слухи доходят до башни «Арасаки»: в городе завёлся киберпсих, который уже стал легендой. Главный пёс корпорации отвечает на твой вызов. Пустой паркинг в Сити-центре, полночь."
+  choices:
+    - label: Выйти на бой
+      violent: true
+      effects: {start_combat: 5, fame: 8, street_cred: 8, faction_rep:arasaka: -20, flag_set:psyleg_smasher: true}
+      text: "Металл о металл, бетон крошится под ногами. Это не драка, это обвал. Город слушает его через стены."
+    - label: Сказать всё в лицо
+      check: {stat: COOL, skill: persuasion, dv: 18}
+      success: {text: "Ты говоришь ему, кем он стал. Он долго молчит, потом уходит. Охрана «Арасаки» говорит, что он вернулся в башню и неделю ни с кем не разговаривал.", effects: {fame: 7, street_cred: 6, humanity: 3, flag_set:psyleg_smasher: true}}
+      fail: {text: "Он смеётся. Металл о металл.", effects: {start_combat: 5, fame: 5, flag_set:psyleg_smasher: true}}
+    - label: Не прийти
+      effects: {}
+      text: "Ты смотришь на паркинг издалека и уходишь. Он будет ждать. Такие всегда ждут."

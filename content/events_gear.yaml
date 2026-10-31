@@ -1,0 +1,80 @@
+# Gear events (owner request: more chrome and guns). Ordinary random events; they grant only timeless items
+# (an event may grant only what exists in every year it can fire).
+
+- id: gear_gun_fair
+  title: Оружейная ярмарка
+  category: money
+  weight: 2
+  conditions:
+    min_street_cred: 3
+  text: "На парковке заброшенного молла ярмарка оружия: столы, ящики, тир из бочек. Торговец с бородой до пояса машет тебе: «Подходи, у меня скидки, пока копы не приехали»."
+  choices:
+    - label: Взять карабин (700)
+      effects: {eddies: -700, item_grant:hunting_carbine: true}
+      text: "Ты пристреливаешь карабин в тире из бочек. Торговец заворачивает его в старое одеяло: «Носи с любовью»."
+    - label: Сторговать лук
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Ты долго ругаешь тетиву и прицел. Торговец сдаётся и отдаёт блочный лук за сотню.", effects: {eddies: -100, item_grant:compound_bow: true}}
+      fail: {text: "Торговец смеётся и называет цену вдвое выше. Ты уходишь с пустыми руками и стаканом кислого лимонада.", effects: {eddies: -10}}
+    - label: Просто поглазеть
+      effects: {skill_xp:firearms: 1, mood: 2}
+      text: "Ты час слушаешь ветеранов, которые спорят о калибрах. Голова гудит, но кое-что запоминается."
+    - label: "Проверить металл"
+      ability: magnet
+      effects: {eddies: -350, item_grant:hunting_carbine: true}
+      text: "Ладонь чувствует сталь стволов: половина — переделки. Торговец сдаётся и отдаёт карабин за полцены."
+
+- id: gear_stash_find
+  title: Схрон под полом
+  category: street
+  weight: 2
+  text: "При ремонте в подъезде рабочие вскрывают пол и разбегаются. Под досками ржавый ящик, внутри промасленная ткань. Соседи делают вид, что ничего не видели."
+  choices:
+    - label: Забрать обрез
+      effects: {item_grant:sawed_off: true, heat: 1}
+      text: "Обрез почти новый, и номер спилен. Через день по подъезду ходит участковый и всех спрашивает про ящик."
+    - label: Забрать мачете
+      effects: {item_grant:machete: true}
+      text: "Ты выбираешь мачете: с ним меньше вопросов. Остальное соседи растаскивают к вечеру."
+    - label: Позвонить копам
+      effects: {heat: -1, faction_rep:ncpd: 1}
+      text: "Копы приезжают через три часа, забирают ящик и даже говорят спасибо. Это почти чудо."
+
+- id: gear_ripper_sale
+  title: Распродажа у риппера
+  category: implants
+  weight: 2
+  conditions:
+    min_street_cred: 2
+  text: "Риппер из соседнего квартала закрывает клинику: копы наступают на пятки. Всё, что не успел продать, он отдаёт почти даром. Кресло ещё тёплое."
+  choices:
+    - label: Кибер-когти (900)
+      effects: {eddies: -900, cyberware_grant:cyber_claws: true}
+      text: "Установка за двадцать минут, без анестезии и без вопросов. Когти выходят и убираются с приятным щелчком."
+    - label: Аудиоимплант (700)
+      effects: {eddies: -700, cyberware_grant:audio_implant: true}
+      text: "Риппер ставит имплант и тут же уходит через чёрный ход. Первое, что ты слышишь новыми ушами, — сирены."
+    - label: Отказаться
+      effects: {}
+      text: "Хром из горящей клиники — плохая примета. Ты уходишь."
+
+- id: gear_dead_merc
+  title: Последний заказ наёмника
+  foe: "Убийца наёмника"
+  foe_faction: scavengers
+  category: street
+  weight: 1
+  conditions:
+    min_street_cred: 5
+  text: "В переулке лежит наёмник, тело ещё тёплое. Рядом сумка с пистолетом с глушителем и стелс-костюмом. Где-то рядом те, кто его убил."
+  choices:
+    - label: Забрать пистолет
+      check: {stat: REF, skill: stealth, dv: 13}
+      success: {text: "Ты подбираешь пистолет и растворяешься в толпе раньше, чем из-за угла выходят двое.", effects: {item_grant:silenced_pistol: true}}
+      fail: {text: "Ты едва успеваешь поднять сумку, как из-за угла выходят двое. Пистолет приходится бросить, а драки уже не избежать.", effects: {start_combat: 2}}
+    - label: Обыскать карманы
+      effects: {eddies: 300, humanity: -1}
+      text: "Триста эдди и фотография ребёнка. Фотографию ты оставляешь ему."
+    - label: Уйти
+      effects: {mood: -2}
+      text: "Ты отворачиваешься и уходишь. Таких, как он, в этом городе каждую ночь по десятку."

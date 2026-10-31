@@ -1,0 +1,53 @@
+- {key: light_vest, name: Лёгкий бронежилет, description: "Держит мелкий калибр и ножи. От чего-то серьёзнее не спасёт.", defense: 7, price: 400}
+- {key: kevlar_jacket, name: Кевларовая куртка, description: "Тонкая, можно носить под пиджаком. Пулю в корпус держит, в голову нет.", defense: 11, price: 1200}
+- {key: medium_armorjack, name: Средний арморджек, description: "Керамические пластины под одеждой. Защищает хорошо, но спрятать её не выйдет: копы и корпо замечают сразу.", defense: 13, price: 2500}
+- {key: heavy_armorjack, name: Тяжёлый арморджек, description: "Штурмовой панцирь. Двигаться в нём тяжело, зато он выносит из-под плотного огня.", defense: 15, price: 5000}
+
+# -- more armor (owner request): every piece trades something ------------------------------------------------------------
+- {key: party_jumpsuit, name: Блестящий клубный комбинезон, description: "Защищает разве что от скуки. Зато на входе в любой клуб тебя пропускают без очереди.", defense: 2, price: 600, mods: {check.social: 2, mood_weekly: 1}}
+- {key: padded_leather, name: Кожаная куртка с подкладкой, description: "Толстая кожа и пара стальных пластин в спине. Выглядит как у всех на районе, этого и хватает.", defense: 4, price: 180, mods: {check.talk_exit: 1}}
+- {key: kevlar_hoodie, name: Худи с кевларовыми вставками, description: "Мягкое, тёплое и держит нож. Капюшон тоже бронированный, на всякий случай.", defense: 6, price: 320}
+- {key: netrunner_suit, name: Костюм нетраннера, description: "Облегающий охлаждающий костюм с экранирующей сеткой. От пуль почти не спасает, от чужого взлома — да.", defense: 5, price: 2600, mods: {check.gig_hack: 2, ice: 1}}
+- {key: medic_jacket, name: Куртка медика, description: "Светоотражающие полосы, кевлар и карманы под всё, что нужно на выезде. Лечить в ней удобнее.", defense: 8, price: 1600, mods: {check.heal: 2}}
+- {key: stealth_suit, name: Стелс-костюм, description: "Матовая ткань гасит тепловой след и шорох шагов. Охрана смотрит прямо на тебя и ничего не видит.", defense: 8, price: 3600, mods: {check.gig_quiet: 2, check.crime: 1}}
+- {key: armored_suit, name: Бронированный деловой костюм, description: "Итальянский крой, кевларовая подкладка. В нём пускают на переговоры и в нём на них не убивают.", defense: 9, price: 2400, mods: {check.social: 2, check.career: 1}}
+- {key: nomad_duster, name: Плащ кочевника, description: "Длинный плащ из пыльной кожи с бронепластинами. Защищает от песка, пуль и лишних вопросов на блокпосту.", defense: 10, price: 1500, mods: {check.escape: 1}}
+- {key: ballistic_trench, name: Баллистический тренч, description: "Длинный плащ из баллистической ткани. Модно, мрачно и держит очередь из ПП.", defense: 12, price: 3200, mods: {check.social: 1}}
+- {key: riot_gear, name: Броня для разгона толпы, description: "Полицейский комплект с щитками. Держит много, но бегать в нём тяжело, а люди шарахаются.", defense: 14, price: 3900, mods: {flee: -1, check.social: -1}}
+- {key: metalgear, name: Металгир, description: "Сплошной панцирь из композита. В нём ты ходячий танк, медленный и пугающий.", defense: 18, price: 9500, available_from: 2023, mods: {flee: -3, check.social: -2}}
+- {key: powered_armor, name: Силовая броня, description: "Экзоскелет с бронёй и сервоприводами, как у штурмовых групп. Поднимает машину, держит очередь в упор.", defense: 20, price: 17000, available_from: 2069, mods: {flee: -2, strength: 2, check.social: -2}}
+
+# -- more armor, batch 2 (owner request) -------------------------------------------------------------------------------
+- {key: work_overalls, name: Рабочий комбинезон с щитками, description: "Комбинезон заводского рабочего с пластиковыми щитками. Защищает от станка, немного — от ножа.", defense: 3, price: 120, mods: {check.career: 1}}
+- {key: bomber_jacket, name: Куртка-бомбер с кевларом, description: "Классический бомбер с кевларовой подкладкой. Стильно и держит мелкий калибр.", defense: 7, price: 700, mods: {check.social: 1}}
+- {key: racer_suit, name: Гоночный комбинезон, description: "Огнеупорный комбинезон гонщика с защитой позвоночника. На трассе спасает жизнь.", defense: 6, price: 1100, mods: {skill.driving: 1}}
+- {key: monk_robe, name: Монашеская ряса со вставками, description: "Простая ряса с кевларовой сеткой внутри. Никто не ждёт брони от монаха.", defense: 6, price: 900, mods: {humanity_loss_pct: -5, check.talk_exit: 1}}
+- {key: gang_colors, name: Куртка в цветах банды, description: "Куртка с нашивками. Свои узнают издалека, чужие тоже. Внутри стальные пластины.", defense: 8, price: 1000, mods: {check.talk_exit: 1, check.social: -1}}
+- {key: corp_security_vest, name: Жилет корпоративной охраны, description: "Стандартный жилет охраны Arasaka с логотипом. С ним пропускают на некоторые этажи.", defense: 11, price: 2400, mods: {check.gig_quiet: 1}}
+- {key: hazmat_suit, name: Защитный костюм, description: "Герметичный костюм для химических заводов и зараженных зон. Пули держит плохо, а вот всё остальное — отлично.", defense: 5, price: 1500, mods: {hp_regen: 1, check.heal: 1}}
+- {key: thermo_cloak, name: Термоплащ, description: "Плащ, который гасит тепловой след. Камеры с тепловизорами видят пустое место.", defense: 7, price: 4200, available_from: 2030, mods: {check.gig_quiet: 2, check.escape: 1}}
+- {key: nanoweave_suit, name: Костюм из нанотекстиля, description: "Выглядит как обычный дорогой костюм. Держит очередь в упор.", defense: 13, price: 8000, available_from: 2050, mods: {check.social: 2}}
+- {key: exo_frame_light, name: Лёгкий экзокаркас, description: "Каркас из углеволокна вдоль ног и спины. Помогает бежать и держать удар.", defense: 12, price: 7500, available_from: 2060, mods: {flee: 1, strength: 1}}
+- {key: riot_shield_set, name: Комплект со щитом, description: "Броня с прозрачным щитом. Держит почти всё, но щит занимает руку.", defense: 16, price: 5500, mods: {check.combat: -1, flee: -2}}
+- {key: dragon_kimono, name: Шёлковое кимоно с драконом, description: "Ручная работа, кевлар под шёлком. Тигриные когти уважают такой вкус.", defense: 9, price: 3500, available_from: 2020, mods: {check.social: 2, mood_weekly: 1}}
+
+# -- legendary armor (from events_legendary2.yaml) -----------------------------------------------------------------------
+- {key: lg_samurai_jacket, name: "Куртка «Ронин»", description: "Потёртая кожаная куртка с самураем на спине. Кевлар внутри помнит больше пуль, чем ты.", defense: 12, price: 9000, not_for_sale: true, mods: {check.social: 2, check.talk_exit: 1}}
+- {key: lg_nomad_poncho, name: "Пончо вождя", description: "Пончо старого вождя кочевников с вшитыми керамическими пластинами. В Пустошах его узнают издалека.", defense: 11, price: 7000, not_for_sale: true, mods: {check.escape: 2, mood_weekly: 1}}
+
+# -- batch 4 (owner request: more items) --------------------------------------------------------------------------------
+- {key: denim_vest, name: Джинсовая жилетка с нашивками, description: "Нашивки старых групп и пара металлических пластин под подкладкой. Панк-рок и немного защиты.", defense: 2, price: 150, mods: {mood_weekly: 1}}
+- {key: biker_leathers, name: Байкерская кожа, description: "Толстая кожа с наплечниками. Асфальт и ножи её не берут сразу.", defense: 5, price: 900, mods: {skill.driving: 1}}
+- {key: police_vest_old, name: Старый жилет NCPD, description: "Списанный полицейский бронежилет с затёртой надписью. Пули держит, уважения не прибавляет.", defense: 7, price: 1300, available_until: 2045, mods: {check.talk_exit: -1}}
+- {key: ghillie_cloak, name: Маскировочная накидка, description: "Лохмотья из ткани и пластика. В руинах тебя не видно с пяти метров.", defense: 3, price: 800, mods: {check.gig_quiet: 1, check.escape: 1}}
+- {key: wedding_suit_armored, name: Свадебный костюм с бронёй, description: "Белый костюм с кевларом под лацканами. Для свадеб в Найт-Сити, где тосты бывают со стрельбой.", defense: 6, price: 2200, mods: {check.social: 2}}
+- {key: firefighter_gear, name: Пожарная экипировка, description: "Огнеупорный костюм пожарного. Против огня — лучшее, против пуль — сойдёт.", defense: 7, price: 1700, mods: {hp_max: 2}}
+- {key: kevlar_raincoat, name: Кевларовый дождевик, description: "Прозрачный дождевик с кевларовой подкладкой. Кислотный дождь и мелкий калибр стекают одинаково.", defense: 6, price: 1400, available_from: 2020}
+- {key: chrome_plate_vest, name: Жилет из хромированных пластин, description: "Пластины от разобранной брони Militech на ремнях. Блестит и звенит.", defense: 11, price: 4600, available_from: 2030, mods: {check.gig_quiet: -1}}
+- {key: smart_fabric_suit, name: Костюм из умной ткани, description: "Ткань твердеет в момент удара. Утром — деловой костюм, вечером — бронежилет.", defense: 12, price: 9000, available_from: 2060, mods: {check.social: 1, check.career: 1}}
+
+# -- legendary, batch 3 --------------------------------------------------------------------------------------------------
+- {key: lg_mother_coat, name: "Пальто «Мать»", description: "Длинное пальто основательницы приюта в Хейвуде. Под подкладкой кевлар, в карманах всегда находятся бинты и конфета.", defense: 12, price: 8000, not_for_sale: true, mods: {check.heal: 1, humanity_loss_pct: -5, check.social: 1}}
+
+# Owner request 30.10: the starter pack (balance.retention.starter_pack). A joke with a real middle defense.
+- {key: clown_suit, name: Костюм клоуна, description: "Пёстрый, как рекламный билборд, и мягкий, как матрас. Под рюшами слои кевлара: пули застревают в оборках, а люди теряют дар речи. Нос не снимается.", defense: 8, price: 0, not_for_sale: true, mods: {check.social: -1, check.escape: 1}}

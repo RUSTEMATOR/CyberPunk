@@ -1,0 +1,87 @@
+# Picture library of the city feed (docs/IMAGES.md, PLAN 11). Entries whose file is not on disk are ignored.
+# Check: python -m app.services.images
+images:
+  - file: district_watson.png
+    tags: [watson, district]
+  - file: district_westbrook.png
+    tags: [westbrook, district]
+  - file: district_city_center.png
+    tags: [city_center, district, corp]
+  - file: district_heywood.png
+    tags: [heywood, district]
+  - file: district_santo_domingo.png
+    tags: [santo_domingo, district]
+  - file: district_pacifica.png
+    tags: [pacifica, district]
+  - file: district_dogtown.png
+    tags: [dogtown, district]
+  - file: district_badlands.png
+    tags: [badlands, district]
+  - file: fixer_generic_1.png
+    tags: [fixer]
+  - file: fixer_generic_2.png
+    tags: [fixer]
+  - file: ripperdoc_clean.png
+    tags: [ripperdoc, clinic]
+  - file: ripperdoc_dirty.png
+    tags: [ripperdoc, clinic, underground]
+  - file: bar_mercs.png
+    tags: [bar]
+  - file: braindance.png
+    tags: [braindance]
+  - file: apartment_capsule.png
+    tags: [home, poor]
+  - file: apartment_megabuilding.png
+    tags: [home]
+  - file: corp_office.png
+    tags: [corp, career]
+  - file: gig_clean.png
+    tags: [gig, clean]
+  - file: gig_complication.png
+    tags: [gig, complication]
+  - file: gig_fail.png
+    tags: [gig, fail, disaster]
+  - file: gig_hack.png
+    tags: [gig, hack]
+  - file: combat_street.png
+    tags: [combat]
+  - file: combat_melee.png
+    tags: [combat, melee]
+  - file: scavengers.png
+    tags: [scavengers, event]
+  - file: cyberpsycho.png
+    tags: [cyberpsycho, humanity]
+  - file: cyberpsycho_2.png
+    tags: [cyberpsycho, humanity]
+  - file: maxtac.png
+    tags: [maxtac, police, heat]
+  - file: maxtac_2.png
+    tags: [maxtac, police, heat]
+  - file: police_stop.png
+    tags: [police, heat]
+  - file: prison.png
+    tags: [prison]
+  - file: death.png
+    tags: [death]
+  - file: death_2.png
+    tags: [death]
+  - file: graveyard.png
+    tags: [death, graveyard]
+  - file: news_studio.png
+    tags: [news]
+  - file: news_studio_2.png
+    tags: [news]
+  - file: trauma_team.png
+    tags: [trauma, rescue]
+  - file: era_change.png
+    tags: [era]
+  - file: era_free_city.png
+    tags: [era, era_free_city]
+  - file: canon_event.png
+    tags: [canon]
+  - file: canon_event_2.png
+    tags: [canon]
+  - file: psych_ward.png
+    tags: [ward]
+  - file: borg.png
+    tags: [borg]

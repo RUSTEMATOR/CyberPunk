@@ -1,0 +1,115 @@
+# Night-taxi vampires (owner request 24.10; after «Ночное такси», events_ozon*.yaml). The drivers carry the Дренажный
+# контур (cyberware vamp_drain): chrome that drains another's blood and inflates their hp. A character can become one:
+# light hurts, the sun burns, and the night taxi (careers.yaml night_taxi) does not let its drivers go.
+# Player text avoids gendered past tense.
+
+# owner report 26.10 «ивенты с ночным такси у меня не появляются»: weights raised (attack 6, offers 8, Ozon taxi 5)
+- id: vamp_attack
+  title: Жёлтое такси без номеров
+  category: street
+  weight: 6
+  conditions:
+    flags_none: [vampire, abroad]
+  text: "Три часа ночи. Такси тормозит рядом, хотя никто его не звал. Водитель выходит, и в свете фонаря видно: из запястий у него торчат прозрачные трубки, а под губой блестят полые иглы. «Не бойся. Я только попробую»."
+  choices:
+    - label: Драться
+      violent: true
+      effects: {start_combat: 3, flag_set:vamp_known: true}
+      text: "Ты бьёшь первым. Трубки на его руках наливаются тёмным."
+    - label: Бежать
+      check: {stat: REF, skill: null, dv: 14}
+      success: {text: "Ты ныряешь в подземный переход. Сзади смеются и хлопают дверью. Визитка таксопарка почему-то оказывается в кармане.", effects: {flag_set:vamp_known: true, mood: -3}}
+      fail: {text: "Иглы входят в шею. Через минуту он отпускает тебя, сытый и вежливый, и даже подвозит до дома. Голова кружится неделю.", effects: {flag_set:vamp_known: true, hp: -12, mood: -4}}
+    - label: Попросить стать своим
+      effects: {flag_set:vamp_known: true, queue_event:vamp_offer: true}
+      text: "Водитель долго смотрит на тебя. Потом улыбается шире, чем бывает у людей. «Смелый. С тобой поговорит хозяин парка»."
+
+- id: vamp_offer
+  title: Хозяин таксопарка
+  category: rare
+  weight: 8
+  conditions:
+    flags_all: [vamp_known]
+    flags_none: [vampire, vamp_refused, abroad]
+  text: "Гараж под эстакадой, двенадцать жёлтых машин. Хозяин парка показывает контур: насос вдоль вен, фильтры, иглы. «Выпьешь чужую кровь — станешь сильнее. Раны закрываются, тело держит пули. Цена простая: днём ты не живёшь, и работаешь на меня. Всегда»."
+  choices:
+    - label: Поставить контур
+      effects: {cyberware_grant:vamp_drain: true, flag_set:vampire: true, career_set:night_taxi: true, vamp_blood: 20, humanity: -10}
+      text: "Операция идёт в машине, прямо на заднем сиденье. Когда ты открываешь глаза, фары режут как ножи, а в горле сухо. Хозяин протягивает ключи: «Твоя смена с полуночи»."
+    - label: Отказаться
+      effects: {flag_set:vamp_refused: true}
+      text: "Хозяин пожимает плечами: «Вежливый отказ — тоже вежливость». Тебя отвозят домой. Бесплатно."
+
+- id: vamp_offer_ozon
+  title: Таксист помнит тебя
+  category: rare
+  weight: 8
+  conditions:
+    flags_all: [ozon_taxi]
+    flags_none: [vampire, vamp_refused, vamp_known, abroad]
+  text: "Тот самый ночной таксист с лишними зубами ждёт у подъезда. «Ты всегда был вежливым. У нас есть место в парке. Только место это навсегда»."
+  choices:
+    - label: Узнать подробнее
+      effects: {flag_set:vamp_known: true, queue_event:vamp_offer: true}
+      text: "Он открывает заднюю дверь. «Хозяин парка всё объяснит»."
+    - label: Отказаться
+      effects: {flag_set:vamp_refused: true, mood: 1}
+      text: "Таксист кивает и уезжает. Фары мигают на прощание."
+
+- id: vamp_sun
+  title: Дневная встреча
+  category: work
+  weight: 3
+  conditions:
+    flags_all: [vampire]
+  text: "Тебя зовут на встречу в полдень. Окна без штор, солнце бьёт в стекло. Контур в венах начинает гудеть, кожа чешется ещё в лифте."
+  choices:
+    - label: Пойти как есть
+      effects: {hp: -10, mood: -3, status: 1}
+      text: "Ты доживаешь до конца встречи. Кожа на руках в волдырях, глаза слезятся до вечера. Встреча, впрочем, удачная."
+    - label: Плащ и очки · 200
+      effects: {eddies: -200, hp: -3}
+      text: "Чёрный плащ, капюшон, очки-сварщики. На тебя косятся, но обжигает только шею."
+    - label: Не пойти
+      effects: {mood: -4, status: -1}
+      text: "Ты пишешь, что болеешь. Тебе не верят. Тебе всё равно: в полдень ты спишь в шкафу."
+
+- id: vamp_shift
+  title: Ночная смена
+  category: work
+  weight: 3
+  conditions:
+    flags_all: [vampire]
+  text: "Полночь, дождь, рация шипит. В машину садится пассажир и с порога начинает хамить: «Шеф, быстро. И музыку выключи»."
+  choices:
+    - label: Довезти вежливо
+      effects: {eddies: 250, mood: 1}
+      text: "Ты молчишь и довозишь. Пассажир оставляет чаевые и так и не узнаёт, как близко был."
+    - label: Покормиться
+      check: {stat: COOL, skill: persuasion, dv: 12}
+      success: {text: "На светофоре он засыпает. Просыпается у своего дома бледным, без кошелька и без памяти о поездке. Контур тёплый.", effects: {vamp_blood: 12, hp: 12, eddies: 300, humanity: -2}}
+      fail: {text: "Он замечает иглы в зеркале и выбивает дверь на ходу. Камеры на перекрёстке всё пишут.", effects: {heat: 2, mood: -2}}
+    - label: Высадить в Пустошах
+      effects: {mood: 3}
+      text: "Ты останавливаешься посреди пустыря и открываешь дверь. Пусть идёт пешком и подумает о вежливости."
+
+- id: vamp_hunter
+  title: Охотник на кровососов
+  category: street
+  weight: 1
+  conditions:
+    flags_all: [vampire]
+  text: "Возле гаража ждёт человек в длинном пальто с ЭМИ-гранатой в одной руке и колом из углепластика в другой. «Таксопарк ночью потерял троих. Ты четвёртый»."
+  choices:
+    - label: Драться
+      violent: true
+      effects: {start_combat: 4, street_cred: 1}
+      text: "Контур гудит, кровь стучит в ушах. Охотник улыбается."
+    - label: Уйти в канализацию
+      check: {stat: REF, skill: stealth, dv: 14}
+      success: {text: "Ты исчезаешь в люке. Охотник ещё час бродит по двору и светит фонарём в пустоту.", effects: {mood: -2}}
+      fail: {text: "ЭМИ-граната бьёт по контуру. Половина крови выходит носом.", effects: {vamp_blood: -15, hp: -10}}
+    - label: Предложить сделку
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "Ты сдаёшь ему водителя конкурирующего парка. Охотник уходит довольным, твой парк тоже доволен.", effects: {eddies: 1500, humanity: -3}}
+      fail: {text: "Охотник не торгуется. Кол входит в плечо, но в сердце не попадает.", effects: {hp: -18}}

@@ -1,0 +1,890 @@
+# Chapter 2 of the stories of the Americas (owner request 30.10, docs/PLAN_WORLD2.md phase 3): steps 5-8 and three local
+# events of each city. The lore: the NUSA of President Myers after the Unification War, Militech nationalised, the Free
+# States, the Republic of Texas that never signed the treaty (the airports of Wellington and El Paso bombed, 3 to 1 for a
+# border war), the volatile Mexico, the two Central American wars, the OAS of Brazil, Argentina and Chile, SovOil's oil
+# in Brazil, the Amazon Plains. Gender-neutral text.
+
+# ======================================================================== NUSA: Myers' shadow
+
+- id: us_story_5
+  title: Подпись президента
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Харлан Пирс приходит в «Ротонду» без улыбки. «Список «врагов нации» утвердили. Подпись — из канцелярии президента Майерс. После Войны за объединение ей нужны враги внутри, чтобы не искать их среди Свободных штатов»."
+  choices:
+    - label: Проверить подпись
+      check: {stat: INT, skill: netrunning, dv: 16}
+      success: {text: "Подпись настоящая, но поставлена автоматом в три ночи. Кто-то в канцелярии подписывает за президента.", effects: {flag_set:us_st2_sign: true}}
+      fail: {text: "Серверы Белого дома — это не архив министерства. Ты уходишь, оставив следы.", effects: {flag_set:us_st2_sign: true, heat: 2}}
+    - label: Поверить Харлану на слово
+      effects: {flag_set:us_st2_sign: true}
+      text: "Харлан смотрит в окно на купол Капитолия. «Тогда готовься к худшему»."
+
+- id: us_story_6
+  title: Марш ветеранов
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Сын Республики
+  foe_faction: us_patriots
+  text: "Мама Глория ведёт ветеранов Анакостии маршем к Капитолию: требуют вычеркнуть их из списка. «Сыны Республики» встречают марш у моста с битами и флагами."
+  choices:
+    - label: Идти в первом ряду
+      violent: true
+      effects: {start_combat: 4, flag_set:us_st2_march: true, humanity: 2}
+      text: "Мост, флаги, ветераны на костылях и молодые парни с битами."
+    - label: Вывести марш другим мостом
+      check: {stat: INT, skill: driving, dv: 14}
+      success: {text: "Ты ведёшь колонну через Южный мост. «Сыны» ждут не там. Марш доходит до Капитолия к полудню.", effects: {flag_set:us_st2_march: true, fame: 2}}
+      fail: {text: "«Сыны» успевают перебежать. Драка всё равно случается, но короткая.", effects: {flag_set:us_st2_march: true, hp: -8}}
+
+- id: us_story_7
+  title: Дроны «Милитеха»
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Над маршем зависают дроны «Милитеха», национализированного ещё в 2023-м. Им приказано «рассеять несанкционированное собрание». Оператор сидит в фургоне за углом, и у него дрожат руки."
+  choices:
+    - label: Уговорить оператора
+      check: {stat: EMP, skill: persuasion, dv: 15}
+      success: {text: "Оператор сам из Анакостии. Он сажает дроны на газон перед Капитолием и выходит из фургона к ветеранам.", effects: {flag_set:us_st2_drones: true, humanity: 3}}
+      fail: {text: "Оператор боится больше, чем сочувствует. Дроны распыляют газ, марш отходит.", effects: {flag_set:us_st2_drones: true, hp: -6}}
+    - label: Взломать дроны
+      check: {stat: INT, skill: netrunning, dv: 17}
+      success: {text: "Дроны разворачиваются и показывают на экранах марш в прямом эфире. Вся страна смотрит.", effects: {flag_set:us_st2_drones: true, fame: 3}}
+      fail: {text: "Защита «Милитеха» жжёт тебе мозг. Дроны падают сами, но и ты тоже.", effects: {flag_set:us_st2_drones: true, hp: -14}}
+
+- id: us_story_8
+  title: Кто подписывает за президента
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Марш у Капитолия. Камеры, сенаторы, Мама Глория с мегафоном. Харлан нашёл того, кто ставил подпись за президента: советник по безопасности. Майерс предлагает тебе встречу один на один."
+  choices:
+    - label: Сдать советника публично
+      effects: {humanity: 4, fame: 6, enmity: 2}
+      text: "Советника уводят из Белого дома в наручниках. Список отменяют. Майерс называет это «досадной ошибкой аппарата»."
+    - label: Встретиться с Майерс
+      effects: {eddies: 60000, status: 3, humanity: -3}
+      text: "Президент благодарит за лояльность и предлагает работу в FIA. Список тихо переписывают. Ветеранов в нём больше нет. Других — есть."
+    - label: Выложить всё и уехать из страны
+      effects: {humanity: 3, fame: 4, heat: 3}
+      text: "Документы читают все. Ты читаешь новости уже из аэропорта. Мама Глория присылает фото: ветераны получили пенсии."
+
+# ======================================================================== Texas: the border
+
+- id: tx_story_5
+  title: Удар по аэропорту
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Техас так и не подписал договор после Войны за объединение. Ночью NUSA бомбит аэропорт Эль-Пасо в ответ на взрывы на базах в Нью-Мексико. Букмекеры дают три к одному на пограничную войну. Долорес Вега звонит: «Флешка Карлоса. Там не только про утечку. Там про бомбы»."
+  choices:
+    - label: Открыть флешку
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "«Петрохем» поставлял взрывчатку тем, кто взорвал базы. Кому-то нужна война, чтобы поднять цену на нефть.", effects: {flag_set:tx_st2_bomb: true}}
+      fail: {text: "Половина файлов зашифрована. Нужен Карлос.", effects: {flag_set:tx_st2_bomb: true, flag_set:tx_st2_carlos: true}}
+    - label: Ехать к Карлосу
+      effects: {flag_set:tx_st2_bomb: true, flag_set:tx_st2_carlos: true}
+      text: "Карлос прячется на ранчо у мексиканской границы. Он знает, что на флешке, и боится этого."
+
+- id: tx_story_6
+  title: Техасские рейнджеры
+  category: ncpd
+  weight: 1
+  forced_only: true
+  text: "Рейнджеры и Национальная гвардия Техаса теперь одно командование. Капитан рейнджеров находит тебя на ранчо Карлоса: «Слышал, у тебя есть то, что остановит войну. Или начнёт её»."
+  choices:
+    - label: Довериться рейнджеру
+      check: {stat: EMP, skill: persuasion, dv: 15}
+      success: {text: "Капитан — ветеран Войны за объединение. Он видел, как она выглядит. Он не хочет второй.", effects: {flag_set:tx_st2_ranger: true}}
+      fail: {text: "Капитан забирает копию флешки и уезжает. Непонятно, на чьей он стороне.", effects: {flag_set:tx_st2_ranger: true, heat: 1}}
+    - label: Уйти через границу
+      effects: {flag_set:tx_st2_ranger: true, flag_set:tx_st2_border: true, eddies: -3000}
+      text: "Койоты переводят тебя через Рио-Гранде за три тысячи. Флешка в ботинке."
+
+- id: tx_story_7
+  title: Ложный флаг
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Картельный подрывник
+  foe_faction: tx_cartel
+  text: "Следующий взрыв назначен на завтра: база NUSA в Оклахоме. Картель Лос-Сетас-Нуэвос везёт заряд из Хьюстона, за рулём человек «Петрохема»."
+  choices:
+    - label: Перехватить грузовик
+      violent: true
+      effects: {start_combat: 4, flag_set:tx_st2_truck: true, fame: 2}
+      text: "Шоссе, прерия, пикапы картеля и грузовик с бомбой в кузове."
+    - label: Разрядить заряд в кузове
+      check: {stat: TECH, skill: tech, dv: 17}
+      success: {text: "Ты прыгаешь в кузов на ходу и режешь провода. Грузовик доезжает до базы пустым.", effects: {flag_set:tx_st2_truck: true, skill_xp:tech: 4}}
+      fail: {text: "Заряд срабатывает в поле. Никто не погиб, но взрыв видно из Далласа.", effects: {flag_set:tx_st2_truck: true, hp: -16, heat: 2}}
+
+- id: tx_story_8
+  title: Война или нет
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Флешка, грузовик, показания Карлоса. Бак Монтгомери предлагает продать всё «Петрохему» за долю в нефти. Рейнджер предлагает отдать губернатору. Долорес хочет, чтобы правду узнали по обе стороны границы."
+  choices:
+    - label: Правду обеим сторонам
+      effects: {humanity: 5, fame: 6, enmity: 2}
+      text: "Сенаторы NUSA и техасский губернатор читают одно и то же. Удары прекращаются. Букмекеры теряют деньги на войне, которой не было."
+    - label: Губернатору Техаса
+      effects: {fame: 3, status: 2, eddies: 20000}
+      text: "Техас получает козырь в переговорах с Вашингтоном. Граница затихает. Ты получаешь звезду почётного рейнджера."
+    - label: Долю в нефти Бака
+      effects: {eddies: 100000, humanity: -8}
+      text: "Нефть дорожает, война тлеет. Ты богат, а в новостях снова горит аэропорт."
+
+# ======================================================================== Mexico: the general's coup
+
+- id: mx_story_5
+  title: Слухи о перевороте
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Мексика остаётся самой нестабильной страной Америки. Генерал, которого разоблачила Палома, не ушёл: он собирает армию для переворота. Эль Чато шепчет: «Оружие идёт из Найт-Сити. «Милитех» продаёт всем»."
+  choices:
+    - label: Проследить поставки
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "Склады «Милитеха» в Гвадалахаре. Оружие под видом гуманитарной помощи.", effects: {flag_set:mx_st2_guns: true}}
+      fail: {text: "Следы ведут в никуда. Нужно ехать самому.", effects: {flag_set:mx_st2_guns: true}}
+    - label: Поговорить с Паломой
+      effects: {flag_set:mx_st2_guns: true, flag_set:mx_st2_paloma: true}
+      text: "Палома снова в эфире каждую ночь. «Пусть стреляют. Я буду говорить громче»."
+
+- id: mx_story_6
+  title: Лучадоры на митинге
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Боец генерала
+  foe_faction: mx_santa
+  text: "Масканы созывают митинг на Сокало против генерала. Лучадоры в масках охраняют трибуну, а Дети Святой Смерти, нанятые генералом, приходят разогнать толпу."
+  choices:
+    - label: Встать с лучадорами
+      violent: true
+      effects: {start_combat: 4, flag_set:mx_st2_rally: true, street_cred: 2}
+      text: "Маски против черепов. Площадь, барабаны, дым петард."
+    - label: Провести Палому к микрофону
+      check: {stat: REF, skill: stealth, dv: 15}
+      success: {text: "Палома говорит с трибуны. Миллион человек на площади слушает.", effects: {flag_set:mx_st2_rally: true, fame: 3}}
+      fail: {text: "До микрофона не дойти. Палома говорит с крыши в мегафон.", effects: {flag_set:mx_st2_rally: true, hp: -6}}
+
+- id: mx_story_7
+  title: Конвой «Милитеха»
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Колонна грузовиков «Милитеха» идёт из Гвадалахары в столицу. В ней оружие для переворота. Колонну охраняют корпоративные наёмники."
+  choices:
+    - label: Сорвать конвой
+      check: {stat: TECH, skill: tech, dv: 16}
+      success: {text: "Ты ломаешь навигацию колонны. Грузовики уходят в пустыню Сонора и застревают в песке.", effects: {flag_set:mx_st2_convoy: true}}
+      fail: {text: "Наёмники засекают тебя. Колонна сворачивает, но доходит до столицы с опозданием.", effects: {flag_set:mx_st2_convoy: true, hp: -10}}
+    - label: Продать маршрут лучадорам
+      effects: {flag_set:mx_st2_convoy: true, eddies: 10000}
+      text: "Лучадоры берут конвой на перевале. Оружие теперь у народа. Это не обязательно лучше."
+
+- id: mx_story_8
+  title: Ночь переворота
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Ночь. Танки генерала у дворца. Палома в эфире. Лучадоры на баррикадах. Генерал предлагает тебе сделку: уйти в сторону — и получить ранчо в Халиско."
+  choices:
+    - label: Защищать эфир Паломы
+      effects: {humanity: 5, fame: 6, enmity: 2}
+      text: "Эфир не прерывается до рассвета. Солдаты слушают Палому по радио и опускают оружие. Переворот гаснет без единого выстрела у дворца."
+    - label: Взять ранчо
+      effects: {eddies: 70000, status: 2, humanity: -8}
+      text: "Генерал берёт власть. Ранчо красивое. Палома замолкает навсегда."
+    - label: Арестовать генерала
+      check: {stat: COOL, skill: persuasion, dv: 17}
+      success: {text: "Ты заходишь в штаб с лучадорами и записью сделки. Генерала уводят его же солдаты.", effects: {humanity: 3, fame: 5, street_cred: 4}}
+      fail: {text: "Охрана генерала стреляет. Ты уходишь, переворот захлёбывается без тебя.", effects: {hp: -18, fame: 2}}
+
+# ======================================================================== Canada: the northern route
+
+- id: ca_story_5
+  title: Беженцы с юга
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Канада — единственный надёжный партнёр Европы в Америке и до сих пор живёт на евродолларах. С юга, из NUSA, идут беженцы от жары и войны. Старый Том видел у перевала колонну: Триада снова возит людей, теперь по программе «трудовых виз»."
+  choices:
+    - label: Пойти к перевалу
+      effects: {flag_set:ca_st2_pass: true}
+      text: "Снег, сосны, колонна автобусов с затемнёнными окнами."
+    - label: Выяснить, кто выдаёт визы
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "Визы выдаёт фирма Изабель Леклер. По бумагам — легально.", effects: {flag_set:ca_st2_pass: true, flag_set:ca_st2_isabelle: true}}
+      fail: {text: "Бумаги в порядке. Слишком в порядке.", effects: {flag_set:ca_st2_pass: true}}
+
+- id: ca_story_6
+  title: Лагерь лесорубов
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Автобусы привозят людей в лагерь лесорубов в горах. Работа законная, условия — нет: паспорта у бригадира, зарплата уходит на «долг за дорогу»."
+  choices:
+    - label: Устроиться в лагерь изнутри
+      check: {stat: BODY, dv: 13}
+      success: {text: "Неделя с пилой. Ты знаешь всё: кто бригадир, где паспорта, кто кому платит.", effects: {flag_set:ca_st2_camp: true, hp: -4}}
+      fail: {text: "Работа ломает спину на третий день. Но кое-что ты узнал.", effects: {flag_set:ca_st2_camp: true, hp: -10}}
+    - label: Снять всё с дрона
+      effects: {flag_set:ca_st2_camp: true, eddies: -1500}
+      text: "Дрон кружит над лагерем. Достаточно для журналистов, мало для суда."
+
+- id: ca_story_7
+  title: Лесные братья
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Лесной брат
+  foe_faction: ca_loggers
+  text: "Лесные братья, которые охраняют лагерь, узнают про тебя. Они приходят ночью к хижине Старого Тома."
+  choices:
+    - label: Защищать хижину
+      violent: true
+      effects: {start_combat: 4, flag_set:ca_st2_cabin: true}
+      text: "Снег, ружьё Старого Тома, фары снегоходов."
+    - label: Увести Тома в горы
+      check: {stat: BODY, dv: 14}
+      success: {text: "Тропы, которые знает только Том. К утру вы на заимке у старого друга.", effects: {flag_set:ca_st2_cabin: true}}
+      fail: {text: "Метель. Вы чуть не замерзаете, но братья теряют след.", effects: {flag_set:ca_st2_cabin: true, hp: -12}}
+
+- id: ca_story_8
+  title: Северный перевал
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "У тебя доказательства: паспорта, долги, подписи Изабель. Канадская конная полиция готова приехать. Изабель предлагает переписать контракты, если ты промолчишь."
+  choices:
+    - label: Вызвать конную полицию
+      effects: {humanity: 5, fame: 4, enmity: 2}
+      text: "Красные мундиры в лагере. Паспорта возвращены, бригадир арестован, Изабель уезжает в Монреаль."
+    - label: Сделка с Изабель
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Контракты переписаны честно. Люди получают зарплату. Изабель держит слово, потому что ты держишь копии.", effects: {humanity: 3, eddies: 15000}}
+      fail: {text: "Изабель обещает и не делает. Копии всё ещё у тебя.", effects: {mood: -3}}
+    - label: Взять долю
+      effects: {eddies: 50000, humanity: -7}
+      text: "Лагерь работает дальше. Старый Том больше не наливает тебе чай."
+
+# ======================================================================== Brazil: SovOil's oil
+
+- id: br_story_5
+  title: Нефть «СовОйла»
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Бразилия подписала с «СовОйлом» соглашение на добычу, и часть разведки страны против. Дона Лу находит у мототаксистов странного пассажира: агента бразильской разведки с пулей в боку. «Под Росиньей хотят бурить. Холм снесут»."
+  choices:
+    - label: Спрятать агента
+      effects: {flag_set:br_st2_agent: true, humanity: 2}
+      text: "Агент Марк Бана приходит в себя на диване у Доны Лу и называет имена тех, кто продал холм."
+    - label: Сдать агента «СовОйлу»
+      effects: {flag_set:br_st2_agent: true, flag_set:br_st2_sold: true, eddies: 15000, humanity: -6}
+      text: "Агента увозят. «СовОйл» платит хорошо и запоминает тебя как надёжного."
+
+- id: br_story_6
+  title: Школа джунглей
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Ополченец Милиции
+  foe_faction: br_milicia
+  text: "Милиция теперь работает на «СовОйл»: выселяет жителей холма под будущую вышку. Их инструкторы прошли школу джунглей «Арасаки» где-то в Амазонских равнинах."
+  choices:
+    - label: Встретить Милицию на склоне
+      violent: true
+      effects: {start_combat: 4, flag_set:br_st2_slope: true, street_cred: 2}
+      text: "Узкие лестницы, бельё на верёвках, бронированные машины внизу."
+    - label: Поднять холм на протест
+      check: {stat: EMP, skill: persuasion, dv: 15}
+      success: {text: "Пятьдесят тысяч человек на склоне. Милиция не стреляет в толпу при камерах.", effects: {flag_set:br_st2_slope: true, fame: 2}}
+      fail: {text: "Половина холма боится выйти. Милиция выселяет два дома.", effects: {flag_set:br_st2_slope: true, mood: -4}}
+
+- id: br_story_7
+  title: Амазонские равнины
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Агент Бана знает, где лежит оригинал соглашения: в лагере «СовОйла» на Амазонских равнинах, бывших джунглях, где теперь пыль до горизонта и одинокие экологи сажают деревья."
+  choices:
+    - label: Лететь на равнины
+      check: {stat: REF, skill: stealth, dv: 16}
+      success: {text: "Лагерь, вышки, пыль. Соглашение у тебя. Экологи провожают тебя до реки.", effects: {flag_set:br_st2_deal: true}}
+      fail: {text: "Охрана лагеря замечает тебя. Ты уходишь с документами, но через пыльную бурю.", effects: {flag_set:br_st2_deal: true, hp: -12}}
+    - label: Купить копию у бухгалтера
+      effects: {flag_set:br_st2_deal: true, eddies: -8000}
+      text: "Бухгалтер «СовОйла» любит футбол и деньги. Копия приходит в коробке из-под бутс."
+
+- id: br_story_8
+  title: Холм не продаётся
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Соглашение доказывает: министр получил долю за землю под Росиньей. Дона Лу, агент Бана и холм ждут твоего решения."
+  choices:
+    - label: Вынести на карнавал
+      effects: {humanity: 5, fame: 6, enmity: 2}
+      text: "Самба-школа Росиньи выходит на Самбодром с платформой, где министр продаёт холм. Вся страна смеётся и злится. Соглашение отменяют."
+    - label: Отдать агенту для суда
+      effects: {humanity: 3, fame: 3, status: 1}
+      text: "Суд идёт два года. Бурить не начинают. Холм ждёт и живёт."
+    - label: Продать «СовОйлу»
+      effects: {eddies: 90000, humanity: -8}
+      text: "Через год на месте Росиньи стройка. Дона Лу переезжает к сестре в Сан-Паулу."
+
+# ======================================================================== Argentina: the OAS summit
+
+- id: ar_story_5
+  title: Саммит ОАГ
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Организация американских государств — держава уровня ЕЭС, и правят ей Бразилия, Аргентина и Чили. В Буэнос-Айресе саммит. Бето Гальярдо, разбогатевший на ничьей, предлагает новое дело: продать барра-бравас охрану саммита."
+  choices:
+    - label: Войти в дело
+      effects: {flag_set:ar_st2_summit: true, eddies: 3000}
+      text: "Барра-бравас в форме частной охраны. Бето смеётся до слёз."
+    - label: Предупредить организаторов
+      effects: {flag_set:ar_st2_summit: true, flag_set:ar_st2_warned: true, humanity: 1}
+      text: "Организаторы благодарят и нанимают барра-бравас всё равно: дешевле."
+
+- id: ar_story_6
+  title: Танго министров
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "На милонге «Последнее танго» танцуют министры трёх стран. Инес де Альвеар знает: бразильский министр продаёт голос по торговому соглашению. Нужен человек, который пригласит его жену на танец, пока Инес фотографирует документы."
+  choices:
+    - label: Танцевать
+      check: {stat: REF, dv: 14}
+      success: {text: "Ты ведёшь танго так, что жена министра забывает о муже на три песни. Инес успевает всё.", effects: {flag_set:ar_st2_docs: true, mood: 4}}
+      fail: {text: "Ты наступаешь ей на ногу на первом шаге. Инес успевает половину.", effects: {flag_set:ar_st2_docs: true, mood: -1}}
+    - label: Взломать телефон министра
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "Телефон министра открыт, как книга. Документы у Инес.", effects: {flag_set:ar_st2_docs: true}}
+      fail: {text: "Телефон защищён. Охрана министра смотрит на тебя внимательно.", effects: {flag_set:ar_st2_docs: true, heat: 1}}
+
+- id: ar_story_7
+  title: Перонисты на площади
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Ночной перонист
+  foe_faction: ar_peronistas
+  text: "Ночные перонисты выходят к Каса Росада против соглашения, которое разорит аргентинских фермеров. Барра-бравас «охраняют» саммит. Две армии кричат друг на друга через площадь Мая."
+  choices:
+    - label: Удержать барра-бравас
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "Бето слушает тебя. Барра-бравас стоят и поют, а не бьют.", effects: {flag_set:ar_st2_plaza: true, street_cred: 2}}
+      fail: {text: "Драка начинается. Ты в центре.", effects: {flag_set:ar_st2_plaza: true, hp: -12}}
+    - label: Драться
+      violent: true
+      effects: {start_combat: 3, flag_set:ar_st2_plaza: true}
+      text: "Барабаны, факелы, слезоточивый газ."
+
+- id: ar_story_8
+  title: Голос министра
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Последний день саммита. Документы о купленном голосе у вас с Инес. Соглашение решает судьбу фермеров трёх стран."
+  choices:
+    - label: Опубликовать перед голосованием
+      effects: {humanity: 4, fame: 5, enmity: 1}
+      text: "Голосование срывается. Фермеры Пампы празднуют асадо на площади. Бето тоже: он поставил на срыв."
+    - label: Продать документы министру
+      effects: {eddies: 60000, humanity: -6}
+      text: "Министр платит. Соглашение подписано. Цены на мясо в Буэнос-Айресе растут вдвое."
+    - label: Отдать Инес и уйти
+      effects: {humanity: 2, eddies: 15000, mood: 3}
+      text: "Инес решает сама. Она шантажирует министра, и соглашение переписывают в пользу фермеров. Тебе достаётся процент."
+
+# ======================================================================== Colombia: the old war
+
+- id: co_story_5
+  title: Старая война
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "С 2003 по 2010 США воевали в Колумбии во Второй центральноамериканской и проиграли. Габи Монтойя находит в шахте отвоёванного изумруда старый американский бункер. Внутри — архив: кто из колумбийцев работал на американцев. Эстебан Рестрепо в списке первым."
+  choices:
+    - label: Изучить архив
+      check: {stat: INT, dv: 13}
+      success: {text: "Рестрепо не просто работал на американцев. Он сдавал деревни, а Чёрные орлы — наследники его отрядов.", effects: {flag_set:co_st2_archive: true}}
+      fail: {text: "Архив на английском и в военных кодах. Нужен переводчик.", effects: {flag_set:co_st2_archive: true}}
+    - label: Отдать Габи и не читать
+      effects: {flag_set:co_st2_archive: true, humanity: 1}
+      text: "Габи читает всю ночь и плачет. Её деревню сдал Рестрепо."
+
+- id: co_story_6
+  title: Невзорвавшиеся дроны
+  category: street
+  weight: 1
+  forced_only: true
+  text: "В горах вокруг шахты лежат невзорвавшиеся американские дроны той войны. Дети находят их каждый год. Чёрные орлы минируют ими тропы к шахте."
+  choices:
+    - label: Разминировать тропу
+      check: {stat: TECH, skill: tech, dv: 16}
+      success: {text: "Двенадцать дронов, двенадцать обрезанных проводов. Тропа чиста.", effects: {flag_set:co_st2_mines: true, humanity: 3}}
+      fail: {text: "Один дрон срабатывает. Тебя отбрасывает в кусты, но дети за тобой целы.", effects: {flag_set:co_st2_mines: true, hp: -15}}
+    - label: Обойти по реке
+      effects: {flag_set:co_st2_mines: true, mood: -1}
+      text: "Долго, мокро, но живым. Тропа остаётся заминированной для других."
+
+- id: co_story_7
+  title: Чёрные орлы в долине
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Чёрный орёл
+  foe_faction: co_paras
+  text: "Чёрные орлы узнают про архив и приходят в долину сжечь деревню, где Габи его прячет. Изумрудники встречают их у моста."
+  choices:
+    - label: Держать мост
+      violent: true
+      effects: {start_combat: 4, flag_set:co_st2_bridge: true, street_cred: 2}
+      text: "Река, туман, мачете и автоматы."
+    - label: Вывести деревню
+      check: {stat: EMP, skill: persuasion, dv: 14}
+      success: {text: "Деревня уходит в горы до рассвета. Орлы жгут пустые дома.", effects: {flag_set:co_st2_bridge: true, humanity: 3}}
+      fail: {text: "Старики отказываются уходить. Ты остаёшься с ними.", effects: {flag_set:co_st2_bridge: true, hp: -10}}
+
+- id: co_story_8
+  title: Правда и изумруды
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Архив в Боготе. Комиссия по правде, созданная после войны, готова принять его. Рестрепо предлагает отдать тебе шахту, если архив исчезнет."
+  choices:
+    - label: Комиссии по правде
+      effects: {humanity: 6, fame: 5, enmity: 2}
+      text: "Рестрепо арестован. Чёрных орлов распускают. Шахта переходит кооперативу рабочих, Габи — председатель."
+    - label: Взять шахту
+      effects: {eddies: 120000, status: 2, humanity: -9}
+      text: "Изумруды твои. Архив горит. Габи уезжает из страны."
+    - label: Отдать изумрудникам
+      effects: {humanity: 2, street_cred: 5, eddies: 20000}
+      text: "Изумрудники решают по-своему. Рестрепо исчезает. Правда остаётся в горах."
+
+# ======================================================================== Cuba: the hurricane
+
+- id: cu_story_5
+  title: Ураган
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Над Карибами идёт ураган пятой категории. Гавана заколачивает окна. Рауль, которого ты довёз до Майами, звонит из Флориды: «Бальсерос держат в порту лодки с людьми, которые хотели уплыть до урагана. Их бросят»."
+  choices:
+    - label: Бежать в порт
+      effects: {flag_set:cu_st2_storm: true}
+      text: "Ветер срывает вывески. В порту десять лодок, привязанных к причалу, и пятьдесят человек внутри."
+    - label: Позвать Йоли с соседями
+      effects: {flag_set:cu_st2_storm: true, flag_set:cu_st2_yoli: true}
+      text: "Йоли собирает пол-Хабаны-Вьехи. Кубинцы умеют переживать ураганы вместе."
+
+- id: cu_story_6
+  title: Порт в шторм
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Бальсеро
+  foe_faction: cu_balseros
+  text: "Бальсерос не хотят отдавать людей: те заплатили, значит, это груз. Волны перехлёстывают через мол."
+  choices:
+    - label: Отбить людей
+      violent: true
+      effects: {start_combat: 3, flag_set:cu_st2_port: true, humanity: 3}
+      text: "Ветер, дождь стеной, ножи на мокром причале."
+    - label: Вывести через склад Панчо
+      check: {stat: REF, skill: stealth, dv: 14}
+      success: {text: "Панчо открывает заднюю дверь мастерской. Пятьдесят человек пережидают ураган в ангаре со старыми «Кадиллаками».", effects: {flag_set:cu_st2_port: true, humanity: 3}}
+      fail: {text: "Половина успевает. Остальных ты вытаскиваешь из воды по одному.", effects: {flag_set:cu_st2_port: true, hp: -12}}
+
+- id: cu_story_7
+  title: Сантеро и ураган
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Ураган кружит над Гаваной вторые сутки. Сантеро говорит, что Ойя, хозяйка ветров, требует ответа: кто будет помогать, когда ветер уйдёт? Бальсерос, правительство или соседи."
+  choices:
+    - label: Пообещать помогать
+      effects: {humanity: 2, flag_set:cu_st2_oya: true}
+      text: "Сантеро кивает. К утру ветер стихает. Совпадение, конечно."
+    - label: Посмеяться
+      effects: {mood: -2, flag_set:cu_st2_oya: true}
+      text: "Сантеро не смеётся. В твоём окне вылетает стекло."
+
+- id: cu_story_8
+  title: После урагана
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Гавана в обломках. Помощь из Майами застряла на таможне, правительство делит гуманитарку, бальсерос предлагают «вывезти всех желающих» за двойную цену."
+  choices:
+    - label: Наладить мост помощи с Раулем
+      effects: {humanity: 5, fame: 4, street_cred: 3}
+      text: "Рауль и диаспора Майами отправляют лодки с едой и лекарствами. Ты встречаешь их у мола. Хабана-Вьеха отстраивается быстрее всех."
+    - label: Работать с бальсерос
+      effects: {eddies: 40000, humanity: -6}
+      text: "Лодки уходят полные. Деньги приходят в долларах. Город пустеет."
+    - label: Отдать всё Йоли
+      effects: {humanity: 4, eddies: -10000, mood: 5}
+      text: "Йоли раздаёт твои деньги соседям по списку. Ни одного лишнего песо, ни одного забытого дома."
+
+# ======================================================================== local life of the Americas
+
+- id: us_ev_checkpoint
+  title: Блокпост FIA
+  category: ncpd
+  weight: 3
+  conditions: {districts: [us_federal, us_anacostia]}
+  text: "Блокпост федералов на въезде в правительственный квартал. Сканер лица, проверка лояльности, вопрос: «Цель визита?»"
+  choices:
+    - label: Ответить правду
+      check: {stat: COOL, dv: 12}
+      success: {text: "Агент пропускает. Твоё лицо уже в базе.", effects: {}}
+      fail: {text: "Агент не верит. Два часа в комнате без окон.", effects: {heat: 1, mood: -2}}
+    - label: Объехать
+      effects: {mood: -1}
+      text: "Объезд через Анакостию — двадцать минут. Там тебя хотя бы не сканируют."
+
+- id: us_ev_veteran
+  title: Ветеран без ног
+  category: relationships
+  weight: 2
+  conditions: {districts: [us_anacostia]}
+  text: "Ветеран Войны за объединение без ног просит на протезы. Его старые были «Милитеха», и «Милитех» их отозвал за долги."
+  choices:
+    - label: Дать денег
+      effects: {humanity: 2, eddies: -500}
+      text: "Он не благодарит, только кивает. Гордость осталась при нём."
+    - label: Отвести к Маме Глории
+      effects: {humanity: 1, street_cred: 1}
+      text: "Мама Глория знает риппера, который чинит протезы бесплатно для своих."
+
+- id: us_ev_news
+  title: Обращение президента
+  category: street
+  weight: 2
+  conditions: {districts: [us_federal, us_anacostia]}
+  text: "На всех экранах обращение президента Майерс: «Мы — снова единая нация». Бармен выключает звук."
+  choices:
+    - label: Послушать
+      effects: {mood: -1}
+      text: "Слова правильные. Лица в баре скептические."
+    - label: Спорить с баром о политике
+      effects: {mood: 2, street_cred: 1}
+      text: "Через час весь бар спорит. Через два все пьют вместе."
+
+- id: tx_ev_rodeo
+  title: Родео
+  category: relationships
+  weight: 3
+  conditions: {districts: [tx_ship_channel, tx_downtown]}
+  text: "Родео на окраине Хьюстона: механический бык с имплантом, ставки, кантри и пиво."
+  choices:
+    - label: Сесть на быка
+      check: {stat: BODY, dv: 14}
+      success: {text: "Восемь секунд. Толпа ревёт. Ковбои хлопают тебя по спине.", effects: {mood: 5, street_cred: 1, eddies: 300}}
+      fail: {text: "Бык сбрасывает тебя на третьей секунде. Толпа ревёт ещё громче.", effects: {hp: -5, mood: 2}}
+    - label: Смотреть
+      effects: {mood: 2}
+      text: "Пиво, кантри, пыль. Техас."
+
+- id: tx_ev_open_carry
+  title: Открытое ношение
+  category: street
+  weight: 2
+  conditions: {districts: [tx_ship_channel, tx_downtown]}
+  text: "В очереди в супермаркете у каждого второго винтовка на плече. Кто-то роняет банку, и двадцать рук тянутся к оружию."
+  choices:
+    - label: Сохранять спокойствие
+      check: {stat: COOL, dv: 12}
+      success: {text: "Ты поднимаешь банку и отдаёшь хозяину. Все выдыхают.", effects: {mood: 1}}
+      fail: {text: "Ты дёргаешься слишком резко. На тебя смотрят двадцать стволов.", effects: {mood: -3}}
+    - label: Уйти без покупок
+      effects: {}
+      text: "Магазин подождёт. Нервы — нет."
+
+- id: tx_ev_heat_wave
+  title: Жара на канале
+  category: rare
+  weight: 2
+  conditions: {districts: [tx_ship_channel]}
+  text: "Сорок восемь градусов. Над корабельным каналом марево, рабочие «Петрохема» падают у труб."
+  choices:
+    - label: Помочь рабочим
+      effects: {humanity: 2, hp: -3}
+      text: "Ты таскаешь воду до заката. Долорес Вега запоминает это."
+    - label: Сидеть в кондиционере
+      effects: {mood: 1}
+      text: "Кондиционер гудит. За окном кто-то падает."
+
+- id: mx_ev_tacos
+  title: Тако в три ночи
+  category: relationships
+  weight: 3
+  conditions: {districts: [mx_tepito, mx_roma]}
+  text: "Три ночи, тележка с тако аль пастор, таксист, проститутка, полицейский и лучадор в маске едят рядом."
+  choices:
+    - label: Съесть пять тако
+      effects: {hp: 3, mood: 4, eddies: -30}
+      text: "Лучадор рассказывает о своих поединках. Полицейский — о своих."
+    - label: Спросить лучадора о боях
+      effects: {street_cred: 1, mood: 2}
+      text: "Он зовёт тебя на тренировку в спортзал Тепито."
+
+- id: mx_ev_quake
+  title: Землетрясение
+  category: rare
+  weight: 2
+  conditions: {districts: [mx_tepito, mx_roma]}
+  text: "Сирена предупреждения, потом толчок. Дом напротив трескается. Люди выбегают на улицу в пижамах."
+  choices:
+    - label: Разбирать завалы
+      effects: {humanity: 3, hp: -4}
+      text: "Цепочка людей передаёт кирпичи. Под третьей плитой — живая кошка. Улица аплодирует."
+    - label: Помочь старикам выйти
+      effects: {humanity: 2}
+      text: "Ты выводишь троих стариков по лестнице, которая качается."
+
+- id: mx_ev_santa_shrine
+  title: Алтарь Санта-Муэрте
+  category: street
+  weight: 2
+  conditions: {districts: [mx_tepito]}
+  text: "Уличный алтарь Святой Смерти: скелет в свадебном платье, свечи, бутылки текилы. Дети Святой Смерти смотрят, как ты проходишь мимо."
+  choices:
+    - label: Оставить подношение
+      effects: {eddies: -50, street_cred: 1}
+      text: "Ты ставишь сигарету и мелочь. Банда кивает."
+    - label: Пройти мимо
+      effects: {}
+      text: "Святая Смерть подождёт. Она всегда ждёт."
+
+- id: ca_ev_poutine
+  title: Путин и хоккей
+  category: relationships
+  weight: 3
+  conditions: {districts: [ca_eastside, ca_coal_harbour]}
+  text: "В баре хоккей: Ванкувер против Монреаля. Бар делится на две половины, обе едят картошку с сыром и соусом."
+  choices:
+    - label: Болеть за Ванкувер
+      effects: {mood: 3}
+      text: "Ванкувер выигрывает в овертайме. Ты пьёшь за счёт бара."
+    - label: Болеть за Монреаль
+      effects: {mood: 1}
+      text: "Монреаль проигрывает. Бар вежливо, по-канадски, тебе сочувствует."
+
+- id: ca_ev_bear
+  title: Медведь у мусорки
+  category: street
+  weight: 2
+  conditions: {districts: [ca_eastside, ca_coal_harbour]}
+  text: "У мусорных баков за ресторанами Чайнатауна копается чёрный медведь. Повара кричат из окон."
+  choices:
+    - label: Шуметь и прогнать
+      check: {stat: COOL, dv: 12}
+      success: {text: "Медведь уходит, неторопливо и с достоинством.", effects: {mood: 2}}
+      fail: {text: "Медведь не уходит. Ты уходишь.", effects: {mood: -1}}
+    - label: Позвонить рейнджерам
+      effects: {humanity: 1}
+      text: "Рейнджеры увозят медведя в лес. Повара угощают тебя пельменями."
+
+- id: ca_ev_overdose
+  title: Ист-Сайд
+  category: rare
+  weight: 2
+  conditions: {districts: [ca_eastside]}
+  text: "На тротуаре Ист-Сайда парень синеет от передозировки. Прохожие обходят."
+  choices:
+    - label: Помочь
+      check: {stat: INT, skill: medicine, dv: 12}
+      success: {text: "Ты делаешь всё правильно. Парень открывает глаза и ругается. Жив.", effects: {humanity: 3}}
+      fail: {text: "Ты держишь его, пока не приезжают медики. Его забирают, но ты не знаешь, выжил ли.", effects: {humanity: 1, mood: -2}}
+    - label: Вызвать скорую и уйти
+      effects: {}
+      text: "Скорая едет двадцать минут."
+
+- id: br_ev_baile
+  title: Баиле фанк
+  category: relationships
+  weight: 3
+  conditions: {districts: [br_rocinha, br_copacabana]}
+  text: "Пятничный баиле фанк под эстакадой: басы, от которых дрожат зубы, и тысяча человек."
+  choices:
+    - label: Танцевать
+      effects: {mood: 5, hp: -1}
+      text: "До рассвета. Ноги не держат. Лучшая ночь месяца."
+    - label: Стоять у бара и смотреть
+      effects: {mood: 2, street_cred: 1}
+      text: "Ты видишь, кто с кем говорит. Холм живёт и под музыку."
+
+- id: br_ev_beach_vendor
+  title: Пляжный торговец
+  category: money
+  weight: 2
+  conditions: {districts: [br_copacabana]}
+  text: "Торговец на Копакабане продаёт всё: кокосы, солнечные очки, импланты-бусы и сим-карты без регистрации."
+  choices:
+    - label: Купить сим-карту
+      effects: {eddies: -100, street_cred: 1}
+      text: "Номер, который не найдёт ни одна полиция. Пригодится."
+    - label: Купить кокос
+      effects: {hp: 2, mood: 2, eddies: -10}
+      text: "Кокос холодный, океан тёплый."
+
+- id: br_ev_mototaxi
+  title: Мототакси
+  category: street
+  weight: 2
+  conditions: {districts: [br_rocinha]}
+  text: "Мототаксист везёт тебя по лестницам холма, где машина не проедет никогда."
+  choices:
+    - label: Держаться крепче
+      effects: {mood: 3}
+      text: "Ты доезжаешь живым и с адреналином до кончиков пальцев."
+    - label: Попросить показать короткий путь
+      check: {stat: REF, dv: 12}
+      success: {text: "Короткий путь лежит через три крыши. Таксист в восторге от тебя.", effects: {street_cred: 1, mood: 4}}
+      fail: {text: "Ты падаешь с мотоцикла на ступеньки.", effects: {hp: -5}}
+
+- id: ar_ev_asado
+  title: Асадо
+  category: relationships
+  weight: 3
+  conditions: {districts: [ar_la_boca, ar_recoleta]}
+  text: "Воскресное асадо во дворе: мясо на углях четыре часа, мате по кругу, спор о футболе."
+  choices:
+    - label: Сесть за стол
+      effects: {hp: 4, mood: 4}
+      text: "Ты ешь так, будто последний раз. Бето рассказывает про финал 1986 года."
+    - label: Спорить о футболе
+      effects: {mood: 2, street_cred: 1}
+      text: "Ты не знаешь ни одного игрока, но спорить научился."
+
+- id: ar_ev_inflation
+  title: Инфляция
+  category: money
+  weight: 2
+  conditions: {districts: [ar_la_boca, ar_recoleta]}
+  text: "Цены в кафе переписывают мелом дважды в день. Обменник на углу предлагает «синий» курс."
+  choices:
+    - label: Поменять по синему курсу
+      effects: {eddies: 400}
+      text: "Лишние песо приятно шуршат. Завтра они будут стоить меньше."
+    - label: Платить эдди
+      effects: {}
+      text: "Эдди тут любят больше песо."
+
+- id: ar_ev_tango_lesson
+  title: Урок танго
+  category: relationships
+  weight: 2
+  conditions: {districts: [ar_la_boca]}
+  text: "Старушка на Каминито предлагает урок танго за пять песо. Говорит, что учила самого Пьяццоллу. Врёт, конечно."
+  choices:
+    - label: Взять урок
+      check: {stat: REF, dv: 12}
+      success: {text: "К концу урока ты почти танцуешь. Старушка плачет от гордости.", effects: {mood: 4}}
+      fail: {text: "Ты наступаешь ей на ногу три раза. Она смеётся.", effects: {mood: 2}}
+    - label: Просто посмотреть
+      effects: {mood: 1}
+      text: "Она танцует одна, с воздухом. Красиво."
+
+- id: co_ev_coffee
+  title: Кофе из горной деревни
+  category: relationships
+  weight: 3
+  conditions: {districts: [co_candelaria, co_zona_t]}
+  text: "Старик на рынке продаёт кофе из своей деревни. Каждое зерно собрано руками внуков."
+  choices:
+    - label: Купить мешок
+      effects: {mood: 3, eddies: -100}
+      text: "Лучший кофе в твоей жизни. Старик рассказывает про деревню, которой уже нет на картах."
+    - label: Помочь ему с торговлей
+      effects: {humanity: 1, street_cred: 1}
+      text: "Ты кричишь цены громче всех на рынке. Мешок продан за час."
+
+- id: co_ev_flower
+  title: Цветочный рынок
+  category: money
+  weight: 2
+  conditions: {districts: [co_candelaria, co_zona_t]}
+  text: "Цветочный экспортёр ищет курьера: доставить коробки роз в аэропорт. Розы колючие, коробки тяжёлые."
+  choices:
+    - label: Доставить
+      check: {stat: COOL, dv: 13}
+      success: {text: "В коробках только розы. Экспортёр платит щедро.", effects: {eddies: 900}}
+      fail: {text: "В одной коробке не розы. Ты бросаешь её и уходишь.", effects: {heat: 1}}
+    - label: Отказаться
+      effects: {}
+      text: "В Колумбии розы бывают разные."
+
+- id: co_ev_bus
+  title: Автобус в горы
+  category: street
+  weight: 2
+  conditions: {districts: [co_candelaria]}
+  text: "Цветной автобус-чива в горы набит курами, мешками и людьми. На крыше играет оркестр."
+  choices:
+    - label: Поехать на крыше
+      effects: {mood: 4, hp: -1}
+      text: "Ветер, горы, аккордеон. Колумбия, которую не показывают в новостях."
+    - label: Поехать внутри
+      effects: {mood: 2}
+      text: "Курица на коленях смотрит на тебя всю дорогу."
+
+- id: cu_ev_domino
+  title: Домино на улице
+  category: relationships
+  weight: 3
+  conditions: {districts: [cu_habana_vieja, cu_marianao]}
+  text: "Старики играют в домино на улице, стуча костяшками так, что слышно на весь квартал."
+  choices:
+    - label: Сесть играть
+      check: {stat: INT, dv: 12}
+      success: {text: "Ты выигрываешь партию. Старики требуют реванша и ром.", effects: {mood: 4}}
+      fail: {text: "Старики разносят тебя в пух. С удовольствием.", effects: {mood: 2}}
+    - label: Смотреть
+      effects: {mood: 1}
+      text: "Кости стучат, сигары дымят. Время здесь идёт медленнее."
+
+- id: cu_ev_car
+  title: «Кадиллак» пятьдесят шестого
+  category: money
+  weight: 2
+  conditions: {districts: [cu_habana_vieja, cu_marianao]}
+  text: "Владелец старого «Кадиллака» предлагает подвезти по Малекону за десять долларов. Машина старше его деда."
+  choices:
+    - label: Прокатиться
+      effects: {mood: 4, eddies: -10}
+      text: "Закат, Малекон, волны, сальса из радиоприёмника 1956 года."
+    - label: Предложить починить мотор
+      check: {stat: TECH, skill: tech, dv: 13}
+      success: {text: "Ты находишь проблему за пять минут. Он катает тебя бесплатно целый вечер.", effects: {mood: 3, skill_xp:tech: 1}}
+      fail: {text: "Мотор глохнет окончательно. Вы толкаете машину вдвоём.", effects: {mood: -1}}
+
+- id: cu_ev_blackout
+  title: Отключение света
+  category: street
+  weight: 2
+  conditions: {districts: [cu_habana_vieja, cu_marianao]}
+  text: "Опять отключили свет на весь район. Соседи выносят свечи и гитары на улицу."
+  choices:
+    - label: Петь с соседями
+      effects: {mood: 4}
+      text: "Ночь при свечах, песни, ром. Света нет, а жить хорошо."
+    - label: Чинить подстанцию
+      check: {stat: TECH, skill: tech, dv: 14}
+      success: {text: "Свет загорается. Весь квартал кричит твоё имя.", effects: {street_cred: 2, mood: 3}}
+      fail: {text: "Искры, хлопок, ещё темнее.", effects: {hp: -4}}

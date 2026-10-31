@@ -1,0 +1,127 @@
+# Partner arcs (owner request): a relationship that grows over weeks: moving in, jealousy, a proposal, a wedding,
+# a child, a crisis. Steps are gated by character flags (p_*), each happens once per life.
+
+- id: parc_move_in
+  title: Ключ от квартиры
+  category: relationships
+  weight: 3
+  conditions:
+    requires: [has_partner]
+    flags_none: [p_together]
+  text: "Партнёр крутит в пальцах ключ от своей квартиры и не смотрит в глаза: «Может, хватит ездить через весь город? Переезжай ко мне. Или я к тебе»."
+  choices:
+    - label: Съехаться
+      effects: {flag_set:p_together: true, "rel_npc:partner": 15, mood: 8}
+      text: "Две коробки вещей, одна кровать, бесконечный спор о том, чья очередь выносить мусор. Это и есть счастье, наверное."
+    - label: Пока рано
+      effects: {flag_set:p_together: true, "rel_npc:partner": -5}
+      text: "Партнёр кивает и убирает ключ. Говорит, что понимает. Звучит не очень убедительно."
+
+- id: parc_jealous
+  title: Ревность
+  category: relationships
+  weight: 2
+  conditions:
+    requires: [has_partner]
+    flags_all: [p_together]
+    flags_none: [p_jealousy]
+  text: "Партнёр нашёл в твоём телефоне переписку с кем-то из клуба. Ничего такого, но объяснять приходится в три часа ночи на кухне."
+  choices:
+    - label: Объяснить честно
+      check: {stat: EMP, skill: persuasion, dv: 13}
+      success: {text: "Ты показываешь всё, от первого сообщения до последнего. Партнёр долго молчит, потом обнимает тебя. Стало даже крепче.", effects: {flag_set:p_jealousy: true, "rel_npc:partner": 8, mood: 3}}
+      fail: {text: "Чем больше ты объясняешь, тем хуже выходит. Партнёр уходит ночевать к подруге.", effects: {flag_set:p_jealousy: true, "rel_npc:partner": -10, mood: -6}}
+    - label: Обидеться в ответ
+      effects: {flag_set:p_jealousy: true, "rel_npc:partner": -6, mood: -4}
+      text: "Вы кричите друг на друга до рассвета. Утром оба делают вид, что ничего не было."
+
+- id: parc_proposal
+  title: Кольцо
+  category: relationships
+  weight: 2
+  conditions:
+    requires: [has_partner]
+    flags_all: [p_together]
+    flags_none: [p_engaged]
+  text: "Ювелир в Японтауне показывает кольцо из синтетического бриллианта. Восемьсот эдди, гравировка бесплатно. Ты думаешь о партнёре весь день."
+  choices:
+    - label: Купить и сделать предложение
+      check: {stat: COOL, dv: 11}
+      success: {text: "На крыше, под неоном, на одном колене. Партнёр плачет и смеётся одновременно. «Да». Конечно, да.", effects: {flag_set:p_engaged: true, eddies: -800, "rel_npc:partner": 20, mood: 15}}
+      fail: {text: "Кольцо выпадает из рук и катится в решётку водостока. Предложение всё равно принято, но кольцо теперь живёт в канализации.", effects: {flag_set:p_engaged: true, eddies: -800, "rel_npc:partner": 15, mood: 8}}
+    - label: Не сейчас
+      effects: {}
+      text: "Ты выходишь из магазина. Кольцо подождёт. Или не подождёт."
+
+- id: parc_wedding
+  title: Свадьба
+  category: relationships
+  weight: 3
+  conditions:
+    requires: [has_partner]
+    flags_all: [p_engaged]
+    flags_none: [p_married]
+  public: true
+  text: "День свадьбы. Можно расписаться тихо в мэрии, а можно закатить вечеринку в баре на весь район. Друзья уже спрашивают, где наливают."
+  choices:
+    - label: Тихо в мэрии (200)
+      effects: {flag_set:p_married: true, eddies: -200, "rel_npc:partner": 10, mood: 12, humanity: 2}
+      text: "Две подписи, штамп, поцелуй под камерой наблюдения. Чиновник желает счастья без тени эмоций. Вам всё равно."
+    - label: Гулять на весь район (2000)
+      effects: {flag_set:p_married: true, eddies: -2000, "rel_npc:partner": 15, mood: 20, humanity: 2, fame: 2, street_cred: 1}
+      text: "Бар трещит по швам, кто-то из гостей уже дерётся, кто-то плачет, а вы танцуете посреди всего этого. Лучший день."
+
+- id: parc_child
+  title: Пополнение
+  category: relationships
+  weight: 2
+  conditions:
+    requires: [has_partner]
+    flags_all: [p_married]
+    flags_none: [p_child_talk]
+  text: "Партнёр садится рядом с чашкой кофе и говорит медленно, подбирая слова: «Я думаю о ребёнке. О нашем»."
+  choices:
+    - label: Да, давай
+      effects: {flag_set:p_child_talk: true, add_npc:child: true, "rel_npc:partner": 10, mood: 10, humanity: 3}
+      text: "Через год в квартире появляется маленький человек, который орёт по ночам. Ты не спишь, но улыбаешься."
+    - label: Не в этом городе
+      effects: {flag_set:p_child_talk: true, "rel_npc:partner": -4}
+      text: "Ты говоришь, что Найт-Сити — не место для детей. Партнёр соглашается. Но смотрит в окно дольше обычного."
+
+- id: parc_crisis
+  title: Трещина
+  category: relationships
+  weight: 1
+  conditions:
+    requires: [has_partner]
+    flags_all: [p_together]
+    flags_none: [p_crisis]
+    max_mood: 40
+  text: "Ты возвращаешься под утро в третий раз за неделю. Партнёр сидит на кухне в темноте: «Я так больше не могу. Либо мы, либо твои дела»."
+  choices:
+    - label: Выбрать партнёра
+      effects: {flag_set:p_crisis: true, "rel_npc:partner": 12, mood: 6, heat: -1}
+      text: "Неделю ты не берёшь ни одного заказа. Вы смотрите старые фильмы и едите лапшу. Город подождёт."
+    - label: Сходить к семейному психотерапевту (500)
+      effects: {flag_set:p_crisis: true, eddies: -500, "rel_npc:partner": 8, humanity: 1}
+      text: "Терапевт в Чартер-Хилл задаёт неудобные вопросы. После третьей сессии становится легче."
+    - label: Уйти
+      effects: {flag_set:p_crisis: true, "rel_npc:partner": -30, mood: -12}
+      text: "Ты собираешь сумку молча. Дверь закрывается тихо. Это хуже, чем если бы хлопнула."
+
+- id: parc_anniversary
+  title: Годовщина
+  category: relationships
+  weight: 2
+  conditions:
+    requires: [has_partner]
+    flags_all: [p_married]
+  text: "Сегодня годовщина. Ты почти забыл, но календарь в линзе напомнил в последний момент."
+  choices:
+    - label: Ужин в Японтауне (400)
+      effects: {eddies: -400, "rel_npc:partner": 6, mood: 6}
+      text: "Суши, саке и разговор до закрытия ресторана. Как в начале."
+    - label: Подарить что-то своими руками
+      check: {stat: TECH, skill: tech, dv: 12}
+      success: {text: "Ты собираешь маленького робота, который поёт вашу песню. Партнёр смеётся до слёз.", effects: {"rel_npc:partner": 10, mood: 5}}
+      fail: {text: "Робот поёт фальшиво и дымится. Партнёр всё равно ставит его на полку.", effects: {"rel_npc:partner": 4, mood: 2}}

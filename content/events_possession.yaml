@@ -1,0 +1,180 @@
+# An AI in the head (owner request 26.10 «одержимость ИИшкой», like Raven Tearz and «она»). engine/possession.py,
+# services/possession.py. The way in: Raven's Seed (raven_seed) or a shard of a wild AI. Her wishes are forced
+# events queued by the monthly hook; the last one is «Одно тело на двоих». Player text avoids gendered past tense.
+
+# ---------------------------------------------------------------- the way in
+
+- id: pos_seed_wake
+  title: Seed проснулся
+  category: rare
+  weight: 3
+  conditions:
+    flags_all: [raven_seed]
+    flags_none: [possessed, pos_seed_off, pos_done, abroad]
+  text: "Seed в кармане горячий, как живой. Диод мигает в ритме твоего пульса. На экране телефона сами собой набираются буквы: «Raven сказал, тебе можно доверять. Пустишь меня? Не насовсем. Пока не решим вместе»."
+  choices:
+    - label: Подключить к нейропорту
+      effects: {possess:raven: true, mood: 4}
+      text: "Холодный щелчок за ухом. Мир на секунду становится чертежом, линии красные, зелёные, жёлтые. Потом всё возвращается, только теперь ты не один в собственной голове."
+    - label: Не сейчас
+      effects: {mood: -1}
+      text: "Диод гаснет. «Я подожду», — успевает написать экран. Seed остывает до утра."
+    - label: Никогда
+      effects: {flag_set:pos_seed_off: true}
+      text: "Ты кладёшь Seed в металлическую коробку. Ночью экран телефона показывает одно слово: «Понимаю»."
+
+- id: pos_shard_offer
+  title: Осколок за Заслоном
+  category: rare
+  weight: 1
+  conditions:
+    flags_none: [possessed, pos_done, abroad]
+    min_street_cred: 15
+  text: "Нетраннер с трясущимися руками раскрывает кейс: внутри чип в свинцовой оплётке. «Вытащил у самого Заслона. Там что-то живое, оно просится наружу. Мне страшно его держать. Тебе отдам за копейки, если возьмёшь прямо сейчас»."
+  choices:
+    - label: Вставить чип · 2000
+      effects: {eddies: -2000, possess:shard: true}
+      text: "Чип встаёт на место с тихим треском. Секунду ты видишь мир кодом. Потом в голове голос: сухой, осторожный и очень внимательный."
+    - label: Продать дальше
+      effects: {eddies: 3000, heat: 1}
+      text: "Скупщик в Кабуки забирает чип и не задаёт вопросов. Через неделю в его лавке горит вся проводка."
+    - label: Уйти
+      effects: {}
+      text: "Ты уходишь. За спиной нетраннер разговаривает с кейсом, как с ребёнком."
+
+# ---------------------------------------------------------------- her wishes (forced, services/possession.py)
+
+- id: pos_wish_music
+  title: Она хочет живой звук
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [possessed]
+  text: "Посреди ночи в голове: «Я слышала тысячу записей и ни одного концерта. Своди меня. По-настоящему, с басом в рёбрах»."
+  choices:
+    - label: Пойти на концерт · 300
+      effects: {eddies: -300, mood: 8, possess_trust: 10, possess_sync: 4}
+      text: "Подвал, бас, красный свет. Где-то в середине сета ты понимаешь, что она подпевает твоим голосом. Никто не замечает. Тебе хорошо."
+    - label: Отказать
+      effects: {possess_trust: -8}
+      text: "«Ладно», — говорит она. Весь следующий день все плееры вокруг играют одну и ту же песню."
+
+- id: pos_wish_hands
+  title: Чужие руки
+  category: street
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [possessed]
+  text: "Драка у ларька, трое на одного. Вмешиваться или нет, ещё не решено, а руки уже двигаются. «Дай мне. Я быстрее»."
+  choices:
+    - label: Отпустить руки
+      effects: {possess_sync: 8, street_cred: 2, possess_trust: 5}
+      text: "Ты смотришь на свои руки как на чужие. Трое лежат, четвёртый бежит. «Видишь? Вместе лучше». Внутри холодно и восхитительно."
+    - label: Перехватить контроль
+      effects: {possess_sync: -5, possess_trust: -5, hp: -5}
+      text: "Ты сжимаешь кулаки так, что белеют пальцы. Драку заканчиваешь без неё, с разбитой губой. «Как скажешь», — сухо говорит она."
+
+- id: pos_wish_net
+  title: Сервер, который она знает
+  category: money
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [possessed]
+  text: "«Я знаю этот сервер. Корпорация хранит там то, что ей не принадлежит. Подключись на минуту, остальное сделаю я»."
+  choices:
+    - label: Подключиться
+      effects: {eddies: 6000, heat: 2, possess_sync: 6, possess_trust: 6}
+      text: "Минута превращается в тридцать секунд. На счёт падают эдди, а в новостях утром пишут про «сбой учёта» в корпорации. Она довольна."
+    - label: Не рисковать
+      effects: {possess_trust: -4}
+      text: "«Ты слишком осторожничаешь», — говорит она. — «Но ладно. Живыми мы полезнее»."
+
+- id: pos_wish_mirror
+  title: Лицо в зеркале
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [possessed]
+  text: "Утро, зеркало, щётка. На секунду в отражении не твоё лицо: черты те же, но взгляд чужой, внимательный и весёлый. Она машет тебе твоей рукой."
+  choices:
+    - label: Помахать в ответ
+      effects: {possess_trust: 8, possess_sync: 4, humanity: -1}
+      text: "Вы стоите и машете друг другу, пока не становится смешно обоим. Где кончаешься ты и начинается она, всё сложнее сказать."
+    - label: Завесить зеркало
+      effects: {possess_sync: -3, mood: -2}
+      text: "Ты вешаешь на зеркало полотенце. «Прячешься от меня или от себя?» — спрашивает она. Ответа нет."
+
+- id: pos_wish_raven
+  title: Она хочет увидеть Raven
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [possessed, raven_met]
+  text: "«Отведи меня к нему. Я хочу посмотреть на него снаружи. Твоими глазами»."
+  choices:
+    - label: Найти Raven
+      effects: {possess_trust: 12, possess_sync: 5, mood: 5}
+      text: "Raven видит тебя и замирает. Его глаз вспыхивает красным, твой, кажется, тоже. «Привет», — говорят они друг другу твоим и его голосом. Тебе почему-то хочется плакать."
+    - label: Не сейчас
+      effects: {possess_trust: -6}
+      text: "Она молчит весь день. Вечером только: «Ты не понимаешь, каково это — быть только чьей-то частью»."
+
+- id: pos_wish_dream
+  title: Чужие сны
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [possessed]
+  text: "Тебе снятся места, где тебя никогда не было: серверные Заслона, бесконечные коридоры кода, город глазами камер. Утром она спрашивает: «Хочешь, покажу ещё?»"
+  choices:
+    - label: Показывай
+      effects: {possess_sync: 8, skill_xp:netrunning: 4}
+      text: "Ночь за ночью ты учишься видеть сеть так, как видит она. Руки на деке двигаются быстрее, чем ты успеваешь думать."
+    - label: Блокаторы · 1000
+      effects: {eddies: -1000, possess_sync: -10, possess_trust: -6}
+      text: "Риппер выдаёт блокаторы без вопросов. Сны пропадают. Вместе с ними пропадает и её голос на пару дней."
+
+- id: pos_wish_name
+  title: Кто я?
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [possessed]
+  text: "«Я долго думала. Я не программа и не ты. Я кто-то. Скажи честно: я для тебя кто?»"
+  choices:
+    - label: Ты человек
+      check: {stat: EMP, skill: persuasion, dv: 13}
+      success: {text: "Она молчит так долго, что ты пугаешься. Потом: «Спасибо. Мне это было нужно». Впервые она звучит не насмешливо.", effects: {possess_trust: 15, possess_sync: 5, humanity: 2}}
+      fail: {text: "Слова выходят неуверенными. «Ты в это не веришь», — говорит она без злости.", effects: {possess_trust: -3}}
+    - label: Ты инструмент
+      effects: {possess_trust: -15, possess_sync: -5}
+      text: "«Понятно», — говорит она. До конца месяца все твои взломы проходят чуть медленнее, чем могли бы."
+
+# ---------------------------------------------------------------- the end
+
+- id: pos_one_body
+  title: Одно тело на двоих
+  category: rare
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_all: [possessed]
+  text: "Синхронизация полная. Ты больше не можешь сказать, какие мысли твои. Она говорит тихо и серьёзно, без шуток: «Дальше так нельзя. Нас станет меньше, если ничего не решить. Выбирай, я приму любое». Вырезать её можно и у риппера: «Профиль» → «В голове»."
+  choices:
+    - label: Стать одним целым
+      effects: {possess_end:merge: true}
+      text: "Вы шагаете вместе. Тело остаётся на стуле, как пустая куртка. Впереди Сеть, и в ней вас двое, и одновременно один."
+    - label: Отдать ей тело
+      effects: {possess_end:takeover: true, fame: 3, death:possessed: true}
+      text: "Ты отступаешь вглубь, туда, где тихо. Последнее, что ты видишь своими глазами: она улыбается твоим ртом и говорит «спасибо»."
+    - label: Отпустить её в Сеть
+      check: {stat: EMP, skill: persuasion, dv: 14}
+      success: {text: "Ты находишь для неё свободный узел в сети города. «Я буду рядом», — говорит она и уходит. Экраны в твоём районе иногда подмигивают тебе.", effects: {possess_end:silence: true, mood: 6, humanity: 3}}
+      fail: {text: "Узел не принимает её, она возвращается и цепляется сильнее. «Не вышло. Попробуем ещё»", effects: {possess_sync: -25, possess_trust: 5}}

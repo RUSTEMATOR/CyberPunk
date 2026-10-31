@@ -1,0 +1,408 @@
+# Leisure (owner request): every activity has its own mechanic and its own events, not just mood.
+# Activities → «Досуг и приколы». One deed = AP + eddies, a check or not, weighted outcomes.
+# `event:` plays a forced_only event right after the outcome (content/events_leisure.yaml).
+# Own hooks: karaoke — fame and a day buff; standup — heat and gangs; yoga — humanity; lottery — money;
+# robot fights — tech xp and your own robot; pigeons — your own pigeon; pizza — random items; date — new people;
+# tattoo — an implant; stream — eddies and scandals; noodles — hp and a championship; arcade — reflexes and the old net;
+# cat cafe — a cat of your own; fortune teller — luck and prophecies.
+
+- key: karaoke
+  section: leisure
+  name: Караоке в «Лиззи»
+  button: Караоке
+  description: "Микрофон, пьяная толпа и песня, которую знает весь город. Удачная песня даёт славу и кураж до полуночи."
+  cost: 50
+  check: {stat: EMP, skill: persuasion, dv: 14}
+  success:
+    - {weight: 4, text: "Ты берёшь высокую ноту, и бар встаёт. Кто-то снимает на видео, к утру у ролика тысячи просмотров.", effects: {fame: 2, mood: 6, buff:the_sun: true}}
+    - {weight: 2, text: "Под конец песни к тебе подпевает весь зал, даже вышибала. Бармен наливает за счёт заведения.", effects: {fame: 1, mood: 6, buff:the_lovers: true}}
+    - {weight: 1, text: "Ты допеваешь, а у стойки тебя ждёт человек в дорогих очках. Он протягивает визитку.", effects: {fame: 2}, event: leisure_producer}
+  fail:
+    - {weight: 3, text: "Ты забываешь слова на втором куплете и мычишь мелодию. Кто-то кидает в тебя орешком.", effects: {mood: -4}}
+    - {weight: 1, text: "Микрофон фонит так, что у половины зала глючат импланты. Тебя вежливо просят больше не петь.", effects: {mood: -2, fame: 1}}
+    - {weight: 1, text: "Пока ты поёшь, к сцене пробирается здоровенный тип с кибер-рукой. Ему не нравится, как ты поёшь его песню.", effects: {}, event: leisure_mic_fight}
+  bus: [perform]
+
+- key: standup
+  section: leisure
+  name: Стендап в подвале
+  button: Стендап
+  description: "Открытый микрофон для смельчаков. Шутки про копов снижают розыск, шутки про корпорации и банды заводят врагов."
+  check: {stat: COOL, skill: persuasion, dv: 15}
+  success:
+    - {weight: 3, text: "Шутка про копов, которые берут взятки купонами на пончики, заходит. В первом ряду сидит патрульный и смеётся громче всех.", effects: {fame: 2, heat: -2, eddies: 80}}
+    - {weight: 2, text: "Шутка про Рейфов, которые угоняют машины, но не умеют парковаться, заходит так, что кто-то падает со стула. Рейфы в зале тоже смеются. Пока.", effects: {fame: 2, faction_rep:wraiths: -2, street_cred: 1}}
+    - {weight: 1, text: "Ты разносишь Arasaka на десять минут. Зал рыдает от смеха. За дальним столиком кто-то в костюме что-то записывает.", effects: {fame: 3}, event: leisure_corp_joke}
+  fail:
+    - {weight: 3, text: "Тишина такая, что слышно, как гудит неон. Кто-то кашляет. Ты уходишь со сцены задом.", effects: {mood: -6}}
+    - {weight: 1, text: "Из зала кто-то орёт: «Скучно!» Встаёт мусорщик с ожерельем из чужих зубов. Он хочет сам выйти на сцену. С тобой.", effects: {}, event: leisure_heckler}
+  bus: [perform]
+
+- key: cyber_yoga
+  section: leisure
+  name: Кибер-йога
+  button: Йога
+  description: "Йога на крыше с инструктором, у которого четыре руки. Возвращает человечность и даёт ровную руку до полуночи."
+  cost: 60
+  success:
+    - {weight: 4, text: "Дыхание, растяжка, вид на город. Импланты впервые за месяц молчат.", effects: {humanity: 2, mood: 3, buff:temperance: true}}
+    - {weight: 2, text: "Ты засыпаешь в позе лотоса. Инструктор не будит: «Это тоже практика». Просыпаешься отдохнувшим.", effects: {humanity: 1, hp: 6}}
+    - {weight: 1, text: "После занятия инструктор берёт тебя за плечо всеми четырьмя руками: «В тебе есть сила для большего. Приходи в полночь».", effects: {humanity: 1}, event: leisure_yoga_cult}
+
+- key: lottery
+  section: leisure
+  name: Лотерея «Миллион Найт-Сити»
+  button: Лотерея
+  description: "Билет за полсотни, раз в день. Почти всегда пусто. Почти."
+  ap: 0
+  cost: 50
+  daily: true
+  success:
+    - {weight: 200, text: "Пусто. Билет улетает в урну вместе с надеждой.", effects: {mood: -1}}
+    - {weight: 60, text: "Совпали две цифры. Выигрыш — бесплатный билет. Который тоже пустой.", effects: {}}
+    - {weight: 10, text: "Три цифры! Сто пятьдесят эдди. Кассир смотрит на тебя с завистью.", effects: {eddies: 150}}
+    - {weight: 4, text: "Четыре цифры! Тысяча эдди. Соседи вдруг вспоминают, как тебя зовут.", effects: {eddies: 1000, mood: 4}}
+    - {weight: 3, text: "На билете странная опечатка: вместо цифр напечатан логотип давно закрытой корпорации. Кассир таращит глаза.", effects: {}, event: leisure_ticket_collector}
+    - {weight: 1, text: "ДЖЕКПОТ. Двадцать тысяч. Ты перечитываешь билет пять раз. Город на секунду замирает, а потом начинает звонить тебе.", effects: {eddies: 20000, fame: 2}, event: leisure_jackpot, loud: "Джекпот «Миллиона Найт-Сити», двадцать тысяч эдди! Счастливый билет: {name}. Весь город уже ищет этот адрес."}
+
+- key: robot_fights
+  section: leisure
+  name: Бои роботов на ставки
+  button: Бои роботов
+  description: "В гаражах дерутся самодельные роботы. Ставка сотня. Глядя на бои, учишься технике, а однажды можно собрать своего."
+  cost: 100
+  check: {stat: LUCK, dv: 12}
+  success:
+    - {weight: 3, text: "Твой фаворит «Мясорубка-3000» откручивает сопернику голову на третьей секунде. Двести на руки.", effects: {eddies: 200, skill_xp:tech: 1}}
+    - {weight: 1, text: "После боя механик победителя продаёт старый корпус робота. Почти целый. Почти дёшево.", effects: {eddies: 200}, event: leisure_robot_build}
+  fail:
+    - {weight: 3, text: "Робот, на которого ты ставишь, уверенно идёт в атаку и падает с ринга сам. Сотня ушла, зато теперь ясно, где у него был перекос.", effects: {skill_xp:tech: 1}}
+    - {weight: 1, text: "Робот-фаворит падает, едва его коснулись. Слишком картинно. Кто-то здесь крутит бои.", effects: {}, event: leisure_robot_rigged}
+
+- key: own_robot_fight
+  section: leisure
+  name: Выставить своего робота
+  button: Мой робот
+  description: "Твой робот против чужих. Нужна техника, чтобы настроить его перед боем. Можно сорвать куш, а можно собирать его по болтам."
+  conditions:
+    flags_all: [robot_owner]
+  cost: 150
+  check: {stat: TECH, skill: tech, dv: 14}
+  success:
+    - {weight: 3, text: "Твой робот гоняет соперника по рингу и добивает его ударом молота. Толпа скандирует его имя. Выигрыш — шестьсот.", effects: {eddies: 600, fame: 1, skill_xp:tech: 2}}
+    - {weight: 1, text: "Чистая победа за четыре секунды. Тебе предлагают продать робота за три тысячи. Ты отказываешься. Пока.", effects: {eddies: 900, fame: 2, skill_xp:tech: 2}, loud: "Самодельный робот, хозяин — {name}, разносит соперника за четыре секунды. Гаражи скандируют его имя."}
+  fail:
+    - {weight: 3, text: "Робот проигрывает по очкам. Ремонт съедает остаток ставки, но ты знаешь, что подкрутить.", effects: {skill_xp:tech: 2, mood: -2}}
+    - {weight: 1, text: "Соседский робот с циркуляркой разрезает твоего пополам. Собирать уже нечего.", effects: {flag_clear:robot_owner: true, mood: -8}}
+
+- key: pigeon_race
+  section: leisure
+  name: Гонки кибер-голубей
+  button: Голуби
+  description: "Старик на крыше разводит голубей с крошечными реактивными ранцами. Ставки принимаются. Голуби бывают очень странными."
+  cost: 40
+  success:
+    - {weight: 3, text: "Твой голубь Пират приходит первым и гадит на финишную ленту. Победа и сто двадцать эдди.", effects: {eddies: 120, mood: 3}}
+    - {weight: 2, text: "Голубь улетает в сторону Сити-центра и не возвращается. Старик пожимает плечами: «Бывает. Вернётся — будет с подарком».", effects: {queue_event:leisure_pigeon_returns: true}}
+    - {weight: 1, text: "После гонки старик долго смотрит на тебя: «У тебя рука лёгкая. Пойдём, кое-что покажу».", effects: {}, event: leisure_pigeon_heir}
+
+- key: own_pigeon_race
+  section: leisure
+  name: Выпустить своего голубя
+  button: Мой голубь
+  description: "Твоя птица с ранцем против голубей всего района. Раз в день, бесплатно."
+  conditions:
+    flags_all: [pigeon_owner]
+  ap: 0
+  daily: true
+  check: {stat: LUCK, dv: 11}
+  success:
+    - {weight: 3, text: "Твой голубь режет воздух над Уотсоном и приходит первым. Старик гордится больше тебя.", effects: {eddies: 250, mood: 4}}
+    - {weight: 1, text: "Голубь приходит первым и приносит в клюве чей-то кредчип. На нём ещё что-то есть.", effects: {eddies: 500, heat: 1}}
+  fail:
+    - {weight: 3, text: "Голубь отвлекается на шаурму и приходит последним. Зато сытый.", effects: {mood: 1}}
+    - {weight: 1, text: "Голубя сбивает полицейский дрон. Он жив и зол. Ранец под замену.", effects: {eddies: -150, mood: -2}}
+
+- key: drone_pizza
+  section: leisure
+  name: Пицца от дрона
+  button: Пицца
+  description: "Заказать пиццу через дрона-доставщика. Иногда вместо пиццы прилетает что-то другое, иногда — что-то опасное."
+  ap: 0
+  cost: 30
+  daily: true
+  success:
+    - {weight: 4, text: "Пицца горячая, сыр тянется, дрон даже помахал пропеллером на прощание.", effects: {hp: 3, mood: 2}}
+    - {weight: 1, text: "Дрон путает адрес и привозит чужую посылку: внутри боевой нож. Пицца ушла кому-то другому.", effects: {item_grant:combat_knife: true}}
+    - {weight: 1, text: "Дрон путает адрес и привозит бейсбольную биту с автографом. Видимо, кто-то очень ждал.", effects: {item_grant:baseball_bat: true}}
+    - {weight: 1, text: "Дрон сбрасывает тебе на порог тяжёлый свёрток в брезенте. На нём нарисован череп с рогами Рейфов.", effects: {}, event: leisure_wrong_package}
+
+- key: blind_date
+  section: leisure
+  name: Свидание вслепую
+  button: Свидание
+  description: "Приложение подобрало пару. Фото размыто, анкета пустая. Можно найти любовь, друга или неприятности."
+  cost: 100
+  check: {stat: EMP, skill: persuasion, dv: 13}
+  success:
+    - {weight: 3, text: "Вы смеётесь весь вечер и уходите, держась за руки.", effects: {mood: 8, add_npc:partner: true}}
+    - {weight: 1, text: "Вечер прекрасный, но человек оказывается твоим бывшим соседом по капсуле. Решаете остаться друзьями.", effects: {mood: 5, add_npc:friend: true}}
+    - {weight: 1, text: "Человек напротив в часах дороже твоей квартиры. Он слушает внимательно, а потом спрашивает, где ты работаешь.", effects: {}, event: leisure_date_corpo}
+  fail:
+    - {weight: 3, text: "Человек весь вечер рассказывает про свою коллекцию кибер-ногтей. Ты сбегаешь через окно туалета.", effects: {mood: -4}}
+    - {weight: 1, text: "Свидание назначено в подвальном баре на окраине. Бар пустой, а у двери стоят двое с медицинскими сумками.", effects: {}, event: leisure_date_trap}
+
+- key: glowing_tattoo
+  section: leisure
+  name: Светящееся тату
+  button: Тату
+  description: "Мастер в Кабуки вживляет светодиоды под кожу. Это настоящий имплант: плюс к обаянию, минус к скрытности и чуточку человечности."
+  cost: 250
+  success:
+    - {weight: 3, text: "Неоновый дракон обвивает руку и переливается в такт музыке. На улице оборачиваются.", effects: {cyberware_grant:led_tattoos: true, street_cred: 1}}
+    - {weight: 1, text: "Мастер путает эскиз, и теперь у тебя на плече светится логотип кофейни. Кофейня присылает купон на год вперёд.", effects: {cyberware_grant:led_tattoos: true, mood: 2}}
+    - {weight: 1, text: "Мастер набивает узор, который ты выбрал по картинке. На улице на тебя странно смотрят Мусорщики.", effects: {cyberware_grant:led_tattoos: true}, event: leisure_tattoo_gang}
+
+- key: bd_stream
+  section: leisure
+  name: Стрим в брейнданс-сети
+  button: Стрим
+  description: "Записать свой день и выложить в сеть. Донаты, спонсоры и шанс заснять то, чего снимать не стоило."
+  check: {stat: COOL, dv: 13}
+  success:
+    - {weight: 3, text: "Запись набирает просмотры: людям нравится, как ты ешь лапшу и ругаешься на дронов. Донаты капают.", effects: {eddies: 250, fame: 1}}
+    - {weight: 1, text: "Стрим попадает в топ дня. Тебе пишут спонсоры с предложением рекламировать энергетик.", effects: {eddies: 700, fame: 2, mood: -2}}
+    - {weight: 1, text: "Пересматривая запись, ты замечаешь в углу кадра то, чего не видел вживую: в подворотне кого-то убивают.", effects: {}, event: leisure_stream_crime}
+  fail:
+    - {weight: 2, text: "Три зрителя, и один из них — твоя мать. Она ставит лайк.", effects: {mood: 2}}
+    - {weight: 1, text: "В кадр случайно попадает твой пароль от банка. Пришлось срочно всё менять.", effects: {eddies: -200, mood: -3}}
+
+- key: street_food_challenge
+  section: leisure
+  name: Острая лапша «Адское пламя»
+  button: Острая лапша
+  description: "Съешь миску самой острой лапши в городе за пять минут. Проверка тела: победа даёт славу, поражение бьёт по здоровью."
+  cost: 40
+  check: {stat: BODY, dv: 14}
+  success:
+    - {weight: 3, text: "Ты доедаешь до дна, не моргнув. Твоё фото вешают на стену героев. Повар плачет от уважения.", effects: {fame: 1, eddies: 40, hp: -2}}
+    - {weight: 1, text: "Ты доедаешь и просишь добавки. Повар бледнеет и зовёт хозяина. Хозяин зовёт тебя на чемпионат.", effects: {fame: 1}, event: leisure_spicy_championship}
+  fail:
+    - {weight: 3, text: "На третьей ложке у тебя запотевают глазные импланты. Остаток вечера ты проводишь у раковины.", effects: {hp: -5, mood: -3}}
+    - {weight: 1, text: "Ты теряешь сознание лицом в миску. Видео с этим моментом становится мемом недели.", effects: {hp: -6, fame: 2}}
+
+- key: vr_arcade
+  section: leisure
+  name: Аркада виртуальной реальности
+  button: Аркада
+  description: "Старые автоматы с VR-шлемами. Гонки тренируют вождение, стрелялки — руку. Говорят, один автомат помнит старую Сеть."
+  cost: 30
+  check: {stat: REF, dv: 14}
+  success:
+    - {weight: 2, text: "Ты бьёшь рекорд в гонках, и автомат играет фанфары. Руки сами помнят каждый поворот.", effects: {skill_xp:driving: 2, mood: 3}}
+    - {weight: 2, text: "Час в виртуальном тире, и пальцы двигаются быстрее мысли.", effects: {skill_xp:firearms: 2, mood: 2}}
+    - {weight: 1, text: "Самый старый автомат в углу вдруг выдаёт вместо заставки строчку кода и мигающий курсор.", effects: {}, event: leisure_arcade_backdoor}
+  fail:
+    - {weight: 2, text: "Тебя убивают на первом уровне. Восьмилетка рядом смотрит с жалостью.", effects: {mood: -2}}
+    - {weight: 1, text: "Шлем перегревается, и ты полчаса видишь всё в зелёном цвете.", effects: {mood: -3, hp: -1}}
+
+- key: cat_cafe
+  section: leisure
+  name: Котокафе
+  button: Котокафе
+  description: "Кафе, где живут коты. Некоторые с имплантами. Человечность восстанавливается, а один кот может уйти с тобой."
+  cost: 40
+  success:
+    - {weight: 3, text: "Рыжий кот с кибер-глазом засыпает у тебя на коленях. Мир становится немного лучше.", effects: {humanity: 2, mood: 4}}
+    - {weight: 1, text: "Кот крадёт у тебя кредчип и уносит его под диван. Персонал достаёт его через час и в качестве извинения не берёт денег.", effects: {humanity: 1, eddies: 40}}
+    - {weight: 1, text: "Чёрный кот без половины уха весь вечер ходит за тобой и уходит следом за дверь.", effects: {humanity: 1}, event: leisure_cat_follows}
+
+- key: fortune_teller
+  section: leisure
+  name: Гадалка с нейросетью
+  button: Гадалка
+  description: "Бабушка в кибер-платке гадает по логам твоего нейропорта. Раз в день. Карта дня действует до полуночи, а пророчества сбываются."
+  ap: 0
+  cost: 20
+  daily: true
+  success:
+    - {weight: 2, text: "«Звезда над тобой». Бабушка улыбается беззубым ртом. Сегодня всё идёт как надо.", effects: {buff:the_star: true}}
+    - {weight: 2, text: "«Колесо крутится». Бабушка вертит в пальцах чип. Удача сегодня на твоей стороне.", effects: {buff:wheel_of_fortune: true, luck_pool: 1}}
+    - {weight: 1, text: "«Башня падает». Бабушка возвращает деньги и не смотрит в глаза.", effects: {eddies: 20, buff:the_tower: true}}
+    - {weight: 1, text: "Бабушка долго смотрит в экран, потом шепчет: «На следующей неделе к тебе придёт человек. Не отказывай ему. Или откажи — решай сам».", effects: {queue_event:leisure_prophecy: true}}
+
+# -- batch 2 (owner request: more items and quests) ---------------------------------------------------------------------
+
+- key: flea_market
+  section: leisure
+  name: Барахолка под эстакадой
+  button: Барахолка
+  description: "Ряды столов с хламом со всего города. Можно найти оружие, броню или просто красивую ерунду. Нужна удача и глаз."
+  cost: 100
+  check: {stat: LUCK, dv: 12}
+  success:
+    - {weight: 2, text: "Под кучей ржавых дисков лежит рабочий мачете. Продавец отдаёт его за сотню, не глядя.", effects: {item_grant:machete: true}}
+    - {weight: 2, text: "Кожаная куртка с подкладкой, почти новая. Пахнет чужим одеколоном, но сидит отлично.", effects: {item_grant:padded_leather: true}}
+    - {weight: 1, text: "Старый дерринджер в коробке из-под сигар. Продавец не знает, что он заряжен.", effects: {item_grant:derringer: true}}
+    - {weight: 1, text: "Ты покупаешь коробку старых шардов. На одном — пароль к чьему-то счёту.", effects: {eddies: 600, heat: 1}}
+  fail:
+    - {weight: 3, text: "Сплошной хлам. Ты уходишь с пластиковым динозавром, который поёт гимн Arasaka.", effects: {mood: 2}}
+    - {weight: 1, text: "Пока ты копаешься в коробках, кто-то копается в твоих карманах.", effects: {eddies: -150}}
+
+- key: dog_shelter
+  section: leisure
+  name: Приют для собак
+  button: Приют
+  description: "Волонтёры приюта ищут, кто погуляет с собаками. Собаки бывают с имплантами. Одна может выбрать тебя."
+  success:
+    - {weight: 3, text: "Ты гуляешь с тремя псами по набережной. Они тянут в разные стороны, и тебе впервые за неделю хорошо.", effects: {mood: 6, humanity: 1}}
+    - {weight: 1, text: "Огромный пёс с кибер-челюстью не отходит от тебя ни на шаг. Волонтёр улыбается: «Он решил».", effects: {}, event: leisure_dog_adopt}
+
+- key: underground_concert
+  section: leisure
+  name: Подпольный концерт
+  button: Концерт
+  description: "Панк-группа играет в подвале без разрешения. Слава, мерч и шанс, что приедет полиция."
+  cost: 80
+  success:
+    - {weight: 3, text: "Ты орёшь песни в первом ряду, пока не садится голос. Утром видео с тобой в первом ряду крутят по всему району.", effects: {mood: 10, fame: 1}}
+    - {weight: 1, text: "Солист дарит тебе куртку группы со сцены. С кевларом внутри: панки знают жизнь.", effects: {item_grant:bomber_jacket: true, mood: 6}}
+    - {weight: 1, text: "Приезжают копы. Ты уходишь через окно туалета, но камера на входе тебя сняла.", effects: {heat: 1, mood: 4}}
+
+- key: shooting_gallery
+  section: leisure
+  name: Уличный тир
+  button: Тир
+  description: "Ярмарочный тир с настоящими патронами. Выбиваешь десятку — забираешь приз. Тренирует руку."
+  cost: 60
+  check: {stat: REF, skill: firearms, dv: 14}
+  success:
+    - {weight: 3, text: "Десять из десяти. Хозяин тира морщится и вручает приз: старый, но рабочий пистолет.", effects: {item_grant:pawnshop_pistol: true, skill_xp:firearms: 2}}
+    - {weight: 2, text: "Девять из десяти. Приз — плюшевый тигр и уважение очереди.", effects: {skill_xp:firearms: 2, mood: 4}}
+  fail:
+    - {weight: 1, text: "Мимо. Мимо. Мимо. Дети в очереди хихикают.", effects: {skill_xp:firearms: 1, mood: -2}}
+
+- key: chess_hustler
+  section: leisure
+  name: Шахматы на деньги
+  button: Шахматы
+  description: "Старик в парке играет в шахматы на сотню. Говорят, он бывший гроссмейстер с имплантом-компьютером. Говорят, не всё правда."
+  cost: 100
+  check: {stat: INT, dv: 14}
+  success:
+    - {weight: 2, text: "Мат на тридцатом ходу. Старик хмыкает, платит двести и предлагает реванш на следующей неделе.", effects: {eddies: 200, mood: 6}}
+    - {weight: 1, text: "Ты выигрываешь, и старик вместо денег отдаёт свой чип мышечной памяти: «Мне он уже не помогает»", effects: {cyberware_grant:muscle_memory_chip: true}}
+  fail:
+    - {weight: 3, text: "Старик ставит мат за двенадцать ходов и предлагает сыграть ещё. Ты благоразумно отказываешься.", effects: {mood: -2}}
+
+- key: karaoke_battle
+  section: leisure
+  name: Баттл рэперов
+  button: Рэп-баттл
+  description: "Подпольный баттл на крыше. Проигравший платит, победитель забирает славу и банк."
+  cost: 100
+  check: {stat: COOL, skill: persuasion, dv: 15}
+  success:
+    - {weight: 3, text: "Твой панчлайн про корпоративные пенсии разносит соперника. Крыша взрывается. Банк твой.", effects: {eddies: 400, fame: 2, street_cred: 1}}
+  fail:
+    - {weight: 2, text: "Соперник читает про твою куртку так, что смеёшься даже ты. Проигрыш, но красивый.", effects: {mood: -3, fame: 1}}
+    - {weight: 1, text: "Ты забываешь текст на второй строчке. Тишина. Кто-то бросает тебе бутылку воды из жалости.", effects: {mood: -6}}
+
+# -- batch 3 ------------------------------------------------------------------------------------------------------------
+
+- key: junk_derby
+  section: leisure
+  name: Дерби на развалюхах
+  button: Дерби
+  description: "Арена на старом стадионе: машины лупят друг друга, пока не останется одна. Нужна тачка, которую не жалко, и крепкая шея."
+  cost: 300
+  check: {stat: REF, skill: driving, dv: 14}
+  success:
+    - {weight: 3, text: "Последняя машина на ходу — твоя. Банк, кубок из выхлопной трубы и рёв трибун.", effects: {eddies: 900, fame: 1}}
+    - {weight: 1, text: "Ты побеждаешь, и организатор вместо денег отдаёт главный приз: собранную из трёх машин развалюху. Ездит!", effects: {vehicle_grant:lg_rusty_hope: true, fame: 1}}
+  fail:
+    - {weight: 2, text: "Тебя таранят с двух сторон. Вылезаешь через окно под аплодисменты.", effects: {hp: -6, mood: 2}}
+    - {weight: 1, text: "Машина горит, ты бежишь. Шоу удалось, тебе — не очень.", effects: {hp: -9, fame: 1}}
+
+- key: night_market_food
+  section: leisure
+  name: Ночной рынок еды
+  button: Ночной рынок
+  description: "Сто лотков с едой со всего мира под неоновыми гирляндами. Сытость, радость и шанс попробовать что-то, о чём потом пожалеешь."
+  cost: 60
+  success:
+    - {weight: 3, text: "Такояки, тако, пельмени и что-то синее на палочке. Живот полон, на душе хорошо, пальцы немного липкие.", effects: {mood: 7, hp: 2}}
+    - {weight: 1, text: "Повар-кочевник угощает тебя супом из Пустошей и рассказывает про старый караван.", effects: {mood: 5, faction_rep:aldecaldos: 1}}
+    - {weight: 1, text: "Синее на палочке было ошибкой. Ночь проходит в обнимку с унитазом.", effects: {hp: -3, mood: -2}}
+
+- key: rooftop_party
+  section: leisure
+  name: Вечеринка на крыше
+  button: Крыша
+  description: "Тусовка на крыше небоскрёба: музыка, город внизу, корпораты, которые притворяются, что они не корпораты. Хорошее место для знакомств."
+  cost: 150
+  check: {stat: COOL, skill: persuasion, dv: 12}
+  success:
+    - {weight: 2, text: "Ты уходишь с тремя визитками и одним приглашением на собеседование.", effects: {add_npc:contact: true, status: 1}}
+    - {weight: 2, text: "Рассвет над заливом, рядом кто-то, кто ещё вчера был незнакомцем.", effects: {mood: 10}}
+  fail:
+    - {weight: 2, text: "Охрана вежливо просит тебя на выход: «Список гостей закрыт».", effects: {mood: -3}}
+
+- key: sim_racing
+  section: leisure
+  name: Гоночный симулятор
+  button: Симулятор
+  description: "Капсула с полным погружением: руль, перегрузки, запах бензина. Тренирует вождение без риска для шеи."
+  cost: 120
+  success:
+    - {weight: 3, text: "Двадцать кругов по виртуальному Монако. Руки помнят каждый поворот.", effects: {skill_xp:driving: 2, mood: 3}}
+    - {weight: 1, text: "Ты бьёшь рекорд трассы. Владелец зала вешает твоё имя на табло.", effects: {skill_xp:driving: 2, fame: 1}}
+
+- key: library_night
+  section: leisure
+  name: Ночь в библиотеке
+  button: Библиотека
+  description: "Старая городская библиотека работает круглосуточно для тех, кому некуда идти. Бумажные книги, тишина и сторож-андроид."
+  success:
+    - {weight: 3, text: "Ты читаешь до утра книгу о городе до Корпоративных войн. Многое становится понятнее.", effects: {skill_xp:tech: 1, mood: 4, humanity: 1}}
+    - {weight: 1, text: "Сторож-андроид советует тебе учебник по медицине. Он оказывается прав.", effects: {skill_xp:medicine: 2}}
+    - {weight: 1, text: "Между страницами старой книги ты находишь записку и сотню эдди. Записка — признание в любви 2012 года.", effects: {eddies: 100, mood: 6}}
+
+- key: tattoo_old_school
+  section: leisure
+  name: Тату у старого мастера
+  button: Старое тату
+  description: "Мастер, который бьёт тату машинкой ещё с прошлого века. Без светодиодов, зато с историей. Одна татуировка — один рассказ."
+  cost: 300
+  daily: true
+  success:
+    - {weight: 2, text: "Ласточка на запястье. Мастер говорит, что она приносит удачу морякам. Ты не моряк, но верится.", effects: {luck_pool: 1, mood: 4}}
+    - {weight: 2, text: "Змея вдоль руки. На улице на тебя начинают смотреть иначе.", effects: {street_cred: 1, mood: 3}}
+    - {weight: 1, text: "Мастер набивает имя, которое срывается у тебя с языка само. Чьё оно, ты не знаешь.", effects: {humanity: 2, mood: -2}}
+
+- key: bowling_league
+  section: leisure
+  name: Ночная лига боулинга
+  button: Боулинг
+  description: "Боулинг с неоновыми шарами и командами из бывших копов, пенсионеров и рипперов. Сплочённость, пиво и немного ставок."
+  cost: 50
+  check: {stat: REF, dv: 12}
+  success:
+    - {weight: 3, text: "Страйк, страйк, спэр. Команда пенсионеров принимает тебя в состав.", effects: {mood: 6, add_npc:friend: true}}
+    - {weight: 1, text: "Ты выигрываешь у команды рипперов. Капитан в знак уважения ставит тебе скидку в клинике.", effects: {eddies: 200, mood: 4}}
+  fail:
+    - {weight: 2, text: "Шар уходит в соседнюю дорожку. Бывшие копы смеются до слёз.", effects: {mood: 1}}
+
+- key: pawnshop_haggle
+  section: leisure
+  name: Торг в ломбарде
+  button: Ломбард
+  description: "Старый ломбард в Уотсоне, где хозяин торгуется ради удовольствия. Можно уйти с вещью дешевле, чем она стоит. Или с пустыми руками."
+  cost: 300
+  check: {stat: COOL, skill: persuasion, dv: 13}
+  success:
+    - {weight: 2, text: "Хозяин сдаётся и отдаёт старый револьвер за триста: «Это грабёж, и я горжусь тобой».", effects: {item_grant:heavy_revolver: true}}
+    - {weight: 2, text: "Байкерская куртка с наплечниками уходит за бесценок.", effects: {item_grant:biker_leathers: true}}
+    - {weight: 1, text: "Под прилавком ракетница в рабочем состоянии. Хозяин добавляет её бонусом.", effects: {item_grant:flare_gun: true, eddies: 150}}
+  fail:
+    - {weight: 3, text: "Хозяин непреклонен. Ты уходишь с брелоком в виде черепа за триста эдди.", effects: {mood: -2}}

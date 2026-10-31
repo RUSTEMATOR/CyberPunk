@@ -1,0 +1,252 @@
+- key: tyger_claws
+  name: Тигриные когти
+  name_gen: "Тигриных когтей"   # case forms for gig titles ({target_gen} ...); a gang without them uses name
+  name_dat: "Тигриным когтям"
+  name_acc: "Тигриных когтей"
+  name_ins: "Тигриными когтями"
+  name_pre: "Тигриных когтях"
+  description: "Банда с корнями в японском преступном мире. Держит клубы, торговлю имплантами и часть улиц. Вежливы ровно до первого удара."
+  style: ножи и катаны, чёрная кожа, показушная вежливость перед ударом
+  disposition:
+    bribe_dv: 15
+    talk_dv: 17
+    bribe_cost_mult: 2.0
+    flee_mod: 2
+    surrender: {robbed: 1}
+    talk_bonus_if:
+      - {districts: [westbrook], bonus: 2}
+  available_from: 2020
+
+- key: maelstrom
+  name: "Мальстрём"
+  name_gen: "Мальстрёма"
+  name_dat: "Мальстрёму"
+  name_acc: "Мальстрём"
+  name_ins: "Мальстрёмом"
+  name_pre: "Мальстрёме"
+  description: "Киборги Уотсона, в которых хрома больше, чем человека. Ценят силу и верность, а из банды уходят только вперёд ногами."
+  style: механические руки и ножи, кричат на улице, в бою молчат; ценят силу и верность
+  disposition:
+    bribe_dv: 21
+    talk_dv: 21
+    bribe_cost_mult: 3.0
+    flee_mod: 1
+    surrender: {robbed: 4, beaten: 4, chrome_stripped: 2}
+    talk_bonus_if:
+      - {chrome: chromed, bonus: 4}      # easier for the chromed: they are "one of us"
+  available_from: 2020
+
+- key: moxes
+  name: "Шельмы"
+  name_gen: "Шельм"
+  name_dat: "Шельмам"
+  name_acc: "Шельм"
+  name_ins: "Шельмами"
+  name_pre: "Шельмах"
+  description: "Банда, выросшая из тех, кого защищала Лиззи Борден. Охраняют клубы и их работников, а за своих мстят без жалости."
+  style: яркие цвета, кожаные куртки, ухмылки; предпочитают договориться, а потом проверить
+  disposition:
+    bribe_dv: 15
+    talk_dv: 13
+    bribe_cost_mult: 0.8
+    flee_mod: 0
+    surrender: {released: 1}
+  available_from: 2067
+
+- key: valentinos
+  name: "Валентинос"
+  description: "Банда Хейвуда, где всё держится на семье, вере и уважении. Правила строгие, за нарушение убивают."
+  style: вежливые, в костюмах, говорят о семье; в конфликте действуют резко и без предупреждения
+  disposition:
+    bribe_dv: 17
+    talk_dv: 15
+    bribe_cost_mult: 1.0
+    flee_mod: 1
+    surrender: {beaten: 1}
+    talk_bonus_if:
+      - {districts: [heywood], bonus: 2}
+  available_from: 2037
+
+- key: sixth_street
+  name: "Шестая улица"
+  name_gen: "Шестой улицы"
+  name_dat: "Шестой улице"
+  name_acc: "Шестую улицу"
+  name_ins: "Шестой улицей"
+  name_pre: "Шестой улице"
+  description: "Ветераны войн, которые взялись «защищать» Санто-Доминго и Хейвуд. Патрулируют перекрёстки и не любят чужих машин."
+  style: военная выправка, камуфляж, армейский жаргон; говорят мало и по делу
+  disposition:
+    bribe_dv: 17
+    talk_dv: 15
+    bribe_cost_mult: 1.0
+    flee_mod: 1
+    surrender: {beaten: 1}
+    talk_bonus_if:
+      - {origins: [corp_war_veteran], bonus: 2}
+  available_from: 2026
+
+- key: voodoo_boys
+  name: "Вудуисты"
+  name_gen: "Вудуистов"
+  name_dat: "Вудуистам"
+  name_acc: "Вудуистов"
+  name_ins: "Вудуистами"
+  name_pre: "Вудуистах"
+  description: "Банда Пасифики, где правят нетраннеры. Торгуют деками и тайнами Сети, к чужакам относятся холодно."
+  style: тату и шрамы, мистика, нетраннинг; речь медленная, с образами из снов и дешёвого брейнданса
+  disposition:
+    bribe_dv: 17
+    talk_dv: 15
+    bribe_cost_mult: 1.0
+    flee_mod: -1
+    surrender: {chrome_stripped: 1}
+    bribe_data_bonus: 3                # paying with data instead of eddies lowers the bribe dv by 3
+    strip_slots: [brain]               # only link implants are taken
+  available_from: 2062
+
+- key: animals
+  name: "Животные"
+  name_gen: "Животных"
+  name_dat: "Животным"
+  name_acc: "Животных"
+  name_ins: "Животными"
+  name_pre: "Животных"
+  description: "Громилы на стимуляторах, которых боятся даже в Пасифике. Оружие носят открыто, а повод для драки им не нужен."
+  style: дикие, грязные, рычат, без плана; мало слов, много шума
+  disposition:
+    bribe_dv: 19
+    talk_dv: 17
+    bribe_cost_mult: 1.5
+    flee_mod: 2
+    surrender: {beaten: 1}
+    talk_alt: fistfight                # may offer a fistfight instead of a talk
+  available_from: 2070
+
+- key: barghest
+  name: "Баргест"
+  name_gen: "Баргеста"
+  name_dat: "Баргесту"
+  name_acc: "Баргест"
+  name_ins: "Баргестом"
+  name_pre: "Баргесте"
+  description: "Хозяева Догтауна. Ловят должников и тех, кто пытается сбежать из района. Их знак — ошейник на шее."
+  style: собачьи метафоры, молчаливые сцены, ошейники и цепи; страх в голосе вместо злости
+  disposition:
+    bribe_dv: 19
+    talk_dv: 19
+    bribe_cost_mult: 1.5
+    flee_mod: 3
+    surrender: {captured: 6, executed: 4}
+  available_from: 2070
+
+- key: wraiths
+  name: "Рейфы"
+  name_gen: "Рейфов"
+  name_dat: "Рейфам"
+  name_acc: "Рейфов"
+  name_ins: "Рейфами"
+  name_pre: "Рейфах"
+  description: "Рейдеры Бэдлендса, бывшие кочевники и механики. Живут на дорогах и знают каждый колодец и каждый тайник."
+  style: пыль, мотоциклы, сухой юмор; говорят о машинах и воде, а не о людях
+  disposition:
+    bribe_dv: 15
+    talk_dv: 19
+    bribe_cost_mult: 0.8
+    flee_mod: 2
+    surrender: {robbed: 1}
+
+- key: aldecaldos
+  name: Альдекальдо
+  description: "Клан кочевников из Бэдлендса: семья, караваны и старые обычаи. Чужака примут, если он отдаст долг чести."
+  style: песни у костра, длинные клятвы, уважение к старшим; насилие редкое, но без пощады
+  disposition:
+    bribe_dv: 13
+    talk_dv: 13
+    bribe_cost_mult: 0.5
+    flee_mod: 1
+    surrender: {released: 1}
+  available_from: 2015
+
+- key: scavengers
+  name: Мусорщики
+  name_gen: "Мусорщиков"
+  name_dat: "Мусорщикам"
+  name_acc: "Мусорщиков"
+  name_ins: "Мусорщиками"
+  name_pre: "Мусорщиках"
+  description: "Банда без своего района. Рыщут по всему городу, снимают хром с тел и продают за бесценок. Ни один фиксер их не контролирует."
+  style: грязные, быстрые, циничные; ценят эдди больше жизни, но не всегда честны в расчётах
+  disposition:
+    bribe_dv: 15
+    talk_dv: 21
+    bribe_cost_mult: 0.7
+    flee_mod: -1
+    surrender: {chrome_stripped: 1}
+
+- key: iron_sights
+  name: "Айрон Сайтс"
+  description: "Банда на деньги службы безопасности Arasaka. Некоторые её бойцы давно перестали быть людьми, и лезвия из их предплечий выдвигаются без всякого повода."
+  style: тяжёлый хром и выдвижные лезвия, дисциплина наёмников и пустые глаза; говорят коротко, смеются не к месту
+  disposition:
+    bribe_dv: 21
+    talk_dv: 21
+    bribe_cost_mult: 2.5
+    flee_mod: 2
+    surrender: {beaten: 3, chrome_stripped: 2, robbed: 1}
+    talk_bonus_if:
+      - {chrome: chromed, bonus: 2}
+  available_from: 2013
+  available_until: 2049
+
+- key: bozos
+  name: "Бозо"
+  description: "Банда клоунов с перекроенными лицами, на которых навсегда застыла гримаса. Играют на страхе и не отпускают жертву, пока им не надоест."
+  style: цирковые прозвища, смех в темноте, розыгрыши с запертыми лифтами и крысами; вежливые до жути, никогда не торопятся
+  disposition:
+    bribe_dv: null
+    talk_dv: 21
+    bribe_cost_mult: 1.0
+    flee_mod: 1
+    surrender: {beaten: 3, captured: 3, vanished: 1}
+  available_from: 2013
+  available_until: 2049
+
+- key: inquisitors
+  name: Инквизиторы
+  name_gen: "Инквизиторов"
+  name_dat: "Инквизиторам"
+  name_acc: "Инквизиторов"
+  name_ins: "Инквизиторами"
+  name_pre: "Инквизиторах"
+  description: "Секта против имплантов. Верят в тренировки и биотех, вырезают хром из живых людей и называют это спасением души."
+  style: проповеди вместо угроз, белые повязки, холодное спокойствие; о хроме говорят как о болезни
+  disposition:
+    bribe_dv: null
+    talk_dv: 19
+    bribe_cost_mult: 1.0
+    flee_mod: 1
+    surrender: {chrome_stripped: 5, beaten: 2, released: 1}
+    talk_bonus_if:
+      - {chrome: clean, bonus: 4}      # a clean body is a sign of the faith
+  available_from: 2013
+  available_until: 2049
+
+- key: piranhas
+  name: Пираньи
+  name_gen: "Пираний"
+  name_dat: "Пираньям"
+  name_acc: "Пираний"
+  name_ins: "Пираньями"
+  name_pre: "Пираньях"
+  description: "Вечеринка с ножом в кармане. Угощают, продают дурь и обчищают тех, кто отказался танцевать. Нападают всей стаей."
+  style: смех, музыка из колонок и дешёвые стимуляторы; шутят над всем, в драку лезут по настроению
+  disposition:
+    bribe_dv: 11
+    talk_dv: 11
+    bribe_cost_mult: 0.6
+    flee_mod: -2
+    surrender: {released: 3, robbed: 2}
+  available_from: 2020
+  available_until: 2049
+

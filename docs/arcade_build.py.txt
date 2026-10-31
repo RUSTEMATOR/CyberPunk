@@ -1,0 +1,114 @@
+"""Builds webapp/arcade/<game>/ from the cloned open-source games: copy, strip trackers, hook the bridge."""
+import re, shutil, pathlib, sys
+
+SRC = pathlib.Path("/tmp/claude-0/oss")
+DST = pathlib.Path("/home/claude/nightcity-bot/webapp/arcade/v4")  # versioned path: Cloudflare keeps old files for hours
+NC = '<script src="../nc.js" charset="utf-8"></script>'
+
+def fresh(key, src, ignore=()):
+    d = DST / key
+    if d.exists():
+        shutil.rmtree(d)
+    shutil.copytree(SRC / src, d, ignore=shutil.ignore_patterns(".git", ".github", "*.md", "node_modules", *ignore))
+    for lic in (SRC / src).glob("LICEN*"):
+        shutil.copy(lic, d / lic.name)
+    return d
+
+def sub(path, old, new, count=1, regex=False):
+    s = path.read_text(encoding="utf-8")
+    if regex:
+        s2, n = re.subn(old, new, s, count=count, flags=re.S)
+    else:
+        n = s.count(old)
+        s2 = s.replace(old, new, count) if n else s
+    if not n:
+        sys.exit(f"patch miss in {path}: {old[:70]!r}")
+    path.write_text(s2, encoding="utf-8")
+
+def head_bridge(index, extra="", bar="bl", viewport=False):
+    tag = '<link rel="stylesheet" href="../nc-theme.css">' + NC.replace("<script ", f'<script data-bar="{bar}" ')
+    sub(index, "</head>", (VIEWPORT if viewport else "") + tag + extra + "\n</head>")
+
+VIEWPORT = '<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">'
+
+# -- Hextris (GPL-3.0) ---------------------------------------------------------------------------------------------
+d = fresh("hextris", "hextris", ignore=("CNAME", "a.js", "manifest.webmanifest"))
+i = d / "index.html"
+sub(i, "<link href='http://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet' type='text/css'>", "")
+sub(i, '<script data-ad-client="ca-pub-9107422120987163" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>', "")
+sub(i, r"<script> \(function\(i,s,o,g,r,a,m\).*?</script>", "", regex=True)
+sub(i, '<link rel="manifest" href="manifest.webmanifest">', "")
+head_bridge(i, "<style>#socialShare,#androidBadge,#iOSBadge,.rrssb-buttons{display:none!important}</style>")
+m = d / "js/main.js"
+sub(m, "$.get('http://54.183.184.126/' + String(score))", "if (window.NC) NC.score(score);")
+sub(d / "js/initialization.js", r"\t\t\(function\(i, s, o, g, r, a, m\) \{.*?ga\('send', 'pageview'\);", "", regex=True)
+sub(m, "(function(){\n    \tvar script = document.createElement('script');\n\tscript.src = 'http://hextris.io/a.js';\n\tdocument.head.appendChild(script);\n})()", "")
+
+# -- 2048 (MIT) -------------------------------------------------------------------------------------------------------
+d = fresh("2048", "2048", ignore=("Rakefile", "CONTRIBUTING.md"))
+head_bridge(d / "index.html")
+g = d / "js/game_manager.js"
+sub(g, "      this.over = true; // Game over!", "      this.over = true; // Game over!\n      if (window.NC) NC.score(this.score);")
+sub(g, "GameManager.prototype.restart = function () {", "GameManager.prototype.restart = function () {\n  if (window.NC && this.score && !this.over) NC.score(this.score);")
+
+# -- T-Rex Runner (BSD-3) -----------------------------------------------------------------------------------------------
+d = fresh("dino", "t-rex-runner")
+i = d / "index.html"
+sub(i, '<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> ', "")
+head_bridge(i)
+j = d / "index.js"
+sub(j, "    var IS_MOBILE = /Android/.test(window.navigator.userAgent) || IS_IOS;",
+       "    var IS_MOBILE = /Android/.test(window.navigator.userAgent) || IS_IOS || ('ontouchstart' in window);")
+sub(j, "        gameOver: function () {", "        gameOver: function () {\n            if (window.NC) NC.score(this.distanceMeter.getActualDistance(Math.ceil(this.distanceRan)));")
+
+# -- Tower Building (MIT) -------------------------------------------------------------------------------------------------
+d = fresh("tower", "tower_game", ignore=("src", "package.json", "package-lock.json", "index.js", "README.zh-CN.md"))
+i = d / "index.html"
+sub(i, '<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCWZ8ZDCH2"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-YCWZ8ZDCH2")</script>', "")
+sub(i, "      if (f >= 3) overShowOver()", "      if (f >= 3) { overShowOver(); if (window.NC) NC.score(score || 0) }")
+sub(i, "    window.location.href = window.location.href + '?s=' + (+new Date())", "    window.location.reload()")
+head_bridge(i, "<style>.js-invite{display:none!important}</style>")
+
+# -- Clumsy Bird (GPL-3.0) ---------------------------------------------------------------------------------------------------
+d = fresh("bird", "clumsy-bird", ignore=("Gruntfile.js", "Procfile", "app.json", "package.json", "humans.txt", "CUSTOMIZING.md"))
+head_bridge(d / "index.html")
+b = d / "build/clumsy-min.js"
+sub(b, "onResetEvent:function(){this.savedData={score:game.data.score,steps:game.data.steps}",
+    "onResetEvent:function(){window.NC&&NC.score(game.data.steps),this.savedData={score:game.data.score,steps:game.data.steps}")
+
+# -- Pac-Man (WTFPL) -------------------------------------------------------------------------------------------------------------
+d = fresh("pacman", "pacman")
+i = d / "index.html"
+head_bridge(i, "<script>document.addEventListener('DOMContentLoaded',function(){NC.pad({left:37,up:38,right:39,down:40,actions:[{label:'Старт',key:78},{label:'Пауза',key:80}]})})</script>", bar="tr", viewport=True)
+p = d / "pacman.js"
+sub(p, "        if (user.getLives() > 0) {\n            startLevel();\n        }",
+       "        if (user.getLives() > 0) {\n            startLevel();\n        } else if (window.NC) {\n            NC.score(user.theScore());\n        }")
+
+# -- Tetris (MIT) ------------------------------------------------------------------------------------------------------------------
+d = fresh("tetris", "tetris")
+i = d / "index.html"
+head_bridge(i, "<script>document.addEventListener('DOMContentLoaded',function(){NC.pad({left:37,up:38,right:39,down:40,repeat:true,actions:[{label:'Старт',key:32}]})})</script>", bar="tr", viewport=True)
+sub(i, "<head>", '<head>\n  <meta charset="utf-8">')
+sub(i, "  </style>", "    @media screen and (max-width: 499px) { #tetris { width: 94vw; font-size: 1em; padding: .5em; margin: 3.2em auto .5em; box-sizing: border-box; } #menu { width: 32vw; height: 64vw; } #upcoming { width: 20vw; height: 20vw; } #canvas { width: 54vw; height: 108vw; } }\n  </style>")
+sub(i, "    function lose() { show('start'); setVisualScore(); playing = false; }",
+       "    function lose() { show('start'); setVisualScore(); playing = false; if (window.NC) NC.score(score); }")
+
+# -- HexGL (MIT, some resources CC BY-NC 3.0) ----------------------------------------------------------------------------------------
+d = fresh("hexgl", "HexGL", ignore=("package.zip", "textures.full", "cache.appcache", "manifest.webapp",
+                                     "package.webapp", "launch.coffee", "tests.html"))
+for f in d.rglob("*.coffee"):
+    if f.is_file():
+        f.unlink()
+i = d / "index.html"
+sub(i, r"    //analytics.*?</script>", "    </script>", regex=True)
+sub(i, '<link rel="icon" href="http://hexgl.bkcore.com/favicon.png" type="image/png">', '<link rel="icon" href="favicon.png" type="image/png">')
+sub(i, '<link rel="shortcut icon" href="http://hexgl.bkcore.com/favicon.png" type="image/png">', "")
+head_bridge(i)
+gp = d / "bkcore/hexgl/Gameplay.js"
+sub(gp, "\tif(result == this.results.FINISH)\n\t{\n\t\tif(this.hud != null) this.hud.display(\"Finish\");",
+        "\tif(result == this.results.FINISH)\n\t{\n\t\tif(window.NC) NC.score(Math.max(1, Math.round((360000 - this.finishTime) / 100)));\n\t\tif(this.hud != null) this.hud.display(\"Finish\");")
+
+print("built", sorted(p.name for p in DST.iterdir()))
+
+# -- the Night City theme (owner request 29.10 «Can we change style of these games?») ----------------------------------
+exec(open("/tmp/claude-0/arcade_theme.py", encoding="utf-8").read())

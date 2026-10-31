@@ -1,0 +1,12 @@
+- key: maelstrom_ganger
+  name: Головорез Мальстрёма
+  factions: [maelstrom]
+  danger: 2
+  attack: 11               # attack roll = attack + d10; formula 8 + 2 * danger
+  defense: 15              # dv for the player to hit; formula 11 + 2 * danger
+  weapon: combat_knife
+  armor: light_vest
+  cyberware: [berserk_zetatech]
+  quickhacks: []
+  ai: brute
+  leader: false

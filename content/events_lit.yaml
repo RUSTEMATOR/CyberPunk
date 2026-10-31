@@ -1,0 +1,138 @@
+# Life in Tears (owner request 24.10): a story character of Night City, like Raven Tearz (events_raven.yaml).
+# A rockerboy who plays post-punk in basements and teaches street kids English for free. The player meets him now and
+# then: flags lit_met -> lit_trust -> lit_debt -> lit_song. With lit_trust he can be called into a fight
+# (balance combat.reinforce lit). His guitar talks (weapons.yaml lit_guitar). Player text avoids gendered past tense.
+
+- id: lit_meet
+  title: Концерт в подвале
+  category: relationships
+  weight: 2
+  conditions:
+    flags_none: [lit_met, abroad]
+  text: "Подвал бывшей прачечной, сорок человек, дым и красный свет. На сцене худой парень с подведёнными глазами и бас-гитарой. Холодные синтезаторы, бас, который чувствуешь рёбрами, и низкий голос: половина слов по-русски, половина по-английски. На колонке маркером: Life in Tears."
+  choices:
+    - label: Танцевать
+      effects: {flag_set:lit_met: true, mood: 6}
+      text: "Ты танцуешь, пока не перестаёшь думать. После концерта он сам подходит стрельнуть сигарету: «Ты попадаешь в ритм. Это редкость»."
+    - label: Купить мерч
+      effects: {flag_set:lit_met: true, eddies: -100, mood: 3}
+      text: "Чёрная футболка, на ней плачущий глаз и надпись «Life in Tears». Он подписывает её прямо на тебе и говорит: «Thank you. Это значит спасибо. Запомни»."
+    - label: Уйти до конца
+      effects: {flag_set:lit_met: true}
+      text: "Ты уходишь на середине песни. Бас ещё долго звучит в голове, как будто кто-то оставил дверь открытой."
+
+- id: lit_intro
+  title: После концерта
+  category: relationships
+  weight: 2
+  conditions:
+    flags_all: [lit_met]
+    flags_none: [lit_known, lit_trust, abroad]
+  # owner report 26.10: first the band introduces itself
+  text: "После концерта в подвале пахнет потом и дешёвым табаком. Басист с подведёнными глазами сматывает провод и узнаёт тебя. «Помню тебя с прошлого концерта, у самой сцены. Меня зовут Life in Tears. Это и я, и вся группа: я, бас и драм-машина, если не сломалась. Пою про город, половину по-русски, половину по-английски: так честнее, этот город говорит на всех языках сразу»."
+  choices:
+    - label: Спросить про песни
+      effects: {flag_set:lit_known: true, mood: 4}
+      text: "«Про то, как корпорации выжимают людей, а люди всё равно танцуют. Грустно и громко». Он улыбается. «Лейблы такое не любят. Поэтому подвалы»."
+    - label: Спросить, на что он живёт
+      effects: {flag_set:lit_known: true, skill_xp:persuasion: 2}
+      text: "«Концерты, мерч и немного уроков. Днём учу уличных детей английскому в Кабуки. Бесплатно. Им нужен язык, на котором пишут контракты, чтобы их не обманули»."
+    - label: Помочь со звуком
+      effects: {flag_set:lit_known: true, skill_xp:tech: 2}
+      text: "Вы вдвоём перепаиваете разъём на колонке. «Руки откуда надо, — говорит он. — Приходи ещё. Мне вечно не хватает тех, кто умеет держать паяльник»."
+
+- id: lit_school
+  title: Урок английского
+  category: relationships
+  weight: 2
+  conditions:
+    flags_all: [lit_met, lit_known]
+    flags_none: [lit_trust, abroad]
+  text: "Общественный центр в Кабуки, пластиковые стулья, двенадцать детей с улицы. У доски тот самый парень с бас-гитарой, только без подводки. «Past simple. I was, you were, we were. Повторяем»."
+  choices:
+    - label: Помочь вести урок
+      check: {stat: EMP, skill: persuasion, dv: 13}
+      success: {text: "Ты объясняешь неправильные глаголы через песни, дети смеются и запоминают. После урока он жмёт руку: «У тебя талант учителя. Приходи ещё». Он пишет тебе свой номер.", effects: {flag_set:lit_trust: true, humanity: 3, skill_xp:persuasion: 4, mood: 4}}
+      fail: {text: "Дети тебя не слушают, один кидается жвачкой. Life in Tears смеётся: «Первый урок у всех такой». Номер он всё равно оставляет.", effects: {flag_set:lit_trust: true, mood: -1}}
+    - label: Сесть за парту самому
+      check: {stat: INT, dv: 12}
+      success: {text: "К концу урока ты знаешь двадцать новых слов и одно ругательство, которое он запрещает повторять при детях.", effects: {skill_xp:persuasion: 3, mood: 3}}
+      fail: {text: "Ты путаешь was и were до самого конца. Девочка с косичками терпеливо поправляет тебя.", effects: {mood: 1}}
+    - label: Оставить денег на учебники
+      effects: {flag_set:lit_trust: true, eddies: -500, humanity: 2}
+      text: "Он долго смотрит на купюры, потом кивает. «На учебники. Не на пиво. Обещаю». Через неделю у детей новые планшеты."
+
+- id: lit_label
+  title: Контракт с лейблом
+  category: money
+  weight: 2
+  conditions:
+    flags_all: [lit_trust]
+    flags_none: [lit_label_done, abroad]
+  text: "Life in Tears звонит ночью. Корпоративный лейбл хочет его песню для рекламы энергетика. Денег хватит, чтобы центр в Кабуки работал год. Но песня про то, как корпорации выжимают город. «Скажи честно. Продавать?»"
+  choices:
+    - label: Продавать, дети важнее
+      effects: {flag_set:lit_label_done: true, eddies: 1000, mood: -2}
+      text: "Он продаёт. Через месяц его песня звучит в рекламе, и подвал над ним смеётся. Он отдаёт тебе долю: «Решали вместе, значит, и делим вместе». Центр в Кабуки получает новую крышу."
+    - label: Не продавать
+      effects: {flag_set:lit_label_done: true, street_cred: 2, mood: 2}
+      text: "Он не продаёт. На следующем концерте в подвале на сто человек больше: слух разошёлся. «Музыка должна оставаться нашей»."
+    - label: Сорвать сделку лейблу
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "Ты сливаешь в сеть внутренние письма лейбла: как они покупают андеграунд, чтобы его выключить. Лейбл платит неустойку центру в Кабуки, чтобы замять скандал.", effects: {flag_set:lit_label_done: true, street_cred: 3, heat: 1}}
+      fail: {text: "Лёд лейбла оказывается крепче, чем выглядел. Сделка остаётся в силе, а у тебя кровь из носа.", effects: {hp: -6}}
+
+- id: lit_raid
+  title: Облава на концерт
+  category: ncpd
+  weight: 2
+  conditions:
+    flags_all: [lit_trust]
+    flags_none: [lit_debt, abroad]
+  foe: Командир облавы
+  text: "Посреди концерта гаснет свет, в подвал спускаются люди в броне. Кто-то из корпов решил, что песни Life in Tears мешают продажам. Он продолжает играть в темноте."
+  choices:
+    - label: Встать у лестницы
+      violent: true
+      effects: {start_combat: 2, flag_set:lit_debt: true, street_cred: 2}
+      text: "Ты встаёшь между облавой и залом. Бас за спиной не замолкает ни на секунду."
+    - label: Вывести людей через котельную
+      check: {stat: COOL, skill: stealth, dv: 14}
+      success: {text: "Ты выводишь всех через котельную и двор. Последним выходит он, с гитарой на плече: «Спасибо. Я этого не забуду».", effects: {flag_set:lit_debt: true, humanity: 2}}
+      fail: {text: "В котельной тупик. Вас берут у выхода, держат до утра и отпускают с синяками.", effects: {hp: -6, heat: 1}}
+    - label: Уйти первым делом
+      effects: {mood: -3}
+      text: "Ты уходишь, пока все стоят. Утром в новостях: «Незаконный концерт разогнан». Его гитару разбили."
+
+- id: lit_song
+  title: Песня о тебе
+  category: rare
+  weight: 1
+  conditions:
+    flags_all: [lit_trust, lit_debt]
+    flags_none: [lit_song, abroad]
+  text: "Подвал набит до потолка. Life in Tears подходит к микрофону: «Эта песня — для человека, который стоит в третьем ряду. Without you, this city is just noise». Весь зал оборачивается."
+  choices:
+    - label: Выйти на сцену
+      effects: {flag_set:lit_song: true, fame: 4, mood: 8, item_grant:lit_guitar: true}
+      text: "Ты поднимаешься на сцену, и он отдаёт тебе свою старую гитару: «Она умеет говорить. Научишь её новым словам». Запись концерта разлетается по сети."
+    - label: Слушать из зала
+      effects: {flag_set:lit_song: true, fame: 2, mood: 6, humanity: 2}
+      text: "Ты слушаешь, и впервые за долгое время город не кажется шумом. Потом вы долго курите у входа и молчите."
+
+- id: lit_raven
+  title: Два Тирза
+  category: rare
+  weight: 1
+  conditions:
+    flags_all: [lit_met, raven_met]
+    flags_none: [lit_raven_seen, abroad]
+  text: "Концерт Life in Tears. В последнем ряду, в тени, стоит худой парень с катаной за спиной и наушниками на шее. Raven Tearz. На экране над баром мигает красный глаз, и, кажется, Люси тоже нравится музыка."
+  choices:
+    - label: Подойти к Raven
+      effects: {flag_set:lit_raven_seen: true, mood: 5}
+      text: "«Люси нравится постпанк, — говорит Raven. — Говорит, в нём честная грусть». Экран над баром показывает строчку на английском и подпись: «Ask him to play it again»."
+    - label: Познакомить их
+      check: {stat: EMP, skill: persuasion, dv: 13}
+      success: {text: "После концерта они курят у входа втроём: двое парней и голос из динамика. Life in Tears обещает написать песню для Люси. Она отвечает, что уже написала для него партию синтезатора.", effects: {flag_set:lit_raven_seen: true, mood: 8, fame: 2}}
+      fail: {text: "Raven молча кивает и исчезает в толпе. Экраны в баре мигают и гаснут. Наверное, в другой раз.", effects: {flag_set:lit_raven_seen: true, mood: 1}}

@@ -1,0 +1,58 @@
+# Legendary implants (owner request: many items). Not on any shelf: each comes from its own rare story in
+# events_legendary3.yaml (`cyberware_grant`). Strong, with a character of their own.
+
+- key: lg_silver_hand
+  name: "Рука «Серебро»"
+  slot: forearms
+  price: 18000
+  humanity_cost: 8
+  description: "Хромированная рука рок-легенды девяностых, снятая с витрины музея. Пальцы помнят аккорды и спусковой крючок одинаково хорошо."
+  tier: military
+  category: combat
+  abilities: [legend_riff]
+  build: berserk
+  requires: []
+  not_for_sale: true
+  mods: {check.combat: 2, ranged_damage: 1, check.social: 1}
+
+- key: lg_owl_eyes
+  name: "Глаза «Сова»"
+  slot: eyes
+  price: 15000
+  humanity_cost: 5
+  description: "Оптика ночного снайпера, пропавшего двадцать лет назад. В темноте видно лучше, чем днём, а днём — почти всё."
+  tier: military
+  category: noncombat
+  abilities: [owl_watch]
+  build: sniper
+  requires: []
+  not_for_sale: true
+  mods: {skill.firearms: 1, check.gig_quiet: 2, check.escape: 1}
+
+- key: lg_saint_heart
+  name: "Сердце «Святой»"
+  slot: circulatory
+  price: 20000
+  humanity_cost: 4
+  description: "Искусственное сердце уличного врача, который двадцать лет лечил бесплатно. Бьётся ровно и, кажется, делает тебя добрее."
+  tier: military
+  category: defense
+  abilities: [saint_beat]
+  build: medic
+  requires: []
+  not_for_sale: true
+  mods: {hp_max: 6, hp_regen: 2, humanity_loss_pct: -10}
+
+- key: lg_ghost_spine
+  name: "Позвоночник «Призрак»"
+  slot: spine
+  price: 22000
+  humanity_cost: 9
+  description: "Позвоночник легендарного вора, который ни разу не попался. Шаги становятся беззвучными, движения — текучими."
+  tier: military
+  category: noncombat
+  abilities: [legend_thief]
+  build: ninja
+  requires: []
+  not_for_sale: true
+  mods: {skill.stealth: 2, check.crime: 2, crime_reward_pct: 10}

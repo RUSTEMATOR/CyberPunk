@@ -1,0 +1,136 @@
+- key: corpo
+  name: "Корпорация"
+  description: "Офисная карьера в мегакорпорации: стабильная зарплата и быстрый рост для тех, у кого есть ум и выдержка. Деньги чистые, руки не всегда."
+  requirements:
+    stats: {INT: 5, COOL: 4}
+  promotion_check: {stat: INT, skill: persuasion}
+  corps: [arasaka, militech, kang_tao, biotechnica]
+  ranks:
+    - {name: Стажёр,   salary: 400,  promotion_dv: 13, min_weeks: 12}
+    - {name: "Младший специалист", salary: 700,  promotion_dv: 15, min_weeks: 26}
+    - {name: Менеджер, salary: 1100, promotion_dv: 17, min_weeks: 52}
+    - {name: "Старший менеджер", salary: 1800, promotion_dv: 19, min_weeks: 78}
+    - {name: "Директор департамента", salary: 3000, promotion_dv: null, min_weeks: 0}
+
+- key: ncpd
+  name: NCPD
+  description: "Полиция Найт-Сити. Платят немного, зато жетон открывает многие двери. Нужны крепкое тело и быстрая реакция."
+  requirements:
+    stats: {BODY: 4, REF: 4}
+  promotion_check: {stat: COOL, skill: firearms}
+  corps: [ncpd]
+  ranks:
+    - {name: "Курсант академии", salary: 500,  promotion_dv: 13, min_weeks: 12}
+    - {name: Патрульный,      salary: 800,  promotion_dv: 15, min_weeks: 26}
+    - {name: Детектив,        salary: 1200, promotion_dv: 17, min_weeks: 52}
+    - {name: Старший детектив, salary: 1800, promotion_dv: 19, min_weeks: 78}
+    - {name: Капитан участка, salary: 2800, promotion_dv: null, min_weeks: 0}   # MaxTac is its own career (maxtac), entered from rank 3+
+
+- key: trauma_team
+  name: "Trauma Team"
+  description: "Частная скорая для тех, у кого оплачена подписка. Работа для медиков с крепкими нервами: остальных пусть подбирают другие."
+  requirements:
+    stats: {INT: 4}
+    skills: {medicine: 1}
+  promotion_check: {stat: INT, skill: medicine}
+  corps: [trauma_team]
+  ranks:
+    - {name: Санитар,         salary: 450,  promotion_dv: 13, min_weeks: 12}
+    - {name: "Фельдшер", salary: 750,  promotion_dv: 15, min_weeks: 26}
+    - {name: "Старший фельдшер", salary: 1200, promotion_dv: 17, min_weeks: 52}
+    - {name: "Стрелок прикрытия", salary: 1700, promotion_dv: 19, min_weeks: 78}
+    - {name: "Командир экипажа", salary: 2600, promotion_dv: null, min_weeks: 0}
+
+- key: media
+  name: Медиа
+  description: "Журналистика в N54. Пишешь правду, которую потом покупают или глушат. Нужны острый ум и подвешенный язык."
+  requirements:
+    stats: {INT: 5}
+    skills: {persuasion: 2}
+  promotion_check: {stat: COOL, skill: persuasion}
+  corps: null
+  ranks:
+    - {name: Стажёр редакции,  salary: 350,  promotion_dv: 13, min_weeks: 12}
+    - {name: Репортёр,         salary: 650,  promotion_dv: 15, min_weeks: 26}
+    - {name: Корреспондент,    salary: 1000, promotion_dv: 17, min_weeks: 52}
+    - {name: "Ведущий эфира", salary: 1600, promotion_dv: 19, min_weeks: 78}
+    - {name: "Главный редактор", salary: 2400, promotion_dv: null, min_weeks: 0}
+
+- key: rockerboy
+  name: Рокербой
+  description: "Бары, фанаты, контракт с лейблом. Держится на голосе, наглости и умении нравиться залу."
+  requirements:
+    stats: {COOL: 5, EMP: 4}
+  promotion_check: {stat: EMP, skill: persuasion}
+  corps: null
+  ranks:
+    - {name: "Сессионный музыкант", salary: 300,  promotion_dv: 13, min_weeks: 12}
+    - {name: "Клубный музыкант", salary: 600,  promotion_dv: 15, min_weeks: 26}
+    - {name: "Фронтмен группы", salary: 1000, promotion_dv: 17, min_weeks: 52}
+    - {name: Хедлайнер,             salary: 1800, promotion_dv: 19, min_weeks: 78}
+    - {name: "Звезда стадионов", salary: 3000, promotion_dv: null, min_weeks: 0}
+
+- key: mechanic
+  name: Механик
+  description: "Мастерская, гаечный ключ и вечно чёрные руки. Машины и хром кормят, пока целы пальцы. Нужна голова для техники."
+  requirements:
+    stats: {TECH: 5}
+    skills: {tech: 2}
+  promotion_check: {stat: TECH, skill: tech}
+  corps: null
+  ranks:
+    - {name: "Ученик механика", salary: 350,  promotion_dv: 13, min_weeks: 12}
+    - {name: Механик,            salary: 600,  promotion_dv: 15, min_weeks: 26}
+    - {name: Старший механик,    salary: 1000, promotion_dv: 17, min_weeks: 52}
+    - {name: "Мастер цеха", salary: 1700, promotion_dv: 19, min_weeks: 78}
+    - {name: Владелец мастерской, salary: 2800, promotion_dv: null, min_weeks: 0}
+
+- key: maxtac
+  name: "МаксТак"
+  description: "Спецподразделение NCPD по борьбе с киберпсихами. Попадают сюда двумя путями: детективом с серьёзным хромом или пойманным киберпсихом, которого проще посадить на поводок, чем пристрелить. Завербованные служат два года без права уйти."
+  # Normal route: NCPD detective or higher plus implants worth 20+ PCh (DESIGN.md 7b).
+  # Recruited route (grantable_by_recruitment) skips all of these and starts at rank 1.
+  requirements:
+    stats: {BODY: 5, REF: 6}
+    skills: {firearms: 3}
+    from_career: {career: ncpd, min_rank: 3}
+    min_humanity_lost: 20
+  promotion_check: {stat: REF, skill: firearms}
+  corps: [ncpd]
+  service_weeks: 104            # contract term for the recruited; leaving earlier is desertion (fugitive_psycho again)
+  grantable_by_recruitment: true
+  ranks:
+    - {name: "Боец по контракту", salary: 1400, promotion_dv: 15, min_weeks: 26}
+    - {name: Оперативник,       salary: 2000, promotion_dv: 17, min_weeks: 39}
+    - {name: Старший оперативник, salary: 2800, promotion_dv: 19, min_weeks: 52}
+    - {name: Командир звена,    salary: 3800, promotion_dv: 21, min_weeks: 78}
+    - {name: Командир отряда,   salary: 5000, promotion_dv: null, min_weeks: 0}
+
+- key: nomad
+  name: Кочевник
+  description: "Жизнь клана за городской чертой: конвои, контрабанда, пыльные бури и семья, которая не бросает своих. Денег немного, зато ты свободен, как ни один горожанин."
+  requirements:
+    stats: {REF: 4}
+    skills: {driving: 1}
+  promotion_check: {stat: REF, skill: driving}
+  corps: null
+  ranks:
+    - {name: Приблуда,          salary: 250,  promotion_dv: 13, min_weeks: 10}
+    - {name: "Водитель конвоя", salary: 500,  promotion_dv: 15, min_weeks: 24}
+    - {name: Разведчик,         salary: 850,  promotion_dv: 17, min_weeks: 48}
+    - {name: "Глава семьи",     salary: 1400, promotion_dv: 19, min_weeks: 72}
+    - {name: "Вожак клана",     salary: 2400, promotion_dv: null, min_weeks: 0}
+
+- key: night_taxi
+  name: Ночное такси
+  description: "Жёлтые машины без номеров, ночные смены, вежливые пассажиры доезжают домой. Сюда не нанимаются: сюда попадают с дренажным контуром в крови, и уйти нельзя, пока он там."
+  requires_flag: vampire
+  bound_flag: vampire
+  promotion_check: {stat: COOL, skill: driving}
+  corps: null
+  ranks:
+    - {name: Ночной водитель,   salary: 600,  promotion_dv: 13, min_weeks: 8}
+    - {name: Водитель с маршрутом, salary: 1000, promotion_dv: 15, min_weeks: 16}
+    - {name: Старший смены,     salary: 1600, promotion_dv: 17, min_weeks: 30}
+    - {name: Диспетчер парка,   salary: 2400, promotion_dv: 19, min_weeks: 52}
+    - {name: Хозяин таксопарка, salary: 3600, promotion_dv: null, min_weeks: 0}

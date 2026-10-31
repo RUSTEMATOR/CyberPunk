@@ -1,0 +1,380 @@
+# The cities of Europe (owner request 25.10, docs/PLAN_WORLD.md). See world_asia.yaml for the format.
+
+- country: europe
+  police: Жандармерия ЕЭС
+  story_title: Ночь над Сеной
+  story: [eu_story_1, eu_story_2, eu_story_3, eu_story_4, eu_story_5, eu_story_6, eu_story_7, eu_story_8]
+  districts:
+    - key: eu_banlieue
+      name: Сен-Дени
+      description: "Северный пригород Парижа: бетонные кварталы, рынки специй, подпольные мечети и мастерские. Полиция заходит сюда только колонной."
+      danger: 3
+      fixer: eu_karim
+      gangs: [eu_zonards, eu_syndicat]
+      corps: [kang_tao]
+      places: ["рынок у базилики", "кварталы Франк-Муазен", "станция RER", "кебабная «Бастилия-2»"]
+    - key: eu_marais
+      name: Маре
+      description: "Старый Париж: особняки, галереи, бутики и бары до утра. Здесь заседают лоббисты Евросоюза и торгуют краденым искусством."
+      danger: 1
+      fixer: eu_celeste
+      gangs: [eu_syndicat, eu_zonards]
+      corps: [kang_tao, zetatech]
+      places: ["площадь Вогезов", "галерея на рю де Тюренн", "подвал-кабаре", "набережная Сены"]
+      heat_mult: 1.5
+  fixers:
+    - {key: eu_karim, name: Карим Бенали, districts: [eu_banlieue], description: "Хозяин такси и всех, кто водит такси в Сен-Дени. Знает, кого куда возили и почему.", voice: "быстро, с арго, называет всех «брат»"}
+    - {key: eu_celeste, name: Селеста Дюваль, districts: [eu_marais], description: "Арт-дилер и бывший агент DGSE. Продаёт картины днём и чужие тайны ночью.", voice: "лениво-изысканно, с цитатами из Бодлера"}
+  gangs:
+    - {key: eu_zonards, name: Зонары, name_gen: Зонаров, name_dat: Зонарам, name_acc: Зонаров, name_ins: Зонарами, name_pre: Зонарах, description: "Молодёжь пригородов, которая жжёт машины и держит рынки. Свои законы и своя музыка.", style: "скутеры, мачете, капюшоны и коктейли Молотова", fights_as: valentinos, disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.0, flee_mod: -1, surrender: {robbed: 3, beaten: 2}}}
+    - {key: eu_syndicat, name: Корсиканский синдикат, name_gen: Корсиканского синдиката, name_dat: Корсиканскому синдикату, name_acc: Корсиканский синдикат, name_ins: Корсиканским синдикатом, name_pre: Корсиканском синдикате, description: "Старая мафия с острова: казино Ниццы, порты Марселя, теперь и галереи Парижа.", style: "костюмы, тихие пистолеты, клятвы на крови и кодекс молчания", fights_as: tyger_claws, disposition: {bribe_dv: 16, talk_dv: 16, bribe_cost_mult: 2.5, flee_mod: 1, surrender: {robbed: 2, beaten: 2}}}
+  ripperdocs:
+    - {key: eu_doc_amelie, name: Доктор Амели Ру, district: eu_banlieue, description: "Работала в «Скорой» Парижа, пока не устала от бумаг. Ставит хром честно и по европейским стандартам.", price_mod: 1.1, complication_chance: 0.02}
+  housing:
+    - {key: eu_h_hlm, name: Квартира в социальном доме, district: eu_banlieue, tier: 1, rent: 180, food: 110, description: "Двенадцатый этаж, лифт иногда работает, соседи всегда дома."}
+    - {key: eu_h_chambre, name: Мансарда под крышей Маре, district: eu_marais, tier: 2, rent: 520, food: 150, description: "Скошенный потолок, окно на крыши Парижа, голуби вместо будильника."}
+    - {key: eu_h_hotel, name: Апартаменты в особняке, district: eu_marais, tier: 3, rent: 1500, food: 220, description: "Потолки в четыре метра, камин и консьерж, который помнит Миттерана."}
+
+- country: uk
+  police: Скотленд-Ярд
+  story_title: Туман на Темзе
+  story: [uk_story_1, uk_story_2, uk_story_3, uk_story_4, uk_story_5, uk_story_6, uk_story_7, uk_story_8]
+  districts:
+    - key: uk_east_end
+      name: Ист-Энд
+      description: "Доки, пабы, рынки и террасы из красного кирпича. Здесь помнят Крэев и знают, что такое семья."
+      danger: 3
+      fixer: uk_nan
+      gangs: [uk_firm, uk_drillers]
+      corps: [militech]
+      places: ["паб «Слепой нищий»", "рынок Спиталфилдс", "доки Канэри", "боксёрский зал на Майл-Энд"]
+    - key: uk_city
+      name: Сити
+      description: "Квадратная миля денег: банки, стекло, мокрые зонты и камеры на каждом метре. Сюда отмывают деньги со всего мира."
+      danger: 1
+      fixer: uk_rupert
+      gangs: [uk_firm, uk_drillers]
+      corps: [militech, zetatech]
+      places: ["биржа", "клуб джентльменов на Пэлл-Мэлл", "башня «Огурец»", "подземка Бэнк"]
+      heat_mult: 2.0
+  fixers:
+    - {key: uk_nan, name: Бабуля Мэгги, districts: [uk_east_end], description: "Хозяйка паба и вдова главаря фирмы. Пьёт чай с ромом и решает, кто в Ист-Энде будет жить спокойно.", voice: "ласково, с кокни, «милок» и «дорогуша»"}
+    - {key: uk_rupert, name: Руперт Эшфорд, districts: [uk_city], description: "Банкир из старой семьи. Решает проблемы клиентов банка способами, которых нет в уставе.", voice: "сухо, вежливо, с британской иронией"}
+  gangs:
+    - {key: uk_firm, name: Фирма, name_gen: Фирмы, name_dat: Фирме, name_acc: Фирму, name_ins: Фирмой, name_pre: Фирме, description: "Семейная банда Ист-Энда в третьем поколении. Букмекеры, рэкет и пабы.", style: "костюмы, кастеты, старомодные револьверы и семейные обеды", fights_as: sixth_street, disposition: {bribe_dv: 15, talk_dv: 14, bribe_cost_mult: 2.0, flee_mod: 0, surrender: {beaten: 3, robbed: 2}}}
+    - {key: uk_drillers, name: Дриллеры, name_gen: Дриллеров, name_dat: Дриллерам, name_acc: Дриллеров, name_ins: Дриллерами, name_pre: Дриллерах, description: "Молодые банды из многоэтажек, которые читают дрилл и режут за районы.", style: "балаклавы, ножи-зомби, электросамокаты, видео в сети", fights_as: maelstrom, disposition: {bribe_dv: 13, talk_dv: 15, bribe_cost_mult: 1.0, flee_mod: -1, surrender: {robbed: 3, beaten: 3}}}
+  ripperdocs:
+    - {key: uk_doc_singh, name: Доктор Сингх, district: uk_east_end, description: "Клиника над закусочной с карри. Ставит хром лучше Харли-стрит и берёт наличными.", price_mod: 1.0, complication_chance: 0.04}
+  housing:
+    - {key: uk_h_council, name: Квартира в муниципальной башне, district: uk_east_end, tier: 1, rent: 220, food: 130, description: "Плесень по углам, вид на Темзу сквозь дождь, соседи-дриллеры этажом ниже."}
+    - {key: uk_h_terrace, name: Террасный дом в Боу, district: uk_east_end, tier: 2, rent: 560, food: 150, description: "Красный кирпич, камин и садик размером с ковёр."}
+    - {key: uk_h_flat, name: Квартира у собора Святого Павла, district: uk_city, tier: 3, rent: 1700, food: 220, description: "Купол собора в окне, швейцар в котелке, тишина за деньги."}
+
+- country: germany
+  police: Федеральная полиция Германии
+  story_title: Стена данных
+  story: [de_story_1, de_story_2, de_story_3, de_story_4, de_story_5, de_story_6, de_story_7, de_story_8]
+  districts:
+    - key: de_kreuzberg
+      name: Кройцберг
+      description: "Сквоты, клубы на старых заводах, турецкие рынки и граффити на остатках стены. Берлин, который не спит и не платит за аренду."
+      danger: 2
+      fixer: de_yusuf
+      gangs: [de_rotfront, de_clan]
+      corps: [zetatech]
+      places: ["клуб в бывшей электростанции", "турецкий рынок у канала", "сквот на Ораниенштрассе", "кусок стены с граффити"]
+    - key: de_mitte
+      name: Митте
+      description: "Правительственный центр: Рейхстаг, министерства, офисы корпораций и стартапы в старых банках."
+      danger: 1
+      fixer: de_greta
+      gangs: [de_clan, de_rotfront]
+      corps: [zetatech, militech]
+      places: ["Рейхстаг", "Александерплац", "биржа данных", "кафе на Унтер-ден-Линден"]
+      heat_mult: 1.5
+  fixers:
+    - {key: de_yusuf, name: Юсуф Озтюрк, districts: [de_kreuzberg], description: "Владелец кебабной и трёх клубов. Знает, кто в Кройцберге продаёт, кто покупает и кто стучит.", voice: "весело, на смеси немецкого и турецкого"}
+    - {key: de_greta, name: Грета Шульц, districts: [de_mitte], description: "Бывший аудитор федерального ведомства. Работает строго по договору, даже если договор о краже.", voice: "по-немецки точно, по пунктам, без эмоций"}
+  gangs:
+    - {key: de_rotfront, name: Красный фронт, name_gen: Красного фронта, name_dat: Красному фронту, name_acc: Красный фронт, name_ins: Красным фронтом, name_pre: Красном фронте, description: "Анархисты сквотов, которые жгут машины корпоратов и взламывают банкоматы.", style: "чёрные куртки, пиротехника, взлом и уличные бои с полицией", fights_as: moxes, disposition: {bribe_dv: 16, talk_dv: 13, bribe_cost_mult: 1.0, flee_mod: -1, surrender: {released: 2, beaten: 2}}}
+    - {key: de_clan, name: Клан Аль-Захир, name_gen: клана Аль-Захир, name_dat: клану Аль-Захир, name_acc: клан Аль-Захир, name_ins: кланом Аль-Захир, name_pre: клане Аль-Захир, description: "Семейный клан, который держит казино, барбершопы и половину строительных фирм Берлина.", style: "дорогие машины, семейная честь, никаких свидетелей", fights_as: valentinos, disposition: {bribe_dv: 15, talk_dv: 16, bribe_cost_mult: 2.0, flee_mod: 1, surrender: {robbed: 3, beaten: 2}}}
+  ripperdocs:
+    - {key: de_doc_vogel, name: Доктор Фогель, district: de_kreuzberg, description: "Немецкая инженерия в теле. Ставит хром медленно, по инструкции, с гарантией на пять лет.", price_mod: 1.2, complication_chance: 0.01}
+  housing:
+    - {key: de_h_squat, name: Комната в сквоте, district: de_kreuzberg, tier: 1, rent: 90, food: 100, description: "Общие собрания по средам, концерты по пятницам, отопление по праздникам."}
+    - {key: de_h_altbau, name: Квартира в старом доме, district: de_kreuzberg, tier: 2, rent: 450, food: 130, description: "Высокие потолки, печь с изразцами, двор с велосипедами."}
+    - {key: de_h_neubau, name: Лофт на Александерплац, district: de_mitte, tier: 3, rent: 1300, food: 190, description: "Умный дом, телебашня в окне и соседи, которые жалуются на шум в 22:01."}
+
+- country: italy
+  police: Карабинеры
+  story_title: Семья и Ватикан
+  story: [it_story_1, it_story_2, it_story_3, it_story_4, it_story_5, it_story_6, it_story_7, it_story_8]
+  districts:
+    - key: it_trastevere
+      name: Трастевере
+      description: "Узкие улочки, плющ на стенах, траттории и бельё над головой. Здесь всё решают за ужином, даже то, кого похоронят."
+      danger: 2
+      fixer: it_nonna
+      gangs: [it_famiglia, it_ultras]
+      corps: [biotechnica]
+      places: ["площадь Санта-Мария", "траттория «Да Енцо»", "рынок на Порта-Портезе", "старая типография"]
+    - key: it_vaticano
+      name: Прати и Ватикан
+      description: "Купол святого Петра, швейцарская гвардия, банк Ватикана и монахи с нейроинтерфейсами. Здесь деньги молятся."
+      danger: 1
+      fixer: it_monsignor
+      gangs: [it_famiglia, it_ultras]
+      corps: [biotechnica, zetatech]
+      places: ["площадь Святого Петра", "банк Ватикана", "кафе у Ватиканских музеев", "подземная капелла"]
+      heat_mult: 1.5
+  fixers:
+    - {key: it_nonna, name: Нонна Карла, districts: [it_trastevere], description: "Хозяйка траттории и бабушка половины района. Её соус знают в Риме, её слово — в Палермо.", voice: "ласково, кормит и угрожает в одной фразе"}
+    - {key: it_monsignor, name: Монсеньор Бальди, districts: [it_vaticano], description: "Казначей одной из конгрегаций. Отпускает грехи и переводит деньги через офшоры с одинаковой лёгкостью.", voice: "мягко, по-латыни в паузах, «сын мой» или «дочь моя» не говорит, говорит «дитя»"}
+  gangs:
+    - {key: it_famiglia, name: Семья Россетти, name_gen: семьи Россетти, name_dat: семье Россетти, name_acc: семью Россетти, name_ins: семьёй Россетти, name_pre: семье Россетти, description: "Мафиозная семья, которая владеет ресторанами, мусоровозами и парой депутатов.", style: "костюмы, лупары, омерта и поцелуй перед приговором", fights_as: tyger_claws, disposition: {bribe_dv: 15, talk_dv: 15, bribe_cost_mult: 2.5, flee_mod: 1, surrender: {robbed: 2, beaten: 2}}}
+    - {key: it_ultras, name: Ультрас «Курва Суд», name_gen: ультрас «Курва Суд», name_dat: ультрас «Курва Суд», name_acc: ультрас «Курва Суд», name_ins: ультрас «Курва Суд», name_pre: ультрас «Курва Суд», description: "Футбольные фанаты «Ромы», которые держат стадион, парковки и наркотрафик района.", style: "шарфы, файеры, ремни с пряжками и хоровые песни", fights_as: animals, disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.0, flee_mod: -1, surrender: {beaten: 4, robbed: 1}}}
+  ripperdocs:
+    - {key: it_doc_ferro, name: Доктор Ферро, district: it_trastevere, description: "Хирург из Неаполя с золотыми руками и долгами семье Россетти. Работает только по рекомендации.", price_mod: 1.0, complication_chance: 0.03}
+  housing:
+    - {key: it_h_room, name: Комната над тратторией, district: it_trastevere, tier: 1, rent: 200, food: 100, description: "Пахнет базиликом и чесноком. Нонна кормит постояльцев бесплатно, если те помогают мыть посуду."}
+    - {key: it_h_palazzo, name: Квартира в палаццо, district: it_trastevere, tier: 2, rent: 500, food: 140, description: "Фрески на потолке, трещины на стенах, терраса с апельсиновым деревом."}
+    - {key: it_h_prati, name: Апартаменты с видом на купол, district: it_vaticano, tier: 3, rent: 1400, food: 200, description: "Купол святого Петра в окне спальни. Колокола в шесть утра включены в цену."}
+
+- country: spain
+  police: Гражданская гвардия
+  story_title: Огни Барселонеты
+  story: [es_story_1, es_story_2, es_story_3, es_story_4, es_story_5, es_story_6, es_story_7, es_story_8]
+  districts:
+    - key: es_raval
+      name: Раваль
+      description: "Старый портовый квартал: узкие улицы, бары, мигранты, карманники и художники. Ночью здесь продают всё."
+      danger: 3
+      fixer: es_paco
+      gangs: [es_ninetas, es_narcos]
+      corps: [biotechnica]
+      places: ["рамбла дель Раваль", "рынок Бокерия", "бар «Марсела»", "заброшенный монастырь"]
+    - key: es_barceloneta
+      name: Барселонета
+      description: "Пляж, яхты, туристы и ночные клубы на набережной. Наркокурьеры приходят морем, деньги уходят в отели."
+      danger: 2
+      fixer: es_montse
+      gangs: [es_narcos, es_ninetas]
+      corps: [biotechnica, petrochem]
+      places: ["пляж Сан-Себастьян", "порт Вель", "клуб «Опиум»", "башня Хауме"]
+  fixers:
+    - {key: es_paco, name: Пако Флако, districts: [es_raval], description: "Танцор фламенко, который давно не танцует. Держит три бара и сеть карманников.", voice: "театрально, с драмой, с паузами как в танце"}
+    - {key: es_montse, name: Монтсе Пуйоль, districts: [es_barceloneta], description: "Владелица яхт-чартера. Её яхты возят туристов днём и что-то ещё ночью.", voice: "по-деловому, на каталанском, когда хочет что-то скрыть"}
+  gangs:
+    - {key: es_ninetas, name: Ньетас, name_gen: Ньетас, name_dat: Ньетас, name_acc: Ньетас, name_ins: Ньетас, name_pre: Ньетас, description: "Латиноамериканская уличная банда с портовых улиц. Держит Раваль за горло и бары за кассу.", style: "бандана, мачете, татуировки и громкий реггетон", fights_as: valentinos, disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.0, flee_mod: -1, surrender: {robbed: 3, beaten: 2}}}
+    - {key: es_narcos, name: Галисийцы, name_gen: Галисийцев, name_dat: Галисийцам, name_acc: Галисийцев, name_ins: Галисийцами, name_pre: Галисийцах, description: "Наркоконтрабандисты с севера на быстрых катерах. Возят товар из Африки и Америки.", style: "катера, спутниковые телефоны, тихие деньги и громкие яхты", fights_as: scavengers, disposition: {bribe_dv: 15, talk_dv: 16, bribe_cost_mult: 2.0, flee_mod: 1, surrender: {robbed: 3, released: 1}}}
+  ripperdocs:
+    - {key: es_doc_nuria, name: Доктор Нурия, district: es_raval, description: "Ставит хром в бывшем монастыре. Монахини когда-то лечили здесь бедных, Нурия продолжает традицию за деньги.", price_mod: 0.85, complication_chance: 0.05}
+  housing:
+    - {key: es_h_piso, name: Комната в общей квартире, district: es_raval, tier: 1, rent: 180, food: 100, description: "Пять соседей, один балкон и вечная очередь в душ."}
+    - {key: es_h_terraza, name: Квартира с террасой, district: es_raval, tier: 2, rent: 450, food: 130, description: "Терраса над крышами, вермут в шесть вечера, гитара соседа до полуночи."}
+    - {key: es_h_beach, name: Апартаменты у пляжа, district: es_barceloneta, tier: 3, rent: 1200, food: 180, description: "Море под окном, яхты в порту, туристы под балконом."}
+
+- country: netherlands
+  police: Королевская полиция Нидерландов
+  story_title: Порт и туман
+  story: [nl_story_1, nl_story_2, nl_story_3, nl_story_4, nl_story_5, nl_story_6, nl_story_7, nl_story_8]
+  districts:
+    - key: nl_wallen
+      name: Валлен
+      description: "Каналы, красные фонари, кофешопы и туристы, потерявшиеся во времени. Всё легально, кроме того, что по-настоящему приносит деньги."
+      danger: 2
+      fixer: nl_sanne
+      gangs: [nl_mocro, nl_bikers]
+      corps: [zetatech]
+      places: ["канал Аудезейдс", "кофешоп «Голубая птица»", "старая церковь", "дом на воде"]
+    - key: nl_port
+      name: Порт Вестпорт
+      description: "Контейнерный порт, через который в Европу идёт четверть мира. Склады, краны и люди, которые не задают вопросов."
+      danger: 3
+      fixer: nl_bram
+      gangs: [nl_bikers, nl_mocro]
+      corps: [zetatech, petrochem]
+      places: ["контейнерный терминал", "склад №7", "закусочная докеров", "сухой док"]
+  fixers:
+    - {key: nl_sanne, name: Санне де Врис, districts: [nl_wallen], description: "Хозяйка кофешопа и бывшая полицейская. Знает правила, потому что сама их когда-то нарушала.", voice: "прямо, спокойно, по-голландски без лишней вежливости"}
+    - {key: nl_bram, name: Брам Ван Дейк, districts: [nl_port], description: "Диспетчер порта. Один щелчок — и контейнер исчезает из системы.", voice: "устало, про погоду и графики, деньги только наличными"}
+  gangs:
+    - {key: nl_mocro, name: Мокро-мафия, name_gen: Мокро-мафии, name_dat: Мокро-мафии, name_acc: Мокро-мафию, name_ins: Мокро-мафией, name_pre: Мокро-мафии, description: "Молодые и жестокие наркобароны порта. Шифрованные телефоны и заказные убийства по видеосвязи.", style: "шифрованные трубки, скутеры, автоматы и заказы из-за границы", fights_as: valentinos, disposition: {bribe_dv: 15, talk_dv: 17, bribe_cost_mult: 2.0, flee_mod: 1, surrender: {robbed: 3, beaten: 2}}}
+    - {key: nl_bikers, name: Ангелы Севера, name_gen: Ангелов Севера, name_dat: Ангелам Севера, name_acc: Ангелов Севера, name_ins: Ангелами Севера, name_pre: Ангелах Севера, description: "Байкерский клуб, который охраняет склады порта и берёт за это процент.", style: "кожаные жилеты, Харлеи, цепи и пиво", fights_as: animals, disposition: {bribe_dv: 14, talk_dv: 14, bribe_cost_mult: 1.5, flee_mod: 0, surrender: {beaten: 3, robbed: 2}}}
+  ripperdocs:
+    - {key: nl_doc_pieter, name: Доктор Питер, district: nl_wallen, description: "Работает в клинике снижения вреда. Хром ставит законно, по рецепту, но рецепты пишет сам.", price_mod: 1.0, complication_chance: 0.02}
+  housing:
+    - {key: nl_h_houseboat, name: Каюта на барже, district: nl_wallen, tier: 1, rent: 200, food: 110, description: "Качает, сыро, утки стучат в борт. Романтично первые три дня."}
+    - {key: nl_h_canal, name: Квартира над каналом, district: nl_wallen, tier: 2, rent: 600, food: 140, description: "Узкая лестница, крюк для мебели под крышей и велосипеды у двери."}
+    - {key: nl_h_loft, name: Лофт в бывшем складе, district: nl_port, tier: 3, rent: 1300, food: 180, description: "Кирпич, сталь, вид на краны. Дизайнеры завидуют, докеры смеются."}
+
+- country: sweden
+  police: Полиция Швеции
+  story_title: Белая ночь
+  story: [se_story_1, se_story_2, se_story_3, se_story_4, se_story_5, se_story_6, se_story_7, se_story_8]
+  districts:
+    - key: se_rinkeby
+      name: Ринкебю
+      description: "Северная окраина Стокгольма: панельные дома, рынки, подростковые банды и взрывы по ночам, о которых не пишут в туристических буклетах."
+      danger: 3
+      fixer: se_amir
+      gangs: [se_network, se_wolves]
+      corps: [zetatech]
+      places: ["площадь Ринкебю", "торговый центр Тенста", "футбольная коробка", "подвал под прачечной"]
+    - key: se_gamla_stan
+      name: Гамла Стан
+      description: "Старый город на острове: брусчатка, дворец, кафе с булочками и банки, где хранят деньги со всего мира."
+      danger: 1
+      fixer: se_ingrid
+      gangs: [se_wolves, se_network]
+      corps: [zetatech, biotechnica]
+      places: ["Королевский дворец", "площадь Стурторьет", "подвальный бар", "пристань паромов"]
+  fixers:
+    - {key: se_amir, name: Амир Хассан, districts: [se_rinkeby], description: "Учитель физкультуры, который знает каждого подростка района. Пытается вытащить их из банд, иногда тем же способом, что и банды.", voice: "спокойно, по-учительски, без крика"}
+    - {key: se_ingrid, name: Ингрид Лунд, districts: [se_gamla_stan], description: "Специалист по кибербезопасности, которая продаёт уязвимости банков тем, кто платит больше банков.", voice: "холодно, логично, редкие сухие шутки"}
+  gangs:
+    - {key: se_network, name: Сеть Фокстрот, name_gen: Сети Фокстрот, name_dat: Сети Фокстрот, name_acc: Сеть Фокстрот, name_ins: Сетью Фокстрот, name_pre: Сети Фокстрот, description: "Наркосеть, которая нанимает подростков для грязной работы через мессенджеры.", style: "подростки на самокатах, гранаты, заказы через телефон", fights_as: valentinos, disposition: {bribe_dv: 14, talk_dv: 16, bribe_cost_mult: 1.5, flee_mod: 0, surrender: {robbed: 3, beaten: 2}}}
+    - {key: se_wolves, name: Северные волки, name_gen: Северных волков, name_dat: Северным волкам, name_acc: Северных волков, name_ins: Северными волками, name_pre: Северных волках, description: "Байкеры и бывшие солдаты, которые охраняют чужие деньги и держат долговой рынок.", style: "бороды, руны, топоры и молчание", fights_as: animals, disposition: {bribe_dv: 15, talk_dv: 15, bribe_cost_mult: 2.0, flee_mod: 0, surrender: {beaten: 3, robbed: 2}}}
+  ripperdocs:
+    - {key: se_doc_eriksson, name: Доктор Эрикссон, district: se_gamla_stan, description: "Скандинавский минимализм в хирургии: ничего лишнего, всё по протоколу.", price_mod: 1.3, complication_chance: 0.01}
+  housing:
+    - {key: se_h_panel, name: Квартира в панельном доме, district: se_rinkeby, tier: 1, rent: 200, food: 130, description: "Тёплые батареи, вид на соседнюю панельку, сауна в подвале по графику."}
+    - {key: se_h_wood, name: Квартира в деревянном доме, district: se_gamla_stan, tier: 2, rent: 600, food: 150, description: "Скрипучие полы, свечи на окнах, кофе с кардамоном."}
+    - {key: se_h_island, name: Дом на острове шхер, district: se_gamla_stan, tier: 3, rent: 1500, food: 190, description: "Свой причал, своя сауна и паром до города дважды в день."}
+
+- country: poland
+  police: Полиция Польши
+  story_title: Янтарный путь
+  story: [pl_story_1, pl_story_2, pl_story_3, pl_story_4, pl_story_5, pl_story_6, pl_story_7, pl_story_8]
+  districts:
+    - key: pl_praga
+      name: Прага
+      description: "Правый берег Варшавы: довоенные дома с дырами от пуль, мастерские, бары в подворотнях и рынок, где можно купить всё."
+      danger: 3
+      fixer: pl_zbyszek
+      gangs: [pl_pruszkow, pl_kibole]
+      corps: [militech]
+      places: ["Ружицкий рынок", "двор с Мадонной", "бар «Лотос»", "заброшенная водочная фабрика"]
+    - key: pl_srodmiescie
+      name: Средместье
+      description: "Сталинский Дворец культуры, стеклянные башни банков и старый город, восстановленный по картинам."
+      danger: 1
+      fixer: pl_magda
+      gangs: [pl_kibole, pl_pruszkow]
+      corps: [militech, zetatech]
+      places: ["Дворец культуры", "Старый рынок", "банковский квартал", "станция Центральная"]
+  fixers:
+    - {key: pl_zbyszek, name: Пан Збышек, districts: [pl_praga], description: "Ветеран старых бандитских девяностых, держит ломбард и половину правого берега.", voice: "ворчливо, «пан» и «пани», анекдоты про ПНР"}
+    - {key: pl_magda, name: Магда Ковальская, districts: [pl_srodmiescie], description: "Юрист по еврофондам. Знает, где деньги ЕС и как их оттуда достать.", voice: "быстро, деловито, с цифрами"}
+  gangs:
+    - {key: pl_pruszkow, name: Прушковские, name_gen: Прушковских, name_dat: Прушковским, name_acc: Прушковских, name_ins: Прушковскими, name_pre: Прушковских, description: "Наследники легендарной группировки. Угоны, контрабанда, рэкет по старой памяти.", style: "кожанки, BMW, обрезы и старые понятия", fights_as: sixth_street, disposition: {bribe_dv: 14, talk_dv: 15, bribe_cost_mult: 2.0, flee_mod: 0, surrender: {robbed: 3, beaten: 2}}}
+    - {key: pl_kibole, name: Киболе, name_gen: Киболе, name_dat: Киболе, name_acc: Киболе, name_ins: Киболе, name_pre: Киболе, description: "Футбольные фанаты «Легии», которые дерутся по договорённости в лесу и без неё в городе.", style: "капы, бомберы, кулаки и пиротехника", fights_as: animals, disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.0, flee_mod: -1, surrender: {beaten: 4, robbed: 1}}}
+  ripperdocs:
+    - {key: pl_doc_nowak, name: Доктор Новак, district: pl_praga, description: "Бывший военный хирург. Ставит натовский хром, списанный со складов.", price_mod: 0.8, complication_chance: 0.05}
+  housing:
+    - {key: pl_h_kamienica, name: Комната в каменице, district: pl_praga, tier: 1, rent: 130, food: 90, description: "Довоенный дом, общий туалет на этаже и соседка с пирогами."}
+    - {key: pl_h_blok, name: Квартира в блочном доме, district: pl_praga, tier: 2, rent: 330, food: 110, description: "Ковёр на стене, вид на Вислу, лифт до восьмого этажа."}
+    - {key: pl_h_tower, name: Апартаменты в небоскрёбе, district: pl_srodmiescie, tier: 3, rent: 1000, food: 160, description: "Дворец культуры прямо в окне. Поляки говорят, это лучший вид: отсюда его не видно."}
+
+- country: ukraine
+  police: Национальная полиция Украины
+  story_title: Подземный Киев
+  story: [ua_story_1, ua_story_2, ua_story_3, ua_story_4, ua_story_5, ua_story_6, ua_story_7, ua_story_8]
+  districts:
+    - key: ua_podil
+      name: Подол
+      description: "Старый Подол: брусчатка, кофейни, бары в подвалах, айтишники и уличные музыканты. Под улицами тянутся старые подземные ходы."
+      danger: 2
+      fixer: ua_oksana
+      gangs: [ua_diggers, ua_cartel]
+      corps: [zetatech]
+      places: ["Контрактовая площадь", "фуникулёр", "подвальный бар «Барбакан»", "вход в подземелья"]
+    - key: ua_troieshchyna
+      name: Троещина
+      description: "Огромный спальный район на левом берегу: панельки до горизонта, рынок, маршрутки и люди, которые пережили всё."
+      danger: 3
+      fixer: ua_bogdan
+      gangs: [ua_cartel, ua_diggers]
+      corps: [zetatech, militech]
+      places: ["Троещинский рынок", "конечная маршрутки", "гаражный кооператив", "заброшенная стройка"]
+  fixers:
+    - {key: ua_oksana, name: Оксана Мельник, districts: [ua_podil], description: "Владелица кофейни и бывший журналист-расследователь. Продаёт информацию и наливает лучший раф на Подоле.", voice: "иронично, быстро, с цитатами из классиков"}
+    - {key: ua_bogdan, name: Богдан Гаражный, districts: [ua_troieshchyna], description: "Хозяин гаражного кооператива. Чинит машины, импланты и чужие проблемы.", voice: "спокойно, по-хозяйски, «та нормально»"}
+  gangs:
+    - {key: ua_diggers, name: Диггеры, name_gen: Диггеров, name_dat: Диггерам, name_acc: Диггеров, name_ins: Диггерами, name_pre: Диггерах, description: "Исследователи подземелий, которые знают каждый туннель и прячут там склады контрабанды.", style: "фонари на касках, верёвки, карты туннелей и самодельные ловушки", fights_as: scavengers, disposition: {bribe_dv: 13, talk_dv: 13, bribe_cost_mult: 1.0, flee_mod: -2, surrender: {released: 2, robbed: 2}}}
+    - {key: ua_cartel, name: Левобережные, name_gen: Левобережных, name_dat: Левобережным, name_acc: Левобережных, name_ins: Левобережными, name_pre: Левобережных, description: "Группировка, которая держит рынки и маршрутки левого берега.", style: "спортивные костюмы, биты, тонированные машины", fights_as: sixth_street, disposition: {bribe_dv: 14, talk_dv: 15, bribe_cost_mult: 1.5, flee_mod: 0, surrender: {robbed: 3, beaten: 2}}}
+  ripperdocs:
+    - {key: ua_doc_ivan, name: Доктор Иван Кравец, district: ua_troieshchyna, description: "Хирург, который научился работать в любых условиях. Ставит хром быстро, надёжно и почти без очереди.", price_mod: 0.75, complication_chance: 0.03}
+  housing:
+    - {key: ua_h_panel, name: Квартира в панельке, district: ua_troieshchyna, tier: 1, rent: 110, food: 80, description: "Девятый этаж, вид на Днепр и соседи, которые всегда помогут."}
+    - {key: ua_h_podil, name: Квартира в старом доме на Подоле, district: ua_podil, tier: 2, rent: 350, food: 110, description: "Деревянные полы, балкон с геранью и звон трамвая под окном."}
+    - {key: ua_h_loft, name: Лофт над Днепром, district: ua_podil, tier: 3, rent: 950, food: 150, description: "Панорамные окна на реку и Лавру, кофемашина лучше, чем у Оксаны."}
+
+- country: russia
+  police: Московская полиция
+  story_title: Чёрный рынок под Кремлём
+  story: [ru_story_1, ru_story_2, ru_story_3, ru_story_4, ru_story_5, ru_story_6, ru_story_7, ru_story_8]
+  districts:
+    - key: ru_kitai_gorod
+      name: Китай-город
+      description: "Центр Москвы: министерства, башни корпораций, старые переулки и бары, где решают вопросы."
+      danger: 2
+      fixer: ru_lev
+      gangs: [ru_brigada, ru_vory]
+      corps: [kang_tao, militech]
+      places: ["переулки Китай-города", "бар «Последний рубеж»", "старая подстанция", "подземный переход"]
+      heat_mult: 1.5
+    - key: ru_kapotnya
+      name: Капотня
+      description: "Промзона у нефтезавода: трубы, гаражи, общежития и вечный запах мазута."
+      danger: 3
+      fixer: ru_valya
+      gangs: [ru_vory, ru_brigada]
+      corps: [petrochem]
+      places: ["нефтезавод", "гаражный кооператив «Рассвет»", "общежитие", "рынок запчастей"]
+  fixers:
+    - {key: ru_lev, name: Лев Аркадьевич, districts: [ru_kitai_gorod], description: "Бывший чиновник, теперь консультант. Знает, кому занести, чтобы дело закрыли или открыли.", voice: "вкрадчиво, по имени-отчеству, намёками"}
+    - {key: ru_valya, name: Валентина Петровна, districts: [ru_kapotnya], description: "Комендантша общежития и хозяйка рынка запчастей. Видела всё и всех пережила.", voice: "громко, прямо, без церемоний"}
+  gangs:
+    - {key: ru_brigada, name: Бригада, name_gen: Бригады, name_dat: Бригаде, name_acc: Бригаду, name_ins: Бригадой, name_pre: Бригаде, description: "Новая бригада, которая крышует автосервисы, рынки и курьеров.", style: "кожаные куртки, спортивные костюмы, биты и травматика", fights_as: sixth_street, disposition: {bribe_dv: 13, talk_dv: 15, bribe_cost_mult: 1.5, flee_mod: 0, surrender: {robbed: 3, beaten: 2}}}
+    - {key: ru_vory, name: Воры в законе, name_gen: Воров в законе, name_dat: Ворам в законе, name_acc: Воров в законе, name_ins: Ворами в законе, name_pre: Ворах в законе, description: "Старая воровская иерархия с понятиями, общаком и татуировками-биографиями.", style: "наколки, понятия, тихий голос и чужие руки для грязной работы", fights_as: tyger_claws, disposition: {bribe_dv: 16, talk_dv: 15, bribe_cost_mult: 2.0, flee_mod: 1, surrender: {robbed: 3, beaten: 2}}}
+  ripperdocs:
+    - {key: ru_doc_semyonov, name: Доктор Семёнов, district: ru_kapotnya, description: "Ставит китайский хром из-под полы. Дёшево, работает, но иногда подтормаживает в мороз.", price_mod: 0.7, complication_chance: 0.1, scan_lie_chance: 0.15}
+  housing:
+    - {key: ru_h_obshaga, name: Комната в общежитии, district: ru_kapotnya, tier: 1, rent: 120, food: 90, description: "Общая кухня, вахтёрша и вид на факелы нефтезавода."}
+    - {key: ru_h_khrushchevka, name: Квартира в хрущёвке, district: ru_kapotnya, tier: 2, rent: 330, food: 110, description: "Совмещённый санузел, ковёр на стене и тёплые батареи."}
+    - {key: ru_h_center, name: Квартира в центре, district: ru_kitai_gorod, tier: 3, rent: 1200, food: 180, description: "Сталинский потолок, вид на купола, консьерж с журналом посетителей."}
+
+- country: turkey
+  police: Полиция Стамбула
+  story_title: Ключ от цистерны
+  story: [tr_story_1, tr_story_2, tr_story_3, tr_story_4, tr_story_5, tr_story_6, tr_story_7, tr_story_8]
+  districts:
+    - key: tr_beyoglu
+      name: Бейоглу
+      description: "Истикляль, трамвай, бары, рынки антиквариата и крыши с видом на Босфор. Европейский берег, где всё продаётся."
+      danger: 2
+      fixer: tr_selim
+      gangs: [tr_kabadayi, tr_smugglers]
+      corps: [kang_tao]
+      places: ["улица Истикляль", "Галатская башня", "рыбный рынок", "мейхане «Ахтапот»"]
+    - key: tr_fatih
+      name: Фатих
+      description: "Старый город: мечети, Гранд-базар, подземные цистерны Византии и переулки, где говорят на двадцати языках."
+      danger: 3
+      fixer: tr_ayse
+      gangs: [tr_smugglers, tr_kabadayi]
+      corps: [kang_tao, petrochem]
+      places: ["Гранд-базар", "цистерна Базилика", "пристань Эминёню", "чайная у мечети"]
+  fixers:
+    - {key: tr_selim, name: Селим Бей, districts: [tr_beyoglu], description: "Владелец мейхане и половины крыш Бейоглу. Угощает ракы и решает вопросы между тостами.", voice: "радушно, длинными тостами, с восточными притчами"}
+    - {key: tr_ayse, name: Айше Ханым, districts: [tr_fatih], description: "Торговка коврами на Гранд-базаре. Под каждым ковром у неё что-то лежит.", voice: "торгуется даже о погоде, называет всех «джаным»"}
+  gangs:
+    - {key: tr_kabadayi, name: Кабадаи, name_gen: Кабадаи, name_dat: Кабадаи, name_acc: Кабадаи, name_ins: Кабадаи, name_pre: Кабадаи, description: "Уличные авторитеты старой школы, которые держат кварталы и рынки Стамбула.", style: "усы, чётки, ножи и честь квартала", fights_as: tyger_claws, disposition: {bribe_dv: 14, talk_dv: 13, bribe_cost_mult: 1.5, flee_mod: 0, surrender: {robbed: 2, beaten: 2}}}
+    - {key: tr_smugglers, name: Люди Босфора, name_gen: Людей Босфора, name_dat: Людям Босфора, name_acc: Людей Босфора, name_ins: Людьми Босфора, name_pre: Людях Босфора, description: "Контрабандисты, которые возят через пролив всё, что не проходит таможню.", style: "катера, рыбацкие сети, ящики и молчаливые капитаны", fights_as: scavengers, disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.5, flee_mod: -1, surrender: {robbed: 3, released: 1}}}
+  ripperdocs:
+    - {key: tr_doc_kemal, name: Доктор Кемаль, district: tr_fatih, description: "Клиника в подвале у Гранд-базара. Хром из Китая и Европы, цены по торгу.", price_mod: 0.8, complication_chance: 0.06}
+  housing:
+    - {key: tr_h_room, name: Комната в старом доме, district: tr_fatih, tier: 1, rent: 120, food: 80, description: "Деревянный дом, крик муэдзина в пять утра и кошки на подоконнике."}
+    - {key: tr_h_galata, name: Квартира у Галатской башни, district: tr_beyoglu, tier: 2, rent: 380, food: 110, description: "Узкий дом, крутая лестница и чай на крыше с видом на минареты."}
+    - {key: tr_h_bosphorus, name: Яли на Босфоре, district: tr_beyoglu, tier: 3, rent: 1300, food: 170, description: "Деревянный особняк на воде. Корабли проходят прямо под окнами спальни."}

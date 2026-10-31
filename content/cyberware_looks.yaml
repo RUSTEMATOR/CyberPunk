@@ -1,0 +1,54 @@
+# Looksmaxxing chrome (owner request 24.10: jokes about looksmaxxing). Cosmetic implants with social bonuses and a
+# small price in nerves: it is never enough.
+
+- key: looks_jaw
+  name: Челюсть «Гигачад»
+  slot: face
+  price: 4500
+  humanity_cost: 4
+  description: "Титановая нижняя челюсть с углом, который лукс-коучи рисуют на схемах. Годы мьюинга за сорок минут под наркозом. Жевать неудобно, зато в профиль ты — монумент."
+  tier: mid
+  category: noncombat
+  abilities: [jaw_line]
+  build: face
+  requires: []
+  mods: {check.social: 1, mood_weekly: 1}
+
+- key: looks_hunter_eyes
+  name: Охотничьи глаза
+  slot: eyes
+  price: 3800
+  humanity_cost: 4
+  description: "Сервоприводы в веках выставляют кантальный наклон в плюс. Взгляд хищника, даже когда думаешь про лапшу."
+  tier: mid
+  category: noncombat
+  abilities: [predator_gaze]
+  build: face
+  requires: []
+  mods: {check.social: 1, check.talk_exit: 1}
+
+- key: looks_legs
+  name: Телескопические голени
+  slot: legs
+  price: 7000
+  humanity_cost: 6
+  description: "Плюс пятнадцать сантиметров роста, по запросу ещё пять. В анкете теперь честные метр восемьдесят. В дверях автобуса приходится пригибаться."
+  tier: mid
+  category: noncombat
+  abilities: [tall_reach]
+  build: flyer
+  requires: []
+  mods: {check.social: 1, flee: 1}
+
+- key: looks_mog_module
+  name: Мог-модуль
+  slot: brain
+  price: 9000
+  humanity_cost: 7
+  description: "Нейросеть в зрительной коре ставит оценку каждому лицу в комнате, твоё — первым. Ты знаешь, кого моггаешь и кто моггает тебя. Спать с этим знанием тяжело."
+  tier: mid
+  category: noncombat
+  abilities: [room_rank]
+  build: face
+  requires: []
+  mods: {check.social: 2, relation_gain: 1, mood_weekly: -1}

@@ -1,0 +1,338 @@
+- key: sleep_regulator
+  name: Регулятор сна
+  slot: brain
+  price: 11000
+  humanity_cost: 8
+  description: "Хватает четырёх часов сна, остальное время твоё. Но ночью глаза не закрываются, а днём всё вокруг серое."
+  tier: military
+  category: noncombat
+  abilities: [four_hours]
+  requires: []
+  mods: {ap_week: 1, mood_weekly: -3}
+  available_from: 2060
+
+- key: memory_module
+  name: Модуль памяти
+  slot: brain
+  price: 9500
+  humanity_cost: 7
+  description: "Кэш памяти в черепе: учишься быстрее и помнишь всё. В том числе лица, которые хотел бы забыть."
+  tier: mid
+  category: noncombat
+  abilities: [memo_cache]
+  requires: []
+  mods: {xp.all: 10}
+  available_from: 2045
+
+- key: neural_stabilizer
+  name: Нейростабилизатор
+  slot: brain
+  price: 6200
+  humanity_cost: 2
+  description: "Прослойка между нервами и железом: следующие импланты отнимают меньше человечности. Уже потерянное он не вернёт."
+  tier: mid
+  category: noncombat
+  abilities: [steady_mind]
+  requires: []
+  mods: {humanity_loss_pct: -20}
+  available_from: 2045
+
+- key: endocrine_regulator
+  name: Эндокринный регулятор
+  slot: circulatory
+  price: 5200
+  humanity_cost: 2
+  description: "Гормоны по расписанию, и настроение всегда ровное. Как улыбка в рекламе, и такое же ненастоящее."
+  tier: mid
+  category: noncombat
+  abilities: [even_mood]
+  build: medic
+  requires: []
+  mods: {mood_weekly: 3}
+  available_from: 2016
+
+- key: hidden_subdermal_stash
+  name: Подкожный тайник
+  slot: skin
+  price: 1900
+  humanity_cost: 3
+  description: "Полость под ребром для чипов, ключей и заначки, сканеры её не видят. Криминал приносит больше, но люди чувствуют, что с тобой что-то не так."
+  tier: street
+  category: noncombat
+  abilities: [rib_pocket]
+  build: tank
+  requires: []
+  mods: {crime_reward_pct: 20, check.crime: 1, check.social: -1}
+
+- key: trade_cortex
+  name: Торговый сопроцессор
+  slot: brain
+  price: 3700
+  humanity_cost: 2
+  description: "Цены и курсы всегда в голове, торгуешься на автомате. Продавцы уступают, хоть и без всякой симпатии."
+  tier: mid
+  category: noncombat
+  abilities: [rate_play]
+  build: agent
+  requires: []
+  mods: {shop_discount_pct: 10}
+  available_from: 2045
+
+- key: immune_booster
+  name: Иммунный ускоритель
+  slot: circulatory
+  price: 2300
+  humanity_cost: 3
+  description: "Раны заживают быстрее, но по ночам знобит и ломит, будто подхватил грипп."
+  tier: street
+  category: noncombat
+  abilities: [fever_burn]
+  build: medic
+  requires: []
+  mods: {hp_regen: 2, mood_weekly: -1}
+  available_from: 2016
+
+- key: pheromone_gland
+  name: Феромонная железа
+  slot: body
+  price: 2800
+  humanity_cost: 4
+  description: "Железа под кожей выделяет запах, который нравится людям. Знакомиться, договариваться и врать становится проще."
+  tier: street
+  category: noncombat
+  abilities: [pheromone]
+  build: face
+  requires: []
+  mods: {relation_gain: 1, check.social: 1}
+  available_from: 2016
+
+- key: corpo_coprocessor
+  name: Корпоративный сопроцессор
+  slot: brain
+  price: 14500
+  humanity_cost: 6
+  description: "Отчёты, этикет и пароли загружаются за минуту: учишься быстрее и растёшь в корпорации. Дорогая вещь, которую компания может отключить одним звонком."
+  tier: military
+  category: noncombat
+  abilities: [etiquette_load]
+  build: agent
+  requires: []
+  mods: {xp.all: 10, salary_pct.corpo: 15, check.career: 1}
+  available_from: 2060
+
+- key: corp_loyalty_plate
+  name: Пластина лояльности
+  slot: body
+  price: 1800
+  humanity_cost: 3
+  description: "Пластина с логотипом компании, вшитая в грудь. Платят чуть больше, но в голове всё время играет корпоративный гимн."
+  tier: street
+  category: noncombat
+  abilities: [badge_flash]
+  build: agent
+  requires: []
+  mods: {salary_pct.corpo: 8, mood_weekly: -1}
+
+- key: ncpd_badge
+  name: Вживлённый жетон NCPD
+  slot: forearms
+  price: 2600
+  humanity_cost: 3
+  description: "Жетон под кожей предплечья: в полиции за него доплачивают. На улице от тебя шарахаются, и разговор ни с кем не клеится."
+  tier: street
+  category: noncombat
+  abilities: [badge_out]
+  build: agent
+  requires: []
+  mods: {salary_pct.ncpd: 12, check.social: -1}
+
+- key: lie_detector
+  name: Детектор лжи
+  slot: face
+  price: 6400
+  humanity_cost: 3
+  description: "Датчик в переносице замечает скачки пульса и дрожь век. Чужую ложь видно сразу, и это помогает и в разговоре, и на службе."
+  tier: mid
+  category: noncombat
+  abilities: [read]
+  build: face
+  requires: []
+  mods: {check.social: 1, check.career: 1}
+  available_from: 2045
+
+- key: trauma_filter
+  name: Сканер Trauma Team
+  slot: eyes
+  price: 4300
+  humanity_cost: 2
+  description: "Медицинский сканер с логотипом Trauma Team: видишь ранения и сразу знаешь, у кого есть подписка. В Trauma Team с ним платят больше, и лечить проще."
+  tier: mid
+  category: noncombat
+  abilities: [triage_scan]
+  build: medic
+  requires: []
+  mods: {salary_pct.trauma_team: 12, check.heal: 1}
+  available_from: 2045
+
+- key: surgeon_fingers
+  name: Пальцы хирурга
+  slot: hands
+  price: 2900
+  humanity_cost: 2
+  description: "Рука не дрожит ни на шве, ни на плате. К вечеру пальцы немеют, а ночью ноют."
+  tier: street
+  category: noncombat
+  abilities: [steady_stitch]
+  build: medic
+  requires: []
+  mods: {skill.medicine: 1, skill.tech: 1, mood_weekly: -1}
+
+- key: media_optics
+  name: Записывающая оптика
+  slot: eyes
+  price: 4600
+  humanity_cost: 2
+  description: "Камера в глазу снимает так, что никто вокруг не замечает. За такие кадры журналистам платят больше, и тихая работа даётся легче."
+  tier: mid
+  category: noncombat
+  abilities: [hidden_film]
+  build: face
+  requires: []
+  mods: {salary_pct.media: 15, check.gig_quiet: 1}
+  available_from: 2045
+
+- key: neuro_journal
+  name: Нейрожурнал
+  slot: brain
+  price: 3100
+  humanity_cost: 2
+  description: "Записываешь мысли прямо из головы, без клавиатуры. Говорить и писать проще, но после смены в голове шумит."
+  tier: street
+  category: noncombat
+  abilities: [thought_note]
+  build: agent
+  requires: []
+  mods: {skill.persuasion: 1, salary_pct.media: 8, mood_weekly: -1}
+
+- key: vocal_synth
+  name: Вокальный синтезатор
+  slot: face
+  price: 6100
+  humanity_cost: 3
+  description: "Голос на три октавы шире, связки больше не нужны. Публика в восторге, лейбл доволен, и самому петь в радость."
+  tier: mid
+  category: noncombat
+  abilities: [three_octaves]
+  build: face
+  requires: []
+  mods: {salary_pct.rockerboy: 15, mood_weekly: 2}
+  available_from: 2045
+
+- key: fan_channel
+  name: Фанатский канал
+  slot: brain
+  price: 2700
+  humanity_cost: 2
+  description: "Прямая линия от фанатов прямо в голову. Одни донатят и пишут тёплые слова, другие звонят в три часа ночи и молча дышат."
+  tier: street
+  category: noncombat
+  abilities: [fan_drop]
+  build: face
+  requires: []
+  mods: {salary_pct.rockerboy: 6, relation_gain: 1, mood_weekly: -1}
+  available_from: 2030
+
+- key: mechanic_fingers
+  name: Механические пальцы
+  slot: hands
+  price: 4100
+  humanity_cost: 2
+  description: "Титановые фаланги со встроенными отвёртками: чинишь без инструментов. В мастерских за такие руки платят больше."
+  tier: mid
+  category: noncombat
+  abilities: [fixit]
+  build: engineer
+  requires: []
+  mods: {skill.tech: 2, salary_pct.mechanic: 15}
+  available_from: 2045
+
+- key: ledger_cache
+  name: Кэш взломщика
+  slot: brain
+  price: 3300
+  humanity_cost: 3
+  description: "Буфер под чужие коды: ломаешь быстрее, и каждый взлом чему-то учит."
+  tier: street
+  category: noncombat
+  abilities: [code_reuse]
+  build: ghost
+  requires: []
+  mods: {skill.netrunning: 1, xp.netrunning: 15}
+
+- key: calm_damper
+  name: Демпфер страха
+  slot: spine
+  price: 1500
+  humanity_cost: 2
+  description: "Держит нервы под замком: паники меньше, и от погони уходишь хладнокровнее. Радости, правда, тоже меньше."
+  tier: street
+  category: noncombat
+  abilities: [fear_lock]
+  requires: []
+  mods: {check.escape: 1, mood_weekly: -1}
+
+- key: vestibular_stab
+  name: Вестибулярный стабилизатор
+  slot: brain
+  price: 3600
+  humanity_cost: 2
+  description: "Гироскоп во внутреннем ухе: машина слушается на любой скорости, и от погони уходишь увереннее."
+  tier: mid
+  category: noncombat
+  abilities: [no_sick]
+  build: pilot
+  requires: []
+  mods: {skill.driving: 2, check.escape: 1}
+  available_from: 2045
+
+- key: dust_filter
+  name: Фильтр пустоши
+  slot: body
+  price: 1700
+  humanity_cost: 2
+  description: "Чистит лёгкие от пыли Бэдлендса, и тело быстрее восстанавливается. В городе фильтр присвистывает на каждом вдохе."
+  tier: street
+  category: noncombat
+  abilities: [dust_walk]
+  build: diver
+  requires: []
+  mods: {hp_regen: 1, check.heal: 1}
+  available_from: 2016
+
+- key: gig_voice_modulator
+  name: Голосовой модулятор
+  slot: face
+  price: 3800
+  humanity_cost: 2
+  description: "Тембр подстраивается под собеседника за секунду. С фиксерами договариваться проще, и люди охотнее идут на контакт."
+  tier: mid
+  category: noncombat
+  abilities: [voice]
+  build: face
+  requires: []
+  mods: {check.gig_talk: 1, relation_gain: 1}
+  available_from: 2045
+
+- key: contact_book
+  name: Записная книжка в затылке
+  slot: brain
+  price: 7200
+  humanity_cost: 3
+  description: "Имена, номера, долги и должники всегда под рукой. Знакомства заводятся быстрее, разговоры даются легче."
+  tier: mid
+  category: noncombat
+  abilities: [call_in_favor]
+  build: face
+  requires: []
+  mods: {relation_gain: 2, skill.persuasion: 1, check.social: 1}
+  available_from: 2045

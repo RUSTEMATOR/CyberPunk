@@ -1,0 +1,195 @@
+/* W16 «Стекло» (owner request 28.10: a nod to iOS glassmorphism). html.glass is set by fx2.js (on by default, a switch
+ * in Персонаж → Сводка). Frosted, see-through chrome: blur plus saturation of what is under it, a thin light edge on top,
+ * a soft inner highlight. A faint light of the place's two colours sits behind the page so the glass has something to
+ * bend. Weak Android (lowfx), "reduce transparency" and browsers without backdrop-filter get a solid fill instead. */
+html.glass {
+  --glass-tint: color-mix(in srgb, var(--panel) 58%, transparent);
+  --glass-tint2: color-mix(in srgb, var(--panel2) 46%, transparent);
+  --glass-edge: color-mix(in srgb, #fff 16%, transparent);
+  --glass-edge2: color-mix(in srgb, #fff 6%, transparent);
+  --glass-blur: saturate(180%) blur(22px);
+  --glass-blur-s: saturate(160%) blur(14px);
+  --glass-rad: max(var(--rad), 14px);
+  --glass-shadow: 0 10px 30px -12px rgba(0, 0, 0, .55);
+}
+html.glass.t-clinic {
+  --glass-tint: color-mix(in srgb, #fff 62%, transparent);
+  --glass-tint2: color-mix(in srgb, #fff 48%, transparent);
+  --glass-edge: color-mix(in srgb, #fff 85%, transparent);
+  --glass-edge2: color-mix(in srgb, #0F1D27 8%, transparent);
+  --glass-shadow: 0 10px 30px -14px rgba(15, 29, 39, .28);
+}
+
+/* the light behind the glass: two soft pools of the place's colours, fixed, never in the way */
+html.glass body::after {
+  content: ""; position: fixed; inset: -10%; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(42% 32% at 12% 18%, color-mix(in srgb, var(--acc) 22%, transparent), transparent 70%),
+    radial-gradient(38% 30% at 92% 62%, color-mix(in srgb, var(--acc2) 16%, transparent), transparent 70%),
+    radial-gradient(50% 40% at 40% 105%, color-mix(in srgb, var(--acc) 12%, transparent), transparent 70%);
+}
+html.glass body { background: var(--bg); position: relative; z-index: 0; }
+
+/* chrome: top bar, bottom tabs, the pinned button, toasts, readouts */
+html.glass .top, html.glass .tabs {
+  background: var(--glass-tint); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+}
+html.glass .top { border-bottom: 1px solid var(--glass-edge2); box-shadow: inset 0 -1px 0 var(--glass-edge2); }
+html.glass .tabs { border-top: 1px solid var(--glass-edge2); box-shadow: inset 0 1px 0 var(--glass-edge); }
+@media (max-width: 1023px) {
+  /* a floating island of tabs, as on iOS */
+  html.glass .tabs { left: calc(10px + var(--safe-l)); right: calc(10px + var(--safe-r)); bottom: calc(6px + var(--safe-b));
+    height: var(--nav-h); padding: 0; border: 1px solid var(--glass-edge2); border-radius: 22px; box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-edge); }
+  html.glass .tab[aria-current="page"]::before { top: 6px; bottom: 6px; left: 8px; right: 8px; width: auto; height: auto; margin: 0; border-radius: 16px;
+    background: color-mix(in srgb, var(--acc) 16%, transparent); box-shadow: inset 0 1px 0 var(--glass-edge2); }
+  html.glass .tab > * { position: relative; }
+}
+html.glass .dock .btn, html.glass .fb-toast, html.glass .fx-delta {
+  background: var(--glass-tint2); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-edge2); border-radius: var(--glass-rad); box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-edge);
+}
+html.glass .dock .btn[data-style="success"], html.glass .dock .btn:not([data-style]) { border-color: color-mix(in srgb, var(--acc) 45%, var(--glass-edge2)); }
+html.glass .fb-toast.bad { border-color: color-mix(in srgb, var(--bad) 60%, transparent); }
+
+/* cards: buttons, notices, panels of the living city — lighter frost so a long list stays fast */
+html.glass .view .btn:not(.tile):not([data-augmented-ui]), html.glass .tiles .btn, html.glass .notice, html.glass .lv-panel, html.glass .chat-input,
+html.glass .input-row input {
+  background: var(--glass-tint2); -webkit-backdrop-filter: var(--glass-blur-s); backdrop-filter: var(--glass-blur-s);
+  border-color: var(--glass-edge2); border-radius: var(--glass-rad); box-shadow: inset 0 1px 0 var(--glass-edge);
+}
+html.glass .view .btn.btn[data-style="danger"]:not([data-augmented-ui]) { border-color: color-mix(in srgb, var(--bad) 55%, transparent); }
+html.glass .view .btn.btn[data-style="success"]:not([data-augmented-ui]), html.glass .dock .btn.btn[data-style="success"] {
+  background: color-mix(in srgb, var(--acc) 82%, transparent); border-color: color-mix(in srgb, var(--acc) 90%, #fff 10%); color: var(--acc-ink);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 30%, transparent), 0 8px 20px -12px var(--acc); }
+
+html.glass .input-row .send { border-radius: var(--glass-rad); }
+
+/* the place picture: the title sits on a pane of glass, the chips are glass pills */
+html.glass .hero { border-radius: 0 0 22px 22px; }
+@media (min-width: 1024px) { html.glass .hero { border-radius: 22px; } }
+html.glass .hero-in { margin: 0 10px 10px; width: calc(100% - 20px); padding: 12px 14px; border-radius: 18px;
+  background: color-mix(in srgb, var(--bg) 34%, transparent); -webkit-backdrop-filter: var(--glass-blur-s); backdrop-filter: var(--glass-blur-s);
+  border: 1px solid var(--glass-edge2); box-shadow: inset 0 1px 0 var(--glass-edge); }
+html.glass .chip { border-radius: 999px; background: var(--glass-tint2); -webkit-backdrop-filter: var(--glass-blur-s); backdrop-filter: var(--glass-blur-s);
+  border: 1px solid var(--glass-edge2); }
+html.glass .hero::after { background: linear-gradient(180deg, rgba(var(--scrim), 0) 45%, rgba(var(--scrim), .55) 100%); }
+
+/* the desktop column */
+@media (min-width: 1024px) {
+  html.glass .side { background: var(--glass-tint); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
+}
+
+/* no glass where it costs too much or is not wanted: a solid fill, the same layout */
+html.glass.lowfx .top, html.glass.lowfx .tabs, html.glass.lowfx .dock .btn, html.glass.lowfx .fb-toast, html.glass.lowfx .fx-delta,
+html.glass.lowfx .view .btn, html.glass.lowfx .tiles .btn, html.glass.lowfx .notice, html.glass.lowfx .lv-panel, html.glass.lowfx .hero-in,
+html.glass.lowfx .chip, html.glass.lowfx .chat-input { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--panel); }
+html.glass.lowfx body::after { display: none; }
+@media (prefers-reduced-transparency: reduce) {
+  html.glass .top, html.glass .tabs, html.glass .dock .btn, html.glass .fb-toast, html.glass .fx-delta, html.glass .view .btn, html.glass .tiles .btn,
+  html.glass .notice, html.glass .lv-panel, html.glass .hero-in, html.glass .chip, html.glass .chat-input { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--panel); }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  html.glass .top, html.glass .tabs, html.glass .dock .btn, html.glass .fb-toast, html.glass .fx-delta, html.glass .hero-in { background: var(--panel); }
+}
+
+/* tiles are separate panes of glass */
+html.glass .tiles { gap: 8px; border-top: 0; padding-top: 4px; }
+
+/* fixes 28.10 (owner report: icons shifted): the chat badge stays a badge, tile icons sit in one box */
+html.glass .tab > .tab-badge { position: absolute; }
+.btn.tile > img.ce, .btn.tile > .ce-video, .btn.tile > .ce-lottie, .btn.tile > svg {
+  width: 24px !important; height: 24px !important; flex: 0 0 24px; margin: 0 !important; object-fit: contain; vertical-align: middle !important; }
+html.glass .tiles .btn.tile, html.glass .tiles .btn.tile:nth-child(odd), html.glass .tiles .btn.tile:nth-child(even) {
+  padding: 12px 14px; border-right: 1px solid var(--glass-edge2); }
+
+/* ---------- W17 «Жидкое стекло» (owner 28.10: «не сказать что прям глассморфизм», iOS 26 folder and dock as the reference).
+ * Glass needs something to bend: the place itself, blurred, sits behind the whole page (#wall, two layers that cross-fade).
+ * Panes are mostly clear: a faint white sheen over a thin veil of the place colour, a wide blur that saturates what is
+ * under it, a bright rim that catches light on the top-left and takes a little of the place colour at the bottom-right,
+ * an inner highlight and a soft drop shadow. */
+html.glass {
+  --glass-veil: color-mix(in srgb, var(--bg) 26%, transparent);
+  --glass-sheen: linear-gradient(180deg, rgba(255, 255, 255, .11), rgba(255, 255, 255, .035) 55%, rgba(255, 255, 255, .02));
+  --glass-blur: saturate(190%) blur(24px);
+  --glass-blur-s: saturate(180%) blur(18px);
+  --glass-rad: 20px;
+  --glass-rim: linear-gradient(140deg, rgba(255, 255, 255, .62), rgba(255, 255, 255, .16) 24%, rgba(255, 255, 255, .05) 52%,
+    color-mix(in srgb, var(--acc) 40%, rgba(255, 255, 255, .22)) 100%);
+  --glass-shadow: 0 14px 34px -14px rgba(0, 0, 0, .6);
+  --glass-inner: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 -1px 0 rgba(255, 255, 255, .04);
+}
+html.glass.t-clinic {
+  --glass-veil: color-mix(in srgb, #fff 42%, transparent);
+  --glass-sheen: linear-gradient(180deg, rgba(255, 255, 255, .55), rgba(255, 255, 255, .25));
+  --glass-rim: linear-gradient(140deg, rgba(255, 255, 255, .95), rgba(255, 255, 255, .4) 30%, rgba(15, 29, 39, .08) 60%, color-mix(in srgb, var(--acc) 35%, #fff) 100%);
+  --glass-shadow: 0 14px 30px -16px rgba(15, 29, 39, .35);
+  --glass-inner: inset 0 1px 0 rgba(255, 255, 255, .9);
+}
+.wall { display: none; }
+html.glass .wall { display: block; position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; background: var(--bg); }
+html.glass .wall i { position: absolute; inset: -8%; background: center / cover no-repeat; opacity: 0; transition: opacity .6s ease;
+  filter: blur(20px) saturate(1.5) brightness(.62); transform: scale(1.08); }
+html.glass .wall i.on { opacity: 1; }
+html.glass .wall::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(var(--scrim), .25), rgba(var(--scrim), .55) 70%, rgba(var(--scrim), .7)); }
+html.glass.t-clinic .wall i { filter: blur(22px) saturate(1.2) brightness(1.25) grayscale(.4); }
+html.glass.t-under .wall i, html.glass.t-alert .wall i { filter: blur(20px) saturate(1.2) brightness(.55) sepia(.35); }
+html.glass.t-net .wall i { filter: blur(22px) grayscale(1) brightness(.45) sepia(1) saturate(3) hue-rotate(-12deg); }
+html.glass body::after { display: none; }
+html.glass body { background: transparent; }
+
+/* the panes */
+html.glass .top, html.glass .tabs, html.glass .view .btn:not([data-augmented-ui]), html.glass .tiles .btn, html.glass .dock .btn,
+html.glass .fb-toast, html.glass .fx-delta, html.glass .notice, html.glass .lv-panel, html.glass #hudMain, html.glass .text blockquote,
+html.glass .hero-in, html.glass .radar-box, html.glass .seg, html.glass .chat-panel.embedded .chat-msg {
+  background: var(--glass-sheen), var(--glass-veil);
+  -webkit-backdrop-filter: var(--glass-blur-s); backdrop-filter: var(--glass-blur-s);
+  border: 0; box-shadow: var(--glass-shadow), var(--glass-inner);
+}
+html.glass .top, html.glass .tabs, html.glass .dock .btn, html.glass .fb-toast { -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
+html.glass .view .btn:not([data-augmented-ui]), html.glass .tiles .btn, html.glass .dock .btn, html.glass .fb-toast, html.glass .fx-delta,
+html.glass .notice, html.glass .lv-panel, html.glass #hudMain, html.glass .text blockquote, html.glass .radar-box, html.glass .seg,
+html.glass .chat-panel.embedded .chat-msg { border-radius: var(--glass-rad); position: relative; }
+html.glass .tiles .btn.tile, html.glass .tiles .btn.tile:nth-child(odd), html.glass .tiles .btn.tile:nth-child(even) { border: 0; border-radius: 20px; }
+/* the rim: a 1px ring drawn with a mask, so it follows the rounding */
+html.glass .top::before, html.glass .tabs::after, html.glass .view .btn:not([data-augmented-ui])::before, html.glass .tiles .btn::before,
+html.glass .dock .btn::before, html.glass .fb-toast::before, html.glass .notice::before, html.glass .lv-panel::before, html.glass #hudMain::before,
+html.glass .text blockquote::before, html.glass .hero-in::before, html.glass .radar-box::before, html.glass .seg::before,
+html.glass .chat-panel.embedded .chat-msg::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; background: var(--glass-rim);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+html.glass .top::before { border-radius: 0; padding: 0 0 1px; }
+html.glass .top { background: var(--glass-sheen), color-mix(in srgb, var(--bg) 34%, transparent); box-shadow: 0 10px 30px -18px rgba(0, 0, 0, .6); }
+html.glass .tabs::after { border-radius: inherit; }
+@media (min-width: 1024px) { html.glass .tabs::after { display: none; } }
+html.glass .fb-toast, html.glass .fx-delta { position: relative; }
+/* the action colour stays glass too: tinted, not painted */
+html.glass .view .btn.btn[data-style="success"]:not([data-augmented-ui]), html.glass .dock .btn.btn[data-style="success"] {
+  background: linear-gradient(180deg, rgba(255, 255, 255, .22), rgba(255, 255, 255, 0) 60%), color-mix(in srgb, var(--acc) 72%, transparent);
+  color: var(--acc-ink); box-shadow: 0 14px 30px -12px color-mix(in srgb, var(--acc) 70%, transparent), inset 0 1px 0 rgba(255, 255, 255, .45); }
+html.glass .view .btn.btn[data-style="danger"]:not([data-augmented-ui]) { background: var(--glass-sheen), color-mix(in srgb, var(--bad) 18%, transparent); }
+/* the cards of the menu */
+html.glass #hudMain { padding: 4px 16px; }
+html.glass #hudMain .vrow { border-bottom-color: rgba(255, 255, 255, .08); }
+html.glass #hudMain .vrow:last-child { border-bottom: 0; }
+html.glass.t-clinic #hudMain .vrow { border-bottom-color: rgba(15, 29, 39, .08); }
+html.glass .text blockquote { padding: 12px 14px; }
+/* text straight on the wallpaper keeps a soft shadow so it reads over any picture */
+html.glass:not(.t-clinic) .text, html.glass:not(.t-clinic) .sh, html.glass:not(.t-clinic) .title, html.glass:not(.t-clinic) .hero-k,
+html.glass:not(.t-clinic) .weather { text-shadow: 0 1px 2px rgba(0, 0, 0, .55); }
+html.glass .sh::after, html.glass .sect::after { background: rgba(255, 255, 255, .12); }
+/* the place picture: a rounded window into the city with a glass caption */
+html.glass .hero { margin: -6px calc(-6px - var(--safe-r)) 0 calc(-6px - var(--safe-l)); border-radius: 26px; box-shadow: 0 18px 40px -18px rgba(0, 0, 0, .7); }
+html.glass .hero-in { border-radius: 18px; }
+@media (min-width: 600px) { html.glass .hero { margin: 0; } }
+/* pressed glass lights up from inside */
+html.glass .btn.is-pressed { transform: scale(.97); background: linear-gradient(180deg, rgba(255, 255, 255, .2), rgba(255, 255, 255, .06)), var(--glass-veil); }
+
+/* no glass where it costs too much or is not wanted */
+html.glass.lowfx .wall, html.glass.lowfx .top::before, html.glass.lowfx .btn::before { display: none; }
+@media (prefers-reduced-transparency: reduce) {
+  html.glass .wall { display: none; }
+  html.glass .top, html.glass .tabs, html.glass .view .btn, html.glass .tiles .btn, html.glass .dock .btn, html.glass .notice, html.glass #hudMain,
+  html.glass .text blockquote { background: var(--panel); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}

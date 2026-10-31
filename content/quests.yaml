@@ -1,0 +1,1292 @@
+# Daily and weekly quests. Schema: app/content/schemas.py (Quest). Guide: docs/CONTENT_GUIDE.md.
+# Paths: combat, noncombat, chrome_free, any. Chrome-free quests never need cyberware_installed.
+
+# --- daily: combat path ---
+
+- key: daily_fight_won
+  text: "Выиграй бой"
+  period: daily
+  paths: [combat]
+  goal: {event: fight_won}
+  target: 1
+  rewards: {eddies: 120, xp: 1}
+
+- key: daily_fight_hard
+  text: "Победи врага с опасностью 3 или выше"
+  period: daily
+  paths: [combat]
+  goal: {event: fight_won, min_danger: 3}
+  target: 1
+  rewards: {eddies: 220, xp: 1}
+
+- key: daily_takedown
+  text: "Обезвредь врага, не убивая"
+  period: daily
+  paths: [combat]
+  goal: {event: takedown}
+  target: 1
+  rewards: {eddies: 110, xp: 1}
+
+- key: daily_loud_gig
+  text: "Выполни заказ громко"
+  period: daily
+  paths: [combat]
+  goal: {event: gig_done, approach: loud}
+  target: 1
+  rewards: {eddies: 200, xp: 1}
+
+- key: daily_quickhack
+  text: "Примени быстрый взлом в бою"
+  period: daily
+  paths: [combat]
+  goal: {event: quickhack_used}
+  target: 1
+  rewards: {eddies: 120, xp: 1}
+
+- key: daily_assault_crime
+  text: "Проверни нападение без осечки"
+  period: daily
+  paths: [combat]
+  goal: {event: crime_done, kind: assault, success: true}
+  target: 1
+  rewards: {eddies: 150, street_cred: 1}
+
+# --- daily: combat and noncombat ---
+
+- key: daily_quiet_gig
+  text: "Выполни заказ тихо"
+  period: daily
+  paths: [combat, noncombat]
+  goal: {event: gig_done, approach: quiet}
+  target: 1
+  rewards: {eddies: 150, xp: 1}
+
+- key: daily_hack
+  text: "Взломай систему вне боя"
+  period: daily
+  paths: [combat, noncombat]
+  goal: {event: hack}
+  target: 1
+  rewards: {eddies: 120, xp: 1}
+
+# --- daily: noncombat path ---
+
+- key: daily_family
+  text: "Проведи время с семьёй"
+  period: daily
+  paths: [noncombat]
+  goal: {event: family_time}
+  target: 1
+  rewards: {eddies: 60, status: 1}
+
+- key: daily_craft
+  text: "Почини или собери что-нибудь"
+  period: daily
+  paths: [noncombat]
+  goal: {event: craft}
+  target: 1
+  rewards: {eddies: 120, xp: 1}
+
+- key: daily_perform
+  text: "Выступи на сцене"
+  period: daily
+  paths: [noncombat]
+  goal: {event: perform}
+  target: 1
+  rewards: {eddies: 150, fame: 1}
+
+- key: daily_report
+  text: "Сними репортаж"
+  period: daily
+  paths: [noncombat]
+  goal: {event: report}
+  target: 1
+  rewards: {eddies: 120, fame: 1}
+
+- key: daily_deal_broker
+  text: "Сведи двух людей и возьми комиссию"
+  period: daily
+  paths: [noncombat]
+  goal: {event: deal, kind: broker}
+  target: 1
+  rewards: {eddies: 180, status: 1}
+
+- key: daily_study
+  text: "Сядь за учёбу"
+  period: daily
+  paths: [noncombat]
+  goal: {event: study}
+  target: 1
+  rewards: {eddies: 40, xp: 1}
+
+# --- daily: chrome_free path (and noncombat where it fits) ---
+
+- key: daily_meditate
+  text: "Помедитируй"
+  period: daily
+  paths: [chrome_free]
+  goal: {event: meditate}
+  target: 1
+  rewards: {eddies: 80, xp: 1}
+
+- key: daily_martial
+  text: "Потренируй боевые искусства"
+  period: daily
+  paths: [chrome_free]
+  goal: {event: martial_arts}
+  target: 1
+  rewards: {eddies: 60, xp: 1}
+
+- key: daily_service
+  text: "Помоги общине"
+  period: daily
+  paths: [chrome_free]
+  goal: {event: service}
+  target: 1
+  rewards: {eddies: 60, fame: 1}
+
+- key: daily_heal_other
+  text: "Вылечи кого-нибудь, кроме себя"
+  period: daily
+  paths: [chrome_free, noncombat]
+  goal: {event: heal, target: other}
+  target: 1
+  rewards: {eddies: 100, xp: 1}
+
+- key: daily_talk_gig
+  text: "Закрой заказ разговором"
+  period: daily
+  paths: [chrome_free, noncombat]
+  goal: {event: gig_done, approach: talk}
+  target: 1
+  rewards: {eddies: 140, xp: 1}
+
+- key: daily_social
+  text: "Проведи время с другом или партнёром"
+  period: daily
+  paths: [chrome_free, noncombat]
+  goal: {event: social_time}
+  target: 1
+  rewards: {eddies: 60}
+
+# --- daily: any path ---
+
+- key: daily_rest
+  text: "Отдохни"
+  period: daily
+  paths: [any]
+  goal: {event: rest}
+  target: 1
+  rewards: {eddies: 50}
+
+- key: daily_bar
+  text: "Загляни в бар"
+  period: daily
+  paths: [any]
+  goal: {event: bar}
+  target: 1
+  rewards: {eddies: 40, street_cred: 1}
+
+- key: daily_therapy
+  text: "Сходи на терапию"
+  period: daily
+  paths: [any]
+  goal: {event: therapy}
+  target: 1
+  rewards: {eddies: 40, xp: 1}
+
+- key: daily_nonviolent_event
+  text: "Реши событие без насилия"
+  period: daily
+  paths: [any]
+  goal: {event: event_resolved, nonviolent: true}
+  target: 1
+  rewards: {eddies: 100, xp: 1}
+
+- key: daily_debt_paid
+  text: "Выплати часть долга"
+  period: daily
+  paths: [any]
+  goal: {event: debt_paid}
+  target: 1
+  rewards: {eddies: 120}
+
+# --- weekly ---
+
+- key: weekly_fight_5
+  text: "Выиграй пять боёв за неделю"
+  period: weekly
+  paths: [combat]
+  goal: {event: fight_won}
+  target: 5
+  rewards: {eddies: 600, xp: 2}
+  world: {gang: -3, text: "{district}: банды района недосчитались бойцов, их хватка слабеет."}
+
+- key: weekly_loud_gig_3
+  text: "Выполни три громких заказа за неделю"
+  period: weekly
+  paths: [combat]
+  goal: {event: gig_done, approach: loud}
+  target: 3
+  rewards: {eddies: 700, street_cred: 2}
+  world: {gang: -2, corp: -2, text: "{district}: громкие заказы напоминают всем, кто здесь сильнее."}
+
+- key: weekly_perform_3
+  text: "Выступи три раза за неделю"
+  period: weekly
+  paths: [noncombat]
+  goal: {event: perform}
+  target: 3
+  rewards: {eddies: 500, fame: 2}
+
+- key: weekly_trade_2
+  text: "Заключи две торговые сделки за неделю"
+  period: weekly
+  paths: [noncombat]
+  goal: {event: deal, kind: trade}
+  target: 2
+  rewards: {eddies: 600, status: 1}
+
+- key: weekly_meditate_5
+  text: "Помедитируй пять раз за неделю"
+  period: weekly
+  paths: [chrome_free]
+  goal: {event: meditate}
+  target: 5
+  rewards: {eddies: 400, xp: 2}
+
+- key: weekly_martial_3
+  text: "Потренируй боевые искусства три раза за неделю"
+  period: weekly
+  paths: [chrome_free]
+  goal: {event: martial_arts}
+  target: 3
+  rewards: {eddies: 400, xp: 2}
+
+- key: weekly_vow_week
+  text: "Продержи обет всю неделю"
+  period: weekly
+  paths: [any]
+  goal: {event: vow_week}
+  target: 1
+  rewards: {eddies: 300, tokens: 2}
+
+- key: weekly_quiet_week
+  text: "Проживи неделю без розыска"
+  period: weekly
+  paths: [any]
+  goal: {event: week_lived, max_heat: 0}
+  target: 1
+  rewards: {eddies: 300, tokens: 1}
+
+# --- new systems (owner request): leisure, more crime, gangs, rides, gear, other players ---
+
+- key: daily_leisure
+  text: "Займись чем-нибудь в «Досуге и приколах»"
+  period: daily
+  paths: [any]
+  goal: {event: action_done, section: leisure}
+  target: 1
+  rewards: {eddies: 100}
+
+- key: daily_more_crime
+  text: "Провернуть одно дело из «Ещё дел»"
+  period: daily
+  paths: [combat, noncombat]
+  goal: {event: action_done, section: crime}
+  target: 1
+  rewards: {eddies: 150, street_cred: 1}
+
+- key: daily_gang_task
+  text: "Выполни задание своей банды"
+  period: daily
+  paths: [any]
+  goal: {event: action_done, section: gang}
+  target: 1
+  rewards: {eddies: 150, xp: 1}
+
+- key: daily_race_win
+  text: "Выиграй уличную гонку"
+  period: daily
+  paths: [any]
+  goal: {event: drive}
+  target: 1
+  rewards: {eddies: 200, fame: 1}
+
+- key: daily_buy_gear
+  text: "Купи оружие или броню"
+  period: daily
+  paths: [combat]
+  goal: {event: item_bought}
+  target: 1
+  rewards: {eddies: 120}
+
+- key: daily_drink_player
+  text: "Выпей с другим игроком"
+  period: daily
+  paths: [any]
+  goal: {event: player_drink}
+  target: 1
+  rewards: {eddies: 120, xp: 1}
+
+- key: daily_player_note
+  text: "Оставь записку другому игроку"
+  period: daily
+  paths: [any]
+  goal: {event: player_note}
+  target: 1
+  rewards: {eddies: 80}
+
+- key: daily_event_any
+  text: "Разберись с двумя событиями"
+  period: daily
+  paths: [any]
+  goal: {event: event_resolved}
+  target: 2
+  rewards: {eddies: 150, xp: 1}
+
+- key: daily_work_shift
+  text: "Отработай смену"
+  period: daily
+  paths: [any]
+  goal: {event: work_hard}
+  target: 1
+  rewards: {eddies: 120}
+
+- key: weekly_leisure_5
+  text: "Пять дел из «Досуга» за неделю"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, section: leisure}
+  target: 5
+  rewards: {eddies: 500, fame: 1}
+
+- key: weekly_crime_5
+  text: "Пять дел из «Ещё дел» за неделю"
+  period: weekly
+  paths: [combat, noncombat]
+  goal: {event: action_done, section: crime}
+  target: 5
+  rewards: {eddies: 800, street_cred: 2}
+
+- key: weekly_gang_4
+  text: "Четыре задания банды за неделю"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, section: gang}
+  target: 4
+  rewards: {eddies: 700, street_cred: 2}
+  world: {gang: 4, text: "{district}: твоя банда крепче держит район."}
+
+- key: weekly_races_3
+  text: "Выиграй три гонки за неделю"
+  period: weekly
+  paths: [any]
+  goal: {event: drive}
+  target: 3
+  rewards: {eddies: 900, fame: 2}
+
+- key: weekly_chrome
+  text: "Поставь новый имплант"
+  period: weekly
+  paths: [combat, noncombat]
+  goal: {event: cyberware_installed}
+  target: 1
+  rewards: {eddies: 500, xp: 2}
+
+- key: weekly_street_fight
+  text: "Выиграй стычку с другим игроком"
+  period: weekly
+  paths: [combat]
+  goal: {event: player_attack, won: true}
+  target: 1
+  rewards: {eddies: 600, street_cred: 2}
+
+- key: weekly_together
+  text: "Проведи время вместе с другим игроком"
+  period: weekly
+  paths: [any]
+  goal: {event: player_together}
+  target: 1
+  rewards: {eddies: 400, xp: 2}
+
+- key: weekly_gigs_4
+  text: "Выполни четыре заказа за неделю"
+  period: weekly
+  paths: [any]
+  goal: {event: gig_done}
+  target: 4
+  rewards: {eddies: 900, street_cred: 1}
+  world: {corp: -2, text: "{district}: заказы фиксеров подтачивают корпорации района."}
+
+# --- generated batch (owner request: many quests) ---
+
+- key: daily_gig_delivery
+  text: "Доставь посылку для фиксера"
+  period: daily
+  paths: [any]
+  goal: {event: gig_done, type: delivery}
+  target: 1
+  rewards: {eddies: 150, xp: 1}
+
+- key: daily_gig_theft
+  text: "Провернуть кражу на заказ"
+  period: daily
+  paths: [combat, noncombat]
+  goal: {event: gig_done, type: theft}
+  target: 1
+  rewards: {eddies: 180, street_cred: 1}
+
+- key: daily_gig_escort
+  text: "Сопроводи клиента"
+  period: daily
+  paths: [any]
+  goal: {event: gig_done, type: escort}
+  target: 1
+  rewards: {eddies: 170, xp: 1}
+
+- key: daily_gig_missing
+  text: "Найди пропавшего"
+  period: daily
+  paths: [any]
+  goal: {event: gig_done, type: missing}
+  target: 1
+  rewards: {eddies: 160, xp: 1}
+
+- key: daily_gig_hack_type
+  text: "Выполни хакерский заказ"
+  period: daily
+  paths: [any]
+  goal: {event: gig_done, type: hack}
+  target: 1
+  rewards: {eddies: 180, xp: 1}
+
+- key: daily_gig_clean
+  text: "Закрой заказ чисто"
+  period: daily
+  paths: [any]
+  goal: {event: gig_done, outcome: clean}
+  target: 1
+  rewards: {eddies: 200, street_cred: 1}
+
+- key: daily_gig_tier2
+  text: "Выполни заказ второго уровня или выше"
+  period: daily
+  paths: [any]
+  goal: {event: gig_done, min_tier: 2}
+  target: 1
+  rewards: {eddies: 250, xp: 1}
+
+- key: daily_pickpocket
+  text: "Вытащи кошелёк без осечки"
+  period: daily
+  paths: [combat, noncombat]
+  goal: {event: crime_done, kind: pickpocket, success: true}
+  target: 1
+  rewards: {eddies: 100}
+
+- key: daily_car_theft
+  text: "Угони машину без осечки"
+  period: daily
+  paths: [combat, noncombat]
+  goal: {event: crime_done, kind: car_theft, success: true}
+  target: 1
+  rewards: {eddies: 180, street_cred: 1}
+
+- key: daily_store
+  text: "Ограбь магазин без осечки"
+  period: daily
+  paths: [combat]
+  goal: {event: crime_done, kind: store_robbery, success: true}
+  target: 1
+  rewards: {eddies: 200, street_cred: 1}
+
+- key: daily_train_firearms
+  text: "Потренируйся в стрельбе"
+  period: daily
+  paths: [combat]
+  goal: {event: train, skill: firearms}
+  target: 1
+  rewards: {eddies: 80, xp: 1}
+
+- key: daily_train_melee
+  text: "Потренируйся в рукопашной"
+  period: daily
+  paths: [combat, chrome_free]
+  goal: {event: train, skill: melee}
+  target: 1
+  rewards: {eddies: 80, xp: 1}
+
+- key: daily_study_tech
+  text: "Поучись технике"
+  period: daily
+  paths: [noncombat]
+  goal: {event: study, skill: tech}
+  target: 1
+  rewards: {eddies: 80, xp: 1}
+
+- key: daily_study_medicine
+  text: "Поучись медицине"
+  period: daily
+  paths: [noncombat]
+  goal: {event: study, skill: medicine}
+  target: 1
+  rewards: {eddies: 80, xp: 1}
+
+- key: daily_study_netrunning
+  text: "Поучись нетраннингу"
+  period: daily
+  paths: [any]
+  goal: {event: study, skill: netrunning}
+  target: 1
+  rewards: {eddies: 90, xp: 1}
+
+- key: daily_braindance
+  text: "Посмотри брейнданс"
+  period: daily
+  paths: [any]
+  goal: {event: braindance}
+  target: 1
+  rewards: {eddies: 60}
+
+- key: daily_hack_out
+  text: "Взломай что-нибудь вне боя"
+  period: daily
+  paths: [noncombat]
+  goal: {event: hack}
+  target: 1
+  rewards: {eddies: 140, xp: 1}
+
+- key: daily_report_media
+  text: "Сними репортаж или историю"
+  period: daily
+  paths: [noncombat]
+  goal: {event: report}
+  target: 1
+  rewards: {eddies: 130, fame: 1}
+
+- key: daily_drive_trip
+  text: "Съезди куда-нибудь за рулём"
+  period: daily
+  paths: [any]
+  goal: {event: drive}
+  target: 1
+  rewards: {eddies: 100}
+
+- key: daily_week_calm
+  text: "Проживи неделю без розыска"
+  period: daily
+  paths: [any]
+  goal: {event: week_lived, max_heat: 0}
+  target: 1
+  rewards: {eddies: 120}
+
+- key: daily_week_happy
+  text: "Проживи неделю в хорошем настроении"
+  period: daily
+  paths: [any]
+  goal: {event: week_lived, min_mood: 60}
+  target: 1
+  rewards: {eddies: 120, xp: 1}
+
+- key: daily_vouch
+  text: "Замолви словечко за другого игрока"
+  period: daily
+  paths: [any]
+  goal: {event: player_vouch}
+  target: 1
+  rewards: {eddies: 100, status: 1}
+
+- key: daily_gift
+  text: "Подари эдди другому игроку"
+  period: daily
+  paths: [any]
+  goal: {event: player_gift}
+  target: 1
+  rewards: {eddies: 60, street_cred: 1}
+
+- key: daily_player_job
+  text: "Выполни совместное дело с игроком"
+  period: daily
+  paths: [any]
+  goal: {event: player_job}
+  target: 1
+  rewards: {eddies: 200, xp: 1}
+
+- key: daily_takedown_2
+  text: "Обезвредь двух врагов, не убивая"
+  period: daily
+  paths: [combat]
+  goal: {event: takedown}
+  target: 2
+  rewards: {eddies: 220, xp: 1}
+
+- key: daily_fight_hard4
+  text: "Победи врага с опасностью 4 или выше"
+  period: daily
+  paths: [combat]
+  goal: {event: fight_won, min_danger: 4}
+  target: 1
+  rewards: {eddies: 350, street_cred: 1}
+
+- key: daily_leisure_2
+  text: "Два дела из «Досуга»"
+  period: daily
+  paths: [any]
+  goal: {event: action_done, section: leisure}
+  target: 2
+  rewards: {eddies: 180, fame: 1}
+
+- key: daily_event_nonviolent
+  text: "Разберись с событием без насилия"
+  period: daily
+  paths: [noncombat, chrome_free]
+  goal: {event: event_resolved, nonviolent: true}
+  target: 1
+  rewards: {eddies: 120, xp: 1}
+
+- key: weekly_gigs_hack_3
+  text: "Три хакерских заказа за неделю"
+  period: weekly
+  paths: [any]
+  goal: {event: gig_done, type: hack}
+  target: 3
+  rewards: {eddies: 800, xp: 2}
+  world: {corp: -3, text: "{district}: взломы бьют по системам корпораций района."}
+
+- key: weekly_gigs_delivery_3
+  text: "Три доставки за неделю"
+  period: weekly
+  paths: [any]
+  goal: {event: gig_done, type: delivery}
+  target: 3
+  rewards: {eddies: 700, street_cred: 1}
+
+- key: weekly_gigs_clean_3
+  text: "Три чистых заказа за неделю"
+  period: weekly
+  paths: [any]
+  goal: {event: gig_done, outcome: clean}
+  target: 3
+  rewards: {eddies: 900, street_cred: 2}
+  world: {corp: -1, text: "{district}: чистая работа: корпорации района не понимают, откуда утечки."}
+
+- key: weekly_gig_tier3
+  text: "Выполни заказ третьего уровня"
+  period: weekly
+  paths: [any]
+  goal: {event: gig_done, min_tier: 3}
+  target: 1
+  rewards: {eddies: 800, street_cred: 1}
+
+- key: weekly_crime_8
+  text: "Восемь удачных преступлений за неделю"
+  period: weekly
+  paths: [combat, noncombat]
+  goal: {event: crime_done, success: true}
+  target: 8
+  rewards: {eddies: 900, street_cred: 2}
+  world: {gang: 2, corp: -1, text: "{district}: улица работает по твоим правилам, корпорации теряют контроль."}
+
+- key: weekly_work_5
+  text: "Пять рабочих смен за неделю"
+  period: weekly
+  paths: [any]
+  goal: {event: work_hard}
+  target: 5
+  rewards: {eddies: 700, status: 1}
+
+- key: weekly_promotion
+  text: "Получи повышение"
+  period: weekly
+  paths: [any]
+  goal: {event: promotion}
+  target: 1
+  rewards: {eddies: 1000, status: 2}
+
+- key: weekly_weeks_6
+  text: "Проживи шесть недель"
+  period: weekly
+  paths: [any]
+  goal: {event: week_lived}
+  target: 6
+  rewards: {eddies: 600, xp: 2}
+
+- key: weekly_events_10
+  text: "Разберись с десятью событиями"
+  period: weekly
+  paths: [any]
+  goal: {event: event_resolved}
+  target: 10
+  rewards: {eddies: 700, xp: 2}
+
+- key: weekly_fight_hard_3
+  text: "Победи трёх опасных врагов (3+)"
+  period: weekly
+  paths: [combat]
+  goal: {event: fight_won, min_danger: 3}
+  target: 3
+  rewards: {eddies: 1000, street_cred: 2}
+  world: {gang: -4, text: "{district}: после твоей недели банды района прячут стволы и ходят тише."}
+
+- key: weekly_study_5
+  text: "Пять занятий учёбой за неделю"
+  period: weekly
+  paths: [noncombat]
+  goal: {event: study}
+  target: 5
+  rewards: {eddies: 600, xp: 3}
+
+- key: weekly_train_5
+  text: "Пять тренировок за неделю"
+  period: weekly
+  paths: [combat, chrome_free]
+  goal: {event: train}
+  target: 5
+  rewards: {eddies: 600, xp: 3}
+
+- key: weekly_social_3
+  text: "Три дела с другими игроками за неделю"
+  period: weekly
+  paths: [any]
+  goal: {event: social_time}
+  target: 3
+  rewards: {eddies: 600, status: 1}
+
+- key: weekly_gifts_2
+  text: "Два подарка другим игрокам"
+  period: weekly
+  paths: [any]
+  goal: {event: player_gift}
+  target: 2
+  rewards: {eddies: 300, street_cred: 2}
+
+- key: weekly_date
+  text: "Сходи на свидание с другим игроком"
+  period: weekly
+  paths: [any]
+  goal: {event: player_date}
+  target: 1
+  rewards: {eddies: 400, xp: 1}
+
+- key: weekly_duel_win
+  text: "Выиграй дуэль"
+  period: weekly
+  paths: [combat]
+  goal: {event: player_duel, won: true}
+  target: 1
+  rewards: {eddies: 500, street_cred: 2}
+
+- key: weekly_bar_3
+  text: "Три вечера в баре"
+  period: weekly
+  paths: [any]
+  goal: {event: bar}
+  target: 3
+  rewards: {eddies: 300, status: 1}
+
+- key: weekly_therapy_2
+  text: "Два сеанса терапии"
+  period: weekly
+  paths: [any]
+  goal: {event: therapy}
+  target: 2
+  rewards: {eddies: 400, xp: 1}
+
+- key: weekly_hack_5
+  text: "Пять взломов вне боя"
+  period: weekly
+  paths: [noncombat]
+  goal: {event: hack}
+  target: 5
+  rewards: {eddies: 800, xp: 2}
+
+- key: weekly_debt
+  text: "Внеси платёж по долгу трижды"
+  period: weekly
+  paths: [any]
+  goal: {event: debt_paid}
+  target: 3
+  rewards: {eddies: 500, status: 1}
+
+- key: weekly_items_2
+  text: "Купи две вещи в оружейной"
+  period: weekly
+  paths: [combat]
+  goal: {event: item_bought}
+  target: 2
+  rewards: {eddies: 400, xp: 1}
+
+- key: weekly_deeds_10
+  text: "Десять любых дел из «Досуга» и «Ещё дел»"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done}
+  target: 10
+  rewards: {eddies: 1000, fame: 1}
+
+# -- batch 3: quests for single deeds (owner request: many quests) ------------------------------------------------------
+
+- key: daily_karaoke
+  text: "Спой в караоке у Лиззи"
+  period: daily
+  paths: [any]
+  goal: {event: action_done, action: karaoke}
+  target: 1
+  rewards: {eddies: 120, fame: 1}
+
+- key: daily_chess_win
+  text: "Обыграй старика в шахматы"
+  period: daily
+  paths: [noncombat]
+  goal: {event: action_done, action: chess_hustler, ok: true}
+  target: 1
+  rewards: {eddies: 200, xp: 1}
+
+- key: daily_gallery
+  text: "Выбей десятку в уличном тире"
+  period: daily
+  paths: [combat]
+  goal: {event: action_done, action: shooting_gallery, ok: true}
+  target: 1
+  rewards: {eddies: 150, xp: 1}
+
+- key: daily_flea
+  text: "Найди что-нибудь стоящее на барахолке"
+  period: daily
+  paths: [any]
+  goal: {event: action_done, action: flea_market, ok: true}
+  target: 1
+  rewards: {eddies: 150}
+
+- key: daily_dogs
+  text: "Погуляй с собаками из приюта"
+  period: daily
+  paths: [chrome_free]
+  goal: {event: action_done, action: dog_shelter}
+  target: 1
+  rewards: {eddies: 100, status: 1}
+
+- key: daily_cats
+  text: "Загляни в котокафе"
+  period: daily
+  paths: [chrome_free]
+  goal: {event: action_done, action: cat_cafe}
+  target: 1
+  rewards: {eddies: 100, xp: 1}
+
+- key: daily_rap_win
+  text: "Победи в рэп-баттле"
+  period: daily
+  paths: [noncombat]
+  goal: {event: action_done, action: karaoke_battle, ok: true}
+  target: 1
+  rewards: {eddies: 250, fame: 1}
+
+- key: daily_copper
+  text: "Срежь медный кабель и не сгори"
+  period: daily
+  paths: [any]
+  goal: {event: action_done, action: scrap_copper, ok: true}
+  target: 1
+  rewards: {eddies: 150, street_cred: 1}
+
+- key: daily_poker
+  text: "Уйди из покерной комнаты с выигрышем"
+  period: daily
+  paths: [any]
+  goal: {event: action_done, action: card_cheat, ok: true}
+  target: 1
+  rewards: {eddies: 300}
+
+- key: daily_tribute
+  text: "Собери дань для банды"
+  period: daily
+  paths: [combat]
+  goal: {event: action_done, action: gang_tribute, ok: true}
+  target: 1
+  rewards: {eddies: 200, street_cred: 1}
+
+- key: weekly_concerts_3
+  text: "Три подпольных концерта за неделю"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, action: underground_concert}
+  target: 3
+  rewards: {eddies: 500, fame: 1}
+
+- key: weekly_standup_3
+  text: "Три стендапа за неделю"
+  period: weekly
+  paths: [noncombat]
+  goal: {event: action_done, action: standup}
+  target: 3
+  rewards: {eddies: 600, fame: 1}
+
+- key: weekly_robot_3
+  text: "Три боя твоего робота за неделю"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, action: own_robot_fight}
+  target: 3
+  rewards: {eddies: 700, xp: 1}
+
+- key: weekly_pigeon_3
+  text: "Три забега твоего голубя за неделю"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, action: own_pigeon_race}
+  target: 3
+  rewards: {eddies: 600, fame: 1}
+
+- key: weekly_stream_4
+  text: "Четыре стрима в брейнданс-сети"
+  period: weekly
+  paths: [noncombat]
+  goal: {event: action_done, action: bd_stream}
+  target: 4
+  rewards: {eddies: 700, fame: 1}
+
+- key: weekly_ammo_heist
+  text: "Обчисти оружейный магазин без шума"
+  period: weekly
+  paths: [combat]
+  goal: {event: action_done, action: ammo_heist, ok: true}
+  target: 1
+  rewards: {eddies: 900, street_cred: 2}
+
+- key: weekly_clinic
+  text: "Вынеси хром из клиники риппера"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, action: clinic_raid, ok: true}
+  target: 1
+  rewards: {eddies: 1200, street_cred: 2}
+
+- key: weekly_turf_2
+  text: "Выиграй две разборки за квартал"
+  period: weekly
+  paths: [combat]
+  goal: {event: action_done, action: gang_turf_fight, ok: true}
+  target: 2
+  rewards: {eddies: 1000, street_cred: 2}
+
+- key: weekly_crime_ok_6
+  text: "Шесть удачных дел из «Ещё дел»"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, section: crime, ok: true}
+  target: 6
+  rewards: {eddies: 1200, street_cred: 2}
+
+- key: weekly_lottery_5
+  text: "Пять лотерейных билетов за неделю"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, action: lottery}
+  target: 5
+  rewards: {tokens: 1, eddies: 200}
+
+# -- batch 4: garage and workshop ---------------------------------------------------------------------------------------
+
+- key: daily_weapon_mod
+  text: "Поставь модуль на оружие"
+  period: daily
+  paths: [combat]
+  goal: {event: upgrade_done, kind: weapon_mod}
+  target: 1
+  rewards: {eddies: 200, xp: 1}
+
+- key: daily_home_item
+  text: "Купи вещь для дома"
+  period: daily
+  paths: [any]
+  goal: {event: upgrade_done, kind: home_item}
+  target: 1
+  rewards: {eddies: 150, status: 1}
+
+- key: daily_tune
+  text: "Прокачай тачку у механика"
+  period: daily
+  paths: [any]
+  goal: {event: upgrade_done, kind: tune}
+  target: 1
+  rewards: {eddies: 300, fame: 1}
+
+- key: daily_repair
+  text: "Почини свою тачку"
+  period: daily
+  paths: [any]
+  goal: {event: upgrade_done, kind: repair}
+  target: 1
+  rewards: {eddies: 150}
+
+- key: weekly_ride_stolen
+  text: "Угони тачку и оставь себе"
+  period: weekly
+  paths: [any]
+  goal: {event: upgrade_done, kind: ride_stolen}
+  target: 1
+  rewards: {eddies: 600, street_cred: 2}
+
+- key: weekly_ride_bought
+  text: "Купи тачку у дилера"
+  period: weekly
+  paths: [any]
+  goal: {event: upgrade_done, kind: ride_bought}
+  target: 1
+  rewards: {eddies: 500, status: 1}
+
+- key: weekly_home_3
+  text: "Три вещи для дома за неделю"
+  period: weekly
+  paths: [chrome_free]
+  goal: {event: upgrade_done, kind: home_item}
+  target: 3
+  rewards: {eddies: 700, status: 1}
+
+- key: weekly_upgrades_4
+  text: "Четыре улучшения в гараже и мастерской"
+  period: weekly
+  paths: [any]
+  goal: {event: upgrade_done}
+  target: 4
+  rewards: {eddies: 800, xp: 2}
+
+- key: weekly_flea_3
+  text: "Три удачных похода на барахолку"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, action: flea_market, ok: true}
+  target: 3
+  rewards: {eddies: 600, tokens: 1}
+
+- key: daily_derby_win
+  text: "Выиграй дерби на развалюхах"
+  period: daily
+  paths: [any]
+  goal: {event: action_done, action: junk_derby, ok: true}
+  target: 1
+  rewards: {eddies: 250, fame: 1}
+
+- key: daily_library
+  text: "Проведи ночь в библиотеке"
+  period: daily
+  paths: [chrome_free]
+  goal: {event: action_done, action: library_night}
+  target: 1
+  rewards: {eddies: 100, xp: 1}
+
+- key: daily_bowling
+  text: "Сыграй в ночной лиге боулинга"
+  period: daily
+  paths: [any]
+  goal: {event: action_done, action: bowling_league}
+  target: 1
+  rewards: {eddies: 100, status: 1}
+
+- key: weekly_smuggle_2
+  text: "Дважды провези оружие через блокпост"
+  period: weekly
+  paths: [combat]
+  goal: {event: action_done, action: arms_smuggle, ok: true}
+  target: 2
+  rewards: {eddies: 1200, street_cred: 2}
+
+- key: weekly_pawn_haggle
+  text: "Выторгуй вещь в ломбарде"
+  period: weekly
+  paths: [noncombat]
+  goal: {event: action_done, action: pawnshop_haggle, ok: true}
+  target: 1
+  rewards: {eddies: 500, xp: 1}
+
+# -- batch 5 ------------------------------------------------------------------------------------------------------------
+
+- key: daily_gang_mural
+  text: "Нарисуй мурал банды и не попадись"
+  period: daily
+  paths: [any]
+  goal: {event: action_done, action: gang_mural, ok: true}
+  target: 1
+  rewards: {eddies: 200, fame: 1}
+
+- key: daily_gang_spy
+  text: "Сходи в разведку к соперникам"
+  period: daily
+  paths: [combat]
+  goal: {event: action_done, action: gang_rival_spy, ok: true}
+  target: 1
+  rewards: {eddies: 250, street_cred: 1}
+
+- key: weekly_gang_wounded
+  text: "Навести раненого брата из банды"
+  period: weekly
+  paths: [chrome_free]
+  goal: {event: action_done, action: gang_hospital}
+  target: 1
+  rewards: {eddies: 400, status: 1}
+
+- key: daily_night_market
+  text: "Поешь на ночном рынке"
+  period: daily
+  paths: [any]
+  goal: {event: action_done, action: night_market_food}
+  target: 1
+  rewards: {eddies: 80, xp: 1}
+
+- key: daily_sim_racing
+  text: "Покатайся в гоночном симуляторе"
+  period: daily
+  paths: [noncombat]
+  goal: {event: action_done, action: sim_racing}
+  target: 1
+  rewards: {eddies: 120, xp: 1}
+
+- key: weekly_rooftop_2
+  text: "Две вечеринки на крыше за неделю"
+  period: weekly
+  paths: [noncombat]
+  goal: {event: action_done, action: rooftop_party, ok: true}
+  target: 2
+  rewards: {eddies: 600, status: 1}
+
+- key: weekly_charity_scam
+  text: "Проведи фальшивый сбор, чтобы не поймали"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, action: fake_charity, ok: true}
+  target: 1
+  rewards: {eddies: 400, street_cred: 1}
+
+- key: weekly_casino_2
+  text: "Две смены крупье в нелегальном казино"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, action: underground_casino, ok: true}
+  target: 2
+  rewards: {eddies: 800, street_cred: 1}
+
+# -- chat games (owner request) -----------------------------------------------------------------------------------------
+
+- key: daily_fish_5
+  text: "Пять уловов на рыбалке"
+  period: daily
+  paths: [any]
+  goal: {event: fish_caught}
+  target: 5
+  rewards: {eddies: 150, xp: 1}
+
+- key: weekly_rare_fish
+  text: "Поймай две редкие рыбы или находки"
+  period: weekly
+  paths: [any]
+  goal: {event: fish_caught, rare: true}
+  target: 2
+  rewards: {eddies: 700, fame: 1}
+
+- key: daily_slots_win
+  text: "Выиграй в слотах"
+  period: daily
+  paths: [any]
+  goal: {event: casino_spin, won: true}
+  target: 1
+  rewards: {eddies: 100, tokens: 1}
+
+# --- after the audiobooks of Ozon671Games (owner request); deeds from content/actions_ozon.yaml ---
+
+- key: daily_ozon_brepsi
+  text: "Выпей «Брепси» с водкой «Колхоз», как Тихий Дэн"
+  period: daily
+  paths: [any]
+  goal: {event: action_done, action: ozon_brepsi_kolkhoz}
+  target: 1
+  rewards: {eddies: 100, xp: 1}
+
+- key: daily_ozon_floor
+  text: "Отработай смену промывателя полов"
+  period: daily
+  paths: [any]
+  goal: {event: action_done, action: ozon_floor_wash}
+  target: 1
+  rewards: {eddies: 120, xp: 1}
+
+- key: daily_ozon_taxi
+  text: "Отработай ночь в такси без аварии"
+  period: daily
+  paths: [any]
+  goal: {event: action_done, action: ozon_taxi_shift, ok: true}
+  target: 1
+  rewards: {eddies: 180, xp: 1}
+
+- key: daily_ozon_audiobook
+  text: "Послушай аудиокнигу Озона на ночь"
+  period: daily
+  paths: [any]
+  goal: {event: action_done, action: ozon_audiobook}
+  target: 1
+  rewards: {eddies: 80, xp: 1}
+
+- key: daily_ozon_guard
+  text: "Отсиди ночное дежурство на парковке"
+  period: daily
+  paths: [any]
+  goal: {event: action_done, action: ozon_chips_guard}
+  target: 1
+  rewards: {eddies: 110, xp: 1}
+
+- key: daily_ozon_silver
+  text: "Перепродай серебряный сервиз с выгодой"
+  period: daily
+  paths: [noncombat]
+  goal: {event: action_done, action: ozon_silver_resale, ok: true}
+  target: 1
+  rewards: {eddies: 200, xp: 1}
+
+- key: weekly_ozon_taxi
+  text: "Подними девять тысяч на такси: отработай четыре ночи без аварий"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, action: ozon_taxi_shift, ok: true}
+  target: 4
+  rewards: {eddies: 900, street_cred: 1}
+
+- key: weekly_ozon_brepsi
+  text: "Пять вечеров с «Брепси» и «Колхозом»"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, action: ozon_brepsi_kolkhoz}
+  target: 5
+  rewards: {eddies: 500, fame: 1}
+
+- key: weekly_ozon_floor
+  text: "Отмой три смены подряд: и уборщиков не уберут"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, action: ozon_floor_wash}
+  target: 3
+  rewards: {eddies: 600, xp: 1}
+
+- key: weekly_ozon_audiobook
+  text: "Дослушай серию: четыре ночи с аудиокнигой"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, action: ozon_audiobook}
+  target: 4
+  rewards: {eddies: 400, tokens: 1}
+
+- key: weekly_ozon_silver
+  text: "Скупи и перепродай три сервиза «от тёти»"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, action: ozon_silver_resale, ok: true}
+  target: 3
+  rewards: {eddies: 1200, street_cred: 1}
+
+- key: weekly_ozon_guard
+  text: "Три ночных дежурства и ни одной сданной пачки чипсов"
+  period: weekly
+  paths: [any]
+  goal: {event: action_done, action: ozon_chips_guard}
+  target: 3
+  rewards: {eddies: 550, xp: 1}

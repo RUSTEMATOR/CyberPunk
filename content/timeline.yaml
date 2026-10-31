@@ -1,0 +1,392 @@
+# Canon world events, sorted by year and week. Schema: app/content/schemas.py (TimelineEvent). Guide: docs/CONTENT_GUIDE.md.
+# Verified in M1.7a against cyberpunk.fandom.com (raw wikitext of the cited pages) and the R. Talsorian / CD Projekt sources those pages cite.
+# Weeks come from exact dates (week = ceil(day_of_year / 7)); when the source gives only a month or a year, source_note says "week estimated".
+# Wiki sources disagree in places; the choice made is stated in the event's source_note.
+
+- id: samurai_riot_2013
+  year: 2013
+  week: 16
+  title: "Бунт у Башни Arasaka"
+  description: "Апрель 2013 года. Arasaka похищает нетраннера Альт Каннингем, чтобы заставить её восстановить Soulkiller. Джонни Сильверхенд собирает отряд (Роуг, Лайл Томпсон, Сантьяго из Aldecaldos) и штурмует Arasaka Tower, пока Samurai играют бесплатный концерт перед башней: толпа поднимает бунт, вызывают войска. Взрыв заряда у кабинета Альт позволяет Тоширо Хараде отключить её от тела, она остаётся призраком в Сети, Джонни убивает Тоширо. Потом Сильверхенд прячется у Aldecaldos. Даты в источниках расходятся (15-16 апреля, 12-13 апреля, 4-5 августа), принят апрель. Число погибших в канон не включено, источники его не дают."
+  announcement: "Концерт Samurai у Башни Arasaka закончился бунтом. На улицах войска, в самой башне стреляли. Альт Каннингем пропала, Джонни Сильверхенда никто не видел. Говорят, внутри остался труп корпората."
+  effects:
+    event_weight.street: 1.3
+    district_danger.city_center: 1
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Never_Fade_Away_(adventure) (15-16 апреля 2013, по Countdown to the Dark Future #171) и https://cyberpunk.fandom.com/wiki/Altiera_Cunningham; https://cyberpunk.fandom.com/wiki/Timeline (12-13 апреля); https://cyberpunk.fandom.com/wiki/Johnny_Silverhand (4-5 августа, конфликт). Принято 16 апреля, неделя 16."
+
+- id: bioware_street_2016
+  year: 2016
+  week: 26
+  title: "Биоимпланты в продаже"
+  description: "В 2016 году биологические импланты (bioware) становятся коммерчески доступными. В этом же году по таймлайну начинается Третья корпоративная война, она идёт в Сети. Месяц не указан, week estimated (26)."
+  announcement: "В продажу поступили выращенные импланты. Крупным шрифтом написано про скидку первым клиентам, мелким про риск отторжения."
+  effects:
+    price_mult.noncombat: 0.9
+    event_weight.implants: 1.3
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Timeline (2016: Bioware becomes commercially available; Third Corporate War begins). Month not given, week estimated."
+
+- id: carbon_plague_2020
+  year: 2020
+  week: 20
+  title: Углеродная чума
+  description: "В 2020 году в Найт-Сити после падения корпоративного аэродина на окраине начинается Carbon Plague, нанотех-чума. За две недели она убивает взрослых, дети до 18 лет не заражаются, потом чума необъяснимо прекращается. Остаются тысячи сирот. Месяц не указан, week estimated (20)."
+  announcement: "На окраине упал корпоративный аэродин. Через неделю начали умирать взрослые, дети не болеют. Власти молчат, приюты переполнены."
+  effects:
+    event_weight.relationships: 1.3
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Carbon_Plague (Night City, 2020, Cyberpunk RED p.239, 244); https://cyberpunk.fandom.com/wiki/Timeline (2020). Month not given, week estimated."
+
+- id: ocean_war_naval_2021
+  year: 2021
+  week: 46
+  title: "Океанская война: OTEC против CINO"
+  description: "В 2021 году IHAG доведена до банкротства через EuroBank, OTEC и CINO дерутся за её активы. В ноябре 2021 года OTEC посылает группу перехватить переговорщиков CINO, нетраннеры CINO в ответ бьют по финансовым биржам. Конфликт растёт, и обе стороны привлекают Militech (OTEC) и Arasaka (CINO). Вики-страница войны считает 2021 началом Четвёртой корпоративной войны, основной таймлайн вики 2022. Точный день не указан, week estimated (46, середина ноября)."
+  announcement: "Океан горит. OTEC и CINO делят активы обанкротившейся IHAG, нетраннеры бьют по биржам, рынки лихорадит. Корпорации называют это просто бизнесом."
+  effects:
+    price_mult.combat: 1.2
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Fourth_Corporate_War (ноябрь 2021: OTEC перехватывает переговорщиков CINO, CINO атакует биржи; инфобокс 2021-2025). https://cyberpunk.fandom.com/wiki/Timeline (2021 банкротство IHAG, война с 2022 - расхождение). Week estimated."
+
+- id: ocean_war_ceasefire_2022
+  year: 2022
+  week: 9
+  title: Перемирие OTEC и CINO
+  description: "22 февраля 2022 года под давлением EuroBank и правительств OTEC и CINO отменяют контракты безопасности. 27 февраля подписан мирный договор. Arasaka и Militech мир не подписывали: их тайная война друг против друга продолжается."
+  announcement: "Морская война закончилась на бумаге: OTEC и CINO подписали мир. Arasaka и Militech ничего не подписывали и продолжают своё."
+  effects:
+    price_mult.combat: 0.9
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Fourth_Corporate_War (22 февраля отмена контрактов, 27 февраля мирный договор 2022); https://cyberpunk.fandom.com/wiki/Timeline (22 февраля EuroBank принуждает к перемирию). 27 февраля = неделя 9."
+
+- id: soulkiller_strike_2022
+  year: 2022
+  week: 10
+  title: "Soulkiller против офицера Militech"
+  description: "6 марта 2022 года Arasaka испытывает только что законченный Soulkiller 2.5, внедрив его в смартлинк машины руководителя Militech. Допрос захваченного разума приводит к штурму офиса Militech в Найт-Сити. Начинаются три месяца скрытых ударов между двумя корпорациями."
+  announcement: "Ночью штурмом взяли офис Militech в Найт-Сити. Ходят слухи, что одного из их людей взяли живым и вытащили из него всё, что было в памяти. Вслух об этом лучше не говорить."
+  effects:
+    faction_power.arasaka: 1
+    faction_power.militech: -1
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Fourth_Corporate_War (6 марта 2022, Soulkiller 2.5, офис Militech в Найт-Сити). 6 марта = неделя 10."
+
+- id: datakrash_2022
+  year: 2022
+  week: 22
+  title: "Крах Сети"
+  description: "Рейч Бартмосс, выдав себя сигналом, погибает при корпоративном рейде на его дом. Перед смертью он запускает вирусы R.A.B.I.D.S., которые подложил в Сеть ещё в сентябре 2014 года. За несколько месяцев заражено 78,2% Сети, ломается рынок, военные ИИ срываются с поводка. Вики-страница DataKrash называет дату 3 июня 2022 (Cyberpunk RED), страница Бартмосса даёт 6 мая, принято 3 июня. Старая Сеть теряет смысл, позже NetWatch строит Blackwall. Эпоха datakrash покрывает весь 2022 год."
+  announcement: "Сеть легла. Вирус Бартмосса за несколько месяцев сожрал почти восемь узлов из десяти. Банки, больницы и половина корпораций остались без связи. Бумага снова в цене."
+  effects:
+    era.datakrash: true
+    price_mult.netrun: 1.3
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/DataKrash (3 июня 2022, 78,2% Сети, Cyberpunk RED p.239, 254-255); https://cyberpunk.fandom.com/wiki/Rache_Bartmoss (смерть 2022, корпоративный рейд; 6 мая - конфликт); https://cyberpunk.fandom.com/wiki/Timeline (2022). 3 июня = неделя 22."
+
+- id: hot_war_2022
+  year: 2022
+  week: 23
+  title: "Arasaka и Militech воюют открыто"
+  description: "К концу мая 2022 года тайная война становится горячей. 9 июня Arasaka атакует завод Militech в Вирджинии, а наёмники Militech расстреливают рабочих Arasaka в Йокогаме. Дальше Париж, Чикаго, Пусан, Гонконг, Рио, удары по орбите. 29 сентября О'Нил Два получает независимость в Семичасовой войне. Осенью Южная Калифорния, Техас, EEC и Япония национализируют активы обеих корпораций."
+  announcement: "Завод Militech в Вирджинии горит. В Йокогаме наёмники расстреляли рабочих Arasaka. Корпорации воюют уже в открытую, а правительства начинают отбирать у них заводы."
+  effects:
+    price_mult.combat: 1.3
+    price_mult.weapons: 1.2
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Fourth_Corporate_War (9 июня 2022, лето и осень 2022, национализация). 9 июня = неделя 23."
+
+- id: arasaka_tower_bombing_2023
+  year: 2023
+  week: 34
+  title: "Ядерный взрыв в Башне Arasaka"
+  description: "20 августа 2023 года штурмовая группа Militech под руководством Моргана Блэкхенда и Джонни Сильверхенда входит в Arasaka Towers, чтобы вытащить Альт Каннингем, уничтожить Soulkiller 3.0 и базу Reliquary. Адам Смэшер режет Джонни пополам. Тактический ядерный заряд детонирует на 120-м этаже восточной башни, в бункере Кея Арасаки. По Cyberpunk RED мгновенно погибают более 12 000 человек, около 500 000 получают смертельные ранения, ещё около 250 000 умирают позже. Центр города разрушен, пыль окрашивает небо в красный почти на два года: начинается Время Красного. Кто именно запустил заряд, официально не установлено."
+  announcement: "Башни Arasaka больше нет. На месте центра Найт-Сити воронка, и сколько людей там погибло, точно не знает никто. Официально тысячи, на деле намного больше. Небо над городом теперь красное."
+  effects:
+    era.time_of_red: true
+    price_mult.housing: 1.3
+    district_danger.city_center: 2
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Night_City_Holocaust (20 августа 2023, 120-й этаж восточной башни, потери по RED); https://cyberpunk.fandom.com/wiki/Fourth_Corporate_War; https://cyberpunk.fandom.com/wiki/Johnny_Silverhand; https://cyberpunk.fandom.com/wiki/Time_of_the_Red. 20 августа = неделя 34."
+
+- id: militech_nationalized_2023
+  year: 2023
+  week: 34
+  title: "Кресс национализирует Militech"
+  description: "В часы после взрыва президент США Элизабет Кресс сначала обвиняет Arasaka, затем понимает, что заряд был от Militech. Официальная версия остаётся прежней: Arasaka взорвала свою башню сама. Кресс национализирует Militech через резервное звание её главы Дональда Ландии и изгоняет силы Arasaka с континента под угрозой удара по штаб-квартире в Токио. Остальные страны следуют за США. Япония вынуждена списать вину на Arasaka и на годы ограничить её работу пределами страны."
+  announcement: "Президент Кресс объявила Arasaka террористами, а Militech перешёл под командование армии. Как всё было на самом деле, знают немногие."
+  effects:
+    faction_power.militech: -1
+    faction_power.arasaka: -2
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Night_City_Holocaust (Aftermath: национализация Militech и изгнание Arasaka в течение часов, Cyberpunk RED); https://cyberpunk.fandom.com/wiki/Timeline (2023). Неделя 34 по дате взрыва; точное время дня не указано."
+
+- id: fourth_war_ends_2025
+  year: 2025
+  week: 26
+  title: Конец Четвёртой корпоративной войны
+  description: "В 2025 году Четвёртая корпоративная война официально объявлена оконченной, Arasaka изгнана обратно в Японию. NetWatch официально объявляет старую Сеть непригодной. Альт Каннингем создаёт Ghost World в руинах Гонконга. Тяжёлые бои кончились ещё в 2023-м. Месяц не указан, week estimated (26)."
+  announcement: "Войну официально объявили оконченной. Кто победил, не понимает никто, кроме тех, кто вовремя положил деньги в правильный банк. Старую Сеть закрыли окончательно."
+  effects:
+    faction_power.arasaka: -1
+    price_mult.combat: 0.9
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Timeline (2025: война официально окончена, Arasaka изгнана в Японию, NetWatch объявляет Сеть непригодной); https://cyberpunk.fandom.com/wiki/Fourth_Corporate_War (2021-2025). Month not given, week estimated."
+
+- id: diaspora_begins_2026
+  year: 2026
+  week: 1
+  title: Диаспора и режим Кресс
+  description: "С 2026 года по таймлайну начинается Диаспора: люди, вытесненные из разрушенных городов, идут занимать места, брошенные со времён Краха. Грабят старые склады и технику. В корпоративных парках работают ограниченные VPN. США превращаются в фактическую диктатуру: Кресс правит под режимом чрезвычайного положения, выборов не будет, пока не подписан договор со Свободными штатами. В 2026 году воюющие стороны подписывают запоздалое официальное перемирие. Таймлайн даёт диапазон 2026-2029, точный год не указан, week estimated (1)."
+  announcement: "Города в руинах, люди уходят на дороги. Кресс держит страну в режиме чрезвычайного положения. Выборов не будет, зато будет порядок."
+  effects:
+    heat_mult: 1.2
+    event_weight.street: 1.2
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Timeline (2026-2029: Diaspora begins, US functional dictatorship under Kress's State of Emergency, Cyberpunk RED; 2026: формальное перемирие); https://cyberpunk.fandom.com/wiki/Elizabeth_Kress. Year within the 2026-2029 range, week estimated."
+
+- id: night_city_refounded_2028
+  year: 2028
+  week: 1
+  title: Найт-Сити основан заново
+  description: "В 2028 году ведущие игроки города ратифицируют новую хартию и официально заново основывают Найт-Сити. Окрестные районы North Oak, Westbrook, Heywood и Pacifica включают в состав города. Месяц не указан, week estimated (1)."
+  announcement: "Подписана новая хартия Найт-Сити. Норт-Оук, Вестбрук, Хейвуд и Пасифика теперь входят в черту города, а значит, и платят городские налоги."
+  effects:
+    price_mult.housing: 1.1
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Timeline (2028, ссылка 2045NC / CPREDNC2045: новая хартия, присоединение North Oak, Westbrook, Heywood, Pacifica). Month not given, week estimated."
+
+- id: ziggurat_citinet_2030
+  year: 2030
+  week: 1
+  title: Ziggurat и первая CitiNet
+  description: "В 2030 году в Найт-Сити основана Ziggurat. С грантом Night Corp и согласием городского совета она за месяцы запускает первую CitiNet и Data Pool: локальную сеть вместо мёртвой Сети. Позже CitiNet появятся в большинстве городов Северной Америки. Период 2030-2035 по таймлайну включает переселение пригородов и открытие Nomad High Roads. Месяц не указан, week estimated (1)."
+  announcement: "В Найт-Сити запустили CitiNet. Это не прежняя Сеть, а городская, с городскими ценами. Пока работает."
+  effects:
+    price_mult.netrun: 0.9
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Ziggurat (основана в 2030, первая CitiNet в Найт-Сити, Cyberpunk RED p.26, 166, 280-281); https://cyberpunk.fandom.com/wiki/Timeline (2030-2035, 2030). Month not given, week estimated."
+
+- id: tyger_claws_nakagawa_2042
+  year: 2042
+  week: 1
+  title: Война за наследство Накагавы
+  description: "В 2042 году при загадочных обстоятельствах умирает Синобу Накагава, патрон Tyger Claws и Night City Co-Prosperity Sphere. Внутри банды начинается гражданская война за наследство. После большого кровопролития побеждает его приёмный сын Хаято Накагава, берёт фонд Nakagawa Foundation и имя Синобу Второй. Банда сохраняет связи с Arasaka. Месяц не указан, week estimated (1)."
+  announcement: "Синобу Накагава мёртв, и Тигриные когти режут друг друга за его наследство. В Джапантауне лавки закрываются раньше обычного."
+  effects:
+    gang_war.tyger_claws: 4
+    district_danger.watson: 1
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Tyger_Claws (раздел 2040s: 2042, смерть Синобу Накагавы, гражданская война, Хаято наследник; Cyberpunk RED Dark Future / Night City Atlas). Month not given, week estimated. Длительность войны 4 недели условная."
+
+- id: maelstrom_brookhaven_2044
+  year: 2044
+  week: 1
+  title: "Освобождение Брукхейвена"
+  description: "В 2044 году члены Forlorn Hope вытаскивают самозахватчиков из рабства Maelstrom в кооперативе Brookhaven. Мелкий эпизод из книги Tales of the RED, показывающий, как Maelstrom держит дома. Месяц не указан, week estimated (1)."
+  announcement: "В Брукхейвене освободили людей, которых Мальстрём держал в рабстве. Банда потеряла лицо, но район пока не отдала."
+  effects:
+    faction_power.maelstrom: -1
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Timeline (2044: Forlorn Hope rescues squatters at Brookhaven Co-op from Maelstrom enslavement; Cyberpunk RED Tales of the RED: Highway to Hell). Month not given, week estimated."
+
+- id: blackwall_project_2044
+  year: 2044
+  week: 1
+  title: "NetWatch строит Чёрный заслон"
+  description: "В 2044 году NetWatch при помощи Трансцендентных и призраков-SPI тайно начинает проект Black Wall. Попытки NetWatch вычистить R.A.B.I.D.S. не удались, все основные узлы в старую Сеть отключены. Blackwall должен держать за барьером взбесившиеся ИИ, пока остальная Сеть служит людям. Закончен через несколько лет после Краха по версии базы данных 2077. Месяц не указан, week estimated (1)."
+  announcement: "NetWatch запечатывает узлы старой Сети. Вход закрыт. Если у тебя там остались данные, забудь адрес."
+  effects:
+    faction_power.netwatch: 1
+    price_mult.netrun: 1.1
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Blackwall (2040s: NetWatch начинает проект The Black Wall в 2044, Cyberpunk RED p.264); https://cyberpunk.fandom.com/wiki/Timeline (2035-2049, NetWatch закрывает старые узлы). Month not given, week estimated."
+
+- id: nusa_constitution_2053
+  year: 2053
+  week: 27
+  title: "Конституция НСША"
+  description: "4 июля 2053 года ратифицирована конституция, США официально становятся New United States of America. Элизабет Кресс уходит с поста после тридцати с лишним лет у власти, страна идёт к выборам, первым президентом NUSA становится Дэвид Уиндэм. Сама Кресс до этого называла себя президентом девять раз переизбранным."
+  announcement: "Подписана конституция: США теперь называются Новыми Соединёнными Штатами Америки. Кресс уходит после тридцати с лишним лет у власти, страна снова выбирает президента. Можно выдохнуть. Ненадолго."
+  effects:
+    heat_mult: 0.9
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/New_United_States (4 июля 2053, конституция, Cyberpunk 2077: Phantom Liberty database); https://cyberpunk.fandom.com/wiki/David_Whindam (первый президент NUSA в 2053); https://cyberpunk.fandom.com/wiki/Elizabeth_Kress. 4 июля = неделя 27."
+
+- id: haitian_pacifica_2062
+  year: 2062
+  week: 1
+  title: Гаитянцы на стройке Пасифики
+  description: "В 2062 году Гаити официально покинут после череды жестоких штормов, часть беженцев перебирается в Pacifica в Найт-Сити работать на курортном проекте. Проект позже рушится из-за Объединительной войны, а гаитянцы остаются. Позднее местные называют их Voodoo Boys по сходству с давно исчезнувшей бандой. Месяц не указан, week estimated (1)."
+  announcement: "С Гаити, разорённого штормами, приехали люди без вещей и без домов. Работа нашлась на курортной стройке в Пасифике. Инвесторы уйдут, а люди останутся."
+  effects:
+    event_weight.work: 1.2
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Timeline (2062: Haiti abandoned, residents move to Pacifica) и https://cyberpunk.fandom.com/wiki/Voodoo_Boys (2062, проект курорта, название Voodoo Boys дано извне). Month not given, week estimated."
+
+- id: myers_nusa_president_2065
+  year: 2065
+  week: 1
+  title: "Майерс становится президентом НСША"
+  description: "В январе 2065 года Розалинд Майерс, бывшая глава Militech, оставившая пост Лукасу Харфорду, становится третьим президентом NUSA (после Дэвида Уиндэма; Элизабет Кресс ушла в 2053 году). Она начинает срок с программы объединения всех штатов. В январе 2069 года, переизбранная, начинает Объединительную войну. В 2077 году она на третьем сроке и объявляет о четвёртом."
+  announcement: "Розалинд Майерс, бывшая глава Militech, принесла присягу президента НСША. Оружейный рынок ждёт заказов, Свободные штаты ждут неприятностей."
+  effects:
+    price_mult.weapons: 1.2
+    faction_power.militech: 1
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Timeline (январь 2065, третий президент NUSA); https://cyberpunk.fandom.com/wiki/Rosalind_Myers (2065 избрана, 2069 переизбрана, 2077 третий срок) и https://cyberpunk.fandom.com/wiki/New_United_States (2065 / 2069 переизбрание). Дата 2069 относится к переизбранию и началу войны, не к первому избранию. Месяц январь = неделя 1."
+
+- id: moxes_formed_2067
+  year: 2067
+  week: 19
+  title: "Шельмы после Лиззи Борден"
+  description: "В 2067 году проститутка зверски убита бандитами Tyger Claws. Элизабет «Лиззи» Борден мстит и убивает трёх нападавших, той же ночью Tyger Claws убивают её. Смерть Лиззи поднимает волну беспорядков по всему Найт-Сити, главной мишенью становятся Tyger Claws. Затем образуются Moxes: защита работников секс-индустрии. Дата основания по вики 13 мая 2067."
+  announcement: "Тигриные когти убили Лиззи Борден, и город охватили беспорядки. Те, кого она защищала, сбились в банду и назвали себя Шельмами. Теперь когти знают, чем это оборачивается."
+  effects:
+    faction_power.moxes: 1
+    faction_power.tyger_claws: -1
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Moxes (инфобокс: образованы 13 мая 2067); https://cyberpunk.fandom.com/wiki/Tyger_Claws (2067, Лиззи Борден, беспорядки); https://cyberpunk.fandom.com/wiki/Timeline (2067). 13 мая = неделя 19."
+
+- id: unification_war_start_2069
+  year: 2069
+  week: 1
+  title: Начало Объединительной войны
+  description: "В январе 2069 года, после переизбрания, президент Майерс при поддержке Militech и союзных штатов (Южная Калифорния, Юта) начинает кампанию по возвращению Свободных штатов. Колорадо, Нью-Мексико, Вайоминг, Монтана, Аризона, Невада и Северная Калифорния сопротивляются при тайной поддержке Arasaka. Самое кровавое сражение при Ridgecrest, не менее 3 078 погибших за день."
+  announcement: "НСША двинули войска на Свободные штаты. Колонны идут по шоссе, а Найт-Сити прикидывает, во что ему обойдётся нейтралитет."
+  effects:
+    era.unification_war: true
+    price_mult.weapons: 1.3
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Unification_War (январь 2069 - июнь 2070); https://cyberpunk.fandom.com/wiki/Timeline (январь 2069). Month January = week 1."
+
+- id: sacramento_bombing_2070
+  year: 2070
+  week: 23
+  title: "Ковровая бомбардировка Сакраменто"
+  description: "В ночь на 6 июня 2070 года NUSA ковровыми бомбардировками уничтожает Сакраменто, столицу Северной Калифорнии. К тому времени федеральные силы заняли все воюющие штаты, кроме Техаса и Северной Калифорнии. Найт-Сити остаётся нейтральным, но на пороге: Советский Союз присылает гуманитарную помощь, которую наблюдатели называют грузом оружия, Техас закрывает границу для беженцев."
+  announcement: "За одну ночь Сакраменто сровняли с землёй. Армия НСША на подступах к Найт-Сити. Техас закрыл границу, дороги на юг забиты."
+  effects:
+    district_danger.badlands: 1
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Unification_War (ночь 6 июня 2070, Сакраменто); https://cyberpunk.fandom.com/wiki/Timeline (6 июня 2070, помощь СССР, граница Техаса). 6 июня = неделя 23."
+
+- id: hansen_defies_2070
+  year: 2070
+  week: 23
+  title: Полковник Хансен остаётся в Пасифике
+  description: "Полковник Курт Хансен, командир подразделения BARGHEST, во время операции Midnight Storm создаёт плацдарм у стадиона EBM Petrochem в Пасифике. Когда нападение на город отменяют, 9 июня 2070 года ему приказано отступить. Хансен и весь BARGHEST отказываются, игнорируют Договор в Арвине и создают в бывшем Serenisands свой закрытый район с чёрным рынком. Позже место назовут Догтауном. Корпорации и инвесторы до этого вывели деньги из Пасифики из-за страха перед войной."
+  announcement: "Войска НСША ушли из Пасифики, но не все. Полковник Хансен остался со своими людьми и обнёс район забором. Выкурить его оттуда пока никто не может."
+  effects:
+    district_open.dogtown: true
+    district_danger.pacifica: 1
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Kurt_Hansen (приказ отступить 9 июня 2070, отказ BARGHEST) и https://cyberpunk.fandom.com/wiki/Dogtown (Serenisands, возникновение Догтауна после Объединительной войны). 9 июня = неделя 23. Название Догтаун позднее, точный год присвоения неизвестен."
+
+- id: arasaka_carrier_2070
+  year: 2070
+  week: 24
+  title: "Авианосец Arasaka у Найт-Сити"
+  description: "Дивизия NUSA подходит к окраинам Найт-Сити. Советник Лусиус Райн через десятилетние связи в городском совете просит защиты у изгнанной Arasaka. 12 июня 2070 года суперавианосец Arasaka появляется у Del Coronado Bay, и через несколько часов NUSA отступает. Президент Майерс не хочет втягивать Arasaka в войну."
+  announcement: "В заливе Дель-Коронадо встал авианосец Arasaka, и через несколько часов армия НСША повернула назад. Советник Райн позвал Arasaka на помощь. Расплачиваться город будет позже."
+  effects:
+    faction_power.arasaka: 2
+    faction_power.militech: -1
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Unification_War (12 июня 2070, суперавианосец в Del Coronado Bay, Лусиус Райн); https://cyberpunk.fandom.com/wiki/Timeline (2070, июнь). 12 июня = неделя 24."
+
+- id: arvin_accord_2070
+  year: 2070
+  week: 25
+  title: Договор объединения
+  description: "В июне 2070 года в Арвине (Южная Калифорния) подписан Договор объединения (Arvin Accord), война кончена. Свободные штаты сохраняют автономию, Техас договор не подписал. Найт-Сити становится независимым вольным городом, выходит из-под законов Северной Калифорнии и NUSA. Лусиус Райн избран мэром и приглашает Arasaka назад: ей дают место в городском совете и право построить новую штаб-квартиру на месте разрушенных башен. Точный день не указан, week estimated (25)."
+  announcement: "Подписан Договор объединения. Война окончена, Найт-Сити больше не подчиняется НСША и становится вольным городом. Arasaka возвращается и строит новую башню на старом месте."
+  effects:
+    faction_power.arasaka: 1
+    price_mult.housing: 1.1
+    gig_pay_mult: 1.1
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Unification_War (Treaty of Unification / Arvin Accord, июнь 2070); https://cyberpunk.fandom.com/wiki/Timeline (2070: независимый город-государство, Райн мэр, Arasaka возвращается). Day not given, week estimated."
+
+- id: valentinos_6th_street_2071
+  year: 2071
+  week: 1
+  title: "Перестрелка в Вестбруке"
+  description: "В 2071 году Valentinos и 6th Street давно воюют за территорию, последний бой года - перестрелка в Westbrook. К 2074 году спор за Vista del Rey обостряется, жители уходят из района. Месяц не указан, week estimated (1). Длительность войны в эффектах 4 недели условная."
+  announcement: "Вестбрук в дыму: Валентинос и Шестая улица опять выясняют, чей это угол. Угол, как обычно, остался ничьим."
+  effects:
+    gang_war.valentinos: 4
+    gang_war.sixth_street: 4
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Valentinos (2071, перестрелка в Westbrook, Cyberpunk 2077: Stories). Month not given, week estimated. Длительность войны условная."
+
+- id: brick_maelstrom_2072
+  year: 2072
+  week: 1
+  title: "Брик во главе Мальстрёма"
+  description: "В 2072 году Declan 'Brick' Griffin становится лидером Maelstrom. По сноске к 2077 году, в период около The Pickup, банду возглавляет Royce, смена руководства не объяснена. Месяц не указан, week estimated (1)."
+  announcement: "Деклан «Брик» Гриффин возглавил Мальстрём. Кто с ним, тот при деле, остальным придётся искать другую банду."
+  effects:
+    faction_power.maelstrom: 1
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Timeline (2072: Declan Brick Griffin becomes leader of Maelstrom; сноска про Royce в 2077 - конфликт). Month not given, week estimated."
+
+- id: voodoo_boys_pacifica_2072
+  year: 2072
+  week: 20
+  title: "Вудуисты забирают Пасифику"
+  description: "В 2072 году гаитянские беженцы, которых местные называют Voodoo Boys, становятся фактическими хозяевами Pacifica, отбив группу задержания NCPD. Они же начинают прощупывать Blackwall в надежде выйти на контакт с ИИ за барьером. Месяц не указан, week estimated (20)."
+  announcement: "NCPD сунулась в Пасифику и ушла ни с чем. Теперь там хозяйничают Вудуисты, а они никому не представляются."
+  effects:
+    faction_power.voodoo_boys: 1
+    district_danger.pacifica: 1
+    event_weight.ncpd: 1.3
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Timeline (2072: Voodoo Boys become de facto rulers of Pacifica after repelling an NCPD task force); https://cyberpunk.fandom.com/wiki/Voodoo_Boys (Blackwall). Month not given, week estimated."
+
+- id: martinez_last_stand_2076
+  year: 2076
+  week: 40
+  title: Последний бой Дэвида Мартинеса
+  description: "В 2076 году Дэвид Мартинес, быстро поднявшийся эджраннер, поднимается на верх Arasaka Tower, чтобы спасти Люси Кушинаду, и сражается с Адамом Смэшером. Бой заканчивается в Memorial Park у башни. СМИ списывают разрушения вокруг на теракт неизвестной группы. Первая половина событий Edgerunners приходится на 2075 год. Месяц не указан, week estimated (40)."
+  announcement: "У Башни Arasaka была стрельба. Разрушения у корпоративного центра СМИ называют терактом. Свидетелей мало, а те, что есть, молчат."
+  effects:
+    district_danger.city_center: 1
+    event_weight.street: 1.3
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Timeline (2075-2076: Edgerunners, последний бой Дэвида Мартинеса в Corporate Center) и https://cyberpunk.fandom.com/wiki/Arasaka_Tower (2076, битва со Смэшером). Month not given, week estimated."
+
+- id: konpeki_relic_2077
+  year: 2077
+  week: 15
+  title: "Кража Реликвии в «Компеки Плаза»"
+  description: "В апреле 2077 года фиксер Декстер ДеШон нанимает V и Джеки украсть Реликвию (Relic) из апартаментов Ёринобу Арасаки в Konpeki Plaza. Акты 1-3 Cyberpunk 2077 идут с апреля до августа. Эпоха year_2077 начинается здесь. Месяц апрель, week estimated (15)."
+  announcement: "Апрель, «Компеки Плаза». Кто-то лезет в пентхаус наследника Arasaka за Реликвией. Охрана молчит, и это плохой знак."
+  effects:
+    era.year_2077: true
+    faction_power.arasaka: -1
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Timeline (2077: April, V and Jackie hired by Dexter DeShawn to steal the Relic). Month April, week estimated."
+
+- id: kujira_saburo_2077
+  year: 2077
+  week: 18
+  title: "«Кудзира» и смерть Сабуро"
+  description: "1 мая 2077 года Kujira прибывает в Найт-Сити с Сабуро Арасакой, Ханако Арасакой и Горо Такемурой. Вскоре после прилёта в Konpeki Plaza Ёринобу убивает Сабуро. Во время ограбления гибнет Джеки, V убит Декстером и оживает благодаря Реликвии, Такемура его вытаскивает. Ёринобу становится главой Arasaka и обвиняет Militech. Позже умирает мэр Лусиус Райн, на выборах побеждает Джефферсон Пералес. Дата убийства Сабуро - вскоре после 1 мая, week estimated."
+  announcement: "В Найт-Сити прилетел флагман «Кудзира» с главой Arasaka Сабуро на борту. Вскоре после прилёта Сабуро умер в «Компеки Плаза», и корпорацию лихорадит."
+  effects:
+    faction_power.arasaka: -2
+    price_mult.combat: 1.1
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Timeline (2077: 1 мая Kujira, затем налёт на Konpeki Plaza и убийство Сабуро); https://cyberpunk.fandom.com/wiki/Saburo_Arasaka. 1 мая = неделя 18; убийство позднее, week estimated."
+
+- id: space_force_one_2077
+  year: 2077
+  week: 25
+  title: "Space Force One падает в Догтауне"
+  description: "В середине-конце июня 2077 года, по сюжету Phantom Liberty, Space Force One президента Розалинд Майерс сбит над Калифорнией и падает в Догтауне, которым правит Курт Хансен. Майерс как раз объявила на съезде Федералистской партии, что идёт на четвёртый срок со слоганом «Возвращение к единству». В Догтауне действует BARGHEST, район закрыт от NCPD. Точный день не указан, week estimated (25)."
+  announcement: "Над Калифорнией сбит Space Force One, борт рухнул в Догтауне. Президент НСША, по официальной версии, жива. Весь район в дыму."
+  effects:
+    district_danger.dogtown: 2
+  canon: true
+  source_note: "https://cyberpunk.fandom.com/wiki/Timeline (2077: mid-late June, Phantom Liberty); https://cyberpunk.fandom.com/wiki/Rosalind_Myers (четвёртый срок, крушение); https://cyberpunk.fandom.com/wiki/Dogtown. Day not given, week estimated."

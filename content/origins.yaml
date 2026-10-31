@@ -1,0 +1,113 @@
+- key: watson_street_kid
+  name: Уличный ребёнок Уотсона
+  description: "Детство между лотками и мегабашнями Уотсона. Улица научила считать эдди, прятаться и не верить тем, кто слишком широко улыбается."
+  start_district: watson
+  skill_bonus: {stealth: 1}
+  start_street_cred: 0
+  enemy_gang: null
+
+- key: corpo_brat
+  name: "Из семьи корпората"
+  description: "Детство в охраняемом квартале Сити-центра. Отца выставили из Arasaka, а манеры остались: с людьми в костюмах ты умеешь говорить на их языке."
+  start_district: city_center
+  skill_bonus: {persuasion: 1}
+  start_street_cred: 0
+  enemy_gang: null
+
+- key: badlands_nomad
+  name: Кочевник из Бэдлендса
+  description: "Трейлер посреди пустыни вместо роддома. Пыль в лёгких, карта в голове и привычка водить там, где нет дороги."
+  start_district: badlands
+  skill_bonus: {driving: 1}
+  start_street_cred: 0
+  enemy_gang: null
+
+- key: ex_ganger
+  name: Бывший член банды
+  description: "Четыре года в Мальстрёме и уход без спроса. Бывшие братья такого не прощают: банда считает тебя врагом. Зато на улице тебя знают."
+  start_district: watson
+  skill_bonus: {melee: 1}
+  start_street_cred: 5
+  enemy_gang: maelstrom
+  available_from: 2020
+
+- key: ex_ganger_early
+  name: Бывший член банды
+  description: "Три года в Айрон Сайтс и уход без спроса. Лезвий в руках больше нет, а враги остались: банда помнит, кто от неё сбежал."
+  start_district: watson
+  skill_bonus: {melee: 1}
+  start_street_cred: 5
+  enemy_gang: iron_sights
+  available_from: 2013
+  available_until: 2019
+
+- key: corp_war_veteran
+  name: "Ветеран корпоративной войны"
+  description: "Служба в наёмной роте во время войны мегакорпораций. Платили хорошо, пока было кому платить. Стреляешь лучше многих."
+  start_district: heywood
+  skill_bonus: {firearms: 1}
+  start_street_cred: 0
+  enemy_gang: null
+  available_from: 2023
+  available_until: 2050
+
+- key: refugee
+  name: Беженец
+  description: "В Найт-Сити с собой были только сумка и чужой паспорт. В лагерях по дороге врача не было, так что перевязывать раны научила нужда."
+  start_district: santo_domingo
+  skill_bonus: {medicine: 1}
+  start_street_cred: 0
+  enemy_gang: null
+
+- key: megabuilding_kid
+  name: Ребёнок мегабашни
+  description: "Пятнадцатый этаж мегабашни H10, лифт работает через день. Ты знаешь все дыры в охране дома и умеешь чинить то, что ломают соседи."
+  start_district: watson
+  skill_bonus: {tech: 1}
+  start_street_cred: 0
+  enemy_gang: null
+
+- key: orphanage_kid
+  name: Сирота из приюта
+  description: "Церковный приют в Хейвуде. Там приходилось драться за еду, потом за место у окна, потом за право уйти."
+  start_district: heywood
+  skill_bonus: {melee: 1}
+  start_street_cred: 0
+  enemy_gang: null
+
+- key: ex_con
+  name: Бывший заключённый
+  description: "Срок в Пасифике за ограбление, которое придумал кто-то другой. Тюрьма учит молчать, ждать и бить первым. На улице это уважают."
+  start_district: pacifica
+  skill_bonus: {melee: 1}
+  start_street_cred: 10
+  enemy_gang: null
+  available_from: 2062
+
+- key: ripper_kid
+  name: "Из семьи риппера"
+  description: "Детство в подпольной клинике Вестбрука, между операционным столом и ванной со льдом. Чужая кровь тебя не пугает, а в железе ты разбираешься."
+  start_district: westbrook
+  skill_bonus: {tech: 1}
+  start_street_cred: 0
+  enemy_gang: null
+
+- key: monastery_novice
+  name: Послушник буддийского монастыря
+  description: "Маленький монастырь над Джапантауном: подъём в пять утра, тишина, ни хрома, ни оружия. Город кажется шумным и чужим. Ты начинаешь с обетом чистого тела."
+  start_district: westbrook
+  skill_bonus: {melee: 1}
+  start_street_cred: 0
+  enemy_gang: null
+  chrome_free_start: true
+  start_vow: no_chrome
+
+- key: preacher_commune
+  name: Ребёнок общины проповедника
+  description: "Общий дом в Хейвуде, общий котёл, общие молитвы и проповедник, который учил, что хром выедает душу. Верить ли ему, теперь решаешь ты. Начинаешь с обетом чистого тела."
+  start_district: heywood
+  skill_bonus: {persuasion: 1}
+  start_street_cred: 0
+  enemy_gang: null
+  chrome_free_start: true
+  start_vow: no_chrome

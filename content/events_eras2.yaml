@@ -1,0 +1,155 @@
+# Events of the early chrome years, batch 2 (owner request: many quests and items). 2013-2019, where the group
+# lives now: the first implants, smartphones, the last petrol cars, the first corporate wars on the horizon.
+
+- id: era13b_tape_deck
+  title: Кассетник в голове
+  category: implants
+  weight: 2
+  available_until: 2019
+  conditions:
+    lacks_cyberware: [tape_deck]
+  text: "Подпольный риппер-меломан предлагает экспериментальный имплант: кассетный плеер, вшитый за ухо. Музыка играет прямо в нервах. Цена смешная, гарантии никакой."
+  choices:
+    - label: Поставить
+      effects: {eddies: -800, cyberware_grant:tape_deck: true}
+      text: "Первой играет кассета, которую риппер вставил для теста: старый синти-поп. Ты слушаешь её три дня подряд."
+    - label: Отказаться
+      effects: {}
+      text: "Риппер обижается и ставит кассетник следующему клиенту. Тот потом месяц не может выключить одну песню."
+
+- id: era13b_first_smartlink
+  title: Первый смартлинк
+  category: implants
+  weight: 2
+  available_until: 2019
+  text: "Бывший военный продаёт трофейный прототип: разъём на ладони и пистолет, который с ним дружит. Говорит, что американская армия испытывала такие в пустыне."
+  choices:
+    - label: Купить пистолет
+      effects: {eddies: -500, item_grant:glock_classic: true}
+      text: "Разъём не подходит ни к одному твоему порту, зато пистолет отличный. Военный клянётся, что так и задумано."
+    - label: Купить разъём
+      effects: {eddies: -900, cyberware_grant:data_jack_early: true}
+      text: "Риппер ставит разъём и долго смеётся над инструкцией на арабском. Работает."
+    - label: Сдать военного копам
+      effects: {faction_rep:ncpd: 2, humanity: -1}
+      text: "Полиция забирает военного вместе с товаром. Тебе жмут руку и забывают."
+
+- id: era13b_gas_station
+  title: Последняя заправка
+  category: money
+  weight: 2
+  available_until: 2019
+  text: "На окраине закрывается последняя частная заправка: бензин подорожал втрое, всё уходит в электро. Хозяин распродаёт имущество и старую машину отца."
+  choices:
+    - label: Купить машину отца
+      effects: {eddies: -9000, vehicle_grant:muscle_70s: true, mood: 6}
+      text: "Восьмицилиндровый маслкар, отполированный до блеска. Хозяин плачет, отдавая ключи."
+    - label: Купить канистры
+      effects: {eddies: -200, mood: 2}
+      text: "Двадцать литров бензина в подвале. Когда-нибудь это будет стоить как золото."
+    - label: Помочь с распродажей
+      effects: {eddies: 300, add_npc:contact: true}
+      text: "Ты таскаешь коробки весь день. Хозяин платит и обещает звонить, если что-то узнает."
+
+- id: era13b_driving_school
+  title: Автошкола
+  category: work
+  weight: 2
+  available_until: 2019
+  text: "Автошкола Уотсона закрывается: робомобили обещают через пять лет. Инструктор продаёт учебный хэтчбек за бесценок и предлагает бесплатный урок."
+  choices:
+    - label: Взять урок
+      effects: {skill_xp:driving: 2, mood: 2}
+      text: "Инструктор кричит на тебя два часа. В конце говорит, что это лучшая езда за месяц. Других учеников в этом месяце не было."
+    - label: Купить хэтчбек
+      effects: {eddies: -1000, vehicle_grant:hatchback_2010s: true}
+      text: "Наклейку «Ученик» ты не снимаешь. Пусть все знают."
+
+- id: era13b_army_surplus
+  title: Армейские излишки
+  category: street
+  weight: 2
+  available_until: 2019
+  text: "После вывода войск из Центральной Америки в город хлынули армейские излишки. На рынке у порта продают автоматы прямо из ящиков, с солидолом."
+  choices:
+    - label: Купить автомат
+      effects: {eddies: -1400, item_grant:ak_classic: true}
+      text: "Автомат пахнет оружейным маслом и чужой войной. Стреляет безотказно."
+    - label: Купить мини-Узи
+      effects: {eddies: -700, item_grant:uzi_classic: true}
+      text: "Маленький и злой. Продавец показывает, как держать, чтобы очередь не ушла в небо."
+    - label: Пройти мимо
+      effects: {}
+      text: "Ящики пустеют к вечеру. Через неделю в новостях — перестрелка на рынке."
+
+- id: era13b_bionic_hand
+  title: Рука из гаража
+  category: implants
+  weight: 2
+  available_until: 2019
+  text: "Студент-инженер собрал в гараже бионическую кисть и ищет добровольца. Бесплатно, но это прототип. Говорит, что в журнале ему уже обещали статью."
+  choices:
+    - label: Стать добровольцем
+      check: {stat: BODY, dv: 12}
+      success: {text: "Кисть приживается. Пальцы двигаются немного раньше, чем ты решаешь ими двигать. Привыкаешь за неделю.", effects: {cyberware_grant:bionic_hand_early: true, humanity: -1}}
+      fail: {text: "Кисть отторгается на третий день. Студент извиняется и оплачивает больницу.", effects: {hp: -6, eddies: 300}}
+    - label: Вложиться в стартап
+      effects: {eddies: -1000, later: [{weeks: 6, chance: 0.4, effects: {eddies: 6000}, text: "Стартап студента выкупает Biotechnica. Твоя доля — шесть тысяч.", fail_text: "Стартап студента закрывается. Деньги ушли на паяльники и лапшу."}]}
+      text: "Студент обещает вернуть с прибылью. Звучит как все обещания этого города."
+
+- id: era13b_phone_hack
+  title: Взломанный телефон
+  category: work
+  weight: 2
+  available_until: 2019
+  text: "Сосед-подросток научился вскрывать смартфоны и предлагает научить и тебя. За двести эдди и обещание не рассказывать его маме."
+  choices:
+    - label: Учиться
+      effects: {eddies: -200, skill_xp:netrunning: 2, skill_xp:tech: 1}
+      text: "Через неделю ты читаешь чужие переписки быстрее, чем свои. Мама соседа ничего не знает."
+    - label: Рассказать маме
+      effects: {humanity: 1, mood: -1}
+      text: "Мама отбирает у сына ноутбук. Сын не разговаривает с тобой полгода."
+
+- id: era13b_radio_contest
+  title: Конкурс радиостанции
+  category: money
+  weight: 2
+  available_until: 2019
+  text: "Местная радиостанция объявляет конкурс: дозвонись в эфир и спой гимн города. Приз — тысяча эдди и кибер-ухо от спонсора."
+  choices:
+    - label: Дозвониться
+      check: {stat: LUCK, dv: 13}
+      success: {text: "Ты в эфире, поёшь ужасно, но с душой. Приз твой: тысяча и имплант-ухо.", effects: {eddies: 1000, cyberware_grant:cyber_ear_dog: true, fame: 1}}
+      fail: {text: "Занято, занято, занято. Победитель поёт ещё хуже тебя.", effects: {mood: -2}}
+    - label: Слушать
+      effects: {mood: 3}
+      text: "Ты смеёшься над участниками весь вечер. Лучшее шоу недели."
+
+- id: era13b_corp_rumor
+  title: Слух о войне корпораций
+  category: work
+  weight: 2
+  available_until: 2019
+  text: "Знакомый клерк из Arasaka шепчет за пивом: скоро начнётся война с Militech, и выиграют те, кто вложится в оружие заранее. Он сам уже вложился."
+  choices:
+    - label: Вложиться в оружие
+      effects: {eddies: -2000, later: [{weeks: 8, chance: 0.6, effects: {eddies: 5000}, text: "Акции оружейников взлетают. Слух оказался правдой.", fail_text: "Война откладывается. Акции падают, клерк больше не звонит."}]}
+      text: "Ты переводишь две тысячи брокеру. Теперь остаётся ждать войны. Странное чувство."
+    - label: Запомнить и молчать
+      effects: {skill_xp:persuasion: 1}
+      text: "Ты киваешь и заказываешь ещё пива. Знание — тоже валюта."
+
+- id: era13b_vhs_bd
+  title: Видеосалон
+  category: relationships
+  weight: 2
+  available_until: 2019
+  text: "В подвале открылся видеосалон: старые боевики на проекторе, первые брейнданс-записи в шлемах за занавеской. Хозяин зовёт на ночной сеанс."
+  choices:
+    - label: Боевик на проекторе
+      effects: {mood: 6, add_npc:friend: true}
+      text: "Двадцать человек в подвале орут на экран. После сеанса ты пьёшь пиво с соседом по ряду."
+    - label: Брейнданс за занавеской
+      effects: {mood: 4, humanity: -1, glitches: 1}
+      text: "Чужая жизнь за пятнадцать минут. Выходишь, не сразу понимая, где твои руки."

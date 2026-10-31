@@ -1,0 +1,111 @@
+# Vehicle events (owner request: chases, carjackers, road trips). Only for those with a ride (flag `vehicle`).
+
+- id: veh_police_chase
+  title: Погоня
+  category: ncpd
+  weight: 3
+  conditions:
+    flags_all: [vehicle]
+    min_heat: 2
+  text: "В зеркале мигалки. Патрульная машина садится на хвост, за ней вторая. В динамике: «Водитель, прижмитесь к обочине»."
+  choices:
+    - label: Уходить переулками
+      check: {stat: REF, skill: driving, dv: 15}
+      success: {text: "Ты ныряешь в переулок, проскакиваешь через парковку и выезжаешь на эстакаду. Мигалки теряются позади. Сердце колотится до вечера.", effects: {heat: -1, skill_xp:driving: 2, street_cred: 1}}
+      fail: {text: "На повороте тебя заносит прямо в мусорные баки. Копы вытаскивают тебя из машины лицом в асфальт.", effects: {hp: -5, heat: 1, jail_weeks: 2}}
+    - label: Прижаться и договориться
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Ты протягиваешь права с купюрой внутри. Патрульный забирает купюру и возвращает права. Хорошего вечера.", effects: {eddies: -300, heat: -1}}
+      fail: {text: "Патрульный купюру берёт, а штраф всё равно выписывает. Двойной.", effects: {eddies: -600}}
+    - label: Сдаться
+      effects: {jail_weeks: 1, heat: -2}
+      text: "Ты останавливаешься и кладёшь руки на руль. Неделя в обезьяннике, зато без новых статей."
+
+- id: veh_carjack
+  title: Угонщики
+  category: street
+  weight: 2
+  conditions:
+    flags_all: [vehicle]
+  faction: scavengers
+  text: "На светофоре к машине подходят двое с монтировками. Один стучит в стекло: «Вылезай, тачка теперь наша»."
+  choices:
+    - label: Газ в пол
+      check: {stat: REF, skill: driving, dv: 13}
+      success: {text: "Ты жмёшь газ на красный. Монтировка скребёт по крылу, но ты уже далеко.", effects: {skill_xp:driving: 1}}
+      fail: {text: "Ты дёргаешься, глохнешь, и стекло разлетается. Отбиваться приходится руками.", effects: {start_combat: 2}}
+    - label: Выйти и разобраться
+      violent: true
+      effects: {start_combat: 2}
+      text: "Ты открываешь дверь так резко, что первый отлетает на асфальт."
+    - label: Отдать ключи
+      effects: {flag_clear:vehicle: true, mood: -8}
+      text: "Ты отдаёшь ключи. Тачка уезжает в темноту. Хорошо хоть цел."
+
+- id: veh_road_trip
+  title: Ночная трасса
+  category: rare
+  weight: 2
+  conditions:
+    flags_all: [vehicle]
+  text: "Бессонная ночь. Трасса из города уходит в Пустоши, луна висит над песком. Можно просто ехать, пока не кончится бензин."
+  choices:
+    - label: Ехать до рассвета
+      effects: {mood: 10, humanity: 1, eddies: -80}
+      text: "Ты встречаешь рассвет на обочине у заправки кочевников. Кофе ужасный, но жизнь прекрасна."
+    - label: Подобрать попутчика
+      check: {stat: LUCK, dv: 12}
+      success: {text: "Попутчица оказывается кочевницей, которая отстала от клана. В благодарность она дарит тебе контакт и свою старую куртку.", effects: {add_npc:contact: true, mood: 5, faction_rep:aldecaldos: 2}}
+      fail: {text: "Попутчик на полпути достаёт нож и просит кошелёк. Ты тормозишь так резко, что он вылетает в кювет. Кошелёк на месте, нервы — нет.", effects: {mood: -5, hp: -2}}
+    - label: Вернуться спать
+      effects: {hp: 3}
+      text: "Ты разворачиваешься на первом съезде. Иногда сон важнее романтики."
+
+- id: veh_race_challenge
+  title: Вызов на светофоре
+  category: street
+  weight: 2
+  conditions:
+    flags_all: [vehicle]
+  text: "На светофоре рядом останавливается машина в неоне. Водитель газует и кивает на дорогу: «До моста. На сотню»."
+  choices:
+    - label: Принять вызов
+      check: {stat: REF, skill: driving, dv: 14}
+      success: {text: "На мост ты влетаешь раньше него. Соперник сигналит в знак уважения и переводит сотню.", effects: {eddies: 100, fame: 1, skill_xp:driving: 1}}
+      fail: {text: "Соперник уходит на первом же повороте. Сотня твоя улетела вместе с ним.", effects: {eddies: -100}}
+    - label: Не обращать внимания
+      effects: {}
+      text: "Ты смотришь прямо перед собой. Зелёный. Ты едешь по своим делам."
+
+- id: veh_breakdown
+  title: Сломалась
+  category: money
+  weight: 2
+  conditions:
+    flags_all: [vehicle]
+  text: "Посреди Уотсона из-под капота валит дым. Тачка кашляет и глохнет. Ближайший механик — через три квартала."
+  choices:
+    - label: Починить самому
+      check: {stat: TECH, skill: tech, dv: 13}
+      success: {text: "Полчаса под капотом, грязные руки, и мотор снова урчит. Ты гордишься собой весь день.", effects: {skill_xp:tech: 2, mood: 3}}
+      fail: {text: "Ты делаешь только хуже. Механику приходится чинить и твою починку.", effects: {eddies: -500}}
+    - label: Вызвать механика
+      effects: {eddies: -250}
+      text: "Механик приезжает через час и чинит за пять минут. Платишь за час."
+
+- id: veh_getaway_job
+  title: Водитель на ограбление
+  category: work
+  weight: 2
+  conditions:
+    flags_all: [vehicle]
+    min_street_cred: 5
+  text: "Фиксер пишет: банде нужен водитель на одно дело. Подъехать, подождать три минуты с работающим мотором, увезти. Тысяча двести."
+  choices:
+    - label: Сесть за руль
+      check: {stat: REF, skill: driving, dv: 15}
+      success: {text: "Сирены воют за спиной, но ты знаешь каждый переулок. Через двадцать минут команда пересчитывает деньги в гараже.", effects: {eddies: 1200, street_cred: 2, heat: 1}}
+      fail: {text: "Ты уходишь от погони, но камера снимает номер. Деньги ты получил, только теперь их придётся потратить на юриста.", effects: {eddies: 600, heat: 3}}
+    - label: Отказаться
+      effects: {}
+      text: "Ты пишешь, что занят. Фиксер отвечает: «Жаль. Ты бы справился»."

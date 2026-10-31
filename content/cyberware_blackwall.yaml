@@ -1,0 +1,179 @@
+# Scripts from beyond the Blackwall (owner request). Not on any shelf: the Blackwall market events grant them
+# (`cyberware_grant`) to a character with the flag `blackwall_contact` (the end of the endless saga's Whisper arc).
+# Enormous power, enormous humanity cost; every script deepens the taint (flags bw_1..bw_3) that leads to the Threshold.
+
+- key: bw_devourer
+  name: "Скрипт Заслона «Пожиратель»"
+  slot: brain
+  price: 30000
+  humanity_cost: 15
+  description: "Код из-за Чёрного заслона, вшитый в нейропорт. Чужие системы открываются сами, будто знают тебя. Ночами снятся пустые серверные."
+  tier: military
+  category: netrun
+  abilities: [system_eat]
+  build: blackwall
+  requires: []
+  not_for_sale: true
+  mods: {skill.netrunning: 3, ram_max: 4, quickhack_targets: 1, check.gig_hack: 3, mood_weekly: -2}
+  grants_hacks: [bw_devour]
+
+- key: bw_shade
+  name: "Скрипт Заслона «Тень»"
+  slot: spine
+  price: 26000
+  humanity_cost: 12
+  description: "Скрипт стирает тебя с камер и сенсоров. Люди тоже начинают смотреть сквозь тебя, и это уже не всегда удобно."
+  tier: military
+  category: noncombat
+  abilities: [shade_fade]
+  build: blackwall
+  requires: []
+  not_for_sale: true
+  mods: {skill.stealth: 3, check.escape: 3, check.gig_quiet: 3, check.social: -1}
+  grants_hacks: [bw_shade_blind]
+
+- key: bw_white_noise
+  name: "Скрипт Заслона «Белый шум»"
+  slot: brain
+  price: 32000
+  humanity_cost: 18
+  description: "Боевой скрипт: мир замедляется, цели подсвечиваются, руки двигаются раньше мысли. После боя долго не можешь вспомнить, что делал."
+  tier: military
+  category: combat
+  abilities: [noise_focus]
+  build: blackwall
+  requires: []
+  not_for_sale: true
+  mods: {check.combat: 3, melee_damage: 3, ranged_damage: 3, mood_weekly: -3}
+
+- key: bw_deep_link
+  name: "Прямой канал за Заслон"
+  slot: brain
+  price: 28000
+  humanity_cost: 10
+  description: "Тонкая нить в Старую Сеть. Ты учишься всему вдвое быстрее, потому что кто-то по ту сторону подсказывает. Иногда слишком настойчиво."
+  tier: military
+  category: booster
+  abilities: [old_net_lesson]
+  build: blackwall
+  requires: []
+  not_for_sale: true
+  mods: {xp.all: 30, stat.INT: 1, mood_weekly: -2}
+
+# -- the cult's scripts (owner request 24.10): the Blackwall window sells them by cult rank (balance.blackwall.shop) ----
+
+- key: bw_litany
+  name: "Скрипт Заслона «Литания»"
+  slot: face
+  price: 9000
+  humanity_cost: 8
+  description: "Голосовой модуль проповедников культа. Твой голос ложится в чужие уши, как шум прибоя: с тобой трудно спорить и ещё труднее перестать слушать."
+  tier: mid
+  category: noncombat
+  abilities: [litany_voice]
+  build: blackwall
+  requires: []
+  not_for_sale: true
+  mods: {skill.persuasion: 2, check.social: 2, mood_weekly: -1}
+  grants_hacks: [bw_litany_hymn]
+
+- key: bw_static_skin
+  name: "Шумовая кожа"
+  slot: skin
+  price: 14000
+  humanity_cost: 10
+  description: "Под кожей живёт статика из-за Заслона. Пули теряют направление в сантиметре от тела. Прикосновения других людей теперь щиплют."
+  tier: mid
+  category: defense
+  abilities: [bullet_drift]
+  build: blackwall
+  requires: []
+  not_for_sale: true
+  mods: {armor: 3, damage_reduction: 2, check.social: -1}
+
+- key: bw_hollow
+  name: "Полое сердце"
+  slot: circulatory
+  price: 18000
+  humanity_cost: 12
+  description: "Сердце заменено пустотой, которая качает кровь сама. Раны затягиваются на глазах. Пульса у тебя больше нет, и врачи этого очень не любят."
+  tier: military
+  category: defense
+  abilities: [hollow_beat]
+  build: blackwall
+  requires: []
+  not_for_sale: true
+  mods: {hp_max: 20, hp_regen: 2, mood_weekly: -2}
+
+- key: bw_mirror
+  name: "Чёрное зеркало"
+  slot: eyes
+  price: 16000
+  humanity_cost: 10
+  description: "Оптика, которая смотрит на мир с той стороны. Видишь слабые места, сквозь стены, на секунду вперёд. Иногда видишь то, что смотрит на тебя оттуда."
+  tier: military
+  category: combat
+  abilities: [other_side_look]
+  build: blackwall
+  requires: []
+  not_for_sale: true
+  mods: {enemy_scan: 2, ranged_damage: 2, check.combat: 1, mood_weekly: -1}
+
+- key: bw_siren
+  name: "Скрипт Заслона «Сирена»"
+  slot: brain
+  price: 22000
+  humanity_cost: 14
+  description: "Скрипт поёт в чужие нейропорты. Кто слышит, роняет оружие и забывает, зачем пришёл. Кто слушает дольше, не приходит в себя вовсе."
+  tier: military
+  category: netrun
+  abilities: [siren_song]
+  build: blackwall
+  requires: []
+  not_for_sale: true
+  mods: {ram_max: 2, quickhack_targets: 1, mood_weekly: -2}
+  grants_hacks: [bw_siren_song]
+
+- key: bw_rust
+  name: "Скрипт Заслона «Ржавчина»"
+  slot: brain
+  price: 24000
+  humanity_cost: 14
+  description: "Код, который ест хром изнутри. Чужие импланты стареют на глазах: сервоприводы скрипят, оптика мутнеет, руки отказывают."
+  tier: military
+  category: netrun
+  abilities: [rust_touch]
+  build: blackwall
+  requires: []
+  not_for_sale: true
+  mods: {skill.netrunning: 2, ram_max: 2, mood_weekly: -2}
+  grants_hacks: [bw_rust_bite]
+
+- key: bw_grasp
+  name: "Хватка из-за Заслона"
+  slot: forearms
+  price: 20000
+  humanity_cost: 13
+  description: "Руки, в которых течёт чужой код. Сталь гнётся, бетон крошится, двери вылетают вместе с косяком. Иногда пальцы сжимаются сами, и ты не помнишь, на чём."
+  tier: military
+  category: combat
+  abilities: [code_grip]
+  build: blackwall
+  requires: []
+  not_for_sale: true
+  mods: {melee_damage: 4, strength: 2, check.combat: 1, mood_weekly: -2}
+
+- key: bw_choir
+  name: "Скрипт Заслона «Хор»"
+  slot: brain
+  price: 35000
+  humanity_cost: 18
+  description: "Святыня культа. Тысяча голосов из-за Заслона говорят через тебя, и каждый ломает свою цель. После боя в голове долго не стихает пение."
+  tier: military
+  category: netrun
+  abilities: [wall]
+  build: blackwall
+  requires: []
+  not_for_sale: true
+  mods: {ram_max: 4, quickhack_targets: 2, ice: 2, mood_weekly: -3}
+  grants_hacks: [bw_choir_chant]

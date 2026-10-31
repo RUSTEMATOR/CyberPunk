@@ -1,0 +1,140 @@
+# Major Arcana of Misty, in the order of the deck (0 Fool .. XXI World).
+# Schema: app/content/schemas.py (Tarot). Guide: docs/CONTENT_GUIDE.md.
+# Mods last until Kyiv midnight. Dark cards stay at -2 or above on checks; hp_max and armor are untouched.
+
+- key: the_fool
+  name: Шут
+  text: "Шут шагает в пропасть и улыбается. Сегодня удача с тобой, и пара лишних эдди найдётся, только на кражу не ходи."
+  mods: {stat.LUCK: 1, check.crime: -1}
+  eddies: 50
+  weight: 1
+
+- key: the_magician
+  name: Маг
+  text: "Маг. Всё нужное уже лежит у тебя под рукой. Сегодня хорошо даются техника и взлом."
+  mods: {check.gig_hack: 1, skill.tech: 1}
+  weight: 2
+
+- key: the_high_priestess
+  name: Верховная жрица
+  text: "Жрица хранит чужие тайны. Сегодня люди откроются тебе сами, а в драке найдутся нужные слова."
+  mods: {check.social: 1, check.talk_exit: 1}
+  weight: 2
+
+- key: the_empress
+  name: Императрица
+  text: "Императрица дарит тепло. Сегодня легко сближаться с людьми, и они тебе ответят."
+  mods: {relation_gain: 2, stat.EMP: 1}
+  weight: 2
+
+- key: the_emperor
+  name: Император
+  text: "Император держит порядок. Сегодня тебя слушают, и на работе всё складывается."
+  mods: {check.career: 1, stat.COOL: 1}
+  weight: 2
+
+- key: the_hierophant
+  name: Иерофант
+  text: "Иерофант стоит за правила. На работе тебя оценят, а вот взятки сегодня лучше не предлагать."
+  mods: {check.career: 1, check.bribe: -1}
+  weight: 2
+
+- key: the_lovers
+  name: Влюблённые
+  text: "Влюблённые. Сердце открыто, и люди отвечают теплом, но в драке ты рассеян. Береги себя."
+  mods: {relation_gain: 2, check.combat: -1}
+  weight: 2
+
+- key: the_chariot
+  name: Колесница
+  text: "Колесница мчит вперёд. Сегодня ты хорошо водишь, а если придётся бежать, ноги унесут."
+  mods: {skill.driving: 1, flee: 2}
+  weight: 2
+
+- key: strength
+  name: Сила
+  text: "Сила не в кулаке, а в терпении. Тело сегодня крепче, и раны затягиваются быстрее."
+  mods: {stat.BODY: 1, hp_regen: 1}
+  weight: 2
+
+- key: the_hermit
+  name: Отшельник
+  text: "Отшельник уходит в тень. Сегодня тебе легко исчезнуть, а вот шуметь не стоит."
+  mods: {check.escape: 1, check.gig_loud: -1}
+  weight: 2
+
+- key: wheel_of_fortune
+  name: Колесо Фортуны
+  text: "Колесо повернулось. Немного эдди уплыло, зато удача сегодня твоя."
+  mods: {stat.LUCK: 2}
+  eddies: -40
+  weight: 2
+
+- key: justice
+  name: Справедливость
+  text: "Справедливость возвращает долги. Сегодня тебе заплатят по старому счёту, и на работе всё сходится."
+  mods: {check.career: 1}
+  eddies: 80
+  weight: 2
+
+- key: the_hanged_man
+  name: Повешенный
+  text: "Повешенный смотрит на мир вниз головой. Сегодня тихие пути надёжнее громких."
+  mods: {check.gig_quiet: 1, check.gig_loud: -1}
+  weight: 2
+
+- key: death
+  name: Смерть
+  text: "Не бойся, это не про конец. Старое уходит, и новому ты учишься быстрее, только с людьми сегодня тяжело."
+  mods: {xp.all: 10, check.social: -1}
+  weight: 1
+
+- key: temperance
+  name: Умеренность
+  text: "Умеренность просит не спешить. Сегодня тебя труднее ранить, но громкие дела оставь на завтра."
+  mods: {damage_reduction: 1, check.gig_loud: -1}
+  weight: 2
+
+- key: the_devil
+  name: Дьявол
+  text: "Дьявол платит щедро. Деньги придут, на тёмное дело рука лёгкая, но на душе будет тяжело."
+  mods: {check.crime: 1, mood_weekly: -2}
+  eddies: 120
+  weight: 2
+
+- key: the_tower
+  name: Башня
+  text: "Башня падает. Сегодня ты потеряешь немного эдди, в драку не лезь, а если запахнет жареным, беги."
+  mods: {check.combat: -2, flee: 1}
+  eddies: -100
+  weight: 1
+
+- key: the_star
+  name: Звезда
+  text: "Звезда светит даже сквозь смог. Сегодня тебе тепло, и люди к тебе тянутся."
+  mods: {relation_gain: 2, mood_weekly: 2}
+  weight: 2
+
+- key: the_moon
+  name: Луна
+  text: "Луна путает следы. Словам сегодня не верь, ни своим, ни чужим. Зато Сеть откроется охотно."
+  mods: {check.talk_exit: -1, check.gig_hack: 1}
+  weight: 2
+
+- key: the_sun
+  name: Солнце
+  text: "Солнце. Всё на виду, и прятаться незачем. Громкие дела удаются, на душе светло."
+  mods: {check.gig_loud: 1, mood_weekly: 2}
+  weight: 3
+
+- key: judgement
+  name: Суд
+  text: "Суд. Всё, что ты сделал, возвращается, и сегодня это хорошее: на работе заметят, а люди вспомнят добро."
+  mods: {check.career: 1, relation_gain: 1}
+  weight: 2
+
+- key: the_world
+  name: Мир
+  text: "Мир. Всё сошлось, такое бывает редко. С людьми легко, учёба идёт сама, на душе спокойно."
+  mods: {stat.EMP: 1, xp.all: 10, mood_weekly: 2}
+  weight: 1

@@ -1,0 +1,96 @@
+# Perk trees after Cyberpunk 2077 (owner request 24.10: more for characters who are not netrunners; extended 24.10:
+# the TECH tree with the game's perks, the EMP and LUCK trees).
+# Every level of the character gives one attribute point, one perk (talent) point and skill points (engine/perks.py).
+# A perk has ranks; `mods` are per rank (summed into the modifiers); `need` is the attribute value for the first rank,
+# each next rank needs one more. `special` names a combat ability the fight engine reads (engine/combat.py).
+# `min_implants: N` = the mods work only with N+ installed implants; `per_attr9` = mods per attribute at 9 or more.
+
+BODY:
+  title: "ТЕЛО · Громила"
+  perks:
+    iron_skin: {name: Железная шкура, text: "Здоровье +6 за ранг.", ranks: 3, need: 3, mods: {hp_max: 6}}
+    painkiller: {name: Обезболивающее, text: "Восстановление +1 в неделю и здоровье +3 за ранг.", ranks: 2, need: 4, mods: {hp_regen: 1, hp_max: 3}}
+    cleave: {name: Таран, text: "Удар в ближнем бою задевает ещё одного врага за ранг.", ranks: 2, need: 5, special: cleave}
+    wrecker: {name: Разрушитель, text: "Урон в ближнем бою +2 за ранг.", ranks: 3, need: 6, mods: {melee_damage: 2}}
+    second_wind: {name: Второе дыхание, text: "Раз за бой на четверти здоровья — лечение 20% за ранг.", ranks: 2, need: 7, special: second_wind}
+    wall_breaker: {name: Сносит стены, text: "Сила +2 и урон в ближнем бою +1. Двери вылетают вместе с косяком.", ranks: 1, need: 8, mods: {strength: 2, melee_damage: 1}}
+    bloodlust: {name: Жажда крови, text: "Каждое убийство в бою лечит 5% здоровья за ранг.", ranks: 2, need: 8, special: bloodlust}
+    juggernaut: {name: Джаггернаут, text: "Снижение урона +1, побег −1. Тебя не остановить, но и не догнать.", ranks: 1, need: 9, mods: {damage_reduction: 1, flee: -1}}
+    quake: {name: Землетрясение, text: "Удар в ближнем бою с шансом 25% оглушает цель на ход.", ranks: 1, need: 10, special: quake}
+
+REF:
+  title: "РЕФЛ · Клинок"
+  perks:
+    quick_hands: {name: Быстрые руки, text: "Проверки в бою +1 за ранг.", ranks: 2, need: 4, mods: {check.combat: 1}}
+    evasion: {name: Неуловимый, text: "Побег и скрытность +1 за ранг.", ranks: 3, need: 4, mods: {flee: 1, check.escape: 1}}
+    deflect: {name: Отбивать пули, text: "С клинком в руках: шанс 15% за ранг отбить пулю. На 3-м ранге отбитая пуля летит в стрелка.", ranks: 3, need: 5, special: deflect}
+    fury: {name: Кровавая ярость, text: "Ниже половины здоровья — урон в ближнем бою +3 за ранг.", ranks: 2, need: 6, special: fury}
+    blade_dancer: {name: Танцор с клинками, text: "Урон в ближнем бою +1 и проверки в бою +1 за ранг.", ranks: 2, need: 7, mods: {melee_damage: 1, check.combat: 1}}
+    finisher: {name: Добивание, text: "Враг ниже четверти здоровья падает от удара клинком.", ranks: 1, need: 8, special: finisher}
+    dual_guns: {name: Два ствола, text: "С двумя одноручными стволами (пистолеты, ПП) второй стреляет без штрафа к попаданию; на 2-м ранге дважды за ход.", ranks: 2, need: 5, special: dual_guns}
+    dual_blades: {name: Два клинка, text: "С двумя клинками второй бьёт без штрафа; на 2-м ранге дважды за ход. С «Отбивать пули» шанс отбить +10%.", ranks: 2, need: 5, special: dual_blades}
+    ninja: {name: Кибер-ниндзя, text: "Первые две атаки по тебе в каждом бою проходят мимо: тебя просто нет там, куда стреляют.", ranks: 1, need: 9, special: ninja}
+
+TECH:
+  title: "ТЕХ · Инженер"
+  perks:
+    tinkerer: {name: Мастер на все руки, text: "Скидка у риппера 5% и в магазинах 3% за ранг.", ranks: 3, need: 3, mods: {ripper_discount_pct: 5, shop_discount_pct: 3}}
+    glutton: {name: Обжора войны, text: "Убийство возвращает заряд инжектора, раз за бой за ранг.", ranks: 2, need: 4, special: glutton}
+    first_aid: {name: Первая помощь, text: "Инжектор лечит на 10% больше за ранг.", ranks: 2, need: 4, special: first_aid}
+    gearhead: {name: Автомеханик, text: "Вождение +1 и побег +1 за ранг.", ranks: 2, need: 4, mods: {skill.driving: 1, check.escape: 1}}
+    transfusion: {name: Переливание, text: "Последний заряд инжектора лечит на 30% больше.", ranks: 1, need: 5, special: transfusion}
+    plating: {name: Бронепластины, text: "Защита +1 за ранг.", ranks: 2, need: 5, mods: {armor: 1}}
+    chrome_heart: {name: Хромированное сердце, text: "Нагрузка хрома на тело −10% за ранг.", ranks: 2, need: 6, mods: {chrome_load_pct: 10}}
+    health_freak: {name: Помешанный на здоровье, text: "Восстановление здоровья +2 в неделю за ранг.", ranks: 2, need: 6, mods: {hp_regen: 2}}
+    all_things_cyber: {name: Всё кибернетическое, text: "Потеря человечности от имплантов −5% и нагрузка хрома −5% за ранг.", ranks: 2, need: 6, mods: {humanity_loss_pct: -5, chrome_load_pct: 5}}
+    field_medic: {name: Полевой медик, text: "Ещё один заряд инжектора в бою и восстановление здоровья +2 в неделю.", ranks: 1, need: 7, mods: {med_charges: 1, hp_regen: 2}}
+    chrome_constitution: {name: Хромированная конституция, text: "С 6+ имплантами: защита +1 и снижение урона +1.", ranks: 1, need: 7, min_implants: 6, mods: {armor: 1, damage_reduction: 1}}
+    renaissance_punk: {name: Ренессанс-панк, text: "Каждый атрибут 9+ даёт нагрузку хрома −5% и RAM +1.", ranks: 1, need: 7, per_attr9: {chrome_load_pct: 5, ram_max: 1}}
+    driver_update: {name: Обновление драйверов, text: "Хром работает чище: проверки в бою +1, RAM +1, анализ врагов +1.", ranks: 1, need: 8, mods: {check.combat: 1, ram_max: 1, enemy_scan: 1}}
+    overclock: {name: Разгон оружия, text: "Урон из огнестрела +2 за ранг.", ranks: 2, need: 8, mods: {ranged_damage: 2}}
+    bolt: {name: Болт, text: "Первый выстрел в бою пробивает броню; на 2-м ранге и второй.", ranks: 2, need: 8, special: bolt}
+    extended_warranty: {name: Расширенная гарантия, text: "Активные импланты (Сандевистан, Берсерк) работают на ход дольше.", ranks: 1, need: 8, mods: {active.all.duration_ticks: 1}}
+    license_to_chrome: {name: Лицензия на хром, text: "Защита +1 и нагрузка хрома −5% за ранг.", ranks: 3, need: 8, mods: {armor: 1, chrome_load_pct: 5}}
+    ambidextrous: {name: Амбидекстр, text: "Обе руки работают: урон в ближнем и дальнем бою +1, проверки в бою +1.", ranks: 1, need: 9, mods: {melee_damage: 1, ranged_damage: 1, check.combat: 1}}
+    cyborg: {name: Киборг, text: "С 8+ имплантами: RAM +2 и ещё заряд инжектора.", ranks: 1, need: 9, min_implants: 8, mods: {ram_max: 2, med_charges: 1}}
+    ticking_bomb: {name: Бомба с часовым механизмом, text: "В начале боя ЭМИ из твоего хрома бьёт врага: 1d6 за каждые два импланта и оглушение на ход.", ranks: 1, need: 10, special: emp}
+    edgerunner: {name: Эджраннер, text: "Нагрузка хрома −20%. Каждое убийство в бою даёт урон +2 до конца боя, до трёх раз.", ranks: 1, need: 10, special: edgerunner, mods: {chrome_load_pct: 20}}
+
+INT:
+  title: "ИНТ · Нетраннер"
+  perks:
+    icebreaker: {name: Ледокол, text: "Заказы «взлом» +1 за ранг.", ranks: 3, need: 4, mods: {check.gig_hack: 1}}
+    ram_plus: {name: Расширенная память, text: "RAM деки +1 за ранг.", ranks: 2, need: 5, mods: {ram_max: 1}}
+    clean_trace: {name: Чистый след, text: "Розыск спадает быстрее, лёд +1 за ранг.", ranks: 2, need: 6, mods: {heat_decay: 1, ice: 1}}
+    scholar: {name: Вечный студент, text: "Опыт всех навыков +10% за ранг.", ranks: 2, need: 6, mods: {xp.all: 10}}
+    cheap_code: {name: Экономный код, text: "Скрипты дешевле на 1 RAM за ранг.", ranks: 2, need: 7, mods: {quickhack_cost: -1}}
+    overdrive: {name: Перегрузка системы, text: "RAM восстанавливается в бою на 1 быстрее за ранг.", ranks: 2, need: 7, mods: {ram_recharge: 1}}
+    worm: {name: Червь, text: "Скрипты бьют ещё одну цель.", ranks: 1, need: 9, mods: {quickhack_targets: 1}}
+
+COOL:
+  title: "ХЛАД · Призрак"
+  perks:
+    silver_tongue: {name: Язык без костей, text: "Общение и уговоры +1 за ранг.", ranks: 3, need: 4, mods: {check.social: 1}}
+    deadeye: {name: Мёртвый глаз, text: "Первый выстрел в бою наносит +50% урона за ранг.", ranks: 3, need: 5, special: deadeye}
+    assassin: {name: Ассасин, text: "Тихие заказы +1 и скрытность +1 за ранг.", ranks: 2, need: 6, mods: {check.gig_quiet: 1, skill.stealth: 1}}
+    clean_job: {name: Чистая работа, text: "Награда за криминал +10% за ранг, розыск спадает быстрее.", ranks: 2, need: 6, mods: {crime_reward_pct: 10, heat_decay: 1}}
+    ghost: {name: Призрак, text: "Первая атака по тебе в бою проходит мимо, за ранг.", ranks: 2, need: 7, special: ghost}
+    ice_veins: {name: Лёд в венах, text: "Выход из боя разговором и подкуп +2.", ranks: 1, need: 8, mods: {check.talk_exit: 2, check.bribe: 2}}
+    cold_blood: {name: Хладнокровие, text: "Проверки в бою +1 и урон из огнестрела +2.", ranks: 1, need: 9, mods: {check.combat: 1, ranged_damage: 2}}
+
+EMP:
+  title: "ЭМП · Душа"
+  perks:
+    warm_heart: {name: Тёплое сердце, text: "Отношения с людьми растут быстрее, +1 за ранг.", ranks: 3, need: 3, mods: {relation_gain: 1}}
+    anchor: {name: Якорь, text: "Потеря человечности −5% и настроение +1 в неделю за ранг.", ranks: 2, need: 5, mods: {humanity_loss_pct: -5, mood_weekly: 1}}
+    self_therapy: {name: Сам себе терапевт, text: "Терапия даёт больше, +2 за ранг.", ranks: 2, need: 6, mods: {therapy_bonus: 2}}
+    crowd_charm: {name: Харизма толпы, text: "Общение +1 и оплата заказов +5% за ранг.", ranks: 2, need: 7, mods: {check.social: 1, gig_pay_pct: 5}}
+    last_line: {name: Последняя черта, text: "Человечность не падает ниже 5 от имплантов.", ranks: 1, need: 9, mods: {humanity_floor: 5}}
+
+LUCK:
+  title: "УДАЧА · Везунчик"
+  perks:
+    lucky_star: {name: Счастливая звезда, text: "Запас глюков +1 за ранг.", ranks: 2, need: 3, mods: {glitch_max: 1}}
+    jackpot: {name: Счастливый билет, text: "Оплата заказов и криминала +5% за ранг.", ranks: 2, need: 5, mods: {crime_reward_pct: 5, gig_pay_pct: 5}}
+    thick_wallet: {name: Крепкий кошелёк, text: "Грабители уносят на 15% меньше за ранг.", ranks: 2, need: 6, mods: {robbery_loss_pct: -15}}
+    guardian_angel: {name: Ангел-хранитель, text: "Побег +1, ещё один глюк и проверки побега +1.", ranks: 1, need: 8, mods: {flee: 1, check.escape: 1, glitch_max: 1}}

@@ -1,0 +1,301 @@
+- key: short_circuit
+  name: Короткое замыкание
+  description: Скачок напряжения бьёт током по чужому хрому изнутри. Дёшево, просто и почти всегда к месту.
+  price: 400
+  ram_cost: 2              # 1..20, тратится из RAM деки
+  dv_base: 9               # 5..30
+  dv_per_danger: 2         # 0..5; СЛ против цели = dv_base + dv_per_danger * опасность цели
+  tier: street             # street | mid | military, по цене, как у имплантов
+  effects: {damage: 2d6}
+
+- key: distraction
+  name: Отвлечение
+  description: "Ложный сигнал сбивает цель с толку, и она ненадолго смотрит не туда. Самый дешёвый взлом, но и эффект скромный."
+  price: 150
+  ram_cost: 1
+  dv_base: 6
+  dv_per_danger: 1
+  tier: street
+  effects: {attack_penalty: 1, penalty_ticks: 1}
+
+- key: reboot_optics
+  name: Перезагрузка оптики
+  description: "Оптика цели уходит в перезагрузку, и на мгновение цель слепнет."
+  price: 350
+  ram_cost: 2
+  dv_base: 8
+  dv_per_danger: 1
+  tier: street
+  effects: {stun_ticks: 1}
+
+- key: weapon_glitch
+  name: Сбой оружия
+  description: "Ствол цели получает чужие команды и начинает клинить. Пока сбой не пройдёт, попасть ей трудно."
+  price: 900
+  ram_cost: 3
+  dv_base: 9
+  dv_per_danger: 2
+  tier: street
+  effects: {attack_penalty: 2, penalty_ticks: 2}
+
+- key: cripple_movement
+  name: Обездвиживание
+  description: "Команды до ног не доходят, и цель на время застывает на месте."
+  price: 2200
+  ram_cost: 4
+  dv_base: 11
+  dv_per_danger: 2
+  tier: street
+  effects: {stun_ticks: 2}
+
+- key: sonic_shock
+  name: Звуковой шок
+  description: "Частота, которую слышит только чужой имплант. Цель оглушена, руки дрожат, и стреляет она хуже."
+  price: 3800
+  ram_cost: 5
+  dv_base: 12
+  dv_per_danger: 2
+  tier: mid
+  effects: {damage: 1d6, attack_penalty: 3, penalty_ticks: 2}
+  available_from: 2030
+
+- key: overheat
+  name: Перегрев
+  description: "Чужой хром раскаляется изнутри. Цель обжигается и на мгновение замирает."
+  price: 4200
+  ram_cost: 6
+  dv_base: 13
+  dv_per_danger: 2
+  tier: mid
+  effects: {damage: 2d6, stun_ticks: 1}
+  available_from: 2030
+
+- key: implant_drain
+  name: Слив заряда
+  description: "Выкачивает заряд из имплантов цели. Лучшее средство против Сандевистана, Берсерка и всего, что работает на заряде."
+  price: 5200
+  ram_cost: 6
+  dv_base: 13
+  dv_per_danger: 2
+  tier: mid
+  effects: {drain_charge: 40}
+  available_from: 2030
+
+- key: cyberware_malfunction
+  name: Сбой импланта
+  description: "Работающий имплант цели уходит в перезапуск и на время отключается."
+  price: 6200
+  ram_cost: 7
+  dv_base: 14
+  dv_per_danger: 2
+  tier: mid
+  effects: {disable_ticks: 1}
+  available_from: 2030
+
+- key: contagion
+  name: Заражение
+  description: "Вирус бьёт по цели и перескакивает на соседа. Урон небольшой, зато задевает сразу нескольких."
+  price: 7800
+  ram_cost: 8
+  dv_base: 14
+  dv_per_danger: 2
+  tier: mid
+  effects: {damage: 1d6, spread: true}
+  available_from: 2030
+
+- key: synapse_burnout
+  name: Синаптический ожог
+  description: "Выжигает нервные окончания изнутри. Самый сильный урон среди взломов, и памяти он съедает соответственно."
+  price: 10500
+  ram_cost: 10
+  dv_base: 16
+  dv_per_danger: 3
+  tier: military
+  effects: {damage: 4d6}
+  available_from: 2045
+
+- key: system_collapse
+  name: Системный сбой
+  description: "Обрушивает всю систему цели: импланты отключаются, мозг получает тяжёлый удар. Памяти требует много."
+  price: 12500
+  ram_cost: 14
+  dv_base: 17
+  dv_per_danger: 3
+  tier: military
+  effects: {damage: 3d6, disable_ticks: 2}
+  available_from: 2045
+
+# -- more quickhacks (owner request) ----------------------------------------------------------------------------------
+- key: comm_jam
+  name: Глушилка связи
+  description: "Рация и импланты связи цели забиты шумом. Она не слышит своих и стреляет вслепую."
+  price: 600
+  ram_cost: 3
+  dv_base: 8
+  dv_per_danger: 1
+  tier: street
+  effects: {attack_penalty: 2, penalty_ticks: 2}
+
+- key: lights_out
+  name: Погасить свет
+  description: "Фонари, вывески и лампы в комнате гаснут разом. Работает даже против тех, у кого нет хрома."
+  price: 450
+  ram_cost: 2
+  dv_base: 7
+  dv_per_danger: 1
+  tier: street
+  environmental: true
+  effects: {attack_penalty: 2, penalty_ticks: 1}
+
+- key: vending_burst
+  name: Автомат с газировкой
+  description: "Ближайший автомат с газировкой стреляет банками на полной скорости. Глупо, больно, работает."
+  price: 500
+  ram_cost: 3
+  dv_base: 8
+  dv_per_danger: 1
+  tier: street
+  environmental: true
+  effects: {damage: 1d6+2, spread: true}
+
+- key: crude_overload
+  name: Грубая перегрузка
+  description: "Ранний взлом: в чужой хром льётся весь ток, какой выдержит дека. Шумно, неаккуратно, больно."
+  price: 900
+  ram_cost: 4
+  dv_base: 11
+  dv_per_danger: 2
+  tier: street
+  effects: {damage: 3d6}
+
+- key: leech
+  name: Пиявка
+  description: "Высасывает заряд из боевых имплантов цели. Сандевистан врага вдруг не хочет включаться."
+  price: 800
+  ram_cost: 3
+  dv_base: 9
+  dv_per_danger: 1
+  tier: street
+  effects: {drain_charge: 40}
+
+- key: implant_jam
+  name: Сбой импланта
+  description: "Работающий имплант цели зависает и уходит в перезагрузку."
+  price: 1100
+  ram_cost: 4
+  dv_base: 10
+  dv_per_danger: 2
+  tier: street
+  effects: {disable_ticks: 2}
+
+- key: chain_lightning
+  name: Цепная молния
+  description: "Разряд прыгает от импланта к импланту и цепляет второго врага рядом."
+  price: 5500
+  ram_cost: 7
+  dv_base: 13
+  dv_per_danger: 2
+  tier: mid
+  effects: {damage: 3d6, spread: true}
+  available_from: 2045
+
+- key: neurostorm
+  name: Нейрошторм
+  description: "Военный вирус: сжигает синапсы и оставляет цель стоять столбом. После него не все встают."
+  price: 9500
+  ram_cost: 10
+  dv_base: 16
+  dv_per_danger: 3
+  tier: military
+  effects: {damage: 5d6, stun_ticks: 1}
+  available_from: 2050
+
+# -- more quickhacks, batch 2 (owner request) --------------------------------------------------------------------------
+- {key: ping_scan, name: Пинг, description: "Подсвечивает импланты цели и сбивает её с толку на мгновение.", price: 250, ram_cost: 1, dv_base: 6, dv_per_danger: 1, tier: street, effects: {attack_penalty: 1, penalty_ticks: 2}}
+- {key: camera_loop, name: Петля на камеры, description: "Камеры показывают вчерашнюю запись. Работает через окружение, даже против людей без хрома.", price: 600, ram_cost: 3, dv_base: 8, dv_per_danger: 1, tier: street, environmental: true, effects: {attack_penalty: 2, penalty_ticks: 2}}
+- {key: grenade_tamper, name: Подрыв гранаты, description: "Граната на поясе цели получает сигнал раньше времени.", price: 1600, ram_cost: 5, dv_base: 11, dv_per_danger: 2, tier: street, effects: {damage: 3d6+2, spread: true}}
+- {key: reboot_all, name: Перезагрузка всего, description: "Все импланты цели уходят в перезагрузку разом. Цель стоит и моргает.", price: 2800, ram_cost: 6, dv_base: 12, dv_per_danger: 2, tier: street, effects: {stun_ticks: 1, disable_ticks: 1}}
+- {key: blind_spot, name: Слепое пятно, description: "Оптика цели перестаёт видеть тебя. Пока не догадается повернуть голову.", price: 900, ram_cost: 3, dv_base: 9, dv_per_danger: 1, tier: street, effects: {attack_penalty: 3, penalty_ticks: 1}}
+- {key: battery_drain, name: Обесточивание, description: "Высасывает заряд всего боевого хрома цели.", price: 2200, ram_cost: 5, dv_base: 11, dv_per_danger: 2, tier: street, effects: {drain_charge: 70}}
+- {key: heart_stutter, name: Сбой ритма, description: "Кардиомонитор цели посылает неверный ритм. Опасно для всех, у кого сердце на проводе.", price: 4200, ram_cost: 6, dv_base: 13, dv_per_danger: 2, tier: mid, effects: {damage: 4d6}, available_from: 2030}
+- {key: puppet_strings, name: Кукловод, description: "На секунду руки цели принадлежат тебе. Она стреляет в своих.", price: 7800, ram_cost: 8, dv_base: 15, dv_per_danger: 3, tier: mid, effects: {stun_ticks: 2, attack_penalty: 2, penalty_ticks: 2}, available_from: 2050}
+
+# -- batch 3 (owner request: more items; early ones for the 2010s) -------------------------------------------------------
+- {key: phone_spam, name: Спам на телефон, description: "Телефон цели взрывается уведомлениями, звонками и рекламой. Трудно стрелять, когда в кармане вибрирует.", price: 300, ram_cost: 2, dv_base: 8, dv_per_danger: 1, tier: street, effects: {attack_penalty: 2, penalty_ticks: 1}, available_until: 2039}
+- {key: car_alarm, name: Автосигнализация, description: "Все машины на парковке разом начинают выть. Цель дёргается на каждый звук.", price: 400, ram_cost: 2, dv_base: 8, dv_per_danger: 1, tier: street, environmental: true, effects: {attack_penalty: 1, penalty_ticks: 2}}
+- {key: sprinkler, name: Пожарные спринклеры, description: "Потолок обрушивает ледяной дождь. Электроника искрит, люди ругаются.", price: 700, ram_cost: 3, dv_base: 9, dv_per_danger: 1, tier: street, environmental: true, effects: {drain_charge: 30, attack_penalty: 1, penalty_ticks: 1}}
+- {key: elevator_drop, name: Лифт вниз, description: "Лифт с целью внутри падает на два этажа и встаёт. Цель выходит, держась за голову.", price: 1500, ram_cost: 4, dv_base: 10, dv_per_danger: 2, tier: street, environmental: true, effects: {damage: 2d6+2, stun_ticks: 1}}
+- {key: gps_spoof, name: Подмена GPS, description: "Навигация в голове цели показывает, что ты сзади. Ты спереди.", price: 1100, ram_cost: 3, dv_base: 10, dv_per_danger: 1, tier: street, effects: {attack_penalty: 3, penalty_ticks: 1}, available_from: 2020}
+- {key: pacemaker_skip, name: Пропуск удара, description: "Импланты сердца цели пропускают один удар. Ровно один.", price: 2600, ram_cost: 5, dv_base: 12, dv_per_danger: 2, tier: street, effects: {damage: 3d6, stun_ticks: 1}, available_from: 2025}
+- {key: chrome_lock, name: Блокировка хрома, description: "Все боевые импланты цели встают на паузу. Руки остаются просто руками.", price: 3400, ram_cost: 6, dv_base: 12, dv_per_danger: 2, tier: mid, effects: {disable_ticks: 2}, available_from: 2035}
+- {key: feedback_loop, name: Петля обратной связи, description: "Каждый выстрел цели отдаётся ей же болью в нервах. Она быстро перестаёт стрелять.", price: 5200, ram_cost: 7, dv_base: 14, dv_per_danger: 2, tier: mid, effects: {damage: 2d6, attack_penalty: 3, penalty_ticks: 2}, available_from: 2045}
+
+# -- Blackwall scripts (owner report 23.10): not on any shelf, they come with the implant (cyberware.grants_hacks) --------
+- key: bw_shade_blind
+  name: "Тень"
+  description: "Скрипт «Тень» стирает тебя из камер, оптики и чужих глаз. Двое врагов теряют тебя на ход и потом стреляют наугад."
+  price: 0
+  ram_cost: 3
+  dv_base: 9
+  dv_per_danger: 1
+  tier: military
+  environmental: true
+  not_for_sale: true
+  effects: {stun_ticks: 1, attack_penalty: 3, penalty_ticks: 2, spread: true}
+
+- key: bw_devour
+  name: "Пожиратель"
+  description: "Код из-за Заслона вгрызается в хром цели: выжигает заряд, глушит импланты и бьёт по мозгу. Перекидывается на соседа."
+  price: 0
+  ram_cost: 6
+  dv_base: 12
+  dv_per_danger: 2
+  tier: military
+  not_for_sale: true
+  effects: {damage: 3d6, drain_charge: 50, disable_ticks: 1, spread: true}
+
+# -- the cult's scripts (owner request 24.10): they come with the cult's implants (cyberware_blackwall.yaml) -------------
+- key: bw_litany_hymn
+  name: "Гимн помех"
+  description: "Литания звучит в каждом динамике рядом. Враги путаются в своих командах и стреляют невпопад."
+  price: 0
+  ram_cost: 3
+  dv_base: 9
+  dv_per_danger: 1
+  tier: mid
+  environmental: true
+  not_for_sale: true
+  effects: {attack_penalty: 3, penalty_ticks: 2, spread: true}
+
+- key: bw_siren_song
+  name: "Песня Сирены"
+  description: "Двое врагов слышат пение из-за Заслона и замирают, опустив оружие."
+  price: 0
+  ram_cost: 5
+  dv_base: 11
+  dv_per_danger: 2
+  tier: military
+  not_for_sale: true
+  effects: {stun_ticks: 2, spread: true}
+
+- key: bw_rust_bite
+  name: "Укус Ржавчины"
+  description: "Хром цели ржавеет за секунды: импланты встают, сервоприводы рвут мясо изнутри."
+  price: 0
+  ram_cost: 6
+  dv_base: 12
+  dv_per_danger: 2
+  tier: military
+  not_for_sale: true
+  effects: {damage: 4d6, disable_ticks: 2}
+
+- key: bw_choir_chant
+  name: "Песнь Хора"
+  description: "Тысяча голосов бьёт по нейропортам. Цель и её сосед падают, держась за голову."
+  price: 0
+  ram_cost: 8
+  dv_base: 13
+  dv_per_danger: 2
+  tier: military
+  not_for_sale: true
+  effects: {damage: 3d6, stun_ticks: 1, drain_charge: 40, spread: true}

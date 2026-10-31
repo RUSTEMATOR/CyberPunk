@@ -1,0 +1,132 @@
+# Legendary items, batch 3 (owner request): each from its own rare story, once per life.
+
+- id: lg3_silver_hand
+  title: Витрина музея рока
+  category: rare
+  weight: 1
+  conditions:
+    min_street_cred: 10
+    flags_none: [lg3_silver]
+  text: "Музей рока в Уотсоне закрывается, экспонаты уходят с молотка. В витрине — хромированная рука легенды девяностых. Охранник шепчет, что за тысячу «потеряет» ключ."
+  choices:
+    - label: Заплатить охраннику
+      check: {stat: REF, skill: stealth, dv: 14}
+      success: {text: "Ключ, витрина, рука под курткой. Риппер ставит её за ночь и молчит с уважением.", effects: {flag_set:lg3_silver: true, eddies: -1000, cyberware_grant:lg_silver_hand: true, fame: 1}}
+      fail: {text: "Сигнализация срабатывает раньше, чем ты открываешь витрину. Охранник с твоей тысячей исчезает.", effects: {flag_set:lg3_silver: true, eddies: -1000, heat: 1}}
+    - label: Купить на аукционе
+      effects: {flag_set:lg3_silver: true, eddies: -12000, cyberware_grant:lg_silver_hand: true}
+      text: "Ты перебиваешь коллекционера из Сити-центра. Дорого, зато честно, и в каталоге теперь твоё имя."
+    - label: Пройти мимо
+      effects: {flag_set:lg3_silver: true}
+      text: "Руку покупает японский коллекционер. Она уезжает в Токио в бронированном ящике."
+
+- id: lg3_owl_eyes
+  title: Последний заказ «Совы»
+  category: rare
+  weight: 1
+  conditions:
+    flags_none: [lg3_owl]
+  text: "Старик в баре рассказывает про снайпера по прозвищу Сова: пропал двадцать лет назад на заказе в Пасифике. Говорят, его лёжка на крыше старого отеля так и стоит нетронутой."
+  choices:
+    - label: Найти лёжку
+      check: {stat: INT, skill: stealth, dv: 15}
+      success: {text: "На крыше, под истлевшим брезентом — скелет в маскхалате и кейс с оптикой. Ты хоронишь Сову, а его глаза риппер ставит тебе.", effects: {flag_set:lg3_owl: true, cyberware_grant:lg_owl_eyes: true, humanity: -1}}
+      fail: {text: "Пасифика ночью — не место для прогулок по крышам. Ты уходишь с пустыми руками и разбитым коленом.", effects: {flag_set:lg3_owl: true, hp: -6}}
+    - label: Это сказка
+      effects: {flag_set:lg3_owl: true}
+      text: "Старик пожимает плечами. Через год кто-то другой приносит в бар кейс с оптикой."
+
+- id: lg3_saint_heart
+  title: Сердце уличного врача
+  category: rare
+  weight: 1
+  conditions:
+    flags_none: [lg3_saint]
+  text: "Умер док Эррера — двадцать лет лечил район бесплатно. В завещании одна строчка: его искусственное сердце отдать тому, кто первым придёт на похороны с цветами."
+  choices:
+    - label: Прийти с цветами
+      effects: {flag_set:lg3_saint: true, eddies: -100, cyberware_grant:lg_saint_heart: true, humanity: 2}
+      text: "Ты приходишь раньше всех, с дешёвыми хризантемами с рынка. Нотариус кивает. Через неделю в груди бьётся сердце, которое спасло сотни людей."
+    - label: Помочь с похоронами
+      effects: {flag_set:lg3_saint: true, humanity: 3, add_npc:friend: true}
+      text: "Ты несёшь гроб вместе с его пациентами. Сердце достаётся девочке, которую он когда-то вытащил с того света. Так правильно."
+
+- id: lg3_ghost_spine
+  title: Исповедь вора
+  category: rare
+  weight: 1
+  conditions:
+    min_street_cred: 15
+    flags_none: [lg3_ghost]
+  text: "В хосписе умирает Призрак — вор, которого за сорок лет ни разу не поймали. Он хочет исповедаться кому-то с улицы. И передать то, что сделало его Призраком."
+  choices:
+    - label: Выслушать
+      effects: {flag_set:lg3_ghost: true, cyberware_grant:lg_ghost_spine: true, humanity: -1, skill_xp:stealth: 3}
+      text: "Ночь рассказов: банки, музеи, особняк мэра. Утром риппер хосписа переносит тебе его позвоночник. «Он так хотел», — говорит медсестра."
+    - label: Записать мемуары
+      effects: {flag_set:lg3_ghost: true, eddies: 5000, fame: 2}
+      text: "Ты продаёшь его истории медиахолдингу. Книга выходит через месяц, Призрак умирает знаменитым."
+
+- id: lg3_nightingale
+  title: Песня наёмницы
+  category: rare
+  weight: 1
+  conditions:
+    flags_none: [lg3_nightingale]
+  text: "В караоке-баре в Кабуки по вечерам поёт пожилая женщина. Бармен говорит, что когда-то она была лучшей наёмницей города. Сегодня она смотрит на тебя после песни."
+  choices:
+    - label: Угостить её
+      check: {stat: EMP, skill: persuasion, dv: 13}
+      success: {text: "Она рассказывает про свою последнюю работу и кладёт на стойку пистолет с глушителем: «Он поёт. Береги его голос»", effects: {flag_set:lg3_nightingale: true, item_grant:lg_nightingale: true, humanity: 1}}
+      fail: {text: "Она вежливо благодарит и уходит. Ты так и не узнаешь её историю.", effects: {flag_set:lg3_nightingale: true, mood: -2}}
+    - label: Спеть с ней дуэтом
+      effects: {flag_set:lg3_nightingale: true, mood: 8, fame: 1}
+      text: "Бар аплодирует стоя. Она смеётся впервые за годы, по словам бармена."
+
+- id: lg3_grandpa_axe
+  title: Топор в стене
+  category: rare
+  weight: 1
+  conditions:
+    flags_none: [lg3_axe]
+  text: "В старом доме, который идёт под снос, из стены торчит рукоять топора. Рабочие говорят, никто не может его вытащить: топор там с позапрошлого века."
+  choices:
+    - label: Вытащить
+      check: {stat: BODY, dv: 15}
+      success: {text: "Стена сдаётся. Топор выходит с куском кирпича и ржавчиной, под которой сталь блестит, как новая.", effects: {flag_set:lg3_axe: true, item_grant:lg_grandpa_axe: true, street_cred: 1}}
+      fail: {text: "Ты тянешь, пока не хрустит спина. Топор остаётся в стене, рабочие — с хорошей историей.", effects: {flag_set:lg3_axe: true, hp: -4}}
+    - label: Оставить дому
+      effects: {flag_set:lg3_axe: true, mood: 2}
+      text: "Пусть уйдёт вместе с домом. Некоторые вещи принадлежат своему месту."
+
+- id: lg3_thunder
+  title: Гром над Пустошами
+  category: rare
+  weight: 1
+  conditions:
+    min_street_cred: 12
+    flags_none: [lg3_thunder]
+  text: "Кочевой клан хоронит своего снайпера. Его винтовку, Гром, по обычаю отдают тому, кто попадёт в жестяную банку на краю каньона с километра."
+  choices:
+    - label: Стрелять
+      check: {stat: REF, skill: firearms, dv: 17}
+      success: {text: "Банка подпрыгивает над каньоном. Клан молчит, потом кричит разом. Гром теперь твой.", effects: {flag_set:lg3_thunder: true, item_grant:lg_thunder: true, faction_rep:aldecaldos: 4}}
+      fail: {text: "Мимо на полметра. Клан хлопает тебя по плечу: банку не сбил никто уже десять лет.", effects: {flag_set:lg3_thunder: true, faction_rep:aldecaldos: 1}}
+    - label: Отказаться
+      effects: {flag_set:lg3_thunder: true}
+      text: "Ты отдаёшь дань уважения и уезжаешь. Винтовку забирает молодой кочевник с дрожащими руками."
+
+- id: lg3_mother_coat
+  title: Пальто основательницы
+  category: rare
+  weight: 1
+  conditions:
+    flags_none: [lg3_mother]
+  text: "Приют в Хейвуде закрывается: нет денег. Воспитательница показывает пальто основательницы, Матери Агаты. Его хотят продать, чтобы протянуть ещё месяц."
+  choices:
+    - label: Купить пальто за 3000
+      effects: {flag_set:lg3_mother: true, eddies: -3000, item_grant:lg_mother_coat: true, humanity: 2}
+      text: "Приют живёт ещё месяц, а в карманах пальто ты находишь бинты и конфету. Каждое утро — новую."
+    - label: Пожертвовать без пальто
+      effects: {flag_set:lg3_mother: true, eddies: -2000, humanity: 3, status: 1}
+      text: "Пальто остаётся висеть в коридоре приюта. Дети говорят, что оно греет даже на вешалке."

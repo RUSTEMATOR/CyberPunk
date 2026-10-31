@@ -1,0 +1,351 @@
+# Seasonal and weather events (owner request: weather and seasons change the events). Conditions `seasons` and `weather`
+# (balance.yaml `weather`). Holidays are once per life; small weather scenes may come back (no flag), with low weight.
+
+# ======================================================================== winter
+
+- id: wx_new_year
+  title: Новый год на крыше
+  category: relationships
+  weight: 4
+  conditions:
+    seasons: [winter]
+    flags_none: [wx_new_year]
+  text: "Последняя ночь года. С крыши мегабашни видно, как корпорации запускают фейерверки, а банды — трассеры. Соседи несут ящик дешёвого шампанского и колонку."
+  choices:
+    - label: Встретить с соседями
+      effects: {flag_set:wx_new_year: true, mood: 8, eddies: -50}
+      text: "Обратный отсчёт хором, объятия с людьми, чьих имён ты не знаешь. На минуту город кажется домом."
+    - label: Корпоративная вечеринка в Сити-центре
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Ты проходишь мимо охраны с уверенным видом. Шампанское настоящее, связи тоже: тебе дают визитку.", effects: {flag_set:wx_new_year: true, status: 2, mood: 5}}
+      fail: {text: "Охрана выводит тебя за пять минут до полуночи. Новый год ты встречаешь у мусорного бака. Тоже традиция.", effects: {flag_set:wx_new_year: true, mood: -3}}
+    - label: Поработать в праздник
+      effects: {flag_set:wx_new_year: true, eddies: 600, mood: -4}
+      text: "Двойная ставка за ночную смену. Под окнами взрываются фейерверки, а ты считаешь деньги."
+
+- id: wx_heating_failure
+  title: Отопление отключили
+  category: money
+  weight: 3
+  conditions:
+    seasons: [winter]
+  text: "В мегабашне отключили отопление: управляющая компания «оптимизирует расходы». В коридорах жгут мусор в бочках, дети спят в куртках."
+  choices:
+    - label: Починить котёл самим
+      check: {stat: TECH, skill: tech, dv: 14}
+      success: {text: "Ты находишь перекрытый корпоратами вентиль и открываешь его. К утру тепло вернулось. Соседи несут пироги.", effects: {humanity: 1, street_cred: 1, mood: 4}}
+      fail: {text: "Котёл гудит, плюётся паром и затихает. Неделю живёшь в куртке.", effects: {hp: -3, mood: -3}}
+    - label: Купить обогреватель
+      effects: {eddies: -250, mood: 2}
+      text: "Обогреватель гудит и пахнет горелой пылью, но в комнате тепло."
+    - label: Перетерпеть
+      effects: {hp: -4, mood: -4}
+      text: "Ночи длинные, одеяло тонкое. Утром трудно разогнуть пальцы."
+
+- id: wx_cold_homeless
+  title: Ночь у бочки
+  category: relationships
+  weight: 3
+  conditions:
+    weather: [cold_snap, snow]
+  text: "Бездомные греются у горящей бочки под эстакадой. Старик просит одеяло для девочки, которая кашляет."
+  choices:
+    - label: Отдать куртку
+      effects: {humanity: 2, mood: 3, hp: -2}
+      text: "Холодно, зато девочка засыпает. Старик кивает тебе с уважением."
+    - label: Купить одеяла на всех
+      effects: {eddies: -300, humanity: 2, street_cred: 1}
+      text: "Через час под эстакадой десять одеял и термос с кипятком. Тебя здесь запомнят."
+    - label: Пройти мимо
+      effects: {humanity: -1}
+      text: "У тебя своих проблем хватает. Кашель долго слышен за спиной."
+
+- id: wx_snow_day
+  title: Снег в Найт-Сити
+  category: rare
+  weight: 4
+  conditions:
+    weather: [snow]
+  text: "С неба падает настоящий снег. Город замирает: такси стоят, банды забыли про войну, корпораты фотографируют сугроб на капоте."
+  choices:
+    - label: Играть в снежки
+      effects: {mood: 10}
+      text: "Ты швыряешь снежок в незнакомца, незнакомец — в тебя, через минуту воюет весь квартал. Никто не стреляет."
+    - label: Продавать горячее
+      effects: {eddies: 500, mood: 2}
+      text: "Термос, стаканчики, лапша. За час всё раскупили."
+    - label: Ограбить застрявшие машины
+      check: {stat: REF, skill: stealth, dv: 13}
+      success: {text: "Пока водители лепят снеговиков, ты проверяешь багажники.", effects: {eddies: 900, humanity: -1}}
+      fail: {text: "Водитель застаёт тебя у багажника и бросает снежок с камнем внутри.", effects: {hp: -4, heat: 1}}
+
+# ======================================================================== spring
+
+- id: wx_hanami
+  title: Ханами в Японтауне
+  category: relationships
+  weight: 4
+  conditions:
+    seasons: [spring]
+    flags_none: [wx_hanami]
+  text: "В Японтауне цветут искусственные сакуры: розовые голограммы над живыми ветками. Тигриные Когти объявили перемирие на время праздника."
+  choices:
+    - label: Пикник под сакурой
+      effects: {flag_set:wx_hanami: true, mood: 7, humanity: 1}
+      text: "Онигири, тёплое саке и лепестки в стакане. Даже Когти рядом выглядят почти мирно."
+    - label: Торговать фонариками
+      effects: {flag_set:wx_hanami: true, eddies: 700}
+      text: "Фонарики с твоим логотипом расходятся быстрее, чем ты успеваешь их зажигать."
+    - label: Сфотографироваться для ленты
+      check: {stat: COOL, skill: persuasion, dv: 12}
+      success: {text: "Твоё фото под сакурой набирает сотни тысяч просмотров.", effects: {flag_set:wx_hanami: true, fame: 2}}
+      fail: {text: "На фото в кадр влезает пьяный корпорат. Лента смеётся не над ним.", effects: {flag_set:wx_hanami: true, mood: -2}}
+
+- id: wx_flooded_underpass
+  title: Затопленный переход
+  category: street
+  weight: 3
+  conditions:
+    seasons: [spring, autumn, winter]
+    weather: [rain, acid_rain]
+  text: "Подземный переход залило по пояс. Посреди воды застрял автобус, в окнах — лица пассажиров. Вода прибывает."
+  choices:
+    - label: Вытаскивать людей
+      check: {stat: BODY, dv: 13}
+      success: {text: "Ты выводишь людей по одному. Последней выходит бабушка с котом. Новостники снимают.", effects: {humanity: 2, fame: 1, hp: -2}}
+      fail: {text: "Течение сбивает с ног. Тебя вытаскивают спасатели.", effects: {hp: -8, mood: -2}}
+    - label: Взломать насосы
+      check: {stat: INT, skill: netrunning, dv: 14}
+      success: {text: "Ты перезапускаешь насосную станцию в обход корпоративной блокировки. Вода уходит за десять минут.", effects: {street_cred: 2, skill_xp:netrunning: 1}}
+      fail: {text: "Насосы запускаются наоборот. Вода поднимается ещё на полметра. Ты уходишь, пока никто не понял.", effects: {heat: 1, mood: -4}}
+    - label: Обойти
+      effects: {mood: -1}
+      text: "Ты идёшь в обход. В новостях вечером: «Все пассажиры спасены». Без тебя."
+
+- id: wx_spring_cleanup
+  title: Субботник на районе
+  category: street
+  weight: 2
+  conditions:
+    seasons: [spring]
+  text: "Местные решили отмыть район после зимы. Банда района смотрит из окна: то ли поможет, то ли обидится."
+  choices:
+    - label: Выйти с метлой
+      effects: {humanity: 1, mood: 3, street_cred: 1}
+      text: "К вечеру двор чистый, в баке — три ржавых пистолета и чей-то имплант. Банда приносит пиццу."
+    - label: Продать мешки и перчатки
+      effects: {eddies: 300}
+      text: "Мешки по эдди, перчатки по два. Бизнес есть бизнес."
+
+# ======================================================================== summer
+
+- id: wx_heat_blackout
+  title: Блэкаут в жару
+  category: street
+  weight: 4
+  conditions:
+    weather: [heatwave]
+  text: "Сеть не выдержала кондиционеров: полрайона без света. Лифты стоят, в темноте звенят витрины. Кто-то уже грабит магазины."
+  choices:
+    - label: Присоединиться к мародёрам
+      check: {stat: REF, skill: stealth, dv: 13}
+      success: {text: "Ты выносишь из магазина электроники всё, что влезает в рюкзак.", effects: {eddies: 1200, heat: 1, humanity: -1}}
+      fail: {text: "Свет включается в самый неподходящий момент. Камеры запомнили лицо.", effects: {heat: 2}}
+    - label: Охранять лавку соседа
+      check: {stat: BODY, skill: melee, dv: 13}
+      success: {text: "Мародёры обходят лавку стороной. Сосед кормит тебя месяц бесплатно.", effects: {street_cred: 2, humanity: 1}}
+      fail: {text: "Мародёров слишком много. Лавку отстоять не выходит, но сосед благодарен за попытку.", effects: {hp: -6}}
+    - label: Сидеть дома с водой
+      effects: {mood: -3}
+      text: "Ночь в темноте, жара, вой сирен. Утром свет дают. В районе пахнет гарью."
+
+- id: wx_pacifica_beach
+  title: Пляж Пасифики
+  category: relationships
+  weight: 3
+  conditions:
+    seasons: [summer]
+    weather: [clear, heatwave]
+  text: "Заброшенный курорт Пасифики. Вуду-бои пускают на пляж за пару эдди, песок горячий, вода подозрительного цвета, но все купаются."
+  choices:
+    - label: Отдохнуть на пляже
+      effects: {mood: 8, eddies: -20, hp: 3}
+      text: "Солнце, волны, кто-то включает старый рок. На пару часов забываешь, где ты."
+    - label: Продавать лёд
+      effects: {eddies: 450}
+      text: "Лёд тает быстрее, чем ты его продаёшь, но деньги остаются."
+    - label: Нырнуть к затонувшей яхте
+      check: {stat: BODY, dv: 14}
+      success: {text: "На дне яхты сейф. В сейфе — старые кредчипы, которые ещё работают.", effects: {eddies: 1500}}
+      fail: {text: "Вода цвета чая плохо влияет на глаза и кожу.", effects: {hp: -6, mood: -2}}
+
+- id: wx_ac_scam
+  title: Кондиционеры по предзаказу
+  category: money
+  weight: 3
+  conditions:
+    weather: [heatwave]
+  text: "Знакомый предлагает схему: собирать предзаказы на кондиционеры, которых нет, пока жара не кончится. «К тому времени всем будет всё равно»."
+  choices:
+    - label: Войти в схему
+      effects: {eddies: 1500, humanity: -2, later: [{weeks: 4, chance: 0.4, effects: {heat: 2, street_cred: -2}, text: "Покупатели нашли тебя. Злые и вспотевшие.", fail_text: "Жара кончилась, про кондиционеры забыли. Схема сработала."}]}
+      text: "Предзаказы идут потоком. Деньги — тоже."
+    - label: Сдать знакомого
+      effects: {eddies: 300, street_cred: -1}
+      text: "NCPD забирает знакомого и платит тебе за наводку. Знакомых у тебя стало меньше."
+    - label: Отказаться
+      effects: {mood: 1}
+      text: "Жара жарой, а совесть отдельно."
+
+- id: wx_dust_convoy
+  title: Караван в буре
+  category: street
+  weight: 4
+  conditions:
+    weather: [dust_storm]
+  text: "Пыльная буря накрыла трассу. Караван кочевников потерял две машины, по рации слышны голоса. Кочевники просят помочь найти своих."
+  choices:
+    - label: Ехать на поиски
+      check: {stat: REF, skill: driving, dv: 15}
+      success: {text: "Ты находишь машины по вспышкам фар. Кочевники обещают, что их семья теперь твоя.", effects: {faction_rep:aldecaldos: 3, street_cred: 2, hp: -2}}
+      fail: {text: "Буря путает дороги. Ты возвращаешься ни с чем и с песком в каждом импланте.", effects: {hp: -6, glitches: 1}}
+    - label: Подсказать по рации
+      check: {stat: INT, skill: tech, dv: 13}
+      success: {text: "Ты пеленгуешь сигнал и ведёшь их голосом. Через час все дома.", effects: {faction_rep:aldecaldos: 2, mood: 3}}
+      fail: {text: "Рация шипит громче голосов. Кочевники находят своих сами, к утру.", effects: {mood: -2}}
+
+# ======================================================================== autumn
+
+- id: wx_day_of_dead
+  title: День мёртвых в Хейвуде
+  category: relationships
+  weight: 4
+  conditions:
+    seasons: [autumn]
+    flags_none: [wx_dead_day]
+  text: "Валентино устраивают шествие Дня мёртвых: черепа на лицах, свечи, оркестр. Можно поставить на алтарь фото тех, кого потеряли."
+  choices:
+    - label: Поставить свечу за своих
+      effects: {flag_set:wx_dead_day: true, humanity: 2, mood: 4}
+      text: "Ты ставишь свечу и называешь имена вслух. Девушка в гриме черепа берёт тебя за руку."
+    - label: Пройти с шествием
+      effects: {flag_set:wx_dead_day: true, faction_rep:valentinos: 2, mood: 5}
+      text: "Барабаны, краска на лице, песни, которых ты не знаешь, но подпеваешь."
+    - label: Почистить карманы в толпе
+      check: {stat: REF, skill: stealth, dv: 14}
+      success: {text: "В толпе все смотрят на черепа, а не на свои карманы.", effects: {flag_set:wx_dead_day: true, eddies: 800, humanity: -1}}
+      fail: {text: "Рука в чужом кармане — рука Валентино. Праздник для тебя заканчивается в переулке.", effects: {flag_set:wx_dead_day: true, hp: -8, faction_rep:valentinos: -3}}
+
+- id: wx_costume_psycho
+  title: Костюм киберпсиха
+  category: street
+  weight: 3
+  conditions:
+    seasons: [autumn]
+  text: "Канун Дня всех святых. По улице идёт человек в костюме киберпсиха: проволока, пятна краски, лезвия из фольги. Только лезвия почему-то в крови."
+  choices:
+    - label: Сделать комплимент костюму
+      check: {stat: COOL, dv: 13}
+      success: {text: "Человек смеётся и снимает маску: актёр после съёмок. Кровь — сироп. Он дарит тебе пригласительный на вечеринку.", effects: {mood: 5}}
+      fail: {text: "Человек смотрит на тебя слишком долго. Потом уходит. Наутро в новостях — нападение в соседнем квартале.", effects: {mood: -5}}
+    - label: Вызвать МаксТак
+      effects: {heat: -1, street_cred: -1}
+      text: "МаксТак приезжает за шесть минут и укладывает человека в асфальт. Оказывается, это был киберпсих. Или актёр. Протокол засекречен."
+
+- id: wx_fog_heist
+  title: Туман для дела
+  category: street
+  weight: 3
+  conditions:
+    weather: [fog]
+  text: "Туман с залива такой, что камеры видят только молоко. Знакомый шепчет: «Склад в порту, сейчас или никогда»."
+  choices:
+    - label: Идти на склад
+      check: {stat: REF, skill: stealth, dv: 12}
+      success: {text: "В тумане ты как призрак. Ящик с имплантами уходит с причала без единого свидетеля.", effects: {eddies: 1400}}
+      fail: {text: "Туман хорош для всех, включая охрану склада. Вы сталкиваетесь нос к носу.", effects: {hp: -6, heat: 1}}
+    - label: Остаться дома
+      effects: {mood: 1}
+      text: "Туман стоит три дня. Где-то в порту что-то пропало. Не у тебя."
+
+# ======================================================================== any season, by weather
+
+- id: wx_acid_awning
+  title: Под одним навесом
+  category: relationships
+  weight: 3
+  conditions:
+    weather: [acid_rain]
+  text: "Кислотный дождь загоняет тебя под навес лапшичной. Рядом корпорат в мокром костюме и бездомный с собакой. Ждать минимум час."
+  choices:
+    - label: Разговорить корпората
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "К концу дождя у тебя его визитка и наводка на работу.", effects: {status: 1, eddies: 300}}
+      fail: {text: "Корпорат вызывает такси прямо под навес и уезжает, обдав вас водой.", effects: {mood: -2}}
+    - label: Поделиться лапшой с бездомным
+      effects: {eddies: -15, humanity: 1, mood: 3}
+      text: "Собака тоже получает свою долю. Дождь кажется короче."
+
+- id: wx_smog_masks
+  title: Респираторы
+  category: money
+  weight: 3
+  conditions:
+    weather: [smog]
+  text: "Смог такой, что датчики в башнях воют. Аптеки продают респираторы втрое дороже, у метро торгуют самодельными."
+  choices:
+    - label: Купить нормальный респиратор
+      effects: {eddies: -200, hp: 3}
+      text: "Дышится легче. Ненамного, но легче."
+    - label: Шить и продавать самодельные
+      check: {stat: TECH, skill: tech, dv: 12}
+      success: {text: "Фильтры из старых кондиционеров, ремни из сумок. Расходятся за день.", effects: {eddies: 700}}
+      fail: {text: "Самодельные фильтры пропускают всё. Покупатели возвращаются с кашлем и вопросами.", effects: {eddies: 100, street_cred: -1}}
+
+- id: wx_lightning_relay
+  title: Молния в ретранслятор
+  category: implants
+  weight: 3
+  conditions:
+    weather: [storm]
+  text: "Молния бьёт в ретранслятор на соседней крыше. На секунду импланты всех в квартале видят одно и то же: чужое воспоминание о море."
+  choices:
+    - label: Поймать сигнал
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "Ты успеваешь записать обрывок. Это кусок корпоративной базы. Продаётся хорошо.", effects: {eddies: 1200, glitches: 1}}
+      fail: {text: "Сигнал ловит тебя. Неделю снится чужое море. Глаза дёргаются.", effects: {glitches: 2, mood: -3}}
+    - label: Отключить импланты до утра
+      effects: {mood: -1, humanity: 1}
+      text: "Ночь без хрома. Тихо, страшно и почему-то легко."
+
+- id: wx_clear_stars
+  title: Звёзды над городом
+  category: rare
+  weight: 2
+  conditions:
+    weather: [clear]
+  text: "Редкая ночь: ветер сдул смог, и над Найт-Сити видно звёзды. Настоящие. На крыше собираются люди, кто-то плачет."
+  choices:
+    - label: Смотреть до утра
+      effects: {humanity: 2, mood: 6}
+      text: "Ты лежишь на крыше и считаешь звёзды. Сбиваешься на сороковой и начинаешь заново."
+    - label: Продавать места на крыше
+      effects: {eddies: 400, humanity: -1}
+      text: "По десять эдди за место. Звёзды бесплатные, крыша — нет."
+
+- id: wx_ghost_ship
+  title: Корабль в тумане
+  category: rare
+  weight: 2
+  conditions:
+    weather: [fog]
+    flags_none: [wx_ghost_ship]
+  text: "Из тумана у причала выходит старый грузовой корабль без огней. На борту никого. Портовые говорят, что он приходит раз в несколько лет и всегда уходит пустым."
+  choices:
+    - label: Подняться на борт
+      check: {stat: COOL, dv: 15}
+      success: {text: "В капитанской каюте — бортовой журнал и ящик старых эдди. Когда ты сходишь на берег, корабля уже нет.", effects: {flag_set:wx_ghost_ship: true, eddies: 2000, mood: -2}}
+      fail: {text: "Трап скрипит, и ты слышишь шаги там, где никого нет. Ты бежишь, не оглядываясь.", effects: {flag_set:wx_ghost_ship: true, mood: -6, glitches: 1}}
+    - label: Сообщить в порт
+      effects: {flag_set:wx_ghost_ship: true, eddies: 200}
+      text: "Портовые кивают, будто знали. Платят за беспокойство и просят забыть."

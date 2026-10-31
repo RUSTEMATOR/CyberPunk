@@ -1,0 +1,171 @@
+# The cities of Africa (owner request 25.10, docs/PLAN_WORLD.md). See world_asia.yaml for the format.
+
+- country: nigeria
+  police: Полиция Лагоса
+  story_title: Нефть и Нолливуд
+  story: [ng_story_1, ng_story_2, ng_story_3, ng_story_4, ng_story_5, ng_story_6, ng_story_7, ng_story_8]
+  districts:
+    - key: ng_makoko
+      name: Макоко
+      description: "Город на сваях в лагуне: лодки вместо улиц, дома на воде, рыбаки и контрабандисты. Самое живое место Лагоса."
+      danger: 3
+      fixer: ng_mama_tee
+      gangs: [ng_area_boys, ng_vikings]
+      corps: [petrochem]
+      places: ["плавучая школа", "рынок на лодках", "бар на сваях", "лодочная мастерская"]
+    - key: ng_victoria
+      name: Остров Виктория
+      description: "Небоскрёбы нефтяных денег, клубы афробита и студии Нолливуда. Миллиардеры и их охрана."
+      danger: 1
+      fixer: ng_chidi
+      gangs: [ng_vikings, ng_area_boys]
+      corps: [petrochem, biotechnica]
+      places: ["студия Нолливуда", "клуб «Шрайн»", "нефтяная башня", "пляж Тарква"]
+  fixers:
+    - {key: ng_mama_tee, name: Мама Ти, districts: [ng_makoko], description: "Хозяйка рынка на лодках. Её лодки возят рыбу, людей и топливо, украденное из трубопровода.", voice: "громко, с пиджином, смеётся раскатисто"}
+    - {key: ng_chidi, name: Чиди Оконкво, districts: [ng_victoria], description: "Продюсер Нолливуда и посредник нефтяных принцев. Снимает фильмы про мафию и знает мафию лично.", voice: "обаятельно, как ведущий ток-шоу, «брат мой»"}
+  gangs:
+    - {key: ng_area_boys, name: Эриа-бойз, name_gen: Эриа-бойз, name_dat: Эриа-бойз, name_acc: Эриа-бойз, name_ins: Эриа-бойз, name_pre: Эриа-бойз, description: "Уличные парни Лагоса, которые собирают плату со всего, что движется.", style: "мачете, мотоциклы окада, громкие голоса и быстрые деньги", fights_as: valentinos, disposition: {bribe_dv: 12, talk_dv: 13, bribe_cost_mult: 1.0, flee_mod: -1, surrender: {robbed: 4}}}
+    - {key: ng_vikings, name: Братство викингов, name_gen: Братства викингов, name_dat: Братству викингов, name_acc: Братство викингов, name_ins: Братством викингов, name_pre: Братстве викингов, description: "Студенческое братство, выросшее в культ. Красные береты, клятвы, нефтяная контрабанда.", style: "красные береты, ритуалы, автоматы и братская верность", fights_as: sixth_street, disposition: {bribe_dv: 15, talk_dv: 16, bribe_cost_mult: 2.0, flee_mod: 1, surrender: {beaten: 3, robbed: 2}}}
+  ripperdocs:
+    - {key: ng_doc_ade, name: Доктор Аде, district: ng_makoko, description: "Ставит хром на лодке, пока лагуна качает операционный стол. Руки твёрдые, цена мягкая.", price_mod: 0.6, complication_chance: 0.1, infection_chance: 0.06}
+  housing:
+    - {key: ng_h_stilt, name: Дом на сваях, district: ng_makoko, tier: 1, rent: 70, food: 50, description: "Доски над водой, лодка у порога, рыба на завтрак."}
+    - {key: ng_h_flat, name: Квартира в Яба, district: ng_makoko, tier: 2, rent: 260, food: 90, description: "Генератор гудит по ночам, соседи-айтишники и бесконечная музыка."}
+    - {key: ng_h_island, name: Апартаменты на острове, district: ng_victoria, tier: 3, rent: 1100, food: 160, description: "Вид на океан, охрана с автоматами и бассейн, который работает всегда."}
+
+- country: egypt
+  police: Полиция Каира
+  story_title: Проклятие фараона
+  story: [eg_story_1, eg_story_2, eg_story_3, eg_story_4, eg_story_5, eg_story_6, eg_story_7, eg_story_8]
+  districts:
+    - key: eg_city_dead
+      name: Город мёртвых
+      description: "Огромное кладбище, где в мавзолеях живут сотни тысяч людей. Мастерские, кафе и школы среди гробниц."
+      danger: 3
+      fixer: eg_hassan
+      gangs: [eg_tomb_raiders, eg_falcons_of_ra]
+      corps: [biotechnica]
+      places: ["мавзолей-мастерская", "кофейня среди гробниц", "рынок антиквариата", "старая мечеть"]
+    - key: eg_zamalek
+      name: Замалек
+      description: "Остров на Ниле: посольства, галереи, яхт-клубы и виллы тех, кто покупает древности, которых не должно быть на рынке."
+      danger: 1
+      fixer: eg_nour
+      gangs: [eg_falcons_of_ra, eg_tomb_raiders]
+      corps: [biotechnica, petrochem]
+      places: ["галерея древностей", "клуб на Ниле", "посольский квартал", "фелука у пристани"]
+  fixers:
+    - {key: eg_hassan, name: Хасан Каменщик, districts: [eg_city_dead], description: "Резчик надгробий, который знает каждую гробницу и каждый тайный ход под кладбищем.", voice: "неспешно, с притчами и запахом кардамона"}
+    - {key: eg_nour, name: Нур Эль-Шериф, districts: [eg_zamalek], description: "Хозяйка галереи, которая продаёт фараонов коллекционерам с честными сертификатами из подвала.", voice: "изысканно, с французскими словами"}
+  gangs:
+    - {key: eg_tomb_raiders, name: Расхитители, name_gen: Расхитителей, name_dat: Расхитителям, name_acc: Расхитителей, name_ins: Расхитителями, name_pre: Расхитителях, description: "Семьи, которые поколениями копают под пирамидами и продают находки за границу.", style: "фонари, кирки, джеллабы и ружья для охраны раскопов", fights_as: scavengers, disposition: {bribe_dv: 13, talk_dv: 13, bribe_cost_mult: 1.5, flee_mod: -1, surrender: {robbed: 3, released: 1}}}
+    - {key: eg_falcons_of_ra, name: Соколы Ра, name_gen: Соколов Ра, name_dat: Соколам Ра, name_acc: Соколов Ра, name_ins: Соколами Ра, name_pre: Соколах Ра, description: "Секта, которая верит, что древние боги живут в Сети, и охраняет гробницы от чужих.", style: "золотые маски, ритуальные ножи, импланты в форме глаза Гора", fights_as: voodoo_boys, disposition: {bribe_dv: 17, talk_dv: 15, bribe_cost_mult: 2.0, flee_mod: 0, surrender: {beaten: 3, released: 1}}}
+  ripperdocs:
+    - {key: eg_doc_amira, name: Доктор Амира, district: eg_city_dead, description: "Клиника в мавзолее. Хирург с дипломом Сорбонны, работает при свечах и генераторе.", price_mod: 0.7, complication_chance: 0.05}
+  housing:
+    - {key: eg_h_tomb, name: Комната в мавзолее, district: eg_city_dead, tier: 1, rent: 60, food: 50, description: "Тихие соседи под полом, живые соседи за стеной. Прохладно даже летом."}
+    - {key: eg_h_flat, name: Квартира в старом Каире, district: eg_city_dead, tier: 2, rent: 220, food: 80, description: "Балкон с видом на минареты и вечный шум клаксонов."}
+    - {key: eg_h_nile, name: Вилла на Ниле, district: eg_zamalek, tier: 3, rent: 950, food: 140, description: "Терраса над рекой, фелуки на закате, слуги, которые всё слышат."}
+
+- country: kenya
+  police: Полиция Найроби
+  story_title: Кремниевая саванна
+  story: [ke_story_1, ke_story_2, ke_story_3, ke_story_4, ke_story_5, ke_story_6, ke_story_7, ke_story_8]
+  districts:
+    - key: ke_kibera
+      name: Кибера
+      description: "Огромные трущобы Найроби, где мобильные деньги изобрели раньше, чем в Европе. Хакеры, ремесленники и банды матату."
+      danger: 3
+      fixer: ke_otieno
+      gangs: [ke_mungiki, ke_matatu]
+      corps: [zetatech]
+      places: ["ремонт телефонов на рынке", "станция матату", "радиостанция Киберы", "железная дорога"]
+    - key: ke_westlands
+      name: Уэстлендс
+      description: "Технопарки, офисы стартапов, кафе с кенийским кофе и рестораны для экспатов. Кремниевая саванна."
+      danger: 1
+      fixer: ke_wanjiru
+      gangs: [ke_matatu, ke_mungiki]
+      corps: [zetatech, biotechnica]
+      places: ["технопарк «Саванна»", "кофейня на крыше", "торговый центр", "национальный парк на окраине"]
+  fixers:
+    - {key: ke_otieno, name: Отиено, districts: [ke_kibera], description: "Хакер, который держит мобильные кошельки половины Киберы. Работает из контейнера с генератором.", voice: "быстро, на суахили и шэнге, смеётся над корпорациями"}
+    - {key: ke_wanjiru, name: Ванджиру Камау, districts: [ke_westlands], description: "Венчурный инвестор, который вкладывает в стартапы и выбивает долги из неудачников.", voice: "уверенно, по-деловому, цитирует бизнес-книги"}
+  gangs:
+    - {key: ke_mungiki, name: Мунгики, name_gen: Мунгики, name_dat: Мунгики, name_acc: Мунгики, name_ins: Мунгики, name_pre: Мунгики, description: "Секта-банда с дредами, которая держит матату, воду и электричество в трущобах.", style: "дреды, мачете, клятвы, сборы с каждой лавки", fights_as: valentinos, disposition: {bribe_dv: 14, talk_dv: 15, bribe_cost_mult: 1.5, flee_mod: 0, surrender: {robbed: 3, beaten: 2}}}
+    - {key: ke_matatu, name: Короли матату, name_gen: Королей матату, name_dat: Королям матату, name_acc: Королей матату, name_ins: Королями матату, name_pre: Королях матату, description: "Владельцы разрисованных маршруток с музыкой. Гоняют по городу и делят маршруты кулаками.", style: "неоновые маршрутки, басы, монтировки и скорость", fights_as: maelstrom, disposition: {bribe_dv: 12, talk_dv: 13, bribe_cost_mult: 1.0, flee_mod: -2, surrender: {robbed: 3, released: 1}}}
+  ripperdocs:
+    - {key: ke_doc_achieng, name: Доктор Ачиенг, district: ke_kibera, description: "Ставит хром в клинике при церкви. Деньги принимает мобильным переводом.", price_mod: 0.6, complication_chance: 0.07}
+  housing:
+    - {key: ke_h_shack, name: Комната в Кибере, district: ke_kibera, tier: 1, rent: 50, food: 50, description: "Жестяные стены, глиняный пол и соседи, которые знают о тебе всё."}
+    - {key: ke_h_flat, name: Квартира в Южном Би, district: ke_kibera, tier: 2, rent: 220, food: 80, description: "Бетонный дом с балконом, вода по расписанию."}
+    - {key: ke_h_villa, name: Дом в Уэстлендс, district: ke_westlands, tier: 3, rent: 900, food: 140, description: "Сад с джакарандой, охрана и вид на технопарк."}
+
+- country: south_africa
+  police: Полиция ЮАР
+  story_title: Столовая гора
+  story: [za_story_1, za_story_2, za_story_3, za_story_4, za_story_5, za_story_6, za_story_7, za_story_8]
+  districts:
+    - key: za_cape_flats
+      name: Кейп-Флэтс
+      description: "Равнина бедных кварталов под Столовой горой. Ветер, песок и банды, которые воюют за каждую улицу."
+      danger: 4
+      fixer: za_auntie
+      gangs: [za_numbers, za_americans]
+      corps: [biotechnica]
+      places: ["футбольное поле на песке", "шебин «Тоу»", "церковь на углу", "стрельбище банд"]
+    - key: za_waterfront
+      name: Уотерфронт
+      description: "Порт, яхты, рестораны, туристы и вид на гору. За стеклом витрин тихо работают алмазные деньги."
+      danger: 1
+      fixer: za_pieter
+      gangs: [za_americans, za_numbers]
+      corps: [biotechnica, militech]
+      places: ["пристань Виктории и Альфреда", "алмазная биржа", "колесо обозрения", "паром на Роббен-Айленд"]
+  fixers:
+    - {key: za_auntie, name: Тётя Рэйчел, districts: [za_cape_flats], description: "Держит шебин и мирит банды на похоронах. Её уважают все, кто ещё жив.", voice: "тепло, с африкаанс и молитвами"}
+    - {key: za_pieter, name: Питер ван Никерк, districts: [za_waterfront], description: "Торговец алмазами, который знает, откуда каждый камень и сколько за него погибло.", voice: "сухо, с акцентом, по-деловому"}
+  gangs:
+    - {key: za_numbers, name: Банда Чисел, name_gen: Банды Чисел, name_dat: Банде Чисел, name_acc: Банду Чисел, name_ins: Бандой Чисел, name_pre: Банде Чисел, description: "Старый синдикат с номерами вместо имён. Держит кварталы флэтс по своим законам и строгой иерархии.", style: "номера в татуировках, ножи, ранги и строгий кодекс", fights_as: tyger_claws, disposition: {bribe_dv: 15, talk_dv: 16, bribe_cost_mult: 1.5, flee_mod: 1, surrender: {beaten: 3, robbed: 2}}}
+    - {key: za_americans, name: Американцы, name_gen: Американцев, name_dat: Американцам, name_acc: Американцев, name_ins: Американцами, name_pre: Американцах, description: "Самая большая уличная банда Кейптауна со звёздно-полосатыми флагами.", style: "флаги, пикапы, автоматы и громкие разборки", fights_as: valentinos, disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.0, flee_mod: 0, surrender: {robbed: 3, beaten: 2}}}
+  ripperdocs:
+    - {key: za_doc_nomsa, name: Доктор Номса, district: za_cape_flats, description: "Травматолог, которая латает бандитов всех цветов и ставит хром тем, кто хочет выжить.", price_mod: 0.75, complication_chance: 0.05}
+  housing:
+    - {key: za_h_shack, name: Комната во флэтс, district: za_cape_flats, tier: 1, rent: 80, food: 60, description: "Бетонная коробка, решётки на окнах, ветер с моря."}
+    - {key: za_h_house, name: Дом в Бо-Каапе, district: za_waterfront, tier: 2, rent: 380, food: 110, description: "Разноцветные домики на холме, мечеть рядом и вид на гавань."}
+    - {key: za_h_villa, name: Вилла у океана, district: za_waterfront, tier: 3, rent: 1100, food: 160, description: "Пингвины на пляже под окном, электрический забор и вид на гору."}
+
+- country: morocco
+  police: Полиция Марокко
+  story_title: Медина
+  story: [ma_story_1, ma_story_2, ma_story_3, ma_story_4, ma_story_5, ma_story_6, ma_story_7, ma_story_8]
+  districts:
+    - key: ma_medina
+      name: Старая медина
+      description: "Лабиринт узких улиц, рынки, мастерские, хаммамы. Без проводника здесь теряются даже местные."
+      danger: 2
+      fixer: ma_youssef
+      gangs: [ma_hashish, ma_harraga]
+      corps: [kang_tao]
+      places: ["рынок специй", "кожевенные чаны", "хаммам", "кафе с мятным чаем"]
+    - key: ma_port
+      name: Порт Касабланки
+      description: "Огромный порт, мечеть на воде и корабли в Европу. Через этот порт уходят надежды и приходят контрабандные грузы."
+      danger: 3
+      fixer: ma_leila
+      gangs: [ma_harraga, ma_hashish]
+      corps: [kang_tao, petrochem]
+      places: ["мечеть Хасана II", "доки", "рыбный рынок", "бар «Рикс»"]
+  fixers:
+    - {key: ma_youssef, name: Юсеф Проводник, districts: [ma_medina], description: "Проводник по медине, который водит туристов к коврам, а нужных людей — к нужным дверям.", voice: "заговорщицки, на смеси арабского и французского, «мой друг»"}
+    - {key: ma_leila, name: Лейла Беннани, districts: [ma_port], description: "Таможенный брокер, которая знает, какой контейнер не откроют.", voice: "холодно, кратко, по-французски"}
+  gangs:
+    - {key: ma_hashish, name: Люди Рифа, name_gen: Людей Рифа, name_dat: Людям Рифа, name_acc: Людей Рифа, name_ins: Людьми Рифа, name_pre: Людях Рифа, description: "Горные кланы, которые возят свой товар через порт в Европу.", style: "горцы в джеллабах, старые ружья, тайные тропы", fights_as: wraiths, disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.5, flee_mod: -1, surrender: {robbed: 3, released: 1}}}
+    - {key: ma_harraga, name: Харрага, name_gen: Харрага, name_dat: Харрага, name_acc: Харрага, name_ins: Харрага, name_pre: Харрага, description: "Перевозчики людей через пролив. Сжигают документы и жизни.", style: "надувные лодки, ножи, деньги вперёд", fights_as: scavengers, disposition: {bribe_dv: 13, talk_dv: 15, bribe_cost_mult: 1.5, flee_mod: -1, surrender: {robbed: 4}}}
+  ripperdocs:
+    - {key: ma_doc_rachid, name: Доктор Рашид, district: ma_medina, description: "Клиника за ковровой лавкой. Ставит европейский хром, контрабандой пришедший через порт.", price_mod: 0.75, complication_chance: 0.06}
+  housing:
+    - {key: ma_h_room, name: Комната в медине, district: ma_medina, tier: 1, rent: 80, food: 60, description: "Окно во внутренний дворик, мятный чай от хозяйки."}
+    - {key: ma_h_riad, name: Риад с фонтаном, district: ma_medina, tier: 2, rent: 350, food: 100, description: "Мозаика, апельсиновое дерево во дворе, тишина за толстыми стенами."}
+    - {key: ma_h_corniche, name: Апартаменты на набережной, district: ma_port, tier: 3, rent: 900, food: 140, description: "Атлантика под окном, мечеть на горизонте, ветер с океана."}

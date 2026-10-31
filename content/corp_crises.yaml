@@ -1,0 +1,149 @@
+# Crises of a player's megacorp (owner request 24.10: rich characters must struggle; app/services/corpman.py).
+# One may come at the owner's press; an unanswered crisis takes its `ignore` outcome at the next press.
+# Effects on the corp: vault (eddies), vault_pct (share of the vault), troops, intel, morale, integrity, security (levels);
+# on the owner: owner_hp, heat, eddies_owner; special: war (a canon megacorp declares war), gang_hostile (the strongest
+# gang near the corp raids next press), lose_district, income_half (the next income is halved).
+# check: {stat, skill, dv} on the owner's character; success/fail replace effects.
+# Player text avoids gendered past tense.
+
+- key: strike
+  title: Забастовка
+  text: "Склады стоят, лифты в башне отключены. Профсоюз требует прибавки, иначе завтра встанет и офис."
+  options:
+    - label: Поднять зарплаты
+      effects: {vault_pct: -15, morale: 20}
+      text: "Прибавку подписывают к вечеру. Люди возвращаются, кто-то даже благодарит."
+    - label: Разогнать бойцами
+      effects: {troops: -2, morale: -25, heat: 2}
+      text: "Дубинки, газ, видео в сети. Работать вышли все. Улыбаться перестали тоже все."
+    - label: Переговоры лично
+      check: {stat: EMP, skill: persuasion, dv: 15}
+      success: {effects: {vault_pct: -5, morale: 10}, text: "Три часа в столовой с бригадирами. Сошлись на малом, и тебя теперь уважают."}
+      fail: {effects: {vault_pct: -10, morale: -10}, text: "Тебя освистывают. Прибавку всё равно приходится дать, только без уважения."}
+  ignore: {effects: {income_half: true, morale: -15}, text: "Забастовка тянется месяц. Доход вдвое меньше."}
+
+- key: leak
+  title: Утечка
+  text: "Кто-то сливает внутреннюю переписку журналистам. Следующая порция выйдет через три дня."
+  options:
+    - label: Купить молчание
+      effects: {vault: -40000}
+      text: "Редакция получает рекламный контракт. Статья не выходит."
+    - label: Искать крысу
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {effects: {intel: 1, morale: 5}, text: "Крыса найдена в бухгалтерии. Её доступы теперь работают на тебя."}
+      fail: {effects: {morale: -10, integrity: -5}, text: "Подозреваешь всех подряд. Крыса уходит сама, хлопнув дверью и слив остальное."}
+    - label: Опровергнуть
+      effects: {morale: -5, heat: 1}
+      text: "Пиар-отдел выпускает опровержение. Верят не все."
+  ignore: {effects: {integrity: -10, morale: -10, security: -1}, text: "Слив выходит целиком: схемы охраны, коды, имена. Охрану придётся перестраивать."}
+
+- key: tribute
+  title: Банда требует дань
+  text: "Местная банда присылает человека с коробкой. В коробке палец охранника и счёт за «защиту»."
+  options:
+    - label: Заплатить
+      effects: {vault: -25000}
+      text: "Человек забирает деньги и коробку. До следующего месяца тихо."
+    - label: Ответить силой
+      check: {stat: COOL, skill: firearms, dv: 16}
+      success: {effects: {troops: -1, morale: 10}, text: "Ночью бойцы корпорации сносят их точку. Счета больше не приходят."}
+      fail: {effects: {troops: -4, gang_hostile: true}, text: "Засада. Бойцы возвращаются не все, а банда объявляет тебе войну на улицах."}
+    - label: Предложить союз
+      effects: {vault: -15000, ally_local: true}
+      text: "Главарь соглашается на сделку: дань в обмен на стволы, когда понадобятся."
+  ignore: {effects: {gang_hostile: true, troops: -2}, text: "Банда приходит сама. Двое охранников не возвращаются со смены."}
+
+- key: audit
+  title: Налоговая проверка
+  text: "В башню заходят аудиторы с ордером. Они хотят видеть все счета, включая те, которых нет."
+  options:
+    - label: Взятка
+      effects: {vault: -35000, heat: 1}
+      text: "Старший аудитор закрывает папку и уходит обедать надолго."
+    - label: Армия юристов
+      effects: {vault: -20000, morale: -5}
+      text: "Юристы тянут время полгода. Дело закрывают за истечением срока."
+    - label: Подчистить счета
+      check: {stat: INT, skill: tech, dv: 16}
+      success: {effects: {intel: 1}, text: "К утру в отчётах идеальный порядок. Аудиторы уходят ни с чем."}
+      fail: {effects: {vault_pct: -25, heat: 2}, text: "Подчистку замечают. Штраф такой, что бухгалтер плачет."}
+  ignore: {effects: {vault_pct: -30}, text: "Штраф списывают из сейфа автоматически."}
+
+- key: hit
+  title: Покушение
+  text: "Твоя служба безопасности перехватывает заказ: кто-то хочет тебя мёртвым. Исполнитель уже в городе."
+  options:
+    - label: Усилить охрану
+      effects: {troops: -3, vault: -10000}
+      text: "Трое бойцов ложатся под пули вместо тебя. Исполнитель уходит, ничего не добившись."
+    - label: Выманить убийцу
+      check: {stat: REF, skill: firearms, dv: 17}
+      success: {effects: {morale: 15, intel: 1}, text: "Ты сам приходишь на встречу и стреляешь первым. Заказчик теперь известен."}
+      fail: {effects: {owner_hp: -30}, text: "Он оказался быстрее. Тебя вытаскивают с того света."}
+    - label: Залечь в башне
+      effects: {income_half: true}
+      text: "Месяц без выхода из башни. Дела идут вполсилы."
+  ignore: {effects: {owner_hp: -40, morale: -10}, text: "Пуля находит тебя на парковке. Живой — уже хорошо."}
+
+- key: board
+  title: Бунт совета директоров
+  text: "Совет директоров голосует за недоверие. Им не нравится, как ты ведёшь дела, и у них есть свой кандидат."
+  options:
+    - label: Откупиться опционами
+      effects: {vault_pct: -20, morale: 5}
+      text: "Каждый директор получает пакет. Голосование переносят на неопределённый срок."
+    - label: Чистка
+      effects: {morale: -20, troops: -1, heat: 1}
+      text: "Двоих директоров находят в машинах на дне залива. Остальные голосуют за тебя единогласно."
+    - label: Выступить на совете
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {effects: {morale: 15}, text: "Ты говоришь двадцать минут. Совет аплодирует стоя."}
+      fail: {effects: {vault_pct: -25, morale: -10}, text: "Тебя слушают молча. Опционы всё равно приходится раздать, и больше."}
+  ignore: {effects: {vault_pct: -35, security: -1}, text: "Совет выводит деньги через подставные фирмы и забирает с собой половину охраны."}
+
+- key: raider
+  title: Рейдерский захват
+  text: "Одна из больших корпораций скупает твои долги и присылает ультиматум: продай контрольный пакет за бесценок, или будет война."
+  options:
+    - label: Отдать часть
+      effects: {vault_pct: -30, integrity: -10}
+      text: "Ты подписываешь. Они забирают лучшее, но башня остаётся твоей."
+    - label: Принять войну
+      effects: {war: true, morale: 10}
+      text: "Ты рвёшь ультиматум на камеру. Совет нервничает, бойцы проверяют оружие."
+    - label: Найти компромат
+      check: {stat: INT, skill: netrunning, dv: 18}
+      success: {effects: {intel: 2}, text: "У рейдеров тоже есть скелеты. Ультиматум отзывают в тот же день."}
+      fail: {effects: {war: true, intel: -1}, text: "Твой нетраннер попадается. Теперь это война, и они знают, кто начал."}
+  ignore: {effects: {war: true, morale: -10}, text: "Молчание принимают за отказ. Утром у башни вражеские бронемашины."}
+
+- key: riot
+  title: Бунт в районе
+  text: "В одном из твоих районов жители громят офис корпорации. Говорят, ты поднял аренду и выгнал половину квартала."
+  options:
+    - label: Снизить аренду
+      effects: {income_half: true, morale: 5}
+      text: "Аренду снижают. Квартал успокаивается, бухгалтерия — нет."
+    - label: Ввести бойцов
+      effects: {troops: -2, heat: 2, morale: -10}
+      text: "Бойцы зачищают улицы. Офис снова работает, под охраной."
+    - label: Раздать гуманитарку
+      effects: {vault: -15000, morale: 10}
+      text: "Грузовики с едой и медикаментами. Местные пишут на стене офиса «спасибо», пусть и с ошибкой."
+  ignore: {effects: {lose_district: true}, text: "Квартал выгоняет корпорацию. Район потерян."}
+
+- key: poach
+  title: Переманивают людей
+  text: "Конкуренты переманивают лучших сотрудников: двойная зарплата, квартира в центре, имплант в подарок."
+  options:
+    - label: Перебить предложение
+      effects: {vault: -30000, morale: 10}
+      text: "Ты удваиваешь их зарплаты сам. Дорого, зато люди остаются."
+    - label: Пригрозить
+      effects: {morale: -15, intel: 1}
+      text: "Пара намёков про семьи. Никто не уходит. Никто и не улыбается."
+    - label: Отпустить
+      effects: {troops: -3, morale: -5}
+      text: "Уходят трое начальников охраны и забирают свои отряды."
+  ignore: {effects: {troops: -4, intel: -1}, text: "Пока ты думаешь, половина отдела безопасности уже работает на других."}

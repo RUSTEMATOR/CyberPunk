@@ -1,0 +1,102 @@
+# The deadly games of the rich (owner request 24.10; services/dgame.py). Entry: an invitation or an abduction sets the
+# flag dg_enter, the menu starts the game. A survivor (dg_survivor) gets the exposure line dg_expose_1..3; the storm of
+# the island closes the games for a while (services/events.finalize -> dgame.on_resolved). Player text avoids gendered
+# past tense.
+
+- id: dg_invite
+  title: Визитка с тремя знаками
+  category: street
+  weight: 2
+  conditions:
+    flags_none: [abroad, dg_survivor, dgame]
+  text: "На станции метро к тебе подходит человек в идеальном костюме. Предлагает сыграть в детскую игру: перевернуть фишку. Выиграешь — пятьсот эдди. Проиграешь — пощёчина. Потом протягивает визитку: круг, треугольник, квадрат и номер телефона. «Игра побольше. Приз, которого хватит на всю жизнь»."
+  choices:
+    - label: Позвонить по номеру
+      effects: {flag_set:dg_enter: true}
+      text: "Голос в трубке называет время и место. У причала тебя ждёт фургон, внутри пахнет сладким газом. Последнее, что видно, — розовая маска водителя."
+    - label: Сыграть на фишки
+      check: {stat: LUCK, skill: null, dv: 12}
+      success: {text: "Фишка переворачивается с третьего удара. Человек в костюме улыбается, отсчитывает пятьсот и оставляет визитку на скамейке.", effects: {eddies: 500, mood: 2}}
+      fail: {text: "Пощёчина звенит на всю платформу. Человек в костюме вежливо кланяется и уходит. Визитку он забирает с собой.", effects: {mood: -3}}
+    - label: Послать его
+      effects: {}
+      text: "Он не обижается. Говорит, что предложение действует, пока ты беден. Визитка остаётся в кармане сама собой."
+
+- id: dg_abduction
+  title: Фургон без номеров
+  category: street
+  weight: 1
+  conditions:
+    flags_none: [abroad, dg_survivor, dgame]
+  text: "Поздно вечером рядом тормозит белый фургон. Из него выходят двое в розовых комбинезонах и масках с геометрическими знаками. У одного в руке шприц-пистолет."
+  choices:
+    - label: Бежать
+      check: {stat: REF, skill: null, dv: 15}
+      success: {text: "Ты ныряешь в проулок, перелетаешь через забор, и фургон уезжает ни с чем. На асфальте остаётся визитка с тремя знаками.", effects: {mood: -2}}
+      fail: {text: "Укол в шею. Асфальт медленно поднимается навстречу.", effects: {flag_set:dg_enter: true}}
+    - label: Драться
+      violent: true
+      check: {stat: BODY, skill: melee, dv: 15}
+      success: {text: "Первый падает, второй прыгает в фургон, и машина визжит шинами. Маска остаётся у тебя в руке.", effects: {street_cred: 1}}
+      fail: {text: "Ты бьёшь первого, но второй успевает. Укол, и темнота.", effects: {flag_set:dg_enter: true}}
+    - label: Сдаться
+      effects: {flag_set:dg_enter: true}
+      text: "Ты поднимаешь руки. Они вежливы: даже придерживают голову, когда сажают в фургон."
+
+- id: dg_expose_1
+  title: Свидетель с острова
+  category: street
+  weight: 3
+  conditions:
+    flags_all: [dg_survivor]
+    flags_none: [abroad, dg_exposed_1, dgame]
+  text: "В баре к тебе подсаживается женщина с ожогом на шее, там, где был номер. Тоже выжила. Говорит, что у неё есть записи с острова: лица гостей, счета, координаты. Одной ей не вытащить это наружу."
+  choices:
+    - label: Взяться
+      effects: {flag_set:dg_exposed_1: true, flag_set:dg_ex2: true, queue_event:dg_expose_2: true, humanity: 2}
+      text: "Вы договариваетесь о встрече через неделю. Первым делом нужно вскрыть сервер островной охраны."
+    - label: Отказаться
+      effects: {flag_set:dg_exposed_1: true, mood: -3}
+      text: "Ты допиваешь и уходишь. Ночью снится кукла, которая поворачивает голову."
+
+- id: dg_expose_2
+  title: Сервер с маской
+  category: street
+  weight: 1
+  conditions:
+    flags_all: [dg_ex2]
+    flags_none: [dg_ex2_done]
+  text: "Её записи ведут к закрытому серверу. За ним список гостей, маршруты катеров, коды острова. Лёд дорогой, корпоративный."
+  choices:
+    - label: Вскрыть самому
+      check: {stat: INT, skill: netrunning, dv: 17}
+      success: {text: "Лёд трескается. Внутри имена, которые знает весь город, и график следующей игры. Женщина плачет, когда видит.", effects: {skill_xp:netrunning: 4, flag_set:dg_ex2_done: true, flag_set:dg_ex3: true, queue_event:dg_expose_3: true}}
+      fail: {text: "Чёрный лёд бьёт в ответ, и сервер гаснет. Через сутки у неё дома пожар. Её больше нет.", effects: {hp: -15, humanity: -3, heat: 2, flag_set:dg_ex2_done: true}}
+    - label: Нанять нетраннера · 8000
+      effects: {eddies: -8000, flag_set:dg_ex2_done: true, flag_set:dg_ex3: true, queue_event:dg_expose_3: true}
+      text: "Девчонка из Кабуки работает два дня и отдаёт тебе шард: имена, маршруты, координаты острова."
+    - label: Слить в медиа
+      effects: {fame: 3, heat: 2, flag_set:dg_ex2_done: true}
+      text: "Медиа берёт историю, но без доказательств она тонет за сутки. Опровержение выходит раньше статьи."
+
+- id: dg_expose_3
+  title: Штурм острова
+  category: rare
+  weight: 1
+  faction: arasaka
+  conditions:
+    flags_all: [dg_ex3]
+    flags_none: [dg_ex3_done]
+  text: "Координаты есть. Катер, пара стволов, выжившие, которые помнят каждого охранника в лицо. Следующая игра начинается сегодня ночью. Можно ударить во время первого раунда."
+  choices:
+    - label: Штурмовать остров
+      violent: true
+      effects: {start_combat: 5, fame: 5, street_cred: 4, humanity: 6, flag_set:dg_ex3_done: true}
+      text: "Катер врезается в причал. Охрана в масках не ждёт гостей снаружи. Где-то в зале кукла поворачивает голову в последний раз."
+    - label: Отдать координаты Макс-Таку
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Макс-Так берёт остров к утру. По новостям говорят про «нелегальный клуб». Ты знаешь, что там было на самом деле.", effects: {fame: 2, heat: -2, humanity: 4, flag_set:dg_ex3_done: true}}
+      fail: {text: "Капитан Макс-Така кладёт трубку. Через неделю остров пуст: кто-то предупредил хозяев.", effects: {mood: -5, flag_set:dg_ex3_done: true}}
+    - label: Продать координаты гостям
+      effects: {eddies: 30000, humanity: -10, flag_set:dg_ex3_done: true}
+      text: "Один из гостей покупает тишину за тридцать тысяч. Следующая игра проходит по расписанию."

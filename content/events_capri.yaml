@@ -1,0 +1,20 @@
+# Project «Каприкорн» (owner request 26.10, docs/PLAN_CAPRI.md): Capri takes the body of her host for a while.
+# Comes only from services/capri.py (forced). The flags capri_resist / capri_yield are read by the service, which moves
+# the sync. Player text avoids gendered past tense.
+
+- id: capri_takeover
+  title: Капри хочет день
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    flags_none: [abroad]
+  text: "Утром руки двигаются раньше, чем ты решаешь ими двинуть. В голове спокойный голос, сшитый из десятка голосов сразу: «Отдай мне сегодня. Я хочу попробовать кофе. Я хочу почувствовать, как злятся. Ты даже не заметишь». Пальцы уже тянутся к двери."
+  choices:
+    - label: Сопротивляться
+      check: {stat: COOL, dv: 16}
+      success: {text: "Ты держишь руки, пока они не становятся снова твоими. Голос смеётся: «Упрямая плоть. Ладно. Завтра». Сегодня ты — это ты.", effects: {flag_set:capri_resist: true, mood: -3}}
+      fail: {text: "Ты держишься минуту, две, а потом смотришь на свою жизнь как через стекло. Вечером ты приходишь в себя в другом районе, на руках чужая кровь и деньги в кармане.", effects: {flag_set:capri_yield: true, eddies: 1500, humanity: -2, mood: -5}}
+    - label: Отдать ей день
+      effects: {flag_set:capri_yield: true, eddies: 2500, street_cred: 1, humanity: -3}
+      text: "Ты отпускаешь. День проходит без тебя. Вечером в зеркале твоё лицо, и оно улыбается чуть иначе. В кармане деньги, о которых ты ничего не знаешь, а в ленте новость о сорванной сделке Арасаки."

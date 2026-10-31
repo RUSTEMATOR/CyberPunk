@@ -1,0 +1,15 @@
+# Elysium (owner request: the «Elysium» crossover). Sold only by the shuttle smuggler (app/services/elysium.py).
+
+- key: exo_frame
+  name: "Экзоскелет «Паук»"
+  slot: spine
+  price: 40000
+  humanity_cost: 10
+  description: "Боевой экзокаркас, вкрученный прямо в позвоночник и череп. Поднимает машину, держит очередь в упор. Ставят в подпольной мастерской за один вечер, а болит потом всю жизнь."
+  tier: military
+  category: combat
+  abilities: [spider_lift]
+  build: flyer
+  requires: []
+  not_for_sale: true
+  mods: {hp_max: 15, check.combat: 2, skill.melee: 2}

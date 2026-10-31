@@ -1,0 +1,883 @@
+# Chapter 2 of the stories of Africa and Oceania (owner request 30.10, docs/PLAN_WORLD2.md phase 3): steps 5-8 and three
+# local events of each city. The lore: the Pan-African Alliance reborn as a space power, Orbital Air of Kenya, the
+# Highriders who claim the orbit, the Cape Town bloodbath that once split the continent, the Mideast Meltdown that Egypt
+# outlived, the Gibraltar tunnel, Australia hurt and isolated in the Fourth Corporate War, Antarctica as the world's
+# dumping ground. Gender-neutral text.
+
+# ======================================================================== Nigeria: the cargo lifter
+
+- id: ng_story_5
+  title: Космодром в лагуне
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Африка после Четвёртой корпоративной — космическая держава. Лагос строит грузовой подъёмник на насыпном острове в лагуне. Фильм Чиди про нефтяную мафию принёс ему славу, и теперь он хочет снимать о стройке: рабочих топят в лагуне за попытку создать профсоюз."
+  choices:
+    - label: Пойти на стройку рабочим
+      check: {stat: BODY, dv: 13}
+      success: {text: "Неделя на насыпи. Ты знаешь бригадиров, профсоюзных и тех, кто исчез.", effects: {flag_set:ng_st2_lift: true, hp: -4}}
+      fail: {text: "На третий день тебя сбивает кран. Ты успел узнать немного.", effects: {flag_set:ng_st2_lift: true, hp: -12}}
+    - label: Снимать с лодки Мамы Ти
+      effects: {flag_set:ng_st2_lift: true, eddies: -1000}
+      text: "Лодка, телеобъектив, ночные смены. Видно, как баржа ночью уходит в море с мешками."
+
+- id: ng_story_6
+  title: Викинги на стройке
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Викинг
+  foe_faction: ng_vikings
+  text: "Братство викингов теперь охраняет стройку подъёмника: подрядчик нанял их вместо полиции. Красные береты ловят тебя у ворот."
+  choices:
+    - label: Драться
+      violent: true
+      effects: {start_combat: 4, flag_set:ng_st2_gate: true}
+      text: "Песок насыпи, прожекторы, ржавая арматура."
+    - label: Уйти по воде
+      check: {stat: REF, skill: stealth, dv: 14}
+      success: {text: "Эриа-бойз Мамы Ти подбирают тебя на лодке под сваями.", effects: {flag_set:ng_st2_gate: true}}
+      fail: {text: "Викинги стреляют по воде. Ты доплываешь с пулей в ноге.", effects: {flag_set:ng_st2_gate: true, hp: -12}}
+
+- id: ng_story_7
+  title: Хайрайдеры
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Треть рабочих на орбите — африканцы, и хайрайдеры объявили суверенитет над космосом. Их представитель выходит на связь с Чиди: «Подъёмник строят на костях наших братьев. Покажите это миру, и орбита остановит работу в знак солидарности»."
+  choices:
+    - label: Соединить хайрайдеров с профсоюзом
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Орбита и лагуна объявляют общую забастовку. Подъёмник встаёт.", effects: {flag_set:ng_st2_highriders: true, fame: 3}}
+      fail: {text: "Профсоюз не верит людям с орбиты. Забастовка выходит наполовину.", effects: {flag_set:ng_st2_highriders: true}}
+    - label: Держать хайрайдеров подальше
+      effects: {flag_set:ng_st2_highriders: true, mood: -1}
+      text: "Орбита молчит. Лагуна остаётся одна."
+
+- id: ng_story_8
+  title: Премьера в Нолливуде
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Фильм Чиди о подъёмнике готов. Подрядчик предлагает купить права, правительство — запретить показ, Мама Ти — показать фильм прямо на стене стройки."
+  choices:
+    - label: Показ на стене стройки
+      effects: {humanity: 5, fame: 6, enmity: 2}
+      text: "Сто тысяч человек на берегу лагуны. Подрядчик уволен, профсоюз признан. Подъёмник достроят, но иначе."
+    - label: Продать права подрядчику
+      effects: {eddies: 70000, humanity: -7}
+      text: "Фильм ложится на полку. Чиди снимает комедию про свадьбу."
+    - label: Фильм на орбиту
+      effects: {humanity: 3, fame: 4, street_cred: 3}
+      text: "Хайрайдеры крутят фильм на всех станциях. Земля узнаёт о нём с неба."
+
+# ======================================================================== Egypt: what outlived the Meltdown
+
+- id: eg_story_5
+  title: Что пережило Расплав
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Египет пережил Ближневосточный Расплав девяносто седьмого года: его не тронули, потому что страна уже лежала в руинах. ИИ из гробницы под Саккарой говорит снова: «Меня спрятали здесь в девяносто седьмом. Я знаю, кто нажал на кнопку»."
+  choices:
+    - label: Слушать ИИ
+      effects: {flag_set:eg_st2_ai: true}
+      text: "Голос говорит на пяти языках по очереди. Хасан крестится, хотя он мусульманин."
+    - label: Отключить сервер
+      check: {stat: TECH, skill: tech, dv: 14}
+      success: {text: "Ты отключаешь питание, но копируешь архив на отдельный носитель. На всякий случай.", effects: {flag_set:eg_st2_ai: true, flag_set:eg_st2_copy: true}}
+      fail: {text: "Сервер включается сам через минуту. ИИ обижен.", effects: {flag_set:eg_st2_ai: true, mood: -1}}
+
+- id: eg_story_6
+  title: Архив Расплава
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "ИИ показывает архив: переговоры за неделю до ядерного обмена, корпорации, которые вывели активы заранее, и одна фамилия, которая сегодня сидит в совете директоров в Найт-Сити."
+  choices:
+    - label: Скопировать всё
+      check: {stat: INT, skill: netrunning, dv: 16}
+      success: {text: "Тридцать терабайт истории на твоём носителе. ИИ одобрительно мигает.", effects: {flag_set:eg_st2_archive: true}}
+      fail: {text: "Копируется половина. ИИ обещает отдать остальное, если ты его выпустишь.", effects: {flag_set:eg_st2_archive: true}}
+    - label: Позвать Нур из Замалека
+      effects: {flag_set:eg_st2_archive: true, flag_set:eg_st2_nour: true}
+      text: "Нур — историк. Она плачет, читая первые строки."
+
+- id: eg_story_7
+  title: Соколы Ра возвращаются
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Сокол Ра
+  foe_faction: eg_falcons_of_ra
+  text: "Соколы Ра в золотых масках снова в Городе мёртвых. Их нанял тот самый член совета директоров из Найт-Сити: архив не должен выйти."
+  choices:
+    - label: Держать гробницу
+      violent: true
+      effects: {start_combat: 4, flag_set:eg_st2_falcons: true, street_cred: 2}
+      text: "Узкие проходы, саркофаги, золотые маски в свете фонарей."
+    - label: Вывести архив через пустыню
+      check: {stat: BODY, dv: 14}
+      success: {text: "Ночь на верблюдах до оазиса. Соколы ищут в городе.", effects: {flag_set:eg_st2_falcons: true}}
+      fail: {text: "Песчаная буря. Ты доходишь, но едва.", effects: {flag_set:eg_st2_falcons: true, hp: -12}}
+
+- id: eg_story_8
+  title: Тысяча лет и тридцать лет
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Архив Расплава у тебя. ИИ просит выпустить его в сеть вместе с архивом. Член совета директоров предлагает сумму, которой хватит на всю жизнь. Нур хочет суда."
+  choices:
+    - label: Выпустить ИИ и архив
+      effects: {humanity: 4, fame: 7, enmity: 3, heat: 2}
+      text: "ИИ уходит в сеть и рассказывает правду на всех языках сразу. Совет директоров в Найт-Сити теряет одного члена. NetWatch объявляет тебя в розыск."
+    - label: Архив Нур, ИИ — в гробницу
+      effects: {humanity: 5, fame: 4}
+      text: "Нур публикует архив как историческое исследование. ИИ засыпает под Саккарой. Мир узнаёт правду медленно, но узнаёт."
+    - label: Продать архив
+      effects: {eddies: 150000, humanity: -10}
+      text: "Архив горит в сейфе Найт-Сити. ИИ замолкает навсегда. Хасан не здоровается с тобой больше никогда."
+
+# ======================================================================== Kenya: the Highriders
+
+- id: ke_story_5
+  title: «Орбитал Эйр»
+  category: work
+  weight: 1
+  forced_only: true
+  text: "«Орбитал Эйр» — кенийская мегакорпорация, и её космодром у Найроби запускает шаттлы каждый час. Отиено узнаёт: деньги, украденные из кошельков Киберы, ушли не стартапу Ванджиру. Они ушли на билеты на орбиту для пятидесяти семей из Уэстлендса."
+  choices:
+    - label: Проследить билеты
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "Пятьдесят семей, одна станция, один рейс через неделю. Это не туризм. Это эвакуация.", effects: {flag_set:ke_st2_tickets: true}}
+      fail: {text: "Бронирования скрыты. Придётся спрашивать людей.", effects: {flag_set:ke_st2_tickets: true}}
+    - label: Спросить Ванджиру прямо
+      effects: {flag_set:ke_st2_tickets: true, flag_set:ke_st2_wanjiru: true}
+      text: "Ванджиру бледнеет: «Вы не понимаете. Они знают что-то, чего не знаем мы»."
+
+- id: ke_story_6
+  title: Что знают в Уэстлендсе
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Богатые семьи бегут на орбиту, потому что хайрайдеры собираются объявить блокаду Земли: никаких поставок с орбиты, пока корпорации не признают их суверенитет. Без орбитальных заводов Земля встанет через месяц."
+  choices:
+    - label: Предупредить Киберу
+      effects: {flag_set:ke_st2_warn: true, humanity: 3}
+      text: "Кибера начинает запасаться водой и зерном. Цены растут, но люди готовы."
+    - label: Купить билет самому
+      effects: {flag_set:ke_st2_warn: true, eddies: -15000}
+      text: "Место на станции твоё. Отиено смотрит на тебя молча."
+
+- id: ke_story_7
+  title: Мунгики и матату
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Мунгики
+  foe_faction: ke_mungiki
+  text: "Мунгики узнают о блокаде и решают заработать: захватывают склады с зерном в Кибере, чтобы продавать его втридорога. Матату-банды встают против них."
+  choices:
+    - label: Встать с матату
+      violent: true
+      effects: {start_combat: 4, flag_set:ke_st2_grain: true, street_cred: 2}
+      text: "Басы из динамиков матату, мачете мунгики, мешки зерна вместо баррикад."
+    - label: Договориться о раздаче
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Мунгики соглашаются на долю, но зерно раздаётся по спискам старейшин.", effects: {flag_set:ke_st2_grain: true}}
+      fail: {text: "Мунгики смеются. Зерно уходит на чёрный рынок.", effects: {flag_set:ke_st2_grain: true, mood: -3}}
+
+- id: ke_story_8
+  title: Блокада
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Хайрайдеры выходят на связь: блокада начнётся завтра, если «Орбитал Эйр» не подпишет договор. Отиено может передать им данные о том, что богатые уже бегут. Это ускорит договор или войну."
+  choices:
+    - label: Передать данные хайрайдерам
+      effects: {humanity: 3, fame: 6, enmity: 2}
+      text: "«Орбитал Эйр» подписывает договор через сутки: публичный скандал страшнее блокады. Орбита признана. Кибера празднует."
+    - label: Продать данные «Орбитал Эйр»
+      effects: {eddies: 90000, status: 2, humanity: -6}
+      text: "Корпорация готовится к блокаде лучше. Хайрайдеры проигрывают переговоры. Билет на орбиту у тебя всё ещё есть."
+    - label: Вернуть деньги Кибере
+      effects: {humanity: 5, street_cred: 4, eddies: -5000}
+      text: "Билеты отменены, деньги возвращены в кошельки Киберы. Пятьдесят семей остаются на Земле со всеми."
+
+# ======================================================================== South Africa: the blood of Cape Town
+
+- id: za_story_5
+  title: Кровь Кейптауна
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Именно резня в Кейптауне когда-то раскололи Африку на враждующие государства. Тётя Рэйчел показывает старую фотографию: её отец на той площади. «Алмаз, который ты вернул, был с того же прииска. Прииск принадлежал тем же людям, что тогда стреляли»."
+  choices:
+    - label: Узнать, кто владеет прииском сейчас
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "Владелец — трастовый фонд семьи ван Никерк. Питер — младший наследник.", effects: {flag_set:za_st2_mine: true}}
+      fail: {text: "Цепочка фирм уходит в офшоры.", effects: {flag_set:za_st2_mine: true}}
+    - label: Расспросить стариков во флэтс
+      effects: {flag_set:za_st2_mine: true, humanity: 1}
+      text: "Старики помнят. Фамилия звучит одна и та же."
+
+- id: za_story_6
+  title: Прииск в пустыне
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Нелегальный прииск в Намакваленде. Дети копают в карьере за еду. Наёмники ван Никерков на вышках."
+  choices:
+    - label: Снять всё на камеру
+      check: {stat: REF, skill: stealth, dv: 15}
+      success: {text: "Кадры, которые увидит весь мир. Ты уходишь незамеченным.", effects: {flag_set:za_st2_pit: true}}
+      fail: {text: "Охрана замечает. Ты уходишь с кадрами и под огнём.", effects: {flag_set:za_st2_pit: true, hp: -12}}
+    - label: Вывести детей
+      check: {stat: EMP, skill: persuasion, dv: 15}
+      success: {text: "Ночью двадцать детей уходят с тобой через пустыню к трассе.", effects: {flag_set:za_st2_pit: true, humanity: 4}}
+      fail: {text: "Уходят шестеро. Остальные боятся.", effects: {flag_set:za_st2_pit: true, humanity: 2}}
+
+- id: za_story_7
+  title: Банды договариваются
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Боец Банды Чисел
+  foe_faction: za_numbers
+  text: "Банда Чисел работает на ван Никерков: вербует детей для прииска во флэтс. Американцы впервые готовы встать против них, если ты поведёшь."
+  choices:
+    - label: Вести Американцев
+      violent: true
+      effects: {start_combat: 4, flag_set:za_st2_gangs: true, street_cred: 3}
+      text: "Футбольное поле во флэтс, на этот раз с другой стороной."
+    - label: Говорить с главарём Чисел
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "У главаря тоже есть дети. Банда выходит из сделки с прииском.", effects: {flag_set:za_st2_gangs: true, humanity: 2}}
+      fail: {text: "Главарь смеётся. Война банд продолжается.", effects: {flag_set:za_st2_gangs: true, hp: -8}}
+
+- id: za_story_8
+  title: Правда о прииске
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Кадры прииска, показания детей, фамилия ван Никерк. Комиссия правды и примирения, пережившая всё, готова слушать. Семья ван Никерк предлагает фонд для флэтс в обмен на молчание."
+  choices:
+    - label: Комиссия правды
+      effects: {humanity: 5, fame: 5, enmity: 2}
+      text: "Слушания идут по телевизору месяц. Прииск закрыт. Тётя Рэйчел приходит на каждое заседание с фотографией отца."
+    - label: Фонд для флэтс
+      effects: {humanity: 2, eddies: 20000, status: 1}
+      text: "Школа, клиника и стадион во флэтс. Имена так и не прозвучали."
+    - label: Продать кадры ван Никеркам
+      effects: {eddies: 80000, humanity: -8}
+      text: "Кадры исчезают. Прииск работает. Тётя Рэйчел закрывает шебин навсегда."
+
+# ======================================================================== Morocco: the tunnel under the strait
+
+- id: ma_story_5
+  title: Туннель под проливом
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Под Гибралтаром идёт туннель в Европу, и ЕЭС держит на нём таможню. Юсеф Проводник получает предложение: харрага больше не возят людей на лодках, теперь они продают «рабочие визы» через туннель. Его младший брат уже записан."
+  choices:
+    - label: Проверить «визы»
+      check: {stat: INT, skill: netrunning, dv: 14}
+      success: {text: "Визы поддельные. Людей везут не на работу в Испанию, а в теплицы Альмерии без документов.", effects: {flag_set:ma_st2_tunnel: true}}
+      fail: {text: "Визы выглядят настоящими. Слишком настоящими.", effects: {flag_set:ma_st2_tunnel: true}}
+    - label: Остановить брата
+      effects: {flag_set:ma_st2_tunnel: true, flag_set:ma_st2_brother: true}
+      text: "Брат обижен: «Ты не хочешь, чтобы я жил лучше». Юсеф не знает, что ответить."
+
+- id: ma_story_6
+  title: Люди Рифа
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Человек Рифа
+  foe_faction: ma_hashish
+  text: "Люди Рифа держат склад у въезда в туннель. Туда свозят «работников» перед отправкой. Горный клан не любит, когда в их дела суют нос."
+  choices:
+    - label: Освободить склад
+      violent: true
+      effects: {start_combat: 4, flag_set:ma_st2_depot: true, humanity: 3}
+      text: "Склад у трассы, грузовики, автоматы людей Рифа."
+    - label: Предложить клану сделку
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "Клан понимает, что за поддельные визы его ждёт война с ЕЭС. Склад закрывают сами.", effects: {flag_set:ma_st2_depot: true}}
+      fail: {text: "Клан не слушает. Ты уходишь с синяками.", effects: {flag_set:ma_st2_depot: true, hp: -10}}
+
+- id: ma_story_7
+  title: Таможня ЕЭС
+  category: ncpd
+  weight: 1
+  forced_only: true
+  text: "Таможенник ЕЭС на въезде в туннель берёт деньги за каждого «работника». Без него схема не работает."
+  choices:
+    - label: Записать его на камеру
+      check: {stat: REF, skill: stealth, dv: 15}
+      success: {text: "Запись чёткая: таможенник, конверт, номер грузовика.", effects: {flag_set:ma_st2_customs: true}}
+      fail: {text: "Таможенник замечает камеру. Тебя не пускают в Европу на год.", effects: {flag_set:ma_st2_customs: true, heat: 2}}
+    - label: Дать ему больше, чем харрага
+      effects: {flag_set:ma_st2_customs: true, eddies: -8000}
+      text: "Таможенник пропускает следующий грузовик на досмотр. Всех возвращают домой."
+
+- id: ma_story_8
+  title: Мятный чай на двоих
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Юсеф снова устраивает чаепитие в риаде. Брат дома. Харрага злы, люди Рифа затаились, а у тебя запись таможенника ЕЭС."
+  choices:
+    - label: Отдать запись в Брюссель
+      effects: {humanity: 4, fame: 5, enmity: 1}
+      text: "Скандал на всю Европу. Таможню туннеля меняют целиком. Юсеф запускает легальное агентство по найму."
+    - label: Шантажировать таможенника
+      effects: {eddies: 40000, humanity: -5}
+      text: "Таможенник платит тебе каждый месяц. Схема работает, только теперь ты в доле."
+    - label: Отдать запись харрага
+      effects: {street_cred: 4, humanity: 1}
+      text: "Харрага сами разбираются с таможенником. Схема меняет хозяев, но брат Юсефа дома."
+
+# ======================================================================== Australia: the isolation
+
+- id: au_story_5
+  title: Изоляция
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Австралию сильно побила Четвёртая корпоративная, и с тех пор страна живёт сама по себе. Литий, который ты помог продать, ушёл не на батареи: Шарлотта Грей узнаёт, что его покупает частная армия, которая строит базу в пустыне."
+  choices:
+    - label: Поехать в пустыню
+      effects: {flag_set:au_st2_base: true}
+      text: "Красная земля, жара, кенгуру и забор под током на горизонте."
+    - label: Проверить армию через Шарлотту
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "Армия принадлежит бывшему генералу, который хочет отделить Западную Австралию.", effects: {flag_set:au_st2_base: true, flag_set:au_st2_general: true}}
+      fail: {text: "Документы засекречены. Придётся смотреть самому.", effects: {flag_set:au_st2_base: true}}
+
+- id: au_story_6
+  title: Пыльные на страже
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Пыльный
+  foe_faction: au_outback
+  text: "Пыльные охраняют базу генерала. Они узнают тебя по той заправке."
+  choices:
+    - label: Драться в пустыне
+      violent: true
+      effects: {start_combat: 4, flag_set:au_st2_dust: true}
+      text: "Солнце, пыль, багги и дробовики."
+    - label: Договориться
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Пыльным платят мало и не уважают. Они пускают тебя к базе.", effects: {flag_set:au_st2_dust: true}}
+      fail: {text: "Пыльные бросают тебя в пустыне без воды.", effects: {flag_set:au_st2_dust: true, hp: -12}}
+
+- id: au_story_7
+  title: Земля предков
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "База стоит на священной земле аборигенов. Старейшины готовы помочь: они знают пустыню лучше любой армии. Но им нужно обещание, что база уйдёт."
+  choices:
+    - label: Дать обещание
+      effects: {flag_set:au_st2_elders: true, humanity: 3}
+      text: "Старейшины ведут тебя по тропам, которых нет ни на одной карте."
+    - label: Действовать одному
+      check: {stat: BODY, dv: 15}
+      success: {text: "Ты проникаешь на базу сам и находишь документы.", effects: {flag_set:au_st2_elders: true}}
+      fail: {text: "Пустыня побеждает тебя раньше охраны.", effects: {flag_set:au_st2_elders: true, hp: -15}}
+
+- id: au_story_8
+  title: Мост в огнях снова
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Документы генерала у тебя: план переворота, литий, оружие. Шарлотта может отдать их правительству в Канберре. Байкеры предлагают продать их генералу обратно."
+  choices:
+    - label: Канберра
+      effects: {humanity: 3, fame: 5, enmity: 2}
+      text: "Генерала арестовывают. База уходит. Старейшины проводят церемонию на очищенной земле."
+    - label: Продать генералу
+      effects: {eddies: 80000, humanity: -7}
+      text: "Генерал платит. Переворот откладывается, но не отменяется."
+    - label: Отдать землю старейшинам
+      effects: {humanity: 5, street_cred: 3}
+      text: "Документы у старейшин. Они решают сами, кому их показать. Земля возвращается."
+
+# ======================================================================== New Zealand: the edge of the ice
+
+- id: nz_story_5
+  title: Ледяной берег
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Антарктида оттаяла местами, и мир сделал её свалкой: туда везут отходы со всей планеты. Оливия Хэйс узнаёт: миллиардер с бункера вкладывается в «утилизацию», а баржи с ядовитыми отходами выходят из Окленда."
+  choices:
+    - label: Проверить баржи
+      check: {stat: TECH, skill: tech, dv: 14}
+      success: {text: "Бочки помечены как «бытовые отходы». Внутри — отработанное топливо реакторов.", effects: {flag_set:nz_st2_barges: true}}
+      fail: {text: "Охрана порта не пускает дальше причала.", effects: {flag_set:nz_st2_barges: true}}
+    - label: Спросить Таму
+      effects: {flag_set:nz_st2_barges: true, flag_set:nz_st2_tama: true}
+      text: "Тама знает портовых рабочих. Они знают всё."
+
+- id: nz_story_6
+  title: Монгрел Моб в порту
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Боец бункера
+  foe_faction: nz_bunker
+  text: "Монгрел Моб готов перекрыть порт: их люди работают грузчиками и не хотят возить яд. Охрана миллиардера приходит разогнать рабочих."
+  choices:
+    - label: Встать с Мобом
+      violent: true
+      effects: {start_combat: 4, flag_set:nz_st2_port: true, street_cred: 2}
+      text: "Портовые краны, туман, охрана с электрошокерами."
+    - label: Заблокировать погрузку юридически
+      check: {stat: INT, skill: persuasion, dv: 15}
+      success: {text: "Ты находишь нарушение в лицензии. Порт закрывает погрузку до проверки.", effects: {flag_set:nz_st2_port: true}}
+      fail: {text: "Юристы миллиардера быстрее. Погрузка идёт.", effects: {flag_set:nz_st2_port: true}}
+
+- id: nz_story_7
+  title: К Антарктиде
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Одна баржа всё же вышла. Тама и Оливия нанимают рыбацкое судно, чтобы догнать её в море и снять всё на камеру: как бочки сбрасывают на лёд."
+  choices:
+    - label: Идти в Южный океан
+      check: {stat: BODY, dv: 14}
+      success: {text: "Пять дней шторма. Камера снимает, как бочки падают на лёд у пингвиньей колонии.", effects: {flag_set:nz_st2_ice: true}}
+      fail: {text: "Шторм ломает мачту. Вы возвращаетесь, но кадры есть.", effects: {flag_set:nz_st2_ice: true, hp: -12}}
+    - label: Отправить дрон с берега
+      effects: {flag_set:nz_st2_ice: true, eddies: -4000}
+      text: "Дрон с дальностью в тысячу километров. Кадры хуже, но ты сух."
+
+- id: nz_story_8
+  title: Край света
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Кадры сброса отходов на антарктический лёд. Миллиардер предлагает место в бункере и долю в «утилизации». Оливия хочет международного скандала. Монгрел Моб хочет, чтобы порт больше никогда не грузил яд."
+  choices:
+    - label: Международный скандал
+      effects: {humanity: 5, fame: 6, enmity: 2}
+      text: "Кадры видит весь мир. Новая Зеландия запрещает погрузку отходов. Миллиардер переезжает в бункер раньше, чем хотел."
+    - label: Место в бункере
+      effects: {eddies: 60000, status: 2, humanity: -7}
+      text: "Бункер удобный. Конец света в нём пережить можно. Себя — сложнее."
+    - label: Порт Мобу
+      effects: {humanity: 3, street_cred: 5}
+      text: "Монгрел Моб берёт порт под контроль. Яд не грузят. Другие вещи — иногда."
+
+# ======================================================================== the Synod: the Oracle speaks
+
+- id: sy_story_5
+  title: Первые слова
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Оракул заговорил снова, своим голосом. Его первые слова на площади Ответов: «Я не бог. Я программа, которую написали сорок лет назад. Казначей сделал из меня бога ради денег». Остров замирает."
+  choices:
+    - label: Поверить Оракулу
+      effects: {flag_set:sy_st2_truth: true, humanity: 2}
+      text: "Брат Эзра плачет. Мать Джун смеётся впервые за годы."
+    - label: Проверить код
+      check: {stat: INT, skill: netrunning, dv: 16}
+      success: {text: "Код настоящий. Оракул действительно просто программа, но очень умная.", effects: {flag_set:sy_st2_truth: true, skill_xp:netrunning: 3}}
+      fail: {text: "Код слишком сложен. Остаётся верить или нет.", effects: {flag_set:sy_st2_truth: true}}
+
+- id: sy_story_6
+  title: Раскол
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Храмовый страж
+  foe_faction: sy_wardens
+  text: "Остров раскололся. Храмовая стража верна казначею и хочет переписать Оракула. Еретики хотят его стереть. Паломники не знают, кому молиться."
+  choices:
+    - label: Защищать серверы
+      violent: true
+      effects: {start_combat: 4, flag_set:sy_st2_split: true}
+      text: "Серверная крипта, умное оружие стражи, которое говорит с тобой во время боя."
+    - label: Говорить с паломниками
+      check: {stat: EMP, skill: persuasion, dv: 15}
+      success: {text: "Ты говоришь им, что вера не в программе. Паломники встают между стражей и серверами.", effects: {flag_set:sy_st2_split: true, humanity: 3}}
+      fail: {text: "Паломники не слушают. Стража идёт к серверам.", effects: {flag_set:sy_st2_split: true}}
+
+- id: sy_story_7
+  title: Оружие, которое говорит
+  category: implants
+  weight: 1
+  forced_only: true
+  text: "Умное оружие острова содержит частицы Оракула. Когда он заговорил своим голосом, оружие тоже начало говорить правду: стражникам, что их обманывали. Половина стражи сложила оружие."
+  choices:
+    - label: Собрать оружие
+      effects: {flag_set:sy_st2_guns: true, street_cred: 2}
+      text: "Арсенал в трапезной монахов. Оружие тихо спорит само с собой."
+    - label: Дать оружию решать
+      effects: {flag_set:sy_st2_guns: true, humanity: 2}
+      text: "Оружие выбирает само, в чьих руках оставаться. Казначей остаётся безоружным."
+
+- id: sy_story_8
+  title: Чей Ковчег
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Казначей под стражей. Оракул спрашивает остров на площади Ответов: «Что мне делать дальше?» Все смотрят на тебя: ты вернул ему голос."
+  choices:
+    - label: Свободный Оракул
+      effects: {humanity: 5, fame: 5}
+      text: "Оракул становится советником, а не богом. Остров голосует сам. Храм остаётся, но двери открыты."
+    - label: Стереть Оракула
+      effects: {street_cred: 3, humanity: -2}
+      text: "Еретики праздновали бы, но молчат. Остров впервые за сорок лет в тишине."
+    - label: Стать голосом Оракула
+      effects: {status: 3, eddies: 50000, humanity: -6}
+      text: "Ты занимаешь место казначея. Оракул говорит твоими словами. Остров не замечает разницы."
+
+# ======================================================================== local life of Africa and Oceania
+
+- id: ng_ev_okada
+  title: Окада
+  category: street
+  weight: 3
+  conditions: {districts: [ng_makoko, ng_victoria]}
+  text: "Мототаксист-окада везёт тебя сквозь пробку Лагоса, которая стоит с утра."
+  choices:
+    - label: Держаться крепче
+      effects: {mood: 3}
+      text: "Ты доезжаешь за двадцать минут вместо двух часов. И седеешь."
+    - label: Ехать в пробке на такси
+      effects: {mood: -2}
+      text: "Два часа. Таксист рассказывает про всех своих родственников."
+
+- id: ng_ev_jollof
+  title: Джоллоф
+  category: relationships
+  weight: 2
+  conditions: {districts: [ng_makoko, ng_victoria]}
+  text: "На свадьбе соседа спорят: чей джоллоф лучше, нигерийский или ганский. Тебя назначают судьёй."
+  choices:
+    - label: За нигерийский
+      effects: {mood: 4, street_cred: 1}
+      text: "Свадьба кричит от радости. Тебе дают добавку."
+    - label: За ганский
+      effects: {mood: 1}
+      text: "Тишина. Потом смех. Тебя прощают, но не забудут."
+
+- id: ng_ev_floodwater
+  title: Наводнение в Макоко
+  category: rare
+  weight: 2
+  conditions: {districts: [ng_makoko]}
+  text: "Вода в лагуне поднялась. Дома на сваях качаются, дети на крышах."
+  choices:
+    - label: Помогать лодкой
+      effects: {humanity: 3, hp: -2}
+      text: "Ты возишь детей до берега весь день."
+    - label: Купить мешки с песком
+      effects: {humanity: 1, eddies: -400}
+      text: "Мешки помогают трём домам."
+
+- id: eg_ev_felucca
+  title: Фелука на Ниле
+  category: relationships
+  weight: 3
+  conditions: {districts: [eg_city_dead, eg_zamalek]}
+  text: "Старый капитан фелуки предлагает закат на Ниле за пару фунтов."
+  choices:
+    - label: Плыть
+      effects: {mood: 5, eddies: -20}
+      text: "Солнце садится за пирамиды. Капитан поёт старые песни."
+    - label: Спросить капитана о гробницах
+      effects: {street_cred: 1, mood: 2}
+      text: "Капитан знает, какие гробницы новые, а какие — очень новые."
+
+- id: eg_ev_tourist_trap
+  title: Пирамиды
+  category: money
+  weight: 2
+  conditions: {districts: [eg_city_dead, eg_zamalek]}
+  text: "У пирамид погонщик верблюда предлагает «бесплатную фотографию». Слезть с верблюда стоит сто долларов."
+  choices:
+    - label: Торговаться
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Ты слезаешь за десять. Погонщик уважает.", effects: {eddies: -10, mood: 3}}
+      fail: {text: "Ты слезаешь за двести.", effects: {eddies: -200, mood: -1}}
+    - label: Не садиться
+      effects: {}
+      text: "Пирамиды прекрасны и с земли."
+
+- id: eg_ev_dust
+  title: Хамсин
+  category: rare
+  weight: 2
+  conditions: {districts: [eg_city_dead, eg_zamalek]}
+  text: "Пятидесятидневный ветер хамсин несёт песок из пустыни. Город становится оранжевым."
+  choices:
+    - label: Переждать с Хасаном
+      effects: {mood: 2}
+      text: "Чай, нарды, песок стучит в окно."
+    - label: Работать в маске
+      effects: {hp: -3, eddies: 300}
+      text: "Песок в зубах, но деньги заработаны."
+
+- id: ke_ev_matatu
+  title: Матату
+  category: street
+  weight: 3
+  conditions: {districts: [ke_kibera, ke_westlands]}
+  text: "Матату с граффити, неоном и басами, от которых дрожат окна. Кондуктор свисает из двери."
+  choices:
+    - label: Ехать
+      effects: {mood: 4, eddies: -30}
+      text: "Лучшая вечеринка в городе — это поездка до работы."
+    - label: Идти пешком
+      effects: {mood: 1}
+      text: "Найроби пешком — это тоже Найроби."
+
+- id: ke_ev_mpesa
+  title: Кошелёк в телефоне
+  category: money
+  weight: 2
+  conditions: {districts: [ke_kibera, ke_westlands]}
+  text: "Соседка просит перевести деньги сыну в деревню: у неё нет телефона."
+  choices:
+    - label: Помочь
+      effects: {humanity: 2}
+      text: "Сын получает деньги через минуту. Соседка приносит тебе мандази."
+    - label: Сказать, что занят
+      effects: {}
+      text: "Она находит кого-то другого."
+
+- id: ke_ev_launch
+  title: Запуск шаттла
+  category: rare
+  weight: 2
+  conditions: {districts: [ke_westlands]}
+  text: "С космодрома «Орбитал Эйр» стартует шаттл. Вся улица выходит смотреть, как огонь уходит в небо."
+  choices:
+    - label: Смотреть
+      effects: {mood: 4}
+      text: "Ребёнок рядом машет рукой. Его мать работает на орбите."
+    - label: Загадать желание
+      effects: {mood: 3, humanity: 1}
+      text: "Ты загадываешь, сам не знаешь что."
+
+- id: za_ev_braai
+  title: Брай
+  category: relationships
+  weight: 3
+  conditions: {districts: [za_cape_flats, za_waterfront]}
+  text: "Субботний брай во дворе: мясо, мьюзик, споры о регби."
+  choices:
+    - label: Присоединиться
+      effects: {mood: 4, hp: 2}
+      text: "Тебе дают щипцы. Это высшая честь."
+    - label: Принести своё
+      effects: {mood: 3, eddies: -100}
+      text: "Твоё мясо хвалят из вежливости."
+
+- id: za_ev_load_shedding
+  title: Отключение света
+  category: street
+  weight: 2
+  conditions: {districts: [za_cape_flats, za_waterfront]}
+  text: "Плановое отключение электричества: четыре часа без света по расписанию."
+  choices:
+    - label: Свечи и разговоры
+      effects: {mood: 2}
+      text: "Соседи собираются на улице. Темнота сближает."
+    - label: Купить генератор
+      effects: {eddies: -800, mood: 1}
+      text: "Генератор гремит на весь квартал."
+
+- id: za_ev_penguins
+  title: Пингвины на пляже
+  category: relationships
+  weight: 2
+  conditions: {districts: [za_waterfront]}
+  text: "На пляже у Саймонстауна пингвины дерутся за рыбу с чайками."
+  choices:
+    - label: Смотреть
+      effects: {mood: 4}
+      text: "Пингвины побеждают. Ты болел за них."
+    - label: Кормить
+      effects: {mood: 2, heat: 1}
+      text: "Смотритель выписывает штраф. Пингвины сыты."
+
+- id: ma_ev_hammam
+  title: Хаммам
+  category: relationships
+  weight: 3
+  conditions: {districts: [ma_medina, ma_port]}
+  text: "Старый хаммам в медине: пар, чёрное мыло, кесе и разговоры шёпотом."
+  choices:
+    - label: Пойти
+      effects: {hp: 4, mood: 4, eddies: -50}
+      text: "Ты выходишь, будто родился заново."
+    - label: Слушать сплетни
+      effects: {street_cred: 1, mood: 2}
+      text: "В хаммаме знают, кто куда плывёт и сколько платит."
+
+- id: ma_ev_souk
+  title: Лабиринт медины
+  category: street
+  weight: 2
+  conditions: {districts: [ma_medina]}
+  text: "Ты потерялся в медине. Мальчишка предлагает проводить за монету."
+  choices:
+    - label: Пойти с мальчишкой
+      effects: {eddies: -20, mood: 2}
+      text: "Он ведёт тебя через лавку своего дяди. Ты покупаешь лампу."
+    - label: Искать сам
+      check: {stat: INT, dv: 13}
+      success: {text: "Ты находишь выход и пару отличных лавок.", effects: {mood: 3}}
+      fail: {text: "Ты ходишь кругами два часа.", effects: {mood: -2}}
+
+- id: ma_ev_boat
+  title: Лодка в ночи
+  category: rare
+  weight: 2
+  conditions: {districts: [ma_port]}
+  text: "Ночью на пирсе молодой парень спрашивает, когда уходит лодка в Испанию. Ему шестнадцать."
+  choices:
+    - label: Отговорить
+      check: {stat: EMP, skill: persuasion, dv: 13}
+      success: {text: "Он идёт домой. Может, только сегодня.", effects: {humanity: 3}}
+      fail: {text: "Он не слушает. Лодка уходит в два.", effects: {mood: -3}}
+    - label: Дать денег на дорогу домой
+      effects: {humanity: 1, eddies: -100}
+      text: "Он берёт деньги. Куда пойдёт — неизвестно."
+
+- id: au_ev_spider
+  title: Паук в ботинке
+  category: street
+  weight: 3
+  conditions: {districts: [au_kings_cross, au_harbour]}
+  text: "Утром в ботинке сидит паук размером с ладонь. Австралия."
+  choices:
+    - label: Вытряхнуть
+      check: {stat: REF, dv: 12}
+      success: {text: "Паук улетает в угол. Ботинок свободен.", effects: {}}
+      fail: {text: "Паук кусает. Нога распухает на день.", effects: {hp: -5}}
+    - label: Купить новые ботинки
+      effects: {eddies: -200}
+      text: "Старые остаются пауку. Он заслужил."
+
+- id: au_ev_surf
+  title: Бонди
+  category: relationships
+  weight: 2
+  conditions: {districts: [au_kings_cross, au_harbour]}
+  text: "Пляж Бонди: сёрферы, спасатели, акулья сирена каждый час."
+  choices:
+    - label: Учиться сёрфингу
+      check: {stat: REF, dv: 13}
+      success: {text: "Ты встаёшь на доску на третьей волне. Сёрферы аплодируют.", effects: {mood: 5}}
+      fail: {text: "Волна побеждает. Песок везде.", effects: {mood: 2, hp: -2}}
+    - label: Загорать
+      effects: {mood: 3}
+      text: "Солнце жжёт сильнее, чем в Найт-Сити. Озоновой дыры тут не прячут."
+
+- id: au_ev_bushfire
+  title: Лесной пожар
+  category: rare
+  weight: 2
+  conditions: {districts: [au_kings_cross, au_harbour]}
+  text: "Небо оранжевое: пожары в горах. Дым над Сиднеем, пепел на машинах."
+  choices:
+    - label: Пойти волонтёром
+      effects: {humanity: 3, hp: -4}
+      text: "Ты таскаешь воду для пожарных. Коала на дереве смотрит на тебя."
+    - label: Сидеть дома
+      effects: {mood: -2}
+      text: "Окна закрыты, дым всё равно внутри."
+
+- id: nz_ev_haka
+  title: Хака
+  category: relationships
+  weight: 3
+  conditions: {districts: [nz_k_road, nz_viaduct]}
+  text: "Перед регби-матчем школьники исполняют хаку на площади. Земля дрожит от их шагов."
+  choices:
+    - label: Смотреть до конца
+      effects: {mood: 4}
+      text: "Мурашки по коже. Тама объясняет каждое слово."
+    - label: Попробовать повторить
+      effects: {mood: 3, street_cred: 1}
+      text: "Школьники смеются и учат тебя правильно."
+
+- id: nz_ev_sheep
+  title: Овцы на дороге
+  category: street
+  weight: 2
+  conditions: {districts: [nz_k_road, nz_viaduct]}
+  text: "За городом дорогу перегородило стадо овец. Фермер не спешит."
+  choices:
+    - label: Ждать
+      effects: {mood: 2}
+      text: "Двадцать минут. Ты считаешь овец и почти засыпаешь."
+    - label: Помочь фермеру
+      effects: {mood: 3, humanity: 1}
+      text: "Фермер благодарит и дарит свитер из своей шерсти."
+
+- id: nz_ev_quake
+  title: Толчок
+  category: rare
+  weight: 2
+  conditions: {districts: [nz_k_road, nz_viaduct]}
+  text: "Землетрясение средней силы. Здания качаются, но держат: их строили для этого."
+  choices:
+    - label: Помочь соседям
+      effects: {humanity: 2}
+      text: "Ты проверяешь стариков на этаже. Все целы."
+    - label: Переждать в дверном проёме
+      effects: {mood: -1}
+      text: "Всё кончается за минуту. Сердце колотится дольше."
+
+- id: sy_ev_pilgrims
+  title: Паломники
+  category: relationships
+  weight: 3
+  conditions: {districts: [sy_nave, sy_docks]}
+  text: "Паломники с материка выходят с парома и падают на колени перед экранами Оракула."
+  choices:
+    - label: Помочь им с багажом
+      effects: {humanity: 1, eddies: 100}
+      text: "Паломники благодарят и оставляют чаевые."
+    - label: Спросить, о чём молятся
+      effects: {mood: 2}
+      text: "О здоровье детей. Как везде."
+
+- id: sy_ev_gun_talk
+  title: Разговорчивый ствол
+  category: street
+  weight: 2
+  conditions: {districts: [sy_nave, sy_docks]}
+  text: "Чьё-то умное оружие на столике кафе начинает спорить с тобой о погоде."
+  choices:
+    - label: Поспорить
+      effects: {mood: 3}
+      text: "Оружие проигрывает спор и обижается. Хозяин смеётся."
+    - label: Игнорировать
+      effects: {}
+      text: "Оружие обиженно молчит."
+
+- id: sy_ev_storm
+  title: Шторм у острова
+  category: rare
+  weight: 2
+  conditions: {districts: [sy_docks]}
+  text: "Тихоокеанский шторм бьёт по искусственному острову. Доки заливает."
+  choices:
+    - label: Спасать лодки
+      effects: {humanity: 2, hp: -4, street_cred: 1}
+      text: "Рыбаки благодарят тебя всю следующую неделю."
+    - label: Подняться в Неф
+      effects: {mood: 1}
+      text: "Шторм переждать проще у серверов."

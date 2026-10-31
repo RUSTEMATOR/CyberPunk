@@ -1,0 +1,124 @@
+# First names carry a gender: m, f or n (unisex: the character's gender is rolled).
+# A surname is a plain string (does not inflect) or {male: ..., female: ...} (Slavic -ov/-ev types).
+first_names:
+  - {name: Ксения, gender: f}
+  - {name: Мария, gender: f}
+  - {name: Ана, gender: f}
+  - {name: Лусия, gender: f}
+  - {name: Фрида, gender: f}
+  - {name: Ребека, gender: f}
+  - {name: Кёко, gender: f}
+  - {name: Юки, gender: n}
+  - {name: Мика, gender: n}
+  - {name: Хана, gender: f}
+  - {name: Айша, gender: f}
+  - {name: Нгози, gender: f}
+  - {name: Мэй, gender: f}
+  - {name: Линь, gender: f}
+  - {name: Су-Ин, gender: f}
+  - {name: Ольга, gender: f}
+  - {name: Наталья, gender: f}
+  - {name: Дарья, gender: f}
+  - {name: Василиса, gender: f}
+  - {name: Агнешка, gender: f}
+  - {name: Ирина, gender: f}
+  - {name: Ева, gender: f}
+  - {name: Тереза, gender: f}
+  - {name: Эсперанса, gender: f}
+  - {name: Вера, gender: f}
+  - {name: Амара, gender: f}
+  - {name: Лиза, gender: f}
+  - {name: Джейн, gender: f}
+  - {name: Кэрол, gender: f}
+  - {name: Кендра, gender: f}
+  - {name: Антон, gender: m}
+  - {name: Андрей, gender: m}
+  - {name: Дмитрий, gender: m}
+  - {name: Тарас, gender: m}
+  - {name: Богдан, gender: m}
+  - {name: Ярослав, gender: m}
+  - {name: Кэндзи, gender: m}
+  - {name: Такеши, gender: m}
+  - {name: Рю, gender: m}
+  - {name: Хиро, gender: n}
+  - {name: Дайсуке, gender: m}
+  - {name: Хосе, gender: m}
+  - {name: Диего, gender: m}
+  - {name: Рамон, gender: m}
+  - {name: Мигель, gender: m}
+  - {name: Артуро, gender: m}
+  - {name: Карлос, gender: m}
+  - {name: Рафаэль, gender: m}
+  - {name: Джек, gender: m}
+  - {name: Томас, gender: m}
+  - {name: Райан, gender: m}
+  - {name: Майкл, gender: m}
+  - {name: Кваме, gender: m}
+  - {name: Лин, gender: n}
+  - {name: Вэй, gender: m}
+  - {name: Цзюнь, gender: m}
+  - {name: Дэнни, gender: m}
+  - {name: Бенито, gender: m}
+  - {name: Лео, gender: m}
+  - {name: Эмиль, gender: m}
+last_names:
+  - Ли
+  - Окада
+  - Санчес
+  - Ковальчук
+  - Мендоса
+  - Ортега
+  - Нгуен
+  - Ким
+  - Танака
+  - Сато
+  - Ямамото
+  - Морено
+  - {male: Кузнецов, female: Кузнецова}
+  - Петренко
+  - Шевченко
+  - Бондаренко
+  - Ковач
+  - Новак
+  - Уильямс
+  - Джонсон
+  - Браун
+  - Миллер
+  - Уилсон
+  - Харрис
+  - Чен
+  - Ву
+  - Чжоу
+  - Лю
+  - Сун
+  - Окафор
+  - Адебайо
+  - Адеми
+  - Каньете
+  - Гусман
+  - Рейес
+  - Фуэнтес
+  - Вега
+  - Ромеро
+  - Торрес
+  - Руис
+  - {male: Соколов, female: Соколова}
+  - {male: Волков, female: Волкова}
+  - {male: Лебедев, female: Лебедева}
+  - {male: Морозов, female: Морозова}
+  - {male: Исмаилов, female: Исмаилова}
+  - Хван
+  - Пак
+  - Мори
+  - Кояма
+  - Ивасаки
+  - Фукуда
+  - Кобаяши
+  - Накамура
+  - Такахаши
+  - Дюбуа
+  - Ларсен
+  - Хэвлок
+  - Мбанга
+  - Оладипо
+  - Гарсия

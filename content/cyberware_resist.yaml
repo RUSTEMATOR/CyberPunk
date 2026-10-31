@@ -1,0 +1,69 @@
+# Chrome resistance (owner request 24.10): implants that help the body accept the rest of the chrome. They lower the
+# chrome load (chrome_load_pct: the immunosuppressants needed), the humanity lost to new implants (humanity_loss_pct) and
+# the price of the suppressants (immuno_cost_pct). Plus a med charge booster for the fight injector.
+
+- key: resist_bridge
+  name: Иммунный мост
+  slot: circulatory
+  price: 4500
+  humanity_cost: 3
+  description: "Фильтр в аорте метит хром как «своё». Тело меньше воюет с железом, подавителей нужно меньше."
+  tier: street
+  category: noncombat
+  abilities: [immune_calm]
+  build: diver
+  requires: []
+  mods: {chrome_load_pct: 15, immuno_cost_pct: -10}
+
+- key: resist_neural_damper
+  name: Нейродемпфер
+  slot: brain
+  price: 9000
+  humanity_cost: 4
+  description: "Глушит фантомные боли и шёпот хрома в голове. Каждый новый имплант ложится мягче."
+  tier: mid
+  category: noncombat
+  abilities: [phantom_hush]
+  build: ghost
+  requires: []
+  mods: {humanity_loss_pct: -20, mood_weekly: 1}
+
+- key: resist_symbiont
+  name: Симбионт-адаптер
+  slot: spine
+  price: 16000
+  humanity_cost: 5
+  description: "Колония синтетических бактерий вдоль позвоночника учит иммунитет жить с железом. Месяц тошноты, потом тело принимает почти всё."
+  tier: military
+  category: noncombat
+  abilities: [symbiote_feed]
+  build: bioform
+  requires: []
+  mods: {chrome_load_pct: 30, humanity_loss_pct: -15, immuno_cost_pct: -25}
+
+- key: resist_cortex_shield
+  name: Кортикальный щит «Якорь»
+  slot: brain
+  price: 28000
+  humanity_cost: 6
+  exclusive_group: chrome_anchor
+  description: "Экспериментальный якорь личности от Biotechnica. Держит тебя собой, сколько бы железа ни было внутри."
+  tier: military
+  category: noncombat
+  abilities: [self_anchor]
+  build: ghost
+  requires: []
+  mods: {humanity_loss_pct: -35, chrome_load_pct: 20, check.social: -1}
+
+- key: med_autoinjector
+  name: Подкожный автоинъектор
+  slot: body
+  price: 6000
+  humanity_cost: 3
+  description: "Капсулы с биогелем под кожей бедра. В бою инжектор заряжается ещё одной дозой."
+  tier: mid
+  category: noncombat
+  abilities: [gel_shot]
+  build: medic
+  requires: []
+  mods: {med_charges: 1}

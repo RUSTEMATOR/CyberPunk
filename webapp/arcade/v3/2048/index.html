@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>2048</title>
+
+  <link href="style/main.css" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="meta/apple-touch-icon.png">
+  <link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone 5+ -->
+  <link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x920.png"  media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone, retina -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="../nc-theme.css"><script data-bar="bl" src="../nc.js" charset="utf-8"></script>
+<style>body{background:var(--nc-bg)!important;color:var(--nc-muted)!important;font-family:'NC Text',sans-serif!important}h1.title{color:var(--nc-yellow)!important;font-family:'NC Title',sans-serif!important;text-shadow:0 0 12px rgba(255,210,63,.55)}.score-container,.best-container{background:var(--nc-panel)!important;color:var(--nc-yellow)!important;border:1px solid var(--nc-line);font-family:'NC Mono',monospace!important}.score-container:after{content:'счёт'!important;color:var(--nc-muted)!important}.best-container:after{content:'рекорд'!important;color:var(--nc-muted)!important}.score-container .score-addition{color:var(--nc-cyan)!important}.game-container{background:var(--nc-panel)!important;border:1px solid var(--nc-line);box-shadow:0 0 24px rgba(45,226,230,.12)}.grid-cell{background:var(--nc-cell)!important}.tile .tile-inner{font-family:'NC Mono',monospace!important;border-radius:4px}.restart-button,.retry-button,.keep-playing-button{background:var(--nc-yellow)!important;color:var(--nc-bg)!important;font-family:'NC Title',sans-serif!important}.game-message{background:rgba(13,14,18,.82)!important}.game-message p{color:var(--nc-yellow)!important;font-family:'NC Title',sans-serif!important}.game-message.game-won{background:rgba(255,210,63,.25)!important}a{color:var(--nc-cyan)!important}hr{border-color:var(--nc-line)!important}strong{color:var(--nc-text)}.game-intro{color:var(--nc-text)!important}.tile.tile-2 .tile-inner{background:#18222E!important;color:#2DE2E6!important;box-shadow:inset 0 0 0 2px #2DE2E6,0 0 12px #2DE2E655!important}.tile.tile-4 .tile-inner{background:#182A33!important;color:#7AF6F8!important;box-shadow:inset 0 0 0 2px #7AF6F8,0 0 12px #7AF6F855!important}.tile.tile-8 .tile-inner{background:#241C38!important;color:#B98CFF!important;box-shadow:inset 0 0 0 2px #B98CFF,0 0 12px #B98CFF55!important}.tile.tile-16 .tile-inner{background:#2E1838!important;color:#E07BFF!important;box-shadow:inset 0 0 0 2px #E07BFF,0 0 12px #E07BFF55!important}.tile.tile-32 .tile-inner{background:#3A1530!important;color:#FF3CAC!important;box-shadow:inset 0 0 0 2px #FF3CAC,0 0 12px #FF3CAC55!important}.tile.tile-64 .tile-inner{background:#3A1220!important;color:#FF4D5E!important;box-shadow:inset 0 0 0 2px #FF4D5E,0 0 12px #FF4D5E55!important}.tile.tile-128 .tile-inner{background:#3A2810!important;color:#FF9F3F!important;box-shadow:inset 0 0 0 2px #FF9F3F,0 0 12px #FF9F3F55!important}.tile.tile-256 .tile-inner{background:#3A3010!important;color:#FFD23F!important;box-shadow:inset 0 0 0 2px #FFD23F,0 0 12px #FFD23F55!important}.tile.tile-512 .tile-inner{background:#173A22!important;color:#3DFF8F!important;box-shadow:inset 0 0 0 2px #3DFF8F,0 0 12px #3DFF8F55!important}.tile.tile-1024 .tile-inner{background:#103A3A!important;color:#2DE2E6!important;box-shadow:inset 0 0 0 2px #2DE2E6,0 0 12px #2DE2E655!important}.tile.tile-2048 .tile-inner{background:#FFD23F!important;color:#0D0E12!important;box-shadow:inset 0 0 0 2px #0D0E12,0 0 22px 4px rgba(255,210,63,.6)!important}.tile.tile-super .tile-inner{background:var(--nc-magenta)!important;color:var(--nc-bg)!important;box-shadow:0 0 24px var(--nc-magenta)!important}</style>
+</head>
+<body>
+  <div class="container">
+    <div class="heading">
+      <h1 class="title">2048</h1>
+      <div class="scores-container">
+        <div class="score-container">0</div>
+        <div class="best-container">0</div>
+      </div>
+    </div>
+
+    <div class="above-game">
+      <p class="game-intro">Сливай одинаковые чипы и собери <strong>2048</strong>.</p>
+      <a class="restart-button">Новая игра</a>
+    </div>
+
+    <div class="game-container">
+      <div class="game-message">
+        <p></p>
+        <div class="lower">
+	        <a class="keep-playing-button">Дальше</a>
+          <a class="retry-button">Ещё раз</a>
+        </div>
+      </div>
+
+      <div class="grid-container">
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+      </div>
+
+      <div class="tile-container">
+
+      </div>
+    </div>
+
+    <p class="game-explanation"><strong class="important">Как играть:</strong> свайпом двигай плитки. Две одинаковые сливаются в одну.</p><hr><p>Игра: 2048, Gabriele Cirulli (MIT). Оформление: Night City Life.</p>
+  </div>
+
+  <script src="js/bind_polyfill.js"></script>
+  <script src="js/classlist_polyfill.js"></script>
+  <script src="js/animframe_polyfill.js"></script>
+  <script src="js/keyboard_input_manager.js"></script>
+  <script src="js/html_actuator.js"></script>
+  <script src="js/grid.js"></script>
+  <script src="js/tile.js"></script>
+  <script src="js/local_storage_manager.js"></script>
+  <script src="js/game_manager.js"></script>
+  <script src="js/application.js"></script>
+</body>
+</html>

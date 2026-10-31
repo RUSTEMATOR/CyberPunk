@@ -1,0 +1,311 @@
+# Emergent roles (DESIGN.md 5b). Nobody picks a role: affinity grows from game-bus events,
+# slowly decays, and rank (0-10) comes from affinity. Starting kits are in presets.yaml.
+# Schema: app/content/schemas.py (Role). Guide: docs/CONTENT_GUIDE.md ("roles.yaml").
+#
+# `solo` is the sample. Every record here is filled the same way: affinity, decay_pct,
+# rank_thresholds (the same scale as solo, so the tenth rank sits near 85-90% of a specialist's
+# equilibrium), perks at ranks 2, 5, 8. Weekly specialist pace is about 9 points at decay 3.
+
+- key: solo
+  name: Соло
+  description: "Наёмный ствол. Сначала стреляет, потом считает убытки. Растёт от боёв и громких заказов."
+  # event[:param] -> affinity points per occurrence. When several keys fit one event, only the
+  # most specific one counts (more parameters wins; equal -> the larger weight).
+  affinity:
+    gig_done: 1                  # any gig
+    gig_done:loud: 3             # a loud gig (short form of gig_done:approach=loud)
+    fight_won: 2
+    fight_won:min_danger=3: 4    # a won fight against danger 3 or higher
+    martial_arts: 1              # owner report 24.10: martial arts off the monk path still builds a fighter
+    takedown: 1
+    crime_done:assault: 1
+  decay_pct: 3                   # percent of affinity lost every week
+  rank_thresholds: [6, 15, 28, 45, 66, 92, 124, 160, 205, 260]   # affinity for rank 1..10
+  perks:                         # exactly at ranks 2, 5, 8 (balance.roles.perk_ranks)
+    - rank: 2
+      name: Боевое чутьё
+      description: "Ты чувствуешь, откуда придёт удар. Все боевые проверки даются легче."
+      mods: {check.combat: 1}
+    - rank: 5
+      name: Холодная голова
+      description: "Громкие заказы идут проще, а ранения ты выдерживаешь дольше."
+      mods: {check.gig_loud: 1, hp_max: 5}
+    - rank: 8
+      name: Профессионал
+      description: "Бьёшь и стреляешь точнее и больнее, чем положено по прайсу."
+      mods: {check.combat: 1, ranged_damage: 1, melee_damage: 1}
+
+- key: netrunner
+  name: Нетраннер
+  description: "Взламывает системы и чужие мозги. Растёт от взломов, быстрых взломов в бою и заказов через Сеть."
+  affinity:
+    hack: 3                      # a hack outside a fight
+    quickhack_used: 3            # a quickhack in a fight
+    gig_done:approach=hack: 3    # a hack gig (long form: "hack" is also a gig type)
+  decay_pct: 3
+  rank_thresholds: [6, 15, 28, 45, 66, 92, 124, 160, 205, 260]
+  perks:
+    - rank: 2
+      name: Интерфейс
+      description: "Сеть слушается, как собственные пальцы. Нетраннинг даётся легче."
+      mods: {skill.netrunning: 1}
+    - rank: 5
+      name: Глубокий доступ
+      description: "В деке больше памяти, а заказы через взлом идут проще."
+      mods: {ram_max: 2, check.gig_hack: 1}
+    - rank: 8
+      name: Чёрный ход
+      description: "Вражеские нетраннеры ломают зубы о твою защиту, а быстрый взлом бьёт по ещё одной цели."
+      mods: {ice: 1, quickhack_targets: 1}
+
+- key: techie
+  name: Техник
+  description: "Чинит, собирает и переделывает всё, что ещё дымит. Растёт от ремонта и сборки."
+  affinity:
+    craft: 4                     # repair, build, modify gear
+    work_hard:career=mechanic: 2
+    study:skill=tech: 1
+  decay_pct: 3
+  rank_thresholds: [6, 15, 28, 45, 66, 92, 124, 160, 205, 260]
+  perks:
+    - rank: 2
+      name: Мастер
+      description: "Руки знают, что внутри. Техника даётся легче."
+      mods: {skill.tech: 1}
+    - rank: 5
+      name: Сборка на коленке
+      description: "Технику осваиваешь быстрее, а в магазинах находишь детали дешевле."
+      mods: {xp.tech: 20, shop_discount_pct: 5}
+    - rank: 8
+      name: "Золотые руки"
+      description: "Техника даётся ещё легче, а рипперы делают скидку тому, кто понимает их работу."
+      mods: {skill.tech: 1, ripper_discount_pct: 10}
+
+- key: medtech
+  name: Медтех
+  description: "Штопает на улице тех, кого другие бросили умирать. Растёт от лечения."
+  affinity:
+    heal: 2                      # healing yourself
+    heal:target=other: 4         # healing someone else (more specific, replaces the 2)
+  decay_pct: 3
+  rank_thresholds: [6, 15, 28, 45, 66, 92, 124, 160, 205, 260]
+  perks:
+    - rank: 2
+      name: Медицина
+      description: "Знаешь, где резать и как зашивать. Медицина даётся легче."
+      mods: {skill.medicine: 1}
+    - rank: 5
+      name: Полевой набор
+      description: "Лечить других проще, а собственные раны заживают быстрее."
+      mods: {check.heal: 1, hp_regen: 1}
+    - rank: 8
+      name: Хирург улицы
+      description: "Медицина даётся ещё легче, а кровотечение почти не страшно."
+      mods: {skill.medicine: 1, bleed: 2}
+
+- key: fixer
+  name: Фиксер
+  description: "Держит связи, знает цены и должников, чужие сделки идут через его руки. Растёт от посредничества и встреч с людьми."
+  affinity:
+    deal:broker: 4               # mediation and contacts
+    social_time: 2
+    gig_done:approach=talk: 2    # a gig closed by talking
+  decay_pct: 3
+  rank_thresholds: [6, 15, 28, 45, 66, 92, 124, 160, 205, 260]
+  perks:
+    - rank: 2
+      name: Оператор
+      description: "Знаешь, кто кому должен. Разговоры и уговоры даются легче."
+      mods: {check.social: 1}
+    - rank: 5
+      name: "Нужные люди"
+      description: "Заказы, решённые разговором, идут проще, а отношения крепнут быстрее."
+      mods: {check.gig_talk: 1, relation_gain: 1}
+    - rank: 8
+      name: Чёрная книга
+      description: "Все номера в голове. Из драки легче уйти разговором, а заказы платят больше."
+      mods: {check.talk_exit: 1, gig_pay_pct: 10}
+
+- key: rockerboy
+  name: Рокербой
+  description: "Поёт, кричит и продаёт себя со сцены. Фанаты платят, менеджмент считает. Растёт от выступлений."
+  affinity:
+    perform: 4                   # a stage performance
+    work_hard:career=rockerboy: 2
+    social_time: 1
+  decay_pct: 3
+  rank_thresholds: [6, 15, 28, 45, 66, 92, 124, 160, 205, 260]
+  perks:
+    - rank: 2
+      name: Харизма
+      description: "Зал слушает, даже когда не собирался. Говорить с людьми проще."
+      mods: {check.social: 1}
+    - rank: 5
+      name: Фан-клуб
+      description: "Музыка приносит больше денег, а люди охотнее идут на сближение."
+      mods: {salary_pct.rockerboy: 10, relation_gain: 1}
+    - rank: 8
+      name: Легенда подворотни
+      description: "Тебя узнают на улице. Разговоры даются легче, а настроение держится лучше."
+      mods: {check.social: 1, mood_weekly: 2}
+
+- key: media
+  name: Медиа
+  description: "Репортёр с камерой и дурными привычками. Чужие секреты для него товар. Растёт от репортажей."
+  affinity:
+    report: 4                    # a story, filming
+    work_hard:career=media: 2
+  decay_pct: 3
+  rank_thresholds: [6, 15, 28, 45, 66, 92, 124, 160, 205, 260]
+  perks:
+    - rank: 2
+      name: Доверие
+      description: "С тобой охотно говорят, даже держа тебя на мушке. Уйти из драки разговором легче."
+      mods: {check.talk_exit: 1}
+    - rank: 5
+      name: Съёмка с руки
+      description: "Тебя не замечают. Тихие заказы и скрытность даются легче."
+      mods: {check.gig_quiet: 1, skill.stealth: 1}
+    - rank: 8
+      name: Дозированный слив
+      description: "Знаешь, что показать и кому. Гонорары в медиа растут, а разговоры даются легче."
+      mods: {salary_pct.media: 15, check.social: 1}
+
+- key: corpo
+  name: Корпорат
+  description: "Работает на корпорацию, пока корпорация не решит иначе. Растёт от усердной работы и повышений в корпорации."
+  affinity:
+    work_hard:career=corpo: 4
+    promotion:career=corpo: 3
+    deal:broker: 1
+  decay_pct: 3
+  rank_thresholds: [6, 15, 28, 45, 66, 92, 124, 160, 205, 260]
+  perks:
+    - rank: 2
+      name: Команда
+      description: "Ты в системе, и система за тебя. Карьерные проверки даются легче."
+      mods: {check.career: 1}
+    - rank: 5
+      name: Премия квартала
+      description: "Зарплата в корпорации выше, а все навыки растут быстрее."
+      mods: {salary_pct.corpo: 10, xp.all: 10}
+    - rank: 8
+      name: Золотой бейдж
+      description: "Двери открываются сами, зарплата растёт, и жизнь кажется не такой уж плохой."
+      mods: {salary_pct.corpo: 15, mood_weekly: 1}
+
+- key: lawman
+  name: Коп
+  description: "Служит в NCPD. Закон в Найт-Сити продаётся, но кому-то надо держать улицу. Растёт от службы и повышений в полиции."
+  affinity:
+    work_hard:career=ncpd: 4
+    promotion:career=ncpd: 3
+    takedown: 2                  # taking someone down without a body
+  decay_pct: 3
+  rank_thresholds: [6, 15, 28, 45, 66, 92, 124, 160, 205, 260]
+  perks:
+    - rank: 2
+      name: Подкрепление
+      description: "Кто-то всегда прикроет. Боевые проверки даются легче."
+      mods: {check.combat: 1}
+    - rank: 5
+      name: Ордер
+      description: "Значок весит больше ствола: из драки легче уйти разговором. И на ногах держишься дольше."
+      mods: {check.talk_exit: 1, hp_max: 5}
+    - rank: 8
+      name: "Выслуга лет"
+      description: "Жалованье в полиции растёт, а удары ты держишь лучше."
+      mods: {salary_pct.ncpd: 15, damage_reduction: 1}
+
+- key: nomad
+  name: Кочевник
+  description: "Дорога важнее адреса. Своя машина, своя семья, свои долги чести. Растёт от поездок, особенно по Бэдлендсу."
+  affinity:
+    drive: 3                     # a trip
+    drive:district=badlands: 4   # a trip through the Badlands (more specific)
+    gig_done:type=delivery: 2
+  decay_pct: 3
+  rank_thresholds: [6, 15, 28, 45, 66, 92, 124, 160, 205, 260]
+  perks:
+    - rank: 2
+      name: Своя тачка
+      description: "Ты чувствуешь машину. Вождение даётся легче."
+      mods: {skill.driving: 1}
+    - rank: 5
+      name: Караван
+      description: "Уйти от погони и сбежать из передряги проще."
+      mods: {flee: 1, check.escape: 1}
+    - rank: 8
+      name: Дорога без адреса
+      description: "Раны заживают быстрее, а за рулём ты ещё увереннее."
+      mods: {hp_regen: 1, skill.driving: 1}
+
+- key: monk
+  name: Монах
+  description: "Держит обеты и дышит ровно: город шумит, монах слушает тишину. Растёт от медитаций, боевых искусств, служения и удержанных обетов."
+  affinity:
+    meditate: 2
+    martial_arts: 2
+    vow_week: 2                  # a week lived while holding a vow
+    service: 1
+  decay_pct: 2                   # slow: the discipline stays longer than the habit
+  rank_thresholds: [6, 15, 28, 45, 66, 92, 124, 160, 205, 260]
+  perks:
+    - rank: 2
+      name: Ровное дыхание
+      description: "Шум города не выбивает из колеи. Настроение крепче, терапия помогает лучше."
+      mods: {mood_weekly: 1, therapy_bonus: 1}
+    - rank: 5
+      name: "Ясный ум"
+      description: "Людям легко с тобой говорить, а все навыки растут быстрее."
+      mods: {check.social: 1, xp.all: 10}
+    - rank: 8
+      name: Кулак без ярости
+      description: "Удар спокойный и точный. В бою ты увереннее, а рукопашная бьёт больнее."
+      mods: {melee_damage: 1, check.combat: 1}
+
+- key: hustler
+  name: Аферист
+  description: "Берёт чужое без стрельбы: карманы, машины, кассы. Растёт от краж, угонов и ограблений."
+  affinity:
+    crime_done:pickpocket: 4
+    crime_done:car_theft: 4
+    crime_done:store_robbery: 4
+    gig_done:type=theft: 2
+  decay_pct: 4                   # fast: a con is forgotten with the last deal
+  rank_thresholds: [6, 15, 28, 45, 66, 92, 124, 160, 205, 260]
+  perks:
+    - rank: 2
+      name: Чистые руки
+      description: "Пальцы быстрее глаз охраны. Скрытность даётся легче."
+      mods: {skill.stealth: 1}
+    - rank: 5
+      name: Второе дно
+      description: "Преступления даются легче, а добыча с них больше."
+      mods: {crime_reward_pct: 15, check.crime: 1}
+    - rank: 8
+      name: Липовые бумаги
+      description: "Розыск остывает быстрее, а на дело ты идёшь увереннее."
+      mods: {heat_decay: 1, check.crime: 1}
+
+- key: trader
+  name: Торговец
+  description: "Покупает дёшево, продаёт дорого и не задаёт лишних вопросов. Растёт от торговых сделок."
+  affinity:
+    deal:trade: 4                # business and resale
+    event_resolved:category=money: 2
+  decay_pct: 3
+  rank_thresholds: [6, 15, 28, 45, 66, 92, 124, 160, 205, 260]
+  perks:
+    - rank: 2
+      name: Наценка
+      description: "Знаешь настоящую цену вещей. В магазинах дешевле."
+      mods: {shop_discount_pct: 5}
+    - rank: 5
+      name: Свой склад
+      description: "Рипперы берут с тебя меньше, а заказы платят чуть больше."
+      mods: {ripper_discount_pct: 10, gig_pay_pct: 5}
+    - rank: 8
+      name: Оптовик
+      description: "Скидки в магазинах растут, а заказы, решённые разговором, идут проще."
+      mods: {shop_discount_pct: 5, check.gig_talk: 1}

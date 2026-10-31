@@ -1,0 +1,704 @@
+# The pressure (owner request 24.10): a constant challenge. Queued by services/pressure.py from balance.pressure.pools,
+# never drawn at random. Three tiers (street, hustler, corp); in each: base threats, demands of those who hold the
+# character on a hook (`hook`), revenge of the wronged (`enmity`). `flag_set:nem_spawn_<faction>` names a nemesis next
+# month; `flag_set:pr_krysha_<gang|ncpd|corp>` takes a protection; `habit:<drug>` hooks on a drug.
+# Player text avoids gendered past tense.
+
+# ======================================================================== STREET: base
+
+- id: pr_gang_recruit
+  title: Вербовщик
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Вербовщик банды
+  text: "У подъезда ждёт парень с хромированной челюстью и двумя друзьями. «Район меняется, чумба. Скоро здесь будут только наши и чужие. Ты пока ничей. Это ненадолго»."
+  choices:
+    - label: Пойти к ним
+      effects: {hook: 2, street_cred: 2, faction_rep:maelstrom: 5, eddies: 500}
+      text: "Рукопожатие, жетон банды, первые деньги. Теперь у тебя есть спина, которую прикроют. И долг, который спросят."
+    - label: Отказать в лицо
+      violent: true
+      effects: {start_combat: 2, enmity: 1, flag_set:nem_spawn_maelstrom: true}
+      text: "«Ничей и останусь». Хромированная челюсть улыбается и кивает друзьям."
+    - label: Отшутиться и уйти
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Ты говоришь, что подумаешь, и умудряешься уйти без синяков. Тебя оставляют в покое. Пока.", effects: {mood: -1}}
+      fail: {text: "Шутка не заходит. Тебя бьют не сильно, но запоминают.", effects: {hp: -8, enmity: 1}}
+
+- id: pr_racket_street
+  title: Крыша
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Двое из местной банды объясняют расценки. «Каждый месяц немного эдди, и с тобой ничего не случится. Ни пожара, ни грабежа, ни переломов. Удобно, правда?»"
+  choices:
+    - label: Платить за крышу
+      effects: {flag_set:pr_krysha_gang: true, mood: -2}
+      text: "Ты киваешь. Теперь каждый месяц часть денег уходит им, зато мелкие хищники обходят тебя стороной."
+    - label: Послать их
+      violent: true
+      effects: {start_combat: 2, enmity: 2}
+      text: "Ты говоришь, куда им идти. Они не уходят."
+    - label: Сказать, что уже под кем-то
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Ты называешь имя, которое знают все. Парни извиняются и уходят. Блеф сработал.", effects: {street_cred: 1}}
+      fail: {text: "Они проверяют. Блеф не сработал, и платить теперь придётся больше.", effects: {eddies: -1500, enmity: 1}}
+
+- id: pr_dealer_sample
+  title: Первая бесплатно
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Дилер в переулке протягивает ампулу. «Первая бесплатно, чумба. Ты выглядишь уставшим. Это поможет. Честно». У него добрые глаза и очень плохие зубы."
+  choices:
+    - label: Взять
+      effects: {habit:glitter: 22, mood: 6, hook: 1}
+      text: "Мир становится чётким и быстрым. Через час тебе хочется ещё. Дилер оставил номер."
+    - label: Отказаться
+      effects: {mood: -1}
+      text: "Дилер пожимает плечами. «Передумаешь — знаешь, где меня найти». Ты знаешь."
+    - label: Выбить из него товар
+      violent: true
+      check: {stat: BODY, skill: melee, dv: 13}
+      success: {text: "Дилер на асфальте, его товар в канализации. Район это заметил, и кто-то очень недоволен.", effects: {street_cred: 2, enmity: 1, flag_set:nem_spawn_valentinos: true}}
+      fail: {text: "У дилера оказываются друзья. Ты уходишь с разбитым лицом.", effects: {hp: -12}}
+
+- id: pr_slavers_van
+  title: Фургон без номеров
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Ловец работорговцев
+  foe_faction: scavengers
+  text: "Ночью рядом тормозит фургон без номеров. Боковая дверь отъезжает, внутри сетки, шокеры и пустые глаза пленников. Работорговцы ищут здоровых людей для плантаций за границей."
+  choices:
+    - label: Драться
+      violent: true
+      effects: {start_combat: 3, street_cred: 2}
+      text: "Первый ловец получает в челюсть раньше, чем достаёт шокер."
+    - label: Бежать
+      check: {stat: REF, skill: stealth, dv: 14}
+      success: {text: "Ты ныряешь в подворотню и уходишь по крышам. Фургон уезжает искать кого-то медленнее.", effects: {mood: -3}}
+      fail: {text: "Шокер в спину. Ты приходишь в себя в фургоне и вырываешься на светофоре, оставив ловцам деньги и кусок кожи.", effects: {hp: -16, eddies_pct: -20, mood: -6}}
+    - label: Заплатить выкуп
+      effects: {eddies: -3000}
+      text: "Ты предлагаешь деньги до того, как дверь закроется. Работорговцы — деловые люди."
+
+- id: pr_slavers_market
+  title: Рынок людей
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Надсмотрщик
+  foe_faction: scavengers
+  text: "В заброшенном складе на окраине торгуют людьми. Клетки, цены мелом на досках, покупатели в масках. Среди пленников ты узнаёшь соседского подростка."
+  choices:
+    - label: Освободить пленников
+      violent: true
+      effects: {start_combat: 4, humanity: 5, street_cred: 3, enmity: 2, flag_set:nem_spawn_scavengers: true}
+      text: "Ты выбиваешь дверь клетки и стреляешь в лампы. В темноте начинается хаос."
+    - label: Выкупить соседа
+      effects: {eddies: -5000, humanity: 3, mood: 2}
+      text: "Ты торгуешься, платишь и уводишь парня за руку. Остальные смотрят тебе вслед."
+    - label: Слить место журналистам
+      check: {stat: INT, skill: netrunning, dv: 14}
+      success: {text: "Через сутки склад показывают по всем каналам. NCPD приходится приехать. Работорговцы ищут, кто слил.", effects: {humanity: 2, enmity: 1}}
+      fail: {text: "Твоё сообщение перехватывают. Теперь работорговцы знают твоё имя.", effects: {enmity: 2, flag_set:nem_spawn_scavengers: true}}
+
+- id: pr_street_challenge
+  title: Вызов на районе
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Местный задира
+  text: "Местный громила при всём районе говорит, что ты слабак и живёшь здесь из милости. Люди смотрят. Если промолчать, это станет правдой."
+  choices:
+    - label: Ответить кулаками
+      violent: true
+      effects: {start_combat: 2, street_cred: 2}
+      text: "Круг расступается. Ты выходишь в центр."
+    - label: Промолчать
+      effects: {street_cred: -3, mood: -4}
+      text: "Ты уходишь. За спиной смех. Завтра об этом будет знать весь квартал."
+    - label: Унизить словами
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Пара фраз, и смеются уже над ним. Громила уходит красный. Он это запомнит.", effects: {street_cred: 2, enmity: 1}}
+      fail: {text: "Слова не помогают. Он бьёт первым и при всех.", effects: {hp: -10, street_cred: -2}}
+
+- id: pr_loan_shark
+  title: Ростовщик
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Улыбчивый ростовщик с района предлагает деньги до зарплаты. «Пять тысяч сейчас, вернёшь через пару месяцев. Проценты? Ерунда, договоримся»."
+  choices:
+    - label: Взять деньги
+      effects: {eddies: 5000, hook: 2}
+      text: "Пачка эдди в кармане. Ростовщик записывает твой адрес и имя мамы."
+    - label: Отказаться
+      effects: {}
+      text: "«Как знаешь, чумба. Я всегда здесь». Это звучит как угроза."
+    - label: Свести его с конкурентом
+      check: {stat: INT, skill: persuasion, dv: 14}
+      success: {text: "Ты сталкиваешь двух ростовщиков лбами и получаешь процент от сделки.", effects: {eddies: 1500}}
+      fail: {text: "Оба понимают, что ты ими играешь.", effects: {enmity: 1, hp: -6}}
+
+# ======================================================================== STREET: demand (on a hook)
+
+- id: pr_gang_errand
+  title: Должок банде
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Тебе звонят те, кому ты обязан. «Надо отвезти сумку на другой конец города. Не открывай. Не опаздывай. Не попадись»."
+  choices:
+    - label: Отвезти сумку
+      check: {stat: REF, skill: driving, dv: 14}
+      success: {text: "Сумка доезжает. Тебе кивают и списывают часть долга.", effects: {hook: -1, eddies: 800}}
+      fail: {text: "Блокпост NCPD. Сумку приходится бросить. Теперь ты должен ещё больше.", effects: {hook: 1, heat: 2}}
+    - label: Отказаться
+      effects: {hook: -1, enmity: 2, flag_set:nem_spawn_maelstrom: true}
+      text: "«Ты сейчас очень ошибаешься», — говорят в трубке и вешают её."
+    - label: Откупиться
+      effects: {eddies: -4000, hook: -2}
+      text: "Деньги вместо услуги. Банда берёт, но смотрит косо."
+
+- id: pr_dealer_debt
+  title: Дилер напоминает
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Дилер, с которым ты знаком слишком хорошо, ждёт у двери. «Ты мне должен. Или деньгами, или отнесёшь кое-что в школу через дорогу»."
+  choices:
+    - label: Заплатить
+      effects: {eddies: -2500, hook: -1}
+      text: "Ты платишь. Дилер доволен и предлагает новую партию со скидкой."
+    - label: Отнести товар
+      effects: {hook: -1, humanity: -6, eddies: 600}
+      text: "Ты делаешь то, о чём будешь думать по ночам."
+    - label: Сдать его NCPD
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Копы забирают дилера. Его друзья знают, кто позвонил.", effects: {hook: -2, enmity: 2, flag_set:nem_spawn_valentinos: true}}
+      fail: {text: "Копы приезжают и забирают тебя за компанию.", effects: {heat: 2, eddies: -1500}}
+
+- id: pr_racket_raise
+  title: Крыша дорожает
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Те, кто тебя «защищает», объявляют новые расценки. «Времена тяжёлые, чумба. Инфляция»."
+  choices:
+    - label: Платить больше
+      effects: {eddies: -2500, hook: -1}
+      text: "Ты платишь. Каждый месяц будет только дороже."
+    - label: Торговаться
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Тебе оставляют старую цену за мелкую услугу.", effects: {hook: -1}}
+      fail: {text: "Торг их злит. Цена удваивается, а на двери появляется метка.", effects: {eddies: -4000, enmity: 1}}
+    - label: Отказаться от крыши
+      effects: {flag_clear:krysha: true, enmity: 2}
+      text: "Ты говоришь, что больше не платишь. Защиты больше нет, а бывшие защитники теперь опаснее всех."
+
+- id: pr_loan_shark_due
+  title: Срок вышел
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Коллектор
+  text: "Ростовщик пришёл за своим. С ним двое коллекторов с гидравлическими кулаками. «Проценты набежали, чумба. Восемь тысяч»."
+  choices:
+    - label: Отдать восемь тысяч
+      effects: {eddies: -8000, hook: -2}
+      text: "Долг закрыт. Ростовщик почти разочарован."
+    - label: Драться с коллекторами
+      violent: true
+      effects: {start_combat: 3, hook: -2, enmity: 2}
+      text: "Гидравлика шипит. Разговор окончен."
+    - label: Просить отсрочку
+      check: {stat: EMP, skill: persuasion, dv: 14}
+      success: {text: "Ростовщик соглашается подождать. Под новый процент.", effects: {mood: -2}}
+      fail: {text: "Отсрочку дают в виде сломанного пальца.", effects: {hp: -10, eddies_pct: -15}}
+
+# ======================================================================== STREET: revenge
+
+- id: pr_door_burned
+  title: Метка на двери
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Ночью кто-то поджигает твою дверь и рисует на стене метку. Это предупреждение от тех, кого ты задел. Следующего не будет."
+  choices:
+    - label: Найти их
+      violent: true
+      effects: {start_combat: 3, enmity: -1}
+      text: "Ты идёшь по следу краски. Он приводит прямо к ним."
+    - label: Укрепить жильё
+      effects: {eddies: -3000, mood: -2}
+      text: "Стальная дверь, камеры, засов. Спать спокойнее, но жить дороже."
+    - label: Помириться
+      check: {stat: EMP, skill: persuasion, dv: 15}
+      success: {text: "Ты приходишь без оружия и говоришь. Тебя выслушивают. Вражда остывает.", effects: {enmity: -2, eddies: -1000}}
+      fail: {text: "Разговор заканчивается быстрее, чем начался.", effects: {hp: -12}}
+
+- id: pr_ambush_alley
+  title: Засада в переулке
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Мститель
+  text: "Переулок, который ты проходишь каждый день, сегодня перекрыт. Впереди трое, сзади двое. Кто-то помнит обиду."
+  choices:
+    - label: Пробиваться
+      violent: true
+      effects: {start_combat: 3}
+      text: "Ты выбираешь самого крупного и идёшь прямо на него."
+    - label: Уйти по крышам
+      check: {stat: REF, skill: stealth, dv: 15}
+      success: {text: "Пожарная лестница, крыша, другая улица. Удаётся уйти, но они знают, где ты ходишь.", effects: {mood: -2}}
+      fail: {text: "Лестница обрывается. Тебя догоняют внизу.", effects: {hp: -18}}
+
+- id: pr_snitch_tag
+  title: Слух о стукаче
+  category: street
+  weight: 1
+  forced_only: true
+  text: "По району ходит слух, что ты сдаёшь людей NCPD. Его пустили твои враги. Соседи перестают здороваться, в баре тебе не наливают."
+  choices:
+    - label: Найти, кто пустил слух
+      check: {stat: INT, skill: stealth, dv: 14}
+      success: {text: "Ты находишь источник и при всех показываешь, кто тут врёт. Слух умирает, враг теряет лицо.", effects: {street_cred: 3, enmity: -1}}
+      fail: {text: "Поиски только подтверждают слух в глазах людей.", effects: {street_cred: -4}}
+    - label: Переждать
+      effects: {street_cred: -3, mood: -3}
+      text: "Через месяц слух утихнет. Осадок останется."
+
+# ======================================================================== HUSTLER: base
+
+- id: pr_biz_racket
+  title: Новая банда в квартале
+  category: money
+  weight: 1
+  forced_only: true
+  foe: Бригадир рэкетиров
+  text: "В квартал пришла новая банда и обходит всех, у кого есть дело. «Десять процентов, и ваш бизнес не сгорит». У соседа вчера сгорел."
+  choices:
+    - label: Платить десять процентов
+      effects: {eddies_pct: -10, flag_set:pr_krysha_gang: true}
+      text: "Ты платишь. Теперь у тебя новые партнёры, которые ничего не делают."
+    - label: Встретить их силой
+      violent: true
+      effects: {start_combat: 3, enmity: 2, street_cred: 2, flag_set:nem_spawn_tyger_claws: true}
+      text: "Когда они приходят за деньгами, их встречают стволы."
+    - label: Пойти к NCPD
+      effects: {eddies: -3000, flag_set:pr_krysha_ncpd: true}
+      text: "Капитан участка берёт конверт и обещает, что патрули будут заезжать. Теперь ты платишь копам."
+
+- id: pr_raider_takeover
+  title: Рейдеры
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Утром на столе бумаги: по документам твоё дело принадлежит фирме-однодневке. Юристы рейдеров уже в приёмной, а у входа их охрана."
+  choices:
+    - label: Нанять юристов
+      effects: {eddies: -8000}
+      text: "Три недели судов и взяток. Документы признают поддельными. Дорогая победа."
+    - label: Взломать их реестр
+      check: {stat: INT, skill: netrunning, dv: 16}
+      success: {text: "Ты подменяешь записи обратно и добавляешь рейдерам пару долгов. Их фирма исчезает за ночь.", effects: {street_cred: 2, enmity: 1}}
+      fail: {text: "Их лёд лучше твоего. Взлом засекают, рейдеры забирают часть активов.", effects: {eddies_pct: -25, enmity: 1}}
+    - label: Договориться о доле
+      effects: {hook: 2, eddies_pct: -10}
+      text: "Ты отдаёшь им долю и место в совете. Дело осталось у тебя, но решения теперь не только твои."
+
+- id: pr_councilman_favor
+  title: Депутат просит
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Депутат городского совета приглашает на ужин. «Мне нужен человек, который проведёт деньги через своё дело. Взамен — разрешения, проверки мимо, нужные знакомства»."
+  choices:
+    - label: Согласиться
+      effects: {eddies: 6000, hook: 3, status: 1}
+      text: "Рукопожатие. Деньги идут через твои счета, разрешения приходят сами. Депутат теперь знает о тебе всё."
+    - label: Вежливо отказать
+      effects: {enmity: 1}
+      text: "Депутат улыбается и говорит, что понимает. Через неделю к тебе приходит первая проверка."
+    - label: Записать разговор
+      check: {stat: COOL, skill: stealth, dv: 15}
+      success: {text: "Запись у тебя. Теперь депутат должен тебе, а не наоборот.", effects: {status: 1, enmity: 1, eddies: 2000}}
+      fail: {text: "Его охрана находит жучок. Ужин заканчивается очень неприятно.", effects: {hp: -12, enmity: 2}}
+
+- id: pr_rival_contract
+  title: Конкурент нанял киллера
+  category: money
+  weight: 1
+  forced_only: true
+  foe: Наёмный убийца
+  text: "Знакомый фиксер шепчет: конкурент заказал тебя. Киллер уже в городе, работает быстро и дорого."
+  choices:
+    - label: Встретить киллера
+      violent: true
+      effects: {start_combat: 4, street_cred: 3}
+      text: "Ты ждёшь там, где он придёт. Он приходит."
+    - label: Перекупить контракт
+      effects: {eddies: -10000, enmity: 1}
+      text: "Киллер берёт двойную цену и уезжает. Конкурент узнаёт и ищет нового."
+    - label: Исчезнуть на время
+      effects: {eddies: -3000, mood: -4}
+      text: "Месяц в мотеле на окраине. Дело без присмотра, но ты жив."
+
+- id: pr_union_boss
+  title: Профсоюз
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Глава местного профсоюза требует поднять работникам зарплату и платить «взносы» лично ему. Иначе забастовка, пикеты и разбитые витрины."
+  choices:
+    - label: Платить взносы
+      effects: {eddies: -4000, hook: 1}
+      text: "Работники довольны, глава профсоюза ещё довольнее."
+    - label: Разогнать профсоюз
+      violent: true
+      effects: {start_combat: 2, enmity: 2, humanity: -2}
+      text: "Ты нанимаешь людей, которые объясняют пикетчикам, что забастовка вредна для здоровья."
+    - label: Договориться с людьми напрямую
+      check: {stat: EMP, skill: persuasion, dv: 14}
+      success: {text: "Ты говоришь с работниками сам. Они остаются с тобой, а глава профсоюза — один.", effects: {humanity: 2, enmity: 1}}
+      fail: {text: "Люди не верят хозяину. Забастовка на две недели.", effects: {eddies: -3000, mood: -3}}
+
+- id: pr_cartel_launder
+  title: Картель ищет прачечную
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Человек картеля кладёт на стол чемодан. «Каждый месяц такой чемодан проходит через твою кассу. Ты получаешь двадцать процентов. Отказываться не принято»."
+  choices:
+    - label: Взять чемодан
+      effects: {eddies: 9000, hook: 3, heat: 1}
+      text: "Двадцать процентов от очень больших денег. И партнёр, от которого не уходят."
+    - label: Отказать
+      effects: {enmity: 2, flag_set:nem_spawn_valentinos: true}
+      text: "Человек картеля забирает чемодан и молча уходит. Это хуже любой угрозы."
+    - label: Сдать картель корпорации
+      check: {stat: INT, skill: persuasion, dv: 16}
+      success: {text: "Корпоративная безопасность платит за информацию и берёт тебя под защиту.", effects: {eddies: 5000, flag_set:pr_krysha_corp: true, enmity: 2}}
+      fail: {text: "Корпорация берёт информацию и забывает о тебе. Картель — нет.", effects: {enmity: 3}}
+
+# ======================================================================== HUSTLER: demand
+
+- id: pr_councilman_demand
+  title: Депутату нужна услуга
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Депутат звонит лично. «Мне нужно, чтобы один свидетель не дошёл до суда. Ты же понимаешь, как много я для тебя сделал»."
+  choices:
+    - label: Сделать
+      effects: {hook: -1, humanity: -6, eddies: 3000}
+      text: "Свидетель уезжает из города. Как именно, лучше не вспоминать."
+    - label: Отказать
+      effects: {hook: -2, enmity: 2}
+      text: "«Очень жаль», — говорит депутат. Через месяц у тебя отзывают лицензии."
+    - label: Предупредить свидетеля
+      check: {stat: COOL, skill: stealth, dv: 15}
+      success: {text: "Свидетель уходит под защиту журналистов. Депутат не знает, кто помог. Пока.", effects: {hook: -2, humanity: 3}}
+      fail: {text: "Депутат знает, кто помог.", effects: {hook: -2, enmity: 3, eddies_pct: -15}}
+
+- id: pr_cartel_demand
+  title: Чемоданов стало больше
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Картель привозит три чемодана вместо одного. «Нам нужно больше. Твоя доля та же. Возражения?»"
+  choices:
+    - label: Принять
+      effects: {eddies: 4000, heat: 3, hook: 1}
+      text: "Касса ломится от чужих денег. Налоговая начинает интересоваться."
+    - label: Выйти из схемы
+      check: {stat: COOL, skill: persuasion, dv: 17}
+      success: {text: "Ты находишь им другую прачечную и выходишь. Картель отпускает. Это редкость.", effects: {hook: -3}}
+      fail: {text: "Из картеля не выходят. Тебе объясняют это на парковке.", effects: {hp: -20, enmity: 2}}
+
+- id: pr_captain_cut
+  title: Капитан хочет больше
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Капитан участка NCPD заходит без звонка. «Твоё дело растёт, мой конверт должен расти тоже. И ещё: нам нужен человек, который подбросит улики одному типу»."
+  choices:
+    - label: Заплатить и подбросить
+      effects: {eddies: -3000, humanity: -3, hook: -1}
+      text: "Невиновный человек получает десять лет. Капитан доволен."
+    - label: Только заплатить
+      effects: {eddies: -6000}
+      text: "Двойной конверт вместо услуги. Капитан недоволен, но берёт."
+    - label: Сдать капитана в отдел внутренних расследований
+      check: {stat: INT, skill: persuasion, dv: 16}
+      success: {text: "Капитана снимают. Полиция района теперь не любит тебя, но боится.", effects: {hook: -2, heat: 2, enmity: 1}}
+      fail: {text: "Внутренние расследования — его друзья. Теперь на тебя заведено дело.", effects: {heat: 4, enmity: 2, flag_set:nem_spawn_ncpd: true}}
+
+# ======================================================================== HUSTLER: revenge
+
+- id: pr_inspection_raid
+  title: Налёт проверок
+  category: money
+  weight: 1
+  forced_only: true
+  text: "За одну неделю к тебе приходят санинспекция, пожарные, налоговая и миграционная служба. Кто-то очень постарался."
+  choices:
+    - label: Платить всем
+      effects: {eddies: -7000}
+      text: "Каждому свой конверт. Проверки уходят довольными."
+    - label: Закрыться до конца проверок
+      effects: {biz_slump: 4, mood: -3}
+      text: "Месяц простоя. Клиенты уходят к конкурентам."
+    - label: Найти заказчика
+      check: {stat: INT, skill: stealth, dv: 15}
+      success: {text: "Ты находишь, кто стоит за проверками, и отвечаешь тем же. Враг теряет больше тебя.", effects: {enmity: -1, street_cred: 2}}
+      fail: {text: "Пока ты ищешь, проверки делают своё дело.", effects: {eddies: -4000, biz_slump: 2}}
+
+- id: pr_arson
+  title: Поджог
+  category: money
+  weight: 1
+  forced_only: true
+  foe: Поджигатель
+  text: "Ночью звонит охранник: в подсобке пахнет бензином, у чёрного хода чужие. Поджигатели ещё здесь."
+  choices:
+    - label: Ехать и драться
+      violent: true
+      effects: {start_combat: 3, enmity: -1}
+      text: "Ты приезжаешь, когда первая бутылка ещё не разбилась."
+    - label: Вызвать пожарных и ждать
+      effects: {eddies: -5000, biz_slump: 2}
+      text: "Пожарные приезжают через сорок минут. Часть здания спасли."
+
+- id: pr_smear_local
+  title: Чёрный пиар
+  category: money
+  weight: 1
+  forced_only: true
+  text: "В сети вирусное видео: якобы в твоём деле травят людей и бьют работников. Видео смонтировано, но кого это волнует."
+  choices:
+    - label: Нанять пиарщиков
+      effects: {eddies: -4000}
+      text: "Встречная кампания, отзывы, интервью. Шум стихает через месяц."
+    - label: Найти монтажёра
+      check: {stat: INT, skill: netrunning, dv: 14}
+      success: {text: "Ты находишь исходники и публикуешь их. Теперь смеются над заказчиком.", effects: {fame: 1, enmity: -1}}
+      fail: {text: "Поиски ни к чему не приводят. Клиенты уходят.", effects: {biz_slump: 3, fame: -1}}
+
+# ======================================================================== CORP: base
+
+- id: pr_senator_ask
+  title: Сенатор просит о помощи
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Сенатор Свободного штата приглашает на закрытую встречу. «Через месяц выборы. Мне нужны деньги, медиа и пара грязных дел. Если поможете, корпорация получит контракты на десятилетие. Если нет — вы знаете, сколько у меня друзей в регуляторах»."
+  choices:
+    - label: Помочь
+      effects: {eddies: -15000, hook: 3, status: 2, fame: 1}
+      text: "Деньги, эфиры, тихие услуги. Сенатор благодарен и теперь считает тебя своим человеком."
+    - label: Отказать
+      effects: {enmity: 2, eddies_pct: -10}
+      text: "Сенатор вежливо прощается. Через неделю твою корпорацию проверяет антимонопольный комитет."
+    - label: Поддержать его соперника
+      check: {stat: INT, skill: persuasion, dv: 17}
+      success: {text: "Соперник выигрывает с твоей помощью. Ты на коне, но у проигравшего длинная память.", effects: {status: 2, enmity: 2, hook: 1}}
+      fail: {text: "Сенатор побеждает и знает, кто был против.", effects: {enmity: 3, eddies_pct: -15}}
+
+- id: pr_buyout_offer
+  title: Предложение о выкупе
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Совет директоров большой корпорации делает предложение: выкупить контрольный пакет твоего бизнеса. Цена щедрая. Отказ — это война, и они это не скрывают."
+  choices:
+    - label: Продать долю
+      effects: {eddies: 40000, hook: 3, status: -1}
+      text: "Ты богаче, чем когда-либо, но в совете теперь чужие люди, и они будут звонить."
+    - label: Отказать
+      effects: {enmity: 3, flag_set:nem_spawn_arasaka: true}
+      text: "«Мы так и думали», — говорят они и закрывают папку. Война началась."
+    - label: Сыграть на опережение
+      check: {stat: INT, skill: persuasion, dv: 18}
+      success: {text: "Ты скупаешь их долги и выставляешь встречное предложение. Они отступают, потеряв лицо.", effects: {status: 2, fame: 2, enmity: 2}}
+      fail: {text: "Они сильнее. Ты теряешь часть активов в первой же атаке.", effects: {eddies_pct: -25, enmity: 2}}
+
+- id: pr_assassin
+  title: Покушение
+  category: work
+  weight: 1
+  forced_only: true
+  foe: Корпоративный ликвидатор
+  foe_faction: arasaka
+  text: "Твой лимузин тормозит на светофоре. С крыши соседнего здания вспышка: снайпер. Охрана кричит «ложись», а из переулка выходят ещё трое."
+  choices:
+    - label: Отстреливаться
+      violent: true
+      effects: {start_combat: 4, fame: 1}
+      text: "Ты вываливаешься из машины со стволом в руке."
+    - label: Прорываться на машине
+      check: {stat: REF, skill: driving, dv: 16}
+      success: {text: "Красный свет, тротуар, встречка. Ты уходишь. Заказчик потратил деньги зря.", effects: {mood: -4}}
+      fail: {text: "Пуля пробивает стекло. Машина в столбе, ты в больнице.", effects: {hp: -25, eddies: -8000}}
+
+- id: pr_board_coup
+  title: Заговор в совете
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Твой заместитель тайно собирает голоса совета директоров. Через неделю голосование о твоём смещении. У него поддержка инвесторов."
+  choices:
+    - label: Подкупить совет
+      effects: {eddies: -20000}
+      text: "Каждый голос стоит денег. Ты остаёшься на месте, заместитель уходит в отставку."
+    - label: Собрать компромат на заговорщиков
+      check: {stat: INT, skill: netrunning, dv: 16}
+      success: {text: "К голосованию у тебя папка на каждого. Голосование отменяется.", effects: {status: 1, enmity: 1}}
+      fail: {text: "Компромата мало. Ты удерживаешь кресло, но теряешь контроль над половиной активов.", effects: {eddies_pct: -20, status: -1}}
+    - label: Убрать заместителя
+      violent: true
+      effects: {humanity: -8, enmity: 2, heat: 3}
+      text: "Заместитель не доживает до голосования. Совет понимает намёк. Полиция тоже."
+
+- id: pr_mayor_campaign
+  title: Кампания мэра
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Штаб действующего мэра ждёт от тебя взноса. Все корпорации города уже заплатили. Не заплатить — значит оказаться в списке тех, кого после выборов будут наказывать."
+  choices:
+    - label: Заплатить взнос
+      effects: {eddies: -12000, hook: 2, status: 1}
+      text: "Ты в списке друзей мэра. Это удобно. И это не бесплатно."
+    - label: Заплатить обеим сторонам
+      effects: {eddies: -20000, hook: 1}
+      text: "Кто бы ни победил, ты с ним. Дорого, но надёжно."
+    - label: Не платить
+      effects: {enmity: 2, mood: -2}
+      text: "Ты не платишь. После выборов в мэрии появляется папка с твоим именем."
+
+- id: pr_foreign_agent
+  title: Иностранный агент
+  category: work
+  weight: 1
+  forced_only: true
+  text: "На приёме к тебе подходит представитель НСША. «Нам нужны ваши поставки и доступ к вашим серверам. Мы хорошо платим. А когда Найт-Сити снова станет нашим, мы вспомним друзей. И остальных тоже»."
+  choices:
+    - label: Согласиться
+      effects: {eddies: 25000, hook: 4, heat: 2}
+      text: "Деньги приходят из Вашингтона. Если это узнают в городе, тебя повесят на первом фонаре."
+    - label: Сдать агента городу
+      effects: {status: 2, fame: 2, enmity: 2}
+      text: "Агента выдворяют. Город благодарен, а у НСША длинные руки."
+    - label: Водить его за нос
+      check: {stat: COOL, skill: persuasion, dv: 17}
+      success: {text: "Ты берёшь аванс и кормишь агента пустышками. Это опасная игра, но выгодная.", effects: {eddies: 10000, enmity: 1}}
+      fail: {text: "Агент понимает, что его водят за нос.", effects: {enmity: 3, flag_set:nem_spawn_militech: true}}
+
+# ======================================================================== CORP: demand
+
+- id: pr_senator_vote
+  title: Сенатор напоминает
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Сенатор звонит ночью. «Завтра голосование по военному бюджету. Мне нужно, чтобы ваши медиа поддержали закон, а ваши люди закрыли рот одному журналисту»."
+  choices:
+    - label: Сделать всё
+      effects: {hook: -1, humanity: -5, status: 1}
+      text: "Закон принят. Журналист замолчал. Сенатор доволен."
+    - label: Только медиа
+      effects: {hook: -1, enmity: 1}
+      text: "Ты выполняешь половину. Сенатор запоминает и вторую."
+    - label: Отказать
+      effects: {hook: -2, enmity: 3, eddies_pct: -15}
+      text: "Сенатор отключается молча. На следующий день акции падают."
+
+- id: pr_war_contract
+  title: Военный контракт
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Те, кто держит тебя на крючке, требуют поставлять оружие сразу обеим сторонам пограничной войны. Огромные деньги и огромный риск."
+  choices:
+    - label: Поставлять
+      effects: {eddies: 30000, humanity: -6, heat: 3, hook: -1}
+      text: "Твои патроны стреляют с обеих сторон фронта. Деньги текут рекой."
+    - label: Отказать
+      effects: {hook: -2, enmity: 2}
+      text: "Ты отказываешь. Партнёры находят другого поставщика и запоминают тебя."
+
+- id: pr_cover_up
+  title: Утечка
+  category: work
+  weight: 1
+  forced_only: true
+  text: "На заводе твоего партнёра утечка токсинов, двести погибших. Партнёр требует, чтобы твои медиа и юристы это замяли."
+  choices:
+    - label: Замять
+      effects: {hook: -2, humanity: -8, eddies: 10000}
+      text: "Новости говорят о погоде. Семьи погибших получают молчаливые чеки."
+    - label: Отказаться
+      effects: {hook: -1, enmity: 2}
+      text: "Ты отказываешь. Партнёр ищет другой способ и другого врага."
+    - label: Слить журналистам
+      check: {stat: COOL, skill: stealth, dv: 16}
+      success: {text: "Правда выходит наружу, а следов к тебе нет. Партнёр под следствием.", effects: {hook: -3, humanity: 4, fame: 1}}
+      fail: {text: "Следы ведут к тебе.", effects: {hook: -2, enmity: 4}}
+
+# ======================================================================== CORP: revenge
+
+- id: pr_kompromat
+  title: Компромат
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Твои враги публикуют папку: переписка, счета, фотографии. Половина правда, половина подделка. Все новостные ленты города только об этом."
+  choices:
+    - label: Отрицать всё
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "Ты выходишь в прямой эфир и разносишь подделки. Город верит тебе больше, чем им.", effects: {fame: 1}}
+      fail: {text: "Эфир проваливается. Акции падают, партнёры звонят юристам.", effects: {eddies_pct: -20, fame: -2, status: -1}}
+    - label: Ответить своим компроматом
+      effects: {eddies: -10000, enmity: 1, fame: -1}
+      text: "Медийная война. Грязь летит во все стороны. Победителей нет."
+
+- id: pr_federal_probe
+  title: Федеральное расследование
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Агенты НСША с ордером на твои офисы. Их натравили твои враги. Сервера, бумаги, сотрудники на допросах."
+  choices:
+    - label: Армия юристов
+      effects: {eddies: -25000}
+      text: "Юристы находят процессуальные ошибки в каждом листе. Агенты уезжают ни с чем."
+    - label: Уничтожить сервера
+      check: {stat: INT, skill: netrunning, dv: 17}
+      success: {text: "К приходу агентов на серверах только котики. Обвинения рассыпаются.", effects: {heat: 2}}
+      fail: {text: "Агенты успевают снять копию. Это очень дорогое дело.", effects: {eddies_pct: -30, heat: 4}}
+
+- id: pr_assassin_pro
+  title: Охотник за головами
+  category: work
+  weight: 1
+  forced_only: true
+  foe: Легенда наёмников
+  foe_faction: militech
+  text: "За твою голову назначена цена, о которой говорят в каждом баре. Её взял лучший. Он не прячется: присылает тебе фотографию твоей двери."
+  choices:
+    - label: Встретить его
+      violent: true
+      effects: {start_combat: 5, fame: 2, street_cred: 3}
+      text: "Ты не будешь прятаться. Ты будешь ждать."
+    - label: Перекупить заказ
+      effects: {eddies: -30000, enmity: -1}
+      text: "Охотник берёт втрое больше и уезжает. Заказчик ищет нового."
+    - label: Уехать из города
+      effects: {eddies: -8000, mood: -6}
+      text: "Месяц в чужой стране. Охотник ждёт. Заказчик платит ему за ожидание."

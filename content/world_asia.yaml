@@ -1,0 +1,348 @@
+# The cities of the world (owner request 25.10, docs/PLAN_WORLD.md): every country is an alternative to Night City.
+# A pack gives the city its districts (with fixers, gangs, corps, places), fixers, gangs (`fights_as`: whose fighters
+# they borrow in a fight), a ripper, homes and a story of 4 steps (events_story_*.yaml). Player text is gender-neutral.
+
+- country: japan
+  police: Полиция Токио
+  story_title: Долг клана Курогава
+  story: [jp_story_1, jp_story_2, jp_story_3, jp_story_4, jp_story_5, jp_story_6, jp_story_7, jp_story_8]
+  districts:
+    - key: tokyo_shinjuku
+      name: Синдзюку
+      description: "Небоскрёбы «Арасаки», неон Кабукитё, офисные муравейники и бары размером со шкаф. Полиция вежливая и вездесущая: за драку здесь ищут втрое быстрее."
+      danger: 2
+      fixer: jp_kaori
+      gangs: [jp_kurogawa, jp_bosozoku]
+      corps: [arasaka]
+      places: ["Кабукитё", "Золотой квартал", "башня «Арасаки» в Синдзюку", "станция Синдзюку"]
+      heat_mult: 1.5
+    - key: tokyo_adachi
+      name: Адати
+      description: "Северная окраина: бетонные муравейники для рабочих, заброшенные заводы, ночные гонки по набережной. Здесь живут те, кого Токио не показывает туристам."
+      danger: 3
+      fixer: jp_matsuda
+      gangs: [jp_bosozoku, jp_kurogawa]
+      corps: [arasaka]
+      places: ["набережная Аракавы", "заброшенный завод «Хитати»", "рынок Кита-Сэндзю", "общежитие рабочих"]
+  fixers:
+    - key: jp_kaori
+      name: Каори Ито
+      districts: [tokyo_shinjuku]
+      description: "Фиксер Синдзюку. Бывший секретарь совета директоров, знает, чьи грехи стоят дороже. Работает только с теми, кого ей порекомендовали."
+      voice: безупречно вежливо, длинные паузы, ни одного прямого слова о насилии
+    - key: jp_matsuda
+      name: Старик Мацуда
+      districts: [tokyo_adachi]
+      description: "Фиксер Адати, хозяин лапшичной под эстакадой. Сорок лет держит район, пережил три войны кланов. Платит наличными, не прощает болтливых."
+      voice: ворчливо, коротко, с присказками о погоде и рыбалке
+  gangs:
+    - key: jp_kurogawa
+      name: Клан Курогава
+      name_gen: клана Курогава
+      name_dat: клану Курогава
+      name_acc: клан Курогава
+      name_ins: кланом Курогава
+      name_pre: клане Курогава
+      description: "Якудза старой школы: татуировки до запястий, чёрные костюмы, кодекс и бухгалтерия. Держат патинко, долги и половину строительных подрядов."
+      style: поклоны перед ударом, катаны и короткие пистолеты, отрубленный палец как извинение
+      fights_as: tyger_claws
+      disposition: {bribe_dv: 16, talk_dv: 16, bribe_cost_mult: 2.5, flee_mod: 1, surrender: {robbed: 2, beaten: 2}}
+    - key: jp_bosozoku
+      name: Красный гром
+      name_gen: Красного грома
+      name_dat: Красному грому
+      name_acc: Красный гром
+      name_ins: Красным громом
+      name_pre: Красном громе
+      description: "Босодзоку на ревущих байках с флагами и неоном. Дети окраин, которым нечего терять, кроме скорости."
+      style: биты и цепи, гонки по ночам, крики и сигналы клаксонов
+      fights_as: maelstrom
+      disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.0, flee_mod: -1, surrender: {robbed: 3, beaten: 3}}
+  ripperdocs:
+    - key: jp_sato
+      name: Доктор Сато
+      district: tokyo_adachi
+      description: "Бывший хирург «Арасаки», уволенный за то, что лечил не тех. Японское качество, японская цена, ни одной лишней улыбки."
+      price_mod: 1.4
+      complication_chance: 0.0
+      sells_software: true
+  housing:
+    - {key: jp_capsule, name: Капсула в Синдзюку, district: tokyo_shinjuku, tier: 1, rent: 260, food: 120, description: "Капсульный отель для офисных работников, опоздавших на последний поезд. Чисто, тихо, на ширину плеч."}
+    - {key: jp_danchi, name: Квартира в данти Адати, district: tokyo_adachi, tier: 2, rent: 420, food: 140, description: "Бетонная многоэтажка для рабочих. Татами, балкон с бельём, соседи кланяются в лифте."}
+    - {key: jp_tower, name: Апартаменты над Синдзюку, district: tokyo_shinjuku, tier: 3, rent: 1400, food: 220, description: "Сороковой этаж, окна во всю стену и вид на Фудзи в ясный день. Консьерж помнит, когда ты вернулся."}
+
+- country: hongkong
+  police: Полиция Гонконга
+  story_title: Город-крепость
+  story: [hk_story_1, hk_story_2, hk_story_3, hk_story_4, hk_story_5, hk_story_6, hk_story_7, hk_story_8]
+  districts:
+    - key: hk_kowloon
+      name: Коулун
+      description: "Неон над узкими улицами, рынки, лапшичные и многоэтажные трущобы на месте Города-крепости. Здесь живут плотнее, чем где-либо на планете."
+      danger: 3
+      fixer: hk_auntie_mei
+      gangs: [hk_14k, hk_clones]
+      corps: [kang_tao]
+      places: ["Темпл-стрит", "руины Города-крепости", "рынок электроники Мон Кок", "чайный дом «Золотой дракон»"]
+    - key: hk_central
+      name: Сентрал
+      description: "Небоскрёбы банков, эскалаторы на холм, бары Лан Квай Фонг. Корпорации Кан Тао диктуют правила, триады собирают десятину."
+      danger: 1
+      fixer: hk_vincent
+      gangs: [hk_14k, hk_clones]
+      corps: [kang_tao, arasaka]
+      places: ["башня Кан Тао", "Лан Квай Фонг", "трамвай на Пик", "паромный причал"]
+      heat_mult: 1.5
+  fixers:
+    - {key: hk_auntie_mei, name: Тётушка Мэй, districts: [hk_kowloon], description: "Хозяйка чайного дома. Знает каждого, кто родился в Коулуне за последние сорок лет.", voice: "мягко, с кантонскими словечками, предлагает чай перед делом"}
+    - {key: hk_vincent, name: Винсент Лау, districts: [hk_central], description: "Бывший брокер Кан Тао. Продаёт инсайд и работу, которую корпорация не может поручить своим.", voice: "быстро, на смеси английского и кантонского, цифры и проценты"}
+  gangs:
+    - {key: hk_14k, name: Триада 14К, name_gen: Триады 14К, name_dat: Триаде 14К, name_acc: Триаду 14К, name_ins: Триадой 14К, name_pre: Триаде 14К, description: "Старейшая триада Гонконга. Ритуалы, клятвы, тесаки и половина бизнеса города.", style: "тесаки, татуировки драконов, клятвы перед алтарём Гуань-ди", fights_as: tyger_claws, disposition: {bribe_dv: 15, talk_dv: 16, bribe_cost_mult: 2.0, flee_mod: 1, surrender: {robbed: 3, beaten: 2}}}
+    - {key: hk_clones, name: Близнецы, name_gen: Близнецов, name_dat: Близнецам, name_acc: Близнецов, name_ins: Близнецами, name_pre: Близнецах, description: "Банда людей с одинаковыми хром-лицами, сделанными в подпольной клинике. Никто не знает, сколько их.", style: "одинаковые лица, одинаковые костюмы, синхронные движения", fights_as: maelstrom, disposition: {bribe_dv: 14, talk_dv: 17, bribe_cost_mult: 1.5, flee_mod: 0, surrender: {robbed: 2, chrome_stripped: 2}}}
+  ripperdocs:
+    - {key: hk_doc_wong, name: Доктор Вонг, district: hk_kowloon, description: "Подпольная клиника над рынком электроники. Хром из Шэньчжэня, работа из Коулуна, цена по-соседски.", price_mod: 0.8, complication_chance: 0.05}
+  housing:
+    - {key: hk_h_cage, name: Клетка-квартира в Коулуне, district: hk_kowloon, tier: 1, rent: 180, food: 90, description: "Два квадратных метра за решёткой в общей комнате. Соседи слышат, как ты дышишь."}
+    - {key: hk_h_estate, name: Квартира в муниципальном доме, district: hk_kowloon, tier: 2, rent: 480, food: 120, description: "Сорок этажей, разноцветные стены, вид на соседний дом в трёх метрах."}
+    - {key: hk_h_peak, name: Апартаменты на Пике, district: hk_central, tier: 3, rent: 1800, food: 220, description: "Над облаками, вид на гавань, охрана с имплантами Кан Тао."}
+
+- country: china
+  police: Народная полиция
+  story_title: Социальный рейтинг
+  story: [cn_story_1, cn_story_2, cn_story_3, cn_story_4, cn_story_5, cn_story_6, cn_story_7, cn_story_8]
+  districts:
+    - key: cn_pudong
+      name: Пудун
+      description: "Небоскрёбы Кан Тао, камеры распознавания лиц на каждом шагу и социальный рейтинг, который решает, пустят ли тебя в метро."
+      danger: 1
+      fixer: cn_ming
+      gangs: [cn_snakeheads, cn_red_pole]
+      corps: [kang_tao]
+      places: ["башня Кан Тао", "набережная Бунд", "магнитопоезд", "ночной рынок данных"]
+      heat_mult: 2.0
+    - key: cn_old_town
+      name: Старый Шанхай
+      description: "Переулки лунтан, лапша, маджонг и люди с обнулённым рейтингом, которые живут вне системы."
+      danger: 3
+      fixer: cn_grandma_li
+      gangs: [cn_red_pole, cn_snakeheads]
+      corps: [kang_tao]
+      places: ["переулок лунтан", "сад Юйюань", "игорный подвал", "рынок поддельных чипов"]
+  fixers:
+    - {key: cn_ming, name: Мин Чжао, districts: [cn_pudong], description: "Менеджер по социальному рейтингу в корпорации. За деньги поднимает и опускает людей в системе.", voice: "вежливо, через корпоративные формулы, без единого лишнего слова"}
+    - {key: cn_grandma_li, name: Бабушка Ли, districts: [cn_old_town], description: "Играет в маджонг в подвале и держит всех, кто выпал из рейтинга. Её чипы лучше государственных.", voice: "ворчливо, поговорками, с азартом игрока"}
+  gangs:
+    - {key: cn_snakeheads, name: Змееголовые, name_gen: Змееголовых, name_dat: Змееголовым, name_acc: Змееголовых, name_ins: Змееголовыми, name_pre: Змееголовых, description: "Контрабандисты людей и данных. Вывозят из системы тех, у кого рейтинг ниже нуля.", style: "контейнеры, поддельные лица, тихие ножи", fights_as: scavengers, disposition: {bribe_dv: 14, talk_dv: 15, bribe_cost_mult: 1.5, flee_mod: -1, surrender: {robbed: 3, released: 1}}}
+    - {key: cn_red_pole, name: Красный шест, name_gen: Красного шеста, name_dat: Красному шесту, name_acc: Красный шест, name_ins: Красным шестом, name_pre: Красном шесте, description: "Боевики старой триады, которые держат игорные подвалы и долги.", style: "кунг-фу, шесты, нунчаки, кодекс учителя", fights_as: tyger_claws, disposition: {bribe_dv: 15, talk_dv: 15, bribe_cost_mult: 2.0, flee_mod: 1, surrender: {beaten: 3, robbed: 2}}}
+  ripperdocs:
+    - {key: cn_doc_zhou, name: Доктор Чжоу, district: cn_old_town, description: "Ставит импланты без регистрации в системе. Твой хром не увидит ни одна камера.", price_mod: 1.0, complication_chance: 0.06, scan_lie_chance: 0.1}
+  housing:
+    - {key: cn_h_longtang, name: Комната в лунтане, district: cn_old_town, tier: 1, rent: 140, food: 80, description: "Общая кухня во дворе, маджонг под окном до утра."}
+    - {key: cn_h_tower, name: Квартира в жилой башне, district: cn_pudong, tier: 2, rent: 500, food: 120, description: "Лифт по распознаванию лица, доставка дронами, тишина по рейтингу."}
+    - {key: cn_h_sky, name: Пентхаус в Пудуне, district: cn_pudong, tier: 3, rent: 1600, food: 200, description: "Восемьдесят восьмой этаж. Облака под ногами, камеры в каждом углу."}
+
+- country: korea
+  police: Полиция Сеула
+  story_title: Идол
+  story: [kr_story_1, kr_story_2, kr_story_3, kr_story_4, kr_story_5, kr_story_6, kr_story_7, kr_story_8]
+  districts:
+    - key: kr_gangnam
+      name: Каннам
+      description: "Неоновые башни, клиники пластической хирургии, агентства айдолов и кафе с кофе по цене обеда."
+      danger: 1
+      fixer: kr_jiwoo
+      gangs: [kr_kkangpae, kr_racers]
+      corps: [zetatech, biotechnica]
+      places: ["агентство «Стар-Лайт»", "улица клиник", "клуб «Октагон»", "станция Каннам"]
+    - key: kr_guryong
+      name: Курён
+      description: "Последняя трущоба Сеула у подножия башен: лачуги, огороды, старики и подпольные гонки на окраине."
+      danger: 3
+      fixer: kr_halmoni
+      gangs: [kr_racers, kr_kkangpae]
+      corps: [zetatech]
+      places: ["деревня Курён", "трасса над рекой Хан", "рынок Норянджин", "заброшенная станция"]
+  fixers:
+    - {key: kr_jiwoo, name: Чжи У Пак, districts: [kr_gangnam], description: "Бывший менеджер айдолов. Знает, кто что вколол перед концертом и кто кому должен.", voice: "вежливо до приторности, с поклонами и уменьшительными"}
+    - {key: kr_halmoni, name: Бабушка Сун, districts: [kr_guryong], description: "Держит кимчи-лавку в трущобе. Пережила снос шесть раз и знает, где закопаны деньги застройщиков.", voice: "громко, ворчливо, кормит и ругает одновременно"}
+  gangs:
+    - {key: kr_kkangpae, name: Кханпхэ, name_gen: Кханпхэ, name_dat: Кханпхэ, name_acc: Кханпхэ, name_ins: Кханпхэ, name_pre: Кханпхэ, description: "Корейские гангстеры в дорогих костюмах. Клубы, ростовщичество и защита агентств.", style: "костюмы, бейсбольные биты, поклон перед ударом", fights_as: tyger_claws, disposition: {bribe_dv: 15, talk_dv: 15, bribe_cost_mult: 2.0, flee_mod: 1, surrender: {robbed: 3, beaten: 2}}}
+    - {key: kr_racers, name: Ночные гонщики, name_gen: Ночных гонщиков, name_dat: Ночным гонщикам, name_acc: Ночных гонщиков, name_ins: Ночными гонщиками, name_pre: Ночных гонщиках, description: "Уличные гонщики на электрокарах, которые ставят на кон машины и жизни.", style: "неоновые машины, ставки, монтировки", fights_as: maelstrom, disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.0, flee_mod: -2, surrender: {robbed: 3, released: 1}}}
+  ripperdocs:
+    - {key: kr_doc_kim, name: Доктор Ким, district: kr_gangnam, description: "Пластический хирург айдолов. Ставит хром так, что его не видно даже на крупном плане.", price_mod: 1.3, complication_chance: 0.01}
+  housing:
+    - {key: kr_h_goshiwon, name: Комната в косивоне, district: kr_guryong, tier: 1, rent: 150, food: 90, description: "Комната-гроб для студентов. Бесплатный рис и кимчи в общей кухне."}
+    - {key: kr_h_villa, name: Квартира в вилле, district: kr_guryong, tier: 2, rent: 420, food: 120, description: "Четырёхэтажный дом, крыша с бочками кимчи и вид на реку."}
+    - {key: kr_h_gangnam, name: Апартаменты в Каннаме, district: kr_gangnam, tier: 3, rent: 1500, food: 200, description: "Умный дом, вид на огни Каннама и соседи-айдолы, которых нельзя фотографировать."}
+
+- country: india
+  police: Полиция Мумбаи
+  story_title: Болливудский долг
+  story: [ind_story_1, ind_story_2, ind_story_3, ind_story_4, ind_story_5, ind_story_6, ind_story_7, ind_story_8]
+  districts:
+    - key: ind_dharavi
+      name: Дхарави
+      description: "Огромные трущобы, где миллион человек делает всё: кожу, керамику, переработку старого хрома. Город внутри города."
+      danger: 3
+      fixer: ind_raju
+      gangs: [ind_dcompany, ind_shiv]
+      corps: [biotechnica]
+      places: ["цеха переработки хрома", "гончарный квартал", "чайная у железной дороги", "храм Ганеши"]
+    - key: ind_bandra
+      name: Бандра
+      description: "Дома кинозвёзд, студии Болливуда, кафе у моря. Деньги кино и деньги мафии здесь давно перемешаны."
+      danger: 1
+      fixer: ind_priya
+      gangs: [ind_shiv, ind_dcompany]
+      corps: [biotechnica, kang_tao]
+      places: ["студия «Синема Сити»", "набережная Бандстенд", "особняк кинозвезды", "бар «Бомбей Стори»"]
+  fixers:
+    - {key: ind_raju, name: Раджу Бхай, districts: [ind_dharavi], description: "Хозяин цеха переработки хрома. Через его руки проходит каждый выброшенный имплант Мумбаи.", voice: "добродушно, с хинглишем, «бхай» к каждому"}
+    - {key: ind_priya, name: Прия Капур, districts: [ind_bandra], description: "Продюсер фильмов, которые снимаются на деньги, о которых не спрашивают.", voice: "драматично, как в кино, с паузами для эффекта"}
+  gangs:
+    - {key: ind_dcompany, name: Компания Д, name_gen: Компании Д, name_dat: Компании Д, name_acc: Компанию Д, name_ins: Компанией Д, name_pre: Компании Д, description: "Синдикат, который финансирует фильмы, ставки на крикет и контрабанду золота.", style: "белые костюмы, пистолеты, звонки из Дубая", fights_as: valentinos, disposition: {bribe_dv: 15, talk_dv: 15, bribe_cost_mult: 2.0, flee_mod: 1, surrender: {robbed: 3, beaten: 1}}}
+    - {key: ind_shiv, name: Армия Шивы, name_gen: Армии Шивы, name_dat: Армии Шивы, name_acc: Армию Шивы, name_ins: Армией Шивы, name_pre: Армии Шивы, description: "Уличное движение, которое держит профсоюзы и рынки района силой.", style: "шафрановые повязки, дубинки, толпа и лозунги", fights_as: animals, disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.0, flee_mod: 0, surrender: {beaten: 3, robbed: 2}}}
+  ripperdocs:
+    - {key: ind_doc_anand, name: Доктор Ананд, district: ind_dharavi, description: "Ставит переработанный хром за копейки. Говорит, что каждый имплант проживает несколько жизней.", price_mod: 0.5, complication_chance: 0.12, infection_chance: 0.06, scan_lie_chance: 0.1}
+  housing:
+    - {key: ind_h_chawl, name: Комната в чоле, district: ind_dharavi, tier: 1, rent: 60, food: 50, description: "Одна комната на семью, общий туалет на этаже, соседи как родные."}
+    - {key: ind_h_flat, name: Квартира у железной дороги, district: ind_dharavi, tier: 2, rent: 220, food: 80, description: "Поезда каждые три минуты, чай с имбирём, вид на крыши."}
+    - {key: ind_h_seaface, name: Апартаменты с видом на море, district: ind_bandra, tier: 3, rent: 900, food: 140, description: "Аравийское море под окном, соседи — звёзды кино."}
+
+- country: thailand
+  police: Королевская полиция Таиланда
+  story_title: Бой в Лумпини
+  story: [th_story_1, th_story_2, th_story_3, th_story_4, th_story_5, th_story_6, th_story_7, th_story_8]
+  districts:
+    - key: th_khlong_toei
+      name: Клонг Той
+      description: "Порт и трущобы вдоль каналов. Рынки, где продают всё живое и неживое, и залы муай-тай на каждом углу."
+      danger: 3
+      fixer: th_somchai
+      gangs: [th_jao_pho, th_ladyboys]
+      corps: [biotechnica]
+      places: ["рынок Клонг Той", "зал муай-тай «Тигр»", "плавучий рынок", "портовые склады"]
+    - key: th_sukhumvit
+      name: Сукхумвит
+      description: "Небоскрёбы, торговые центры, бары с неоном и туристы, которые ищут то, чего нет дома."
+      danger: 2
+      fixer: th_ploy
+      gangs: [th_ladyboys, th_jao_pho]
+      corps: [biotechnica, zetatech]
+      places: ["Сой Ковбой", "стадион Лумпини", "небоскрёб «Махханакхон»", "ночной рынок поездов"]
+  fixers:
+    - {key: th_somchai, name: Сомчай, districts: [th_khlong_toei], description: "Бывший чемпион по муай-тай, теперь хозяин зала и ставок. Улыбается всегда, даже перед ударом.", voice: "приветливо, с улыбкой, короткими фразами"}
+    - {key: th_ploy, name: Плой, districts: [th_sukhumvit], description: "Хозяйка трёх баров на Сукхумвите. Знает всех туристов, которые слишком много болтают.", voice: "игриво, с иронией, «ка» в конце каждой фразы"}
+  gangs:
+    - {key: th_jao_pho, name: Крёстные отцы, name_gen: Крёстных отцов, name_dat: Крёстным отцам, name_acc: Крёстных отцов, name_ins: Крёстными отцами, name_pre: Крёстных отцах, description: "Провинциальные мафиозные кланы, которые держат порт, ставки и депутатов.", style: "золотые цепи, амулеты, дорогие машины и наёмники", fights_as: valentinos, disposition: {bribe_dv: 14, talk_dv: 15, bribe_cost_mult: 2.0, flee_mod: 1, surrender: {robbed: 3, beaten: 1}}}
+    - {key: th_ladyboys, name: Неоновые кобры, name_gen: Неоновых кобр, name_dat: Неоновым кобрам, name_acc: Неоновых кобр, name_ins: Неоновыми кобрами, name_pre: Неоновых кобрах, description: "Банда бойцов муай-тай с хромированными голенями. Охраняют бары и выбивают долги.", style: "удары коленями и локтями, неоновые татуировки, скорость", fights_as: moxes, disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.0, flee_mod: -1, surrender: {beaten: 3, robbed: 2}}}
+  ripperdocs:
+    - {key: th_doc_nok, name: Доктор Нок, district: th_sukhumvit, description: "Медицинский туризм: хром по цене отпуска, с видом на бассейн.", price_mod: 0.75, complication_chance: 0.05}
+  housing:
+    - {key: th_h_canal, name: Дом на сваях у канала, district: th_khlong_toei, tier: 1, rent: 80, food: 50, description: "Доски, вода под полом, рынок прямо под окном на лодках."}
+    - {key: th_h_condo, name: Кондо на Сукхумвите, district: th_sukhumvit, tier: 2, rent: 330, food: 90, description: "Бассейн на крыше, тук-туки внизу, жара круглый год."}
+    - {key: th_h_tower, name: Апартаменты в небоскрёбе, district: th_sukhumvit, tier: 3, rent: 1000, food: 140, description: "Пятидесятый этаж, вид на реку Чао Прайя и храмы."}
+
+- country: singapore
+  police: Полиция Сингапура
+  story_title: Идеальный город
+  story: [sg_story_1, sg_story_2, sg_story_3, sg_story_4, sg_story_5, sg_story_6, sg_story_7, sg_story_8]
+  districts:
+    - key: sg_marina
+      name: Марина-Бэй
+      description: "Самый чистый город мира: сады на небоскрёбах, казино, банки и штраф за жвачку. Всё под наблюдением, всё по правилам."
+      danger: 1
+      fixer: sg_rachel
+      gangs: [sg_ah_long, sg_syndicate]
+      corps: [kang_tao, arasaka]
+      places: ["казино «Марина Бэй Сэндс»", "Сады у залива", "банковская башня", "хокер-центр Лау Па Сат"]
+      heat_mult: 2.5
+    - key: sg_geylang
+      name: Гейланг
+      description: "Единственный квартал, где правила гнутся: ночные рынки, нелегальные игры, дуриан и тени от неона."
+      danger: 2
+      fixer: sg_uncle_tan
+      gangs: [sg_syndicate, sg_ah_long]
+      corps: [kang_tao]
+      places: ["ночной рынок Гейланга", "подпольный игорный дом", "храм у канала", "лавка дурианов"]
+  fixers:
+    - {key: sg_rachel, name: Рэйчел Тан, districts: [sg_marina], description: "Юрист казино. Знает каждого кита, который проигрывает больше, чем может себе позволить.", voice: "безупречно, по-сингапурски эффективно, «ла» в конце"}
+    - {key: sg_uncle_tan, name: Дядюшка Тан, districts: [sg_geylang], description: "Продаёт дурианы и всё, что нельзя продавать в Сингапуре.", voice: "на синглише, ворчливо, с запахом дуриана"}
+  gangs:
+    - {key: sg_ah_long, name: Ростовщики А Лонг, name_gen: ростовщиков А Лонг, name_dat: ростовщикам А Лонг, name_acc: ростовщиков А Лонг, name_ins: ростовщиками А Лонг, name_pre: ростовщиках А Лонг, description: "Подпольные ростовщики, которые пишут краской на дверях должников.", style: "краска, замки на дверях, угрозы семье", fights_as: valentinos, disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.5, flee_mod: 0, surrender: {robbed: 4}}}
+    - {key: sg_syndicate, name: Синдикат Лотоса, name_gen: Синдиката Лотоса, name_dat: Синдикату Лотоса, name_acc: Синдикат Лотоса, name_ins: Синдикатом Лотоса, name_pre: Синдикате Лотоса, description: "Тихая триада, которая держит игорные дома и отмывает деньги через казино.", style: "дорогие костюмы, тихие ножи, никаких следов", fights_as: tyger_claws, disposition: {bribe_dv: 16, talk_dv: 16, bribe_cost_mult: 2.5, flee_mod: 1, surrender: {robbed: 2, released: 2}}}
+  ripperdocs:
+    - {key: sg_doc_lim, name: Доктор Лим, district: sg_marina, description: "Лучшая клиника Азии. Хром идеального качества, лицензия на всё, цена соответствующая.", price_mod: 1.5, complication_chance: 0.0}
+  housing:
+    - {key: sg_h_dorm, name: Койка в общежитии рабочих, district: sg_geylang, tier: 1, rent: 200, food: 90, description: "Двенадцать коек в комнате, вентилятор, расписание душа."}
+    - {key: sg_h_hdb, name: Квартира в HDB, district: sg_geylang, tier: 2, rent: 550, food: 120, description: "Государственный дом, чистый подъезд, хокер-центр внизу."}
+    - {key: sg_h_marina, name: Апартаменты у залива, district: sg_marina, tier: 3, rent: 2200, food: 240, description: "Бассейн на крыше над всем городом. Штраф за брошенный окурок — твоя месячная аренда."}
+
+- country: uae
+  police: Полиция Дубая
+  story_title: Золото пустыни
+  story: [ae_story_1, ae_story_2, ae_story_3, ae_story_4, ae_story_5, ae_story_6, ae_story_7, ae_story_8]
+  districts:
+    - key: ae_marina
+      name: Дубай Марина
+      description: "Стеклянные башни, яхты, суперкары и самый высокий небоскрёб мира. Деньги здесь показывают, а не прячут."
+      danger: 1
+      fixer: ae_khalid
+      gangs: [ae_sheikh_guard, ae_falcons]
+      corps: [petrochem, militech]
+      places: ["Бурдж-Халифа", "яхт-клуб", "крытый горнолыжный склон", "ночной клуб «Мираж»"]
+      heat_mult: 2.0
+    - key: ae_deira
+      name: Дейра
+      description: "Старый Дубай: золотой рынок, специи, лодки-дау у ручья и рабочие кварталы, которые строят этот город."
+      danger: 2
+      fixer: ae_fatima
+      gangs: [ae_falcons, ae_sheikh_guard]
+      corps: [petrochem]
+      places: ["золотой рынок", "рынок специй", "причал дау", "рабочий лагерь Сонапур"]
+  fixers:
+    - {key: ae_khalid, name: Халид аль-Мансури, districts: [ae_marina], description: "Племянник шейха с хорошим образованием и плохими друзьями. Решает проблемы, которых официально нет.", voice: "учтиво, неторопливо, «иншалла» вместо обещаний"}
+    - {key: ae_fatima, name: Фатима, districts: [ae_deira], description: "Торговка золотом на рынке Дейры. Взвешивает золото и людей одинаково точно.", voice: "строго, коротко, считает на калькуляторе во время разговора"}
+  gangs:
+    - {key: ae_sheikh_guard, name: Гвардия шейха, name_gen: Гвардии шейха, name_dat: Гвардии шейха, name_acc: Гвардию шейха, name_ins: Гвардией шейха, name_pre: Гвардии шейха, description: "Частная армия одного из шейхов. Наёмники со всего мира, лучшее оборудование, ноль ответственности.", style: "экзоскелеты, тактические очки, приказы по рации", fights_as: arasaka, disposition: {bribe_dv: 18, talk_dv: 18, bribe_cost_mult: 3.0, flee_mod: 2, surrender: {beaten: 2, robbed: 2}}}
+    - {key: ae_falcons, name: Соколы, name_gen: Соколов, name_dat: Соколам, name_acc: Соколов, name_ins: Соколами, name_pre: Соколах, description: "Контрабандисты на быстрых лодках и внедорожниках. Возят золото, оружие и людей через залив.", style: "дау, внедорожники в дюнах, автоматы под брезентом", fights_as: wraiths, disposition: {bribe_dv: 14, talk_dv: 14, bribe_cost_mult: 1.5, flee_mod: -1, surrender: {robbed: 3, released: 1}}}
+  ripperdocs:
+    - {key: ae_doc_haddad, name: Доктор Хаддад, district: ae_marina, description: "Клиника класса люкс для шейхов и их охраны. Золотые импланты по запросу.", price_mod: 1.6, complication_chance: 0.0}
+  housing:
+    - {key: ae_h_labour, name: Койка в рабочем лагере, district: ae_deira, tier: 1, rent: 100, food: 70, description: "Восемь коек, кондиционер, автобус на стройку в пять утра."}
+    - {key: ae_h_deira, name: Квартира в Дейре, district: ae_deira, tier: 2, rent: 450, food: 110, description: "Вид на ручей и дау, запах специй, азан пять раз в день."}
+    - {key: ae_h_marina, name: Апартаменты в Марине, district: ae_marina, tier: 3, rent: 2000, food: 220, description: "Шестидесятый этаж, бассейн, вид на искусственные острова."}
+
+- country: kazakhstan
+  police: Полиция Алматы
+  story_title: Яблоки и уран
+  story: [kz_story_1, kz_story_2, kz_story_3, kz_story_4, kz_story_5, kz_story_6, kz_story_7, kz_story_8]
+  districts:
+    - key: kz_barakholka
+      name: Барахолка
+      description: "Огромный рынок на окраине: контейнеры с товаром из Китая, Турции и России, перекупщики, менялы и всё, что можно продать."
+      danger: 3
+      fixer: kz_aslan
+      gangs: [kz_steppe, kz_kurai]
+      corps: [kang_tao]
+      places: ["контейнерный рынок", "меняльный ряд", "шашлычная «Жаркент»", "склад у трассы"]
+    - key: kz_medeu
+      name: Медеу
+      description: "Предгорья над городом: каток, лыжные трассы, дачи элиты и тихие сделки в горном воздухе."
+      danger: 1
+      fixer: kz_aigerim
+      gangs: [kz_kurai, kz_steppe]
+      corps: [petrochem, kang_tao]
+      places: ["высокогорный каток", "канатная дорога", "дача министра", "чайхана в ущелье"]
+  fixers:
+    - {key: kz_aslan, name: Аслан Ага, districts: [kz_barakholka], description: "Король барахолки. Через его контейнеры проходит половина товаров Центральной Азии.", voice: "радушно, с тостами и уважением к старшим"}
+    - {key: kz_aigerim, name: Айгерим, districts: [kz_medeu], description: "Секретарь министерства энергетики и дочь влиятельного рода. Знает, куда утекают нефтяные деньги.", voice: "холодно, вежливо, на трёх языках"}
+  gangs:
+    - {key: kz_steppe, name: Степные волки, name_gen: Степных волков, name_dat: Степным волкам, name_acc: Степных волков, name_ins: Степными волками, name_pre: Степных волках, description: "Банда с барахолки: рэкет торговцев, перегон машин, бои на пустырях.", style: "спортивные костюмы, внедорожники, кулаки борцов", fights_as: animals, disposition: {bribe_dv: 13, talk_dv: 14, bribe_cost_mult: 1.0, flee_mod: 0, surrender: {beaten: 3, robbed: 2}}}
+    - {key: kz_kurai, name: Род Курай, name_gen: рода Курай, name_dat: роду Курай, name_acc: род Курай, name_ins: родом Курай, name_pre: роде Курай, description: "Клан, который держит транзит через границу и долю в нефтяных контрактах.", style: "охрана в костюмах, ружья для охоты с беркутом, родовые связи", fights_as: sixth_street, disposition: {bribe_dv: 15, talk_dv: 14, bribe_cost_mult: 2.0, flee_mod: 1, surrender: {robbed: 2, released: 2}}}
+  ripperdocs:
+    - {key: kz_doc_bolat, name: Доктор Болат, district: kz_barakholka, description: "Ставит китайский и российский хром в контейнере за рынком. Качество — как повезёт, цена — всегда хорошая.", price_mod: 0.6, complication_chance: 0.1, scan_lie_chance: 0.1}
+  housing:
+    - {key: kz_h_obshaga, name: Комната в общежитии, district: kz_barakholka, tier: 1, rent: 90, food: 70, description: "Общая кухня, плов по пятницам, вид на горы."}
+    - {key: kz_h_flat, name: Квартира в сталинке, district: kz_barakholka, tier: 2, rent: 280, food: 100, description: "Высокие потолки, яблоня под окном, горы на горизонте."}
+    - {key: kz_h_dacha, name: Дача в предгорьях, district: kz_medeu, tier: 3, rent: 950, food: 150, description: "Сосны, ручей, баня и вид на снежные пики."}

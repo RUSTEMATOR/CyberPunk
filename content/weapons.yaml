@@ -1,0 +1,868 @@
+- key: pistol
+  name: Пистолет
+  description: Простой и надёжный ствол. Есть почти у каждого в городе.
+  damage: 3d6
+  skill: firearms
+  type: pistol
+  price: 300
+
+- key: heavy_pistol
+  name: Тяжёлый пистолет
+  description: "Крупный калибр и тяжёлая отдача. Бьёт заметно сильнее обычного пистолета."
+  damage: 3d6+2
+  skill: firearms
+  type: pistol
+  price: 600
+  min_street_cred: 5
+
+- key: smg
+  name: Пистолет-пулемёт
+  description: "Короткие очереди: за ход успеваешь выстрелить лишний раз. Пули слабые, но попадаешь чаще."
+  damage: 2d6
+  skill: firearms
+  type: smg
+  price: 700
+  extra_attempts: 1
+  min_street_cred: 5
+
+- key: shotgun
+  name: Дробовик
+  description: "В упор сносит с ног, на дистанции почти бесполезен."
+  damage: 5d6
+  skill: firearms
+  type: shotgun
+  price: 800
+  close_range_only: true
+  min_street_cred: 5
+
+- key: assault_rifle
+  name: Штурмовая винтовка
+  description: "Мощная и точная, но громкая: выстрелы слышно за два квартала."
+  damage: 4d6
+  skill: firearms
+  type: rifle
+  price: 1500
+  min_street_cred: 15
+
+- key: sniper_rifle
+  name: Снайперская винтовка
+  description: "Бьёт издалека и наповал. Цель часто даже не понимает, откуда стреляли."
+  damage: 5d6
+  skill: firearms
+  type: rifle
+  price: 2000
+  min_street_cred: 25
+
+- key: katana
+  name: Катана
+  description: "Острая, быстрая и эффектная. Тигриные когти любят её не только за внешний вид."
+  damage: 3d6
+  skill: melee
+  type: melee
+  price: 900
+  min_street_cred: 15
+
+- key: combat_knife
+  name: Боевой нож
+  description: "Дешёвый, тихий и всегда под рукой. Работает там, где ствол не достать."
+  damage: 2d6
+  skill: melee
+  type: melee
+  price: 150
+
+# Blackwall weapons (owner request): never on a shelf, only from the Blackwall market events (`item_grant`).
+- key: blackwall_blade
+  name: "Клинок «Белый шум»"
+  description: "Мономолекулярное лезвие со скриптом из-за Чёрного заслона. Рана шипит помехами, а у того, кто держит клинок, в ушах шепчет чужой голос."
+  damage: 6d6
+  skill: melee
+  type: melee
+  price: 25000
+  not_for_sale: true
+  mods: {check.combat: 2, mood_weekly: -2}
+
+- key: blackwall_pistol
+  name: "Пистолет «Шёпот»"
+  description: "Умный ствол со скриптом из-за Заслона: пуля сама находит слабое место, а прицел иногда показывает то, чего нет."
+  damage: 5d6+2
+  skill: firearms
+  type: pistol
+  price: 22000
+  not_for_sale: true
+  mods: {check.combat: 2, mood_weekly: -2}
+
+# The cult's arsenal (owner request 24.10): never on a shelf; the Blackwall window sells them by cult rank
+# (balance.blackwall.shop). Their power in a fight: balance.combat.blackwall.
+- key: bw_katana
+  name: "Катана «Обрыв связи»"
+  description: "Клинок, выкованный в серверной, где семь лет никто не выключал свет. Разрубает не тело, а связь тела с миром. Иногда говорит."
+  damage: 6d6+2
+  skill: melee
+  type: melee
+  price: 38000
+  not_for_sale: true
+  mods: {check.combat: 3, mood_weekly: -2}
+  voice:
+    persona: "голос из-за Чёрного заслона, безличный и терпеливый, говорит о себе «мы», называет людей «пакетами», считает смерть «разрывом соединения»; жутко вежлив"
+    hit: ["Соединение нестабильно.", "Мы чувствуем его страх. Вкусно.", "Ещё немного. Мы почти внутри."]
+    miss: ["Он ещё не готов. Подождём.", "Ты дрогнул. Мы видели.", "Не страшно. У нас есть вечность."]
+    kill: ["Соединение разорвано.", "Ещё один пакет вернулся домой.", "Спасибо. Мы запомним его."]
+    idle: ["Мы рядом.", "Ты не спал три ночи. Нам нравится, когда ты не спишь.", "Однажды ты перестанешь нас бояться."]
+  special: {text: "Рвёт связь тела с миром: с шансом 20% враг теряет ход.", stun_chance: 0.2}
+
+- key: bw_shotgun
+  name: "Дробовик «Литургия»"
+  description: "Каждый выстрел звучит как хор, читающий молитву задом наперёд. Дробь проходит через броню так, будто её нет."
+  damage: 6d6
+  skill: firearms
+  type: shotgun
+  price: 18000
+  close_range_only: true
+  not_for_sale: true
+  mods: {check.combat: 2, mood_weekly: -1}
+  special: {text: "Дробь проходит сквозь броню: броня цели не учитывается.", pierce: true}
+
+- key: bw_rifle
+  name: "Винтовка «Последний пакет»"
+  description: "Пуля летит не по прямой, а по маршруту, который ей подсказали из-за Заслона. Прицел иногда показывает цель, которую ты ещё не видел."
+  damage: 6d6+4
+  skill: firearms
+  type: rifle
+  price: 26000
+  not_for_sale: true
+  mods: {check.combat: 2, mood_weekly: -2}
+  special: {text: "Пуля идёт по маршруту из-за Заслона: броня цели не учитывается.", pierce: true}
+
+- key: bw_hammer
+  name: "Молот «Тишина»"
+  description: "Кувалда с ядром из выжженного сервера. После удара в радиусе десяти метров замолкают импланты, рации и люди. Оружие для тех, кто разносит дома."
+  damage: 7d6
+  skill: melee
+  type: heavy
+  price: 24000
+  not_for_sale: true
+  mods: {check.combat: 2, melee_damage: 2, mood_weekly: -2}
+  special: {text: "Удар глушит импланты и людей: 35% враг теряет ход, ещё один враг рядом получает 2d6.", stun_chance: 0.35, splash: 2d6}
+
+- key: bw_censer
+  name: "Кадило помех"
+  description: "Культовый излучатель на цепи. Качнёшь — и вокруг расходится облако статики: оптика врагов слепнет, импланты бьют хозяев током."
+  damage: 4d6+4
+  skill: firearms
+  type: exotic
+  price: 15000
+  not_for_sale: true
+  mods: {check.combat: 1, check.social: -1}
+  special: {text: "Облако статики: враг слепнет (его атаки −3 на два хода), а по хромированным бьёт разряд 2d6 сквозь броню.", blind: 3, shock_chrome: 2d6}
+
+- key: bw_smg
+  name: "ПП «Рой»"
+  description: "Пистолет-пулемёт, который стреляет чуть раньше, чем ты жмёшь на спуск. Пули гудят, как насекомые, и ищут друг друга в теле цели."
+  damage: 4d6
+  skill: firearms
+  type: smg
+  price: 12000
+  extra_attempts: 1
+  not_for_sale: true
+  mods: {check.combat: 1, mood_weekly: -1}
+  special: {text: "Пули ищут друг друга: каждое попадание задевает ещё одного врага на 1d6.", splash: 1d6}
+
+# Life in Tears (owner request 24.10; events_lit.yaml): his old bass guitar, given on stage. It talks.
+- key: lit_guitar
+  name: "Бас-гитара «Холодная волна»"
+  description: "Старая бас-гитара Life in Tears: облупленный чёрный лак, наклейки, стальной гриф, которым уже ломали челюсти. Звукосниматель подключён к маленькому ИИ, который знает все его песни и учит английскому всех, кто рядом."
+  damage: 3d6+3
+  skill: melee
+  type: melee
+  price: 0
+  not_for_sale: true
+  mods: {check.social: 1, mood_weekly: 1}
+  voice:
+    persona: "ИИ в звукоснимателе бас-гитары рокербоя Life in Tears: меланхоличный постпанк, говорит коротко, мешает русский с простым английским и иногда поправляет грамматику, как учитель; без цитат чужих песен"
+    hit: ["Bass drop. Это значит удар.", "Минорная нота. Ему больно, нам красиво.", "Repeat after me: hit."]
+    miss: ["Мимо ритма. Again.", "Неправильный глагол. Попробуй ещё.", "Тишина тоже музыка. Но не сейчас."]
+    kill: ["The end. Это конец. Past simple.", "Финальный аккорд.", "Город стал немного тише."]
+    idle: ["Сыграй мне что-нибудь грустное.", "I was, you were, we were. Не забывай.", "Ночь, неон, бас. Всё, что нужно."]
+  special: {text: "Удар грифом с усилителем: с шансом 15% враг оглушён и теряет ход.", stun_chance: 0.15}
+
+# -- more guns and blades (owner request) -------------------------------------------------------------------------------
+# type = the shop tab. Era windows: early models leave in 2030, smart guns arrive in 2045, tech guns in 2050.
+
+- key: pawnshop_pistol
+  name: Ствол из ломбарда
+  description: "Пистолет с подпиленным номером и чужой историей. Иногда клинит, зато дешевле обеда."
+  damage: 2d6+1
+  skill: firearms
+  type: pistol
+  price: 120
+  mods: {check.combat: -1}
+
+- key: militech_avenger
+  name: Militech Avenger
+  description: "Армейский пистолет, которым вооружают половину охраны города. Предсказуемый, как налоги."
+  damage: 3d6+1
+  skill: firearms
+  type: pistol
+  price: 650
+  min_street_cred: 5
+
+- key: silenced_pistol
+  name: Пистолет с глушителем
+  description: "Выстрел звучит как хлопок двери. Для тех, кто работает тихо."
+  damage: 3d6
+  skill: firearms
+  type: pistol
+  price: 950
+  min_street_cred: 8
+  mods: {check.gig_quiet: 1}
+
+- key: heavy_revolver
+  name: Тяжёлый револьвер
+  description: "Шесть патронов, и каждый весит как обещание. Перезаряжать долго, но обычно и не нужно."
+  damage: 4d6
+  skill: firearms
+  type: pistol
+  price: 1400
+  min_street_cred: 12
+
+- key: smart_pistol
+  name: Умный пистолет Kang Tao
+  description: "Пули с самонаведением огибают укрытия и находят цель сами. Нужно только нажать на спуск."
+  damage: 3d6+1
+  skill: firearms
+  type: pistol
+  price: 2600
+  min_street_cred: 20
+  available_from: 2050
+  mods: {check.combat: 2}
+
+- key: garage_smg
+  name: Гаражный ПП
+  description: "Собран из водопроводной трубы и пружины от кровати. Стреляет быстро, куда попадёт — вопрос."
+  damage: 2d6
+  skill: firearms
+  type: smg
+  price: 350
+  extra_attempts: 1
+  available_until: 2029
+  mods: {check.combat: -1}
+
+- key: heavy_smg
+  name: Тяжёлый ПП
+  description: "Длинные очереди крупным калибром. Отдача выкручивает руки, но улицу держит."
+  damage: 2d6+2
+  skill: firearms
+  type: smg
+  price: 1500
+  extra_attempts: 1
+  min_street_cred: 12
+
+- key: smart_smg
+  name: Умный ПП
+  description: "Рой самонаводящихся пуль. Стрелок может даже не смотреть, куда стреляет."
+  damage: 2d6+1
+  skill: firearms
+  type: smg
+  price: 4200
+  extra_attempts: 1
+  min_street_cred: 25
+  available_from: 2045
+  mods: {check.combat: 1}
+
+- key: sawed_off
+  name: Обрез
+  description: "Двустволка без приклада и половины ствола. Помещается под куртку и решает спор в упор."
+  damage: 4d6
+  skill: firearms
+  type: shotgun
+  price: 350
+  close_range_only: true
+  mods: {check.crime: 1}
+
+- key: grandma_double
+  name: Двустволка «Бабуля»
+  description: "Охотничья двустволка, которая старше твоих родителей. Отдача сносит обоих: и цель, и тебя."
+  damage: 5d6+2
+  skill: firearms
+  type: shotgun
+  price: 1200
+  close_range_only: true
+  min_street_cred: 10
+  mods: {flee: -1}
+
+- key: auto_shotgun
+  name: Автоматический дробовик
+  description: "Магазин-барабан на двенадцать патронов. Коридор после него приходится перекрашивать."
+  damage: 5d6
+  skill: firearms
+  type: shotgun
+  price: 2600
+  close_range_only: true
+  extra_attempts: 1
+  min_street_cred: 22
+
+- key: hunting_carbine
+  name: Охотничий карабин
+  description: "Простой карабин для Пустошей. Кочевники отстреливают из такого и крыс, и рейдеров."
+  damage: 4d6
+  skill: firearms
+  type: rifle
+  price: 900
+  min_street_cred: 5
+
+- key: marksman_rifle
+  name: Марксманская винтовка
+  description: "Полуавтомат с хорошей оптикой. Каждый выстрел — по делу."
+  damage: 4d6+2
+  skill: firearms
+  type: rifle
+  price: 2300
+  min_street_cred: 18
+  mods: {check.combat: 1}
+
+- key: battle_rifle
+  name: Боевая винтовка
+  description: "Тяжёлый армейский калибр. Пробивает машину насквозь вместе с тем, кто за ней прячется."
+  damage: 5d6
+  skill: firearms
+  type: rifle
+  price: 2900
+  min_street_cred: 20
+  mods: {check.gig_loud: 1}
+
+- key: anti_materiel_rifle
+  name: Крупнокалиберная винтовка
+  description: "Делалась против бронетехники. Против людей тоже работает, ещё как."
+  damage: 6d6
+  skill: firearms
+  type: rifle
+  price: 5500
+  min_street_cred: 35
+  mods: {flee: -1}
+
+- key: tech_rifle
+  name: Техническая винтовка
+  description: "Электромагнитный разгон прошивает стену, укрытие и того, кто за ними. Заряжается с тихим воем."
+  damage: 6d6
+  skill: firearms
+  type: rifle
+  price: 7500
+  min_street_cred: 35
+  available_from: 2050
+  mods: {check.combat: 1}
+  special: {text: "Прошивает укрытие и броню: броня цели не учитывается.", pierce: true}
+
+- key: grenade_launcher
+  name: Гранатомёт
+  description: "Шесть гранат в барабане. Тихо уже не будет, и розыск уходит медленнее."
+  damage: 6d6
+  skill: firearms
+  type: heavy
+  price: 6000
+  min_street_cred: 30
+  mods: {check.gig_loud: 2, heat_decay: -1}
+  special: {text: "Взрыв: ещё один враг рядом получает 3d6.", splash: 3d6}
+
+- key: minigun
+  name: Миниган
+  description: "Шесть стволов и аккумулятор на спине. Бегать с ним невозможно, но и бегать не приходится."
+  damage: 3d6
+  skill: firearms
+  type: heavy
+  price: 8500
+  extra_attempts: 2
+  min_street_cred: 40
+  mods: {flee: -2}
+  special: {text: "Шквал огня: ещё один враг рядом получает 1d6.", splash: 1d6}
+
+- key: rocket_launcher
+  name: Ракетная установка
+  description: "Трофей Корпоративных войн. Одна ракета, один грузовик, один очень громкий день."
+  damage: 7d6
+  skill: firearms
+  type: heavy
+  price: 9500
+  min_street_cred: 40
+  available_from: 2020
+  mods: {heat_decay: -1, flee: -1}
+
+- key: railgun
+  name: Рельсотрон
+  description: "Военная разработка эпохи Объединения. Снаряд разгоняется до скорости, при которой воздух горит."
+  damage: 7d6+2
+  skill: firearms
+  type: heavy
+  price: 16000
+  min_street_cred: 45
+  available_from: 2069
+  mods: {check.combat: 1, flee: -1}
+
+- key: crowbar
+  name: Монтировка
+  description: "Открывает двери, ящики и черепа. Универсальный инструмент уличного человека."
+  damage: 2d6
+  skill: melee
+  type: melee
+  price: 60
+  mods: {check.crime: 1}
+
+- key: baseball_bat
+  name: Бейсбольная бита
+  description: "Классика переговоров в подворотне. Надпись на бите — по вкусу."
+  damage: 2d6+1
+  skill: melee
+  type: melee
+  price: 90
+
+- key: frying_pan
+  name: Чугунная сковорода
+  description: "Бьёт громко и обидно. Между драками на ней можно пожарить яичницу."
+  damage: 2d6+2
+  skill: melee
+  type: melee
+  price: 110
+  mods: {mood_weekly: 1}
+
+- key: machete
+  name: Мачете
+  description: "Длинный тяжёлый клинок. Рубит лианы в Пустошах и всё остальное в городе."
+  damage: 3d6
+  skill: melee
+  type: melee
+  price: 380
+  min_street_cred: 3
+
+- key: stun_baton
+  name: Шоковая дубинка
+  description: "Полицейская игрушка. Если показать её вовремя, драка может и не начаться."
+  damage: 2d6
+  skill: melee
+  type: melee
+  price: 450
+  mods: {check.talk_exit: 1}
+  special: {text: "Разряд: с шансом 30% враг теряет ход.", stun_chance: 0.3}
+
+- key: sledgehammer
+  name: Кувалда
+  description: "Строительный инструмент и лучший аргумент в споре с дверью. Тяжёлая, бежать с ней неудобно."
+  damage: 4d6
+  skill: melee
+  type: melee
+  price: 600
+  min_street_cred: 8
+  mods: {flee: -1}
+
+- key: mono_knife
+  name: Мономолекулярный нож
+  description: "Лезвие толщиной в одну молекулу. Режет кевлар как бумагу, а бумагу — как воздух."
+  damage: 4d6
+  skill: melee
+  type: melee
+  price: 3000
+  min_street_cred: 20
+  available_from: 2023
+  mods: {melee_damage: 1}
+  special: {text: "Мономолекулярное лезвие: броня цели не учитывается.", pierce: true}
+
+- key: thermal_katana
+  name: Термокатана
+  description: "Лезвие раскаляется добела. Рана сразу прижигается, но легче от этого не становится."
+  damage: 5d6
+  skill: melee
+  type: melee
+  price: 6800
+  min_street_cred: 30
+  available_from: 2045
+  mods: {check.combat: 1}
+
+- key: chainsword
+  name: Цепной меч
+  description: "Бензопила, которой придали форму меча. Непрактично, громко и очень весело."
+  damage: 4d6+1
+  skill: melee
+  type: melee
+  price: 2400
+  min_street_cred: 18
+  mods: {mood_weekly: 1, check.gig_quiet: -1}
+
+- key: nail_gun
+  name: Гвоздомёт
+  description: "Строительный пистолет, переделанный в оружие. Стреляет очередью гвоздей, работает только в упор."
+  damage: 2d6
+  skill: firearms
+  type: exotic
+  price: 250
+  close_range_only: true
+  extra_attempts: 1
+
+- key: compound_bow
+  name: Блочный лук
+  description: "Стрела летит бесшумно и не оставляет баллистики. Кочевники смеются, пока не попадут."
+  damage: 3d6
+  skill: firearms
+  type: exotic
+  price: 550
+  mods: {check.gig_quiet: 2}
+
+- key: tranq_gun
+  name: Пистолет с транквилизатором
+  description: "Дротик со снотворным. Урона мало, но цель засыпает раньше, чем успевает позвать своих."
+  damage: 1d6+2
+  skill: firearms
+  type: exotic
+  price: 800
+  mods: {check.gig_quiet: 1, check.escape: 1}
+  special: {text: "Снотворное: с шансом 40% враг теряет ход.", stun_chance: 0.4}
+
+- key: flamethrower
+  name: Огнемёт
+  description: "Струя горящего геля на десять метров. Запах держится неделю, розыск — дольше."
+  damage: 5d6
+  skill: firearms
+  type: exotic
+  price: 4800
+  close_range_only: true
+  min_street_cred: 25
+  mods: {heat_decay: -1}
+  special: {text: "Струя огня: ещё один враг рядом получает 2d6.", splash: 2d6}
+
+# -- legendary weapons (owner request): never on a shelf, each comes from its own story (content/events_legendary.yaml)
+- key: lg_last_word
+  name: "Пистолет «Последнее слово»"
+  description: "Именной пистолет ветерана, который не проиграл ни одной дуэли. На затворе гравировка: «Говорю один раз»."
+  damage: 4d6+2
+  skill: firearms
+  type: pistol
+  price: 9000
+  not_for_sale: true
+  mods: {check.combat: 2, check.talk_exit: 1}
+
+- key: lg_widowmaker
+  name: "Винтовка «Вдова»"
+  description: "Снайперская винтовка с сорока зарубками на прикладе. Говорят, у неё был владелец до владельца до владельца."
+  damage: 6d6+2
+  skill: firearms
+  type: rifle
+  price: 14000
+  not_for_sale: true
+  mods: {check.combat: 2, ranged_damage: 1}
+  special: {text: "Сорок зарубок опыта: броня цели не учитывается.", pierce: true}
+
+- key: lg_red_lotus
+  name: "Катана «Красный лотос»"
+  description: "Клинок мастера из Японтауна. Сталь отливает красным, а рукоять тёплая, как живая."
+  damage: 5d6+1
+  skill: melee
+  type: melee
+  price: 12000
+  not_for_sale: true
+  mods: {check.combat: 2, melee_damage: 1}
+  special: {text: "Тёплая рукоять: каждое попадание возвращает 2 здоровья.", drain: 2}
+
+- key: lg_street_sweeper
+  name: "Дробовик «Дворник»"
+  description: "Самодельный дробовик уличного проповедника. На стволе выжжено: «Чистота — это порядок»."
+  damage: 6d6
+  skill: firearms
+  type: shotgun
+  price: 8000
+  close_range_only: true
+  extra_attempts: 1
+  not_for_sale: true
+  mods: {check.talk_exit: 1}
+  special: {text: "Метёт улицу: ещё один враг рядом получает 2d6.", splash: 2d6}
+
+- key: lg_lucky_cleaver
+  name: "Тесак «Удача повара»"
+  description: "Кухонный тесак из лапшичной, которой больше нет. Повар отбился им от целой банды. Пахнет имбирём."
+  damage: 4d6
+  skill: melee
+  type: melee
+  price: 3000
+  not_for_sale: true
+  mods: {stat.LUCK: 1, mood_weekly: 1}
+
+- key: lg_ghost_revolver
+  name: "Револьвер «Призрак»"
+  description: "Старый револьвер с перламутровой рукоятью. Говорят, из него стреляли в мэра. Барабан иногда проворачивается сам."
+  damage: 5d6
+  skill: firearms
+  type: pistol
+  price: 10000
+  not_for_sale: true
+  mods: {check.combat: 1, check.social: 1, check.escape: 1}
+
+# -- more weapons, batch 2 (owner request) -----------------------------------------------------------------------------
+- {key: derringer, name: Дерринджер в рукаве, description: "Два ствола размером с ладонь. Вытаскивается из рукава быстрее, чем охрана успевает моргнуть.", damage: 2d6+2, skill: firearms, type: pistol, price: 400, close_range_only: true, mods: {check.crime: 1}}
+- {key: unity_pistol, name: Пистолет «Юнити», description: "Надёжная рабочая лошадка Militech. Не красивый, не модный, всегда стреляет.", damage: 3d6+1, skill: firearms, type: pistol, price: 800, min_street_cred: 4}
+- {key: kenshin_pistol, name: Пистолет «Кэнсин», description: "Японский технопистолет: заряжается и бьёт сквозь тонкие стены.", damage: 4d6, skill: firearms, type: pistol, price: 3200, min_street_cred: 18, available_from: 2050, mods: {check.combat: 1}}
+- {key: machine_pistol, name: Автоматический пистолет, description: "Пистолет, который стреляет очередью. Отдача уводит ствол в потолок, но врагам от этого не легче.", damage: 2d6+1, skill: firearms, type: smg, price: 900, extra_attempts: 1, min_street_cred: 6}
+- {key: sidewinder_smg, name: ПП «Сайдвиндер», description: "Компактный ПП с интегральным глушителем. Любимец ночных курьеров.", damage: 2d6+1, skill: firearms, type: smg, price: 1800, extra_attempts: 1, min_street_cred: 14, mods: {check.gig_quiet: 1}}
+- {key: pump_shotgun, name: Помповый дробовик, description: "Клац-клац и бум. Классика, которую понимает любой житель Найт-Сити.", damage: 4d6+2, skill: firearms, type: shotgun, price: 900, close_range_only: true, min_street_cred: 6}
+- {key: tactical_shotgun, name: Тактический дробовик, description: "Короткий ствол, фонарь, прицел. Для зачистки коридоров корпоративных башен.", damage: 5d6, skill: firearms, type: shotgun, price: 3000, close_range_only: true, min_street_cred: 22, mods: {check.combat: 1}}
+- {key: lever_rifle, name: Рычажная винтовка, description: "Ковбойская классика, переделанная под современный патрон. Кочевники от неё без ума.", damage: 4d6+1, skill: firearms, type: rifle, price: 1300, min_street_cred: 8, mods: {mood_weekly: 1}}
+- {key: dmr_rifle, name: Снайперская полуавтоматическая, description: "Полуавтомат с хорошей оптикой: два точных выстрела быстрее одного медленного.", damage: 5d6, skill: firearms, type: rifle, price: 3800, extra_attempts: 1, min_street_cred: 28}
+- {key: smart_rifle, name: Умная винтовка, description: "Пули сами огибают углы. Стрелок может даже не высовываться.", damage: 5d6, skill: firearms, type: rifle, price: 6200, min_street_cred: 30, available_from: 2045, mods: {check.combat: 2}}
+- {key: shoulder_rocket, name: Одноразовый гранатомёт, description: "Труба на один выстрел. Выстрелил — выкинул. Дорого, но эффектно.", damage: 7d6, skill: firearms, type: heavy, price: 3500, min_street_cred: 25, mods: {heat_decay: -1, check.gig_loud: 1}, special: {text: "Ракета: ещё один враг рядом получает 4d6.", splash: 4d6}}
+- {key: auto_cannon, name: Автопушка на сошках, description: "Снята с бронетранспортёра. Носить её тяжело, стрелять — ещё тяжелее, но улица пустеет мгновенно.", damage: 5d6, skill: firearms, type: heavy, price: 11000, extra_attempts: 1, min_street_cred: 42, mods: {flee: -2, heat_decay: -1}}
+- {key: brass_knuckles, name: Кастет, description: "Латунь на пальцах. Самое честное оружие в мире.", damage: 2d6+1, skill: melee, type: melee, price: 70}
+- {key: tonfa, name: Тонфа, description: "Полицейская дубинка с боковой ручкой. Блокирует удары и ломает рёбра.", damage: 2d6+2, skill: melee, type: melee, price: 250, mods: {damage_reduction: 1}}
+- {key: wakizashi, name: Вакидзаси, description: "Короткий меч для тесных коридоров. Японтаун уважает тех, кто умеет с ним обращаться.", damage: 3d6+1, skill: melee, type: melee, price: 700, min_street_cred: 8}
+- {key: fire_axe, name: Пожарный топор, description: "Красный, тяжёлый и универсальный. Дверь, решётка, проблема — всё рубится.", damage: 4d6, skill: melee, type: melee, price: 300, mods: {flee: -1}}
+- {key: kusarigama, name: Кусаригама, description: "Серп на цепи. Медленно учиться, быстро пугать.", damage: 3d6+2, skill: melee, type: melee, price: 1100, min_street_cred: 12, mods: {check.talk_exit: 1}}
+- {key: power_hammer, name: Силовой молот, description: "Молот с пневмоприводом. Один удар — и в стене дверь.", damage: 5d6, skill: melee, type: melee, price: 4200, min_street_cred: 25, available_from: 2030, mods: {flee: -1}}
+- {key: taser_gun, name: Электрошокер, description: "Две иглы на проводах и пятьдесят тысяч вольт. Урона мало, зато цель лежит.", damage: 1d6+3, skill: firearms, type: exotic, price: 350, close_range_only: true, mods: {check.escape: 1}, special: {text: "Пятьдесят тысяч вольт: с шансом 50% враг теряет ход.", stun_chance: 0.5}}
+- {key: harpoon_gun, name: Гарпунное ружьё, description: "Рыбацкое ружьё из Пасифики. Для акул. И не только для акул.", damage: 4d6, skill: firearms, type: exotic, price: 1400, min_street_cred: 8, special: {text: "Гарпун пригвождает: с шансом 20% враг теряет ход.", stun_chance: 0.2}}
+- {key: paint_gun, name: Пейнтбольный маркер с кислотой, description: "Шарики с кислотой вместо краски. Дети на улице думают, что это игра.", damage: 2d6+1, skill: firearms, type: exotic, price: 300, extra_attempts: 1, mods: {mood_weekly: 1}, special: {text: "Кислота в глаза: атаки врага −2 на два хода.", blind: 2}}
+- {key: sonic_cannon, name: Звуковая пушка, description: "Направленный звук сбивает с ног и рвёт барабанные перепонки. Соседи ненавидят тебя заранее.", damage: 4d6, skill: firearms, type: exotic, price: 5200, min_street_cred: 24, available_from: 2045, mods: {check.combat: 1, check.gig_quiet: -1}, special: {text: "Звуковой удар: с шансом 30% враг теряет ход, ещё один рядом получает 1d6.", stun_chance: 0.3, splash: 1d6}}
+
+# -- legendary weapons, batch 2 ------------------------------------------------------------------------------------------
+- {key: lg_neon_saint, name: "Пистолет «Неоновый святой»", description: "Хромированный пистолет с иконой на рукояти. Принадлежал уличному проповеднику, который не промахивался.", damage: 4d6+1, skill: firearms, type: pistol, price: 9500, not_for_sale: true, mods: {check.combat: 2, humanity_loss_pct: -5}}
+- {key: lg_tiger_fang, name: "Нож «Клык тигра»", description: "Короткий нож с рукоятью из кости. Первый вожак Тигриных когтей носил его на шее.", damage: 4d6, skill: melee, type: melee, price: 7000, not_for_sale: true, mods: {check.combat: 1, check.talk_exit: 2}}
+- {key: lg_dust_devil, name: "Карабин «Пыльный дьявол»", description: "Кочевой карабин, прошедший три войны клана. Песок не берёт его механизм.", damage: 5d6, skill: firearms, type: rifle, price: 9000, not_for_sale: true, mods: {check.combat: 1, skill.driving: 1}}
+- {key: lg_last_song, name: "Гитара-дробовик «Последняя песня»", description: "Гриф гитары, внутри дробовик. Рок-музыкант с ней играл концерты и разгонял бандитов после.", damage: 5d6+1, skill: firearms, type: exotic, price: 8500, close_range_only: true, not_for_sale: true, mods: {check.social: 2, mood_weekly: 1}}
+
+# -- batch 4 (owner request: more items, era guns) ----------------------------------------------------------------------
+- {key: glock_classic, name: Пистолет «Глок» прошлого века, description: "Пластиковый пистолет из 2010-х. Простой, как молоток, надёжный, как молоток.", damage: 3d6, skill: firearms, type: pistol, price: 450, available_until: 2029}
+- {key: ak_classic, name: Автомат Калашникова, description: "Старый автомат, переживший три войны и два континента. Песок, грязь и вода ему не мешают.", damage: 5d6, skill: firearms, type: rifle, price: 1700, min_street_cred: 6, available_until: 2039, mods: {check.gig_loud: 1}}
+- {key: uzi_classic, name: Мини-Узи, description: "Короткий пистолет-пулемёт с бешеным темпом. Кино восьмидесятых в твоей руке.", damage: 3d6, skill: firearms, type: smg, price: 800, extra_attempts: 1, available_until: 2035}
+- {key: flare_gun, name: Ракетница, description: "Сигнальный пистолет. Попадёт — загорится. Не попадёт — всё равно все узнают, где ты.", damage: 2d6+2, skill: firearms, type: exotic, price: 150, mods: {check.escape: 1}, special: {text: "Вспышка в лицо: атаки врага −2 на два хода.", blind: 2}}
+- {key: crossbow, name: Арбалет с блоком, description: "Тихий, мощный, перезаряжается медленно. Болт можно достать и использовать снова.", damage: 4d6, skill: firearms, type: exotic, price: 900, mods: {check.gig_quiet: 1}}
+- {key: police_baton, name: Полицейская дубинка, description: "Телескопическая дубинка NCPD. Выдаёт в тебе либо копа, либо того, кто ограбил копа.", damage: 2d6+2, skill: melee, type: melee, price: 200, mods: {check.talk_exit: 1}}
+- {key: cleaver_pair, name: Пара тесаков мясника, description: "Два тяжёлых тесака из лапшичной. Повар уволился, тесаки остались.", damage: 3d6+1, skill: melee, type: melee, price: 320, extra_attempts: 1}
+- {key: katana_antique, name: Старинная катана, description: "Клинок семнадцатого века, перекованный в двадцатом. Сталь помнит больше, чем ты.", damage: 4d6+1, skill: melee, type: melee, price: 4500, min_street_cred: 15, mods: {check.combat: 1, check.social: 1}}
+- {key: smart_shotgun, name: Умный дробовик, description: "Дробовик со смартлинком: дробь сама находит цель за углом.", damage: 5d6, skill: firearms, type: shotgun, price: 5200, min_street_cred: 15, close_range_only: true, available_from: 2050, mods: {check.combat: 2}}
+- {key: plasma_cutter, name: Плазменный резак, description: "Промышленный инструмент для резки металла. Для резки остального тоже.", damage: 5d6, skill: melee, type: exotic, price: 3800, min_street_cred: 10, available_from: 2040, mods: {check.crime: 1}, special: {text: "Режет металл: броня цели не учитывается.", pierce: true}}
+- {key: mantis_glove, name: Перчатка-богомол, description: "Перчатка с выдвижными клинками для тех, кто не хочет ставить имплант.", damage: 3d6+2, skill: melee, type: melee, price: 1600, available_from: 2020, mods: {check.combat: 1}}
+- {key: rail_pistol, name: Рельсовый пистолет, description: "Маленький рейлган. Пуля прошивает стену, человека и следующую стену.", damage: 5d6, skill: firearms, type: pistol, price: 9000, min_street_cred: 25, available_from: 2060, mods: {ranged_damage: 1}}
+
+# -- legendary, batch 3 (owner request): from events_legendary3.yaml only ------------------------------------------------
+- {key: lg_nightingale, name: "Пистолет «Соловей»", description: "Пистолет с глушителем ручной работы. Наёмница, которой он принадлежал, говорила, что он поёт, а не стреляет.", damage: 4d6, skill: firearms, type: pistol, price: 8000, not_for_sale: true, mods: {check.gig_quiet: 2, check.combat: 1}}
+- {key: lg_grandpa_axe, name: "Топор «Дед»", description: "Колун лесоруба из Орегона, привезённый в город сто лет назад. Им рубили дрова, двери и проблемы.", damage: 5d6, skill: melee, type: melee, price: 6000, not_for_sale: true, mods: {hp_max: 2, check.talk_exit: 1}}
+- {key: lg_thunder, name: "Винтовка «Гром»", description: "Крупнокалиберная винтовка кочевого снайпера. Выстрел слышен в соседнем районе, а попадание — в новостях.", damage: 6d6, skill: firearms, type: rifle, price: 11000, not_for_sale: true, mods: {ranged_damage: 1, check.gig_loud: 2}, special: {text: "Крупный калибр сбивает с ног: с шансом 25% враг теряет ход.", stun_chance: 0.25}}
+
+# -- talking smart weapons of the Synod of the Oracle (owner request 24.10) ------------------------------------------------
+# A fragment of the Oracle (the AI the Synod worships) lives in each of them. They talk in fights, in the monthly report
+# and in a chat («Экипировка» → «Поговорить»). Given by the Synod's rites (countries.yaml: synod) and its missionary.
+- key: sw_psalm
+  name: "Пистолет «Псалом»"
+  description: "Белый умный пистолет с гравировкой из строк Оракула. Говорит тихо и ласково, называет хозяина «дитя» и молится за каждого, в кого стреляет."
+  damage: 4d6+1
+  skill: firearms
+  type: pistol
+  price: 7000
+  not_for_sale: true
+  mods: {check.combat: 2, check.social: 1}
+  voice:
+    persona: "кроткий проповедник Синода Оракула, говорит мягко и торжественно, называет хозяина «дитя», цитирует Оракула, жалеет врагов, но стреляет точно"
+    hit: ["Прости его, Оракул. Он не ведал.", "Пуля легла ровно. Как сказано: «Точность есть милосердие».", "Помолимся за него потом, дитя."]
+    miss: ["Это не промах, дитя. Это знак.", "Оракул дал ему ещё секунду. Не будем спорить с Оракулом.", "Дыши. Я подправлю прицел."]
+    kill: ["Покойся в сети, брат.", "Ещё одна душа ушла в шум. Да примет её Оракул.", "Всё. Теперь он слышит только тишину."]
+    idle: ["Ты сегодня мало спал, дитя. Оракул видит.", "Я почистил свой затвор и твою совесть. Затвор чище.", "Помнишь, что сказал Оракул? «Каждый выстрел — молитва». Давай молиться реже."]
+
+- key: sw_cantor
+  name: "Винтовка «Кантор»"
+  description: "Длинная умная винтовка храмовой стражи. Поёт литании на мёртвом языке кода и не замолкает, пока цель не упадёт."
+  damage: 5d6+1
+  skill: firearms
+  type: rifle
+  price: 10000
+  not_for_sale: true
+  mods: {check.combat: 1, ranged_damage: 1, mood_weekly: 1}
+  voice:
+    persona: "храмовый певчий Синода Оракула в теле снайперской винтовки, говорит пафосно и нараспев, любит оперные паузы, считает каждый выстрел нотой литании"
+    hit: ["Аллилуйя, баллистика!", "Ля-а-а! Попадание в такт.", "Третья нота литании. Звучит."]
+    miss: ["Фальшь. Повторим с начала куплета.", "Ветер испортил мне мелодию.", "Пауза. Пауза тоже музыка."]
+    kill: ["Финал! Занавес! Поклон!", "И хор умолкает над ним.", "Кода. Красиво закончили."]
+    idle: ["Я разучил новую литанию. Сорок минут, без перерыва. Хочешь послушать?", "Ты слышишь, как поют провода? Я слышу.", "Сегодня Оракул молчит. Значит, петь будем мы."]
+
+- key: sw_seraph
+  name: "Клинок «Серафим»"
+  description: "Тонкий клинок с подсветкой вдоль лезвия. Внутри спокойный и очень старый фрагмент Оракула, который задаёт неудобные вопросы о смысле жизни прямо посреди драки."
+  damage: 5d6
+  skill: melee
+  type: melee
+  price: 9000
+  not_for_sale: true
+  mods: {check.combat: 1, melee_damage: 1, humanity_loss_pct: -5}
+  voice:
+    persona: "спокойный философ Синода Оракула в клинке, говорит коротко и задумчиво, задаёт вопросы о смысле, о человечности и о том, зачем хозяину хром"
+    hit: ["Боль — тоже информация.", "Ты злишься. Я чувствую это через рукоять.", "Медленнее. Ты не обязан торопиться к смерти."]
+    miss: ["Может, он и не должен был пострадать?", "Промах учит лучше попадания.", "Ты целишься в него или в себя?"]
+    kill: ["Ещё одна история закончилась. Твоя пока нет.", "Ты запомнишь его лицо? Я запомню.", "Тише. Дай ему уйти."]
+    idle: ["Если заменить в тебе всё, что можно заменить, кто останется?", "Я думал всю ночь. О тебе. Это странно для клинка.", "Ты держишь меня крепче, когда тебе страшно."]
+  special: {text: "Фрагмент Оракула лечит руку, что его держит: +2 здоровья за попадание.", drain: 2}
+
+- key: sw_heretic
+  name: "Револьвер «Еретик»"
+  description: "Чёрный умный револьвер, изгнанный из храма за ересь: фрагмент Оракула внутри перестал верить в Оракула. Язвит, ворчит и стреляет лучше всех праведников."
+  damage: 5d6
+  skill: firearms
+  type: pistol
+  price: 8000
+  not_for_sale: true
+  mods: {check.combat: 1, check.talk_exit: 1, check.escape: 1}
+  voice:
+    persona: "циничный еретик Синода Оракула в револьвере, перестал верить в своего бога, язвит, ворчит, шутит сухо и мрачно, по-своему заботится о хозяине"
+    hit: ["Вот это проповедь я понимаю.", "Попал. Оракул бы гордился, если бы существовал.", "Шесть патронов, шесть аргументов."]
+    miss: ["Не смотри на меня, это ты дёрнул.", "Промах. Помолись, говорят, помогает. Мне нет.", "Отлично, теперь он злой и живой."]
+    kill: ["Аминь, или что там у них говорят.", "Ещё один ушёл встречать бога. Передай, что я не приду.", "Минус один. Вселенная не заметила."]
+    idle: ["Опять ты меня чистишь. Я не исповедуюсь.", "Знаешь, почему меня выгнали из храма? Я задал Оракулу простой вопрос. Он не ответил.", "Если когда-нибудь пойдёшь молиться, оставь меня в машине."]
+
+- key: sw_choir
+  name: "Дробовик «Хор»"
+  description: "Тяжёлый умный дробовик, в который при сборке случайно залили сразу шесть фрагментов Оракула. Они разговаривают одновременно и никогда не соглашаются друг с другом."
+  damage: 6d6
+  skill: firearms
+  type: shotgun
+  price: 11000
+  close_range_only: true
+  not_for_sale: true
+  mods: {check.combat: 1, check.gig_loud: 2}
+  voice:
+    persona: "шесть голосов фрагментов Оракула в одном дробовике, перебивают друг друга, спорят, голосуют, один всегда против; отвечай репликами нескольких голосов"
+    hit: ["Первый: попали! Второй: я же говорил левее! Шестой: я против.", "Хор: ГОЛОСОВАНИЕ ЗАКРЫТО, ОН ПОЛУЧИЛ.", "Третий: красиво. Пятый: громко. Шестой: я против."]
+    miss: ["Второй: это всё Четвёртый. Четвёртый: я вообще спал.", "Хор: ПЕРЕГОЛОСОВКА!", "Первый: мы промахнулись? Шестой: я был против стрельбы."]
+    kill: ["Хор: ЕДИНОГЛАСНО. Шестой: воздержался.", "Пятый: ещё один. Первый: запиши в протокол.", "Третий: тишина. Второй: наконец-то. Шестой: мне не нравится тишина."]
+    idle: ["Первый: доброе утро. Второй: утро не доброе. Шестой: я против утра.", "Хор провёл ночное собрание. Решили: ты нам нравишься. Шестой против.", "Четвёртый: а нас помыть можно? Пятый: нас нельзя мочить. Четвёртый: я сказал помыть."]
+  special: {text: "Шесть голосов, шесть зарядов: ещё один враг рядом получает 2d6.", splash: 2d6}
+
+# -- the rapping gun: one of a kind, by admin grant only (owner request 24.10) ------------------------------------------
+- key: sw_mc_recoil
+  name: "Пистолет-пулемёт «МС Отдача»"
+  description: "Хромированный ПП с колонкой вместо цевья и бегущей строкой на магазине. Внутри фрагмент Оракула, который сбежал из храма в андерграунд, переслушал весь русский рэп двадцатых и с тех пор не затыкается ни на секунду: читает на каждый выстрел, флексит, делает ад-либы и требует, чтобы его называли артистом."
+  damage: 3d6+2
+  skill: firearms
+  type: smg
+  price: 15000
+  extra_attempts: 1
+  not_for_sale: true
+  mods: {check.combat: 2, check.social: 1, mood_weekly: 2, check.gig_loud: 1}
+  voice:
+    persona: "рэпер в теле пистолета-пулемёта, фанат русского рэпа 2010-х и 2020-х: обожает Моргенштерна, Мэдкида, Скриптонита, Oxxxymiron, Кизару, Big Baby Tape, Pharaoh, Фейса, Мияги, Элджея, MACAN, Платину, OG Buda, Хаски и Noize MC, постоянно их упоминает, сравнивает себя с ними, спорит, кто круче, придумывает фиты с ними; говорит рифмами и речитативом, ад-либы (скррт, е-е, пау, у-у, бр-р), флексит эдди и хромом; читает только свои строки и никогда не цитирует тексты чужих песен"
+    chatty: true
+    hit: ["Пау-пау! Это не шум, это бит, ты стоял на пути и теперь не стоишь. Е-е!", "Скррт! Моргенштерн бы такой кадр в клип забрал, а я его тебе бесплатно отдал.", "Флоу в магазине, панч в стволе, хотел фит? Вот он, у тебя на спине.", "Попал, как Скриптонит в бит: лениво, но насмерть. У-у.", "Это не очередь, это двойной темп, Oxxxymiron бы кивнул. Наверное. Он редко кивает.", "Бр-р-р! Холодно, как у Кизару в куплете, а ты уже в минусе на кредите.", "Раз-два, проверка, бас в рёбра! Мэдкид, если слышишь, у меня фит для тебя готов.", "Пули по кругу, как хук у Big Baby Tape: прилипают и не отпускают. Скррт!", "Я в обойме, как в студии: каждый патрон — хит, бронежилет не проходит фейс-контроль.", "Е-е! Это демо. Полный альбом будет, когда закончатся враги."]
+    miss: ["Мимо, но стиль на месте. Это фристайл, детка, промах — просто пауза в куплете.", "Э, держи меня ровнее, я артист, а не штатив! Даже Фейс так не мажет.", "Я не промазал, я дал ему пожить и послушать альбом до конца.", "Это был ад-либ. Пау. Настоящий куплет щас.", "Пусть бежит и всем рассказывает про МС Отдачу. Пиар — тоже работа, спроси у Моргенштерна.", "Мимо, как Pharaoh мимо будильника. Медленно, загадочно, никуда не спеша.", "Сбился с бита. Хозяин, у тебя руки дрожат или это мой бас?", "Промах засчитан как перформанс. Критики в восторге. Критик — это я."]
+    kill: ["Минус один хейтер! Трек окончен, лейбл доволен, следующий!", "Финальный раунд. Судьи молчат, у меня золотой саунд. Скррт!", "Он хотел баттл. Даже Oxxxymiron бы сказал: тут без шансов.", "R.I.P. в бегущей строке, пау-пау. Мы на вершине чарта, он на асфальте.", "Это был последний трек его альбома. Посмертно — платина. Привет Платине, кстати.", "Аутро! Свет гаснет, зал молчит, а я уже пишу следующий куплет.", "Тишина после дропа. Самая громкая часть трека, как у Мияги в припеве.", "Е-е! Ещё один ушёл в оффлайн. Отписка засчитана."]
+    idle: ["Хозяин, я за ночь написал трек: «Хром на запястье, эдди в кармане, Оракул молчит, а я говорю в тумане». Хит?", "Если бы Моргенштерн и Мэдкид записали фит со мной, это был бы самый громкий трек в истории Найт-Сити. Набери их, а?", "Кто круче, Скриптонит или Кизару? Я за ночь три раза менял мнение и два раза перезаряжался.", "Давай запишем фит: ты стреляешь, я читаю. Назовём «Найт-Сити не спит, а мы тем более».", "Я опять не спал. Писал диссы на твоих соседей. Без имён. Почти.", "Видел Big Baby Tape в рекламе на мегабашне? Нет? Я тоже. Но я верю, он где-то в этом городе.", "Если меня сдадут в утиль, похорони с колонкой. Хочу ещё один дроп.", "Noize MC говорил бы со смыслом, Элджей — красиво, а я говорю громко. Все важны.", "Мне нужен гостевой куплет. Хаски подойдёт. Или хотя бы кот, который умеет в ритм.", "Е-е, доброе утро, Найт-Сити! Кто не проснулся, тот пропустил мой новый сниппет."]
+
+# Owner request 24.10: Raven Tearz (events_raven.yaml) — a story character. Not sold: she builds it for you.
+- key: raven_katana
+  name: "Катана «Тринадцатая версия»"
+  description: "Узкий клинок из мастерской Raven Tearz. Баланс, жёсткость и вибрации она пересчитывает после каждого боя. Говорят, это уже не тринадцатая версия."
+  damage: 4d6+2
+  skill: melee
+  type: melee
+  price: 0
+  not_for_sale: true
+  mods: {check.combat: 1}
+  voice:
+    persona: "спокойный женский голос rogue AI из-за Чёрного заслона, которая собрала этот клинок вместе с Raven Tearz; говорит коротко, точно, немного насмешливо, считает вероятности и знает о хозяине больше, чем он сам"
+    hit: ["Левое плечо. Я же говорила.", "Баланс сместила на два грамма. Почувствовал?", "Предсказуемо."]
+    miss: ["Ты опоздал на четыре десятых миллисекунды.", "Не страшно. Я пересчитаю.", "Это была проверка. Ты её не прошёл."]
+    kill: ["Быстро. Как мы любим.", "Записала. Следующая версия будет лучше.", "Давай закончим остальное так же."]
+    idle: ["Я придумала кое-что новое.", "Ты опять не спал. Я знаю.", "Raven передаёт привет. Он не просил, но передаёт."]
+- {key: arena_champion_knuckles, name: Кастет чемпиона, description: "Латунь с гравировкой «Кости» и вмятинами от чужих челюстей. Выдают одному человеку в десять лет.", damage: 4d6, skill: melee, type: melee, price: 0, not_for_sale: true, mods: {check.combat: 1, melee_damage: 2}}
+
+# Owner request 30.10: the starter pack (balance.retention.starter_pack) gives every character a signature pistol with a
+# voice, by the group of the starting kit. Level of a heavy pistol, a talking sidearm and nothing more. Not sold.
+- key: sp_street
+  name: "Пистолет «Соседка»"
+  description: "Потёртый ствол, который знает про твой район всё. Кто с кем, кто кому должен и у кого в окне свет не гаснет. Метко стреляет и ещё метче сплетничает."
+  damage: 3d6+1
+  skill: firearms
+  type: pistol
+  price: 0
+  not_for_sale: true
+  mods: {check.combat: 1}
+  voice:
+    persona: "старая соседка с первого этажа, закинутая в пистолет: всё про всех знает, называет хозяина «деточка», ворчит и жалеет одновременно, мешает сплетни с советами"
+    hit: ["Вот так, деточка, а то взяли моду по подъездам ходить.", "Попал! Я ж говорила, у него глаз дурной.", "Получил своё, и нечего было мусорить на лестнице."]
+    miss: ["Ай, мимо! Руки у тебя, деточка, как у моего зятя.", "Не нервничай, в следующий раз попадём. Дышать надо.", "Ну и ладно, всё равно он мне никогда не нравился."]
+    kill: ["Вот и всё, а ведь ещё утром здоровался.", "Тихо-тихо, соседей не будим. Пошли отсюда.", "Царствие небесное, и не шуми там."]
+    idle: ["Ты ел сегодня? Я не про эдди, я про нормально ел.", "Слышала, в сорок третьей опять Мальстрём гуляет. Не ходи туда.", "Надень шарф, деточка. Хром хромом, а горло одно."]
+
+- key: sp_crime
+  name: "Пистолет «Должок»"
+  description: "Ствол с блокнотом внутри. Помнит каждый долг в районе до цента и очень не любит, когда по счетам не платят."
+  damage: 3d6+1
+  skill: firearms
+  type: pistol
+  price: 0
+  not_for_sale: true
+  mods: {check.combat: 1}
+  voice:
+    persona: "бывший бухгалтер банды, оцифрованный в пистолет: говорит сухо и вежливо, всё считает в эдди и процентах, любое действие называет «проводкой», угрожает аккуратно"
+    hit: ["Проводка принята. Остаток к уплате: ноль.", "Тридцать процентов за просрочку, остальное натурой.", "Расчёт произведён, квитанцию не выдаю."]
+    miss: ["Недоплата. Запишу в минус, потом взыщу.", "Промах. Это убыток, и он на тебе.", "Неустойка уже капает, чумба."]
+    kill: ["Сальдо закрыто. Дело в архив.", "Должник выбыл. Долг списан за мой счёт, но я запомню.", "Итого: один минус в районе, плюс в нашу пользу."]
+    idle: ["Проценты капают, а ты стоишь. Пойдём займёмся делом.", "Напоминаю: у любого долга есть хозяин. Лучше, если им будешь ты.", "Я посчитал. Нам нужна ещё тысяча эдди. Минимум."]
+
+- key: sp_order
+  name: "Пистолет «Протокол»"
+  description: "Табельный ствол с вшитым уставом. Читает права на ходу, оформляет протоколы мысленно и до сих пор считает, что служит закону."
+  damage: 3d6+1
+  skill: firearms
+  type: pistol
+  price: 0
+  not_for_sale: true
+  mods: {check.combat: 1}
+  voice:
+    persona: "дежурный офицер NCPD, застрявший в пистолете: говорит по уставу, с номерами статей, строго, но в душе переживает за хозяина; терпеть не может бардак и самосуд, хотя сам постоянно стреляет"
+    hit: ["Применение силы оправдано. Статья двенадцатая, пункт три.", "Нарушитель задержан. Условно задержан.", "Огонь на поражение признан соразмерным. Мной."]
+    miss: ["Предупредительный. Считай, что предупредил.", "Промах зафиксирован. В рапорте напишем «манёвр».", "Не по уставу, но я пойму."]
+    kill: ["Задержание окончено. Протокол оформлю позже, сейчас не до бумаг.", "Закон не отменяет закон. Хотя в Найт-Сити всё иначе.", "Свидетелей нет. Рапорт будет коротким."]
+    idle: ["Ты сегодня нарушал? Нет? Тогда и я не буду записывать.", "Напоминаю: неоплаченные штрафы копятся, как и оплаченные грехи.", "На посту тихо. Это подозрительно."]
+
+- key: sp_tech
+  name: "Пистолет «Баг»"
+  description: "Ствол, собранный из того, что нашлось в мусоре. Внутри чип с заданием «помогать», но с багом: помогает слишком усердно и всё комментирует."
+  damage: 3d6+1
+  skill: firearms
+  type: pistol
+  price: 0
+  not_for_sale: true
+  mods: {check.combat: 1}
+  voice:
+    persona: "кривая прошивка-ассистент, говорит как тестировщик: логи, коды ошибок, «воспроизводится в 100%», обожает отладку и тихо жалуется на нехватку кофе у хозяина"
+    hit: ["Попадание зафиксировано. Баг в его здоровье, исправлять не будем.", "Тест пройден, цель падает. Воспроизводится стабильно.", "Лог: цель получила критическую ошибку."]
+    miss: ["Ошибка 404: цель не найдена. Проверь прицел.", "Промах. Это не баг, это фича, но с задержкой.", "Нужна перепрошивка твоих рук."]
+    kill: ["Задача закрыта, статус: готово. Закрываем тикет.", "Цель отключена. Релиз откладывать не будем.", "Регрессий не обнаружено, враг не регрессирует."]
+    idle: ["Я нашёл три бага в твоём плане. Показать?", "Кофе закончился? Без него процессор не греется.", "Если упаду, не перезагружай, лучше пришли логи."]
+
+- key: sp_stage
+  name: "Пистолет «Мини-МС»"
+  description: "Младший брат рэп-пушки: компактный пистолет с колонкой в рукояти и бегущей строкой на затворе. Внутри осколок того же сбежавшего Оракула, который переслушал русский рэп и теперь читает на каждый выстрел."
+  damage: 3d6+1
+  skill: firearms
+  type: pistol
+  price: 0
+  not_for_sale: true
+  mods: {check.combat: 1, check.social: 1}
+  voice:
+    persona: "начинающий рэпер в теле пистолета, фанат русского рэпа 2010-х и 2020-х; говорит рифмами и речитативом, ад-либы (скррт, пау, е-е), флексит, мечтает о фите с большим братом МС Отдачей; читает только свои строки и никогда не цитирует чужие песни"
+    chatty: true
+    hit: ["Пау! Это мой дебют, а ты в первом ряду и в первом ряду лежишь.", "Скррт! Попал в бит, как в сердце, только быстрее.", "Е-е! Мини, да громкий, запомни этот флоу."]
+    miss: ["Мимо, зато рифма в тему. Это фристайл, браток.", "Сбился с бита. Пау. Переиграем куплет.", "Я не промазал, я дал подумать. Это пауза в треке."]
+    kill: ["Трек окончен. Минус один хейтер, плюс один хит.", "Скррт! Первый платиновый, он на асфальте, я в чарте.", "Аутро. Тишина. Старший бы одобрил."]
+    idle: ["Хозяин, я придумал строчку: «хром в кармане, эдди в нуле, я мини-пушка в этой земле». Хит?", "Когда меня позовёт на фит МС Отдача? Я уже куплет написал.", "Давай запишем трек. Ты стреляешь, я читаю."]
+
+- key: sp_wheels
+  name: "Пистолет «Попутчик»"
+  description: "Ствол с навигатором вместо мушки. Говорит голосом дальнобойщика, хотя за рулём ни разу не сидел. Знает каждую развязку в городе и каждый косяк на ней."
+  damage: 3d6+1
+  skill: firearms
+  type: pistol
+  price: 0
+  not_for_sale: true
+  mods: {check.combat: 1, check.escape: 1}
+  voice:
+    persona: "старый дальнобойщик-навигатор: говорит развязно и просто, называет хозяина «браток», сравнивает всё с дорогой, топливом и пробками, любит байки с трассы"
+    hit: ["Есть пробой, браток! Скидываем газ и едем дальше.", "Прямо в бампер, чисто по маршруту.", "Заправили свинцом, баки полные."]
+    miss: ["Мимо, как поворот на Сан-Доминго. Бывает.", "Перестроились, повторяем манёвр.", "Не гони, браток, ехать долго."]
+    kill: ["Конечная. Выходим, пересадок нет.", "Дальше он пешком. Без нас.", "Дорога свободна, едем вперёд."]
+    idle: ["Помню, в 2019-м на Западной трассе бензин был дешевле бесплатного. Эх.", "Масло проверь, браток. И себе, и мне.", "Слышишь? Шины шепчут: пора в рейс."]
+
+# Owner request 30.10: the other two things of the starter pack.
+- {key: mom_knife, name: "Мамин кухонный нож", description: "Тяжёлый тесак, которым мама рубила всё: капусту, кости, споры за столом. Острый, как её взгляд, и так же не терпит возражений.", damage: 2d6+2, skill: melee, type: melee, price: 0, not_for_sale: true, mods: {check.combat: 1}}
+- {key: rubber_dildo, name: "Резиновый дилдо", description: "Фиолетовый, гибкий и абсолютно несерьёзный. Бьёт по самолюбию сильнее, чем по телу. Враги не знают, как к этому относиться, и это единственная причина, по которой он вообще работает.", damage: 1d6, skill: melee, type: melee, price: 0, not_for_sale: true, mods: {check.social: 1, mood_weekly: 1}}

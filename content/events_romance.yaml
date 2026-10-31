@@ -1,0 +1,230 @@
+# Life in a relationship (owner request 25.10 «больше жизни в отношениях»): a partner needs time together, and
+# every lived month may bring a scandal to answer or a warm surprise. Queued by app/services/romance.py, never drawn
+# at random (forced_only). The relation with the partner is `rel_npc:partner`; `npc_leave:partner` ends it.
+
+# ---------------------------------------------------------------- scandals
+
+- id: rom_scandal_late
+  title: Опять под утро
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    requires: [has_partner]
+  text: "Четыре утра. Партнёр сидит на кухне в темноте, рядом остывший ужин. «Двенадцать сообщений. Двенадцать, и ни одного ответа. Ты вообще помнишь, что у тебя есть дом?»"
+  choices:
+    - label: Извиниться и остаться
+      check: {stat: EMP, skill: persuasion, dv: 13}
+      success: {text: "Ты садишься рядом и говоришь как есть. Ужин греют вдвоём, разговор идёт до рассвета. Обида уходит.", effects: {"rel_npc:partner": 8, mood: 3}}
+      fail: {text: "Слова выходят не те. Партнёр уходит спать в другую комнату, и дверь закрывается громче обычного.", effects: {"rel_npc:partner": -6, mood: -3}}
+    - label: «Я работаю ради нас»
+      effects: {"rel_npc:partner": -10, mood: -4}
+      text: "«Ради нас? Нас уже почти нет». Разговор окончен, но не закончен."
+    - label: Цветы и ресторан завтра
+      effects: {eddies: -800, "rel_npc:partner": 6, mood: 2}
+      text: "Ресторан с видом на залив и настоящие цветы, не голограмма. Партнёр улыбается впервые за неделю."
+
+- id: rom_scandal_jealous
+  title: Чужое имя
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    requires: [has_partner]
+  text: "На экране твоего телефона всплывает сообщение от незнакомого имени. Партнёр видит его первым. «Кто это? Только не ври»."
+  choices:
+    - label: Показать всю переписку
+      effects: {"rel_npc:partner": 4, mood: -1}
+      text: "Это фиксер по работе, и переписка скучная до зевоты. Партнёру неловко, тебе тоже. Но доверие стало крепче."
+    - label: Отшутиться
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Шутка попадает в цель. Партнёр смеётся, хотя ещё косится на телефон.", effects: {"rel_npc:partner": 2}}
+      fail: {text: "Шутка звучит как оправдание. Три дня тишины и короткие ответы.", effects: {"rel_npc:partner": -8, mood: -3}}
+    - label: Обидеться в ответ
+      effects: {"rel_npc:partner": -12, mood: -5}
+      text: "«Ты мне не доверяешь?» Вечер заканчивается хлопком двери. С обеих сторон."
+
+- id: rom_scandal_money
+  title: Куда делись деньги
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    requires: [has_partner]
+  text: "Партнёр держит в руке распечатку счёта. «Объясни мне, куда за месяц ушло столько эдди. И почему я узнаю об этом из банка»."
+  choices:
+    - label: Рассказать всё
+      effects: {"rel_npc:partner": 5, mood: -1}
+      text: "Ты выкладываешь всё: долги, риппера, дела. Партнёр долго молчит, потом говорит: «Дальше вместе считаем»."
+    - label: Перевести партнёру денег
+      effects: {eddies: -1500, "rel_npc:partner": 7}
+      text: "Перевод приходит раньше, чем заканчивается разговор. Не решение, но жест."
+    - label: «Это мои деньги»
+      effects: {"rel_npc:partner": -12, mood: -3}
+      text: "Партнёр кладёт распечатку на стол и уходит к подруге на два дня."
+
+- id: rom_scandal_danger
+  title: Кровь на куртке
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    requires: [has_partner]
+  text: "Партнёр нашёл твою куртку в стирке. На рукаве засохшая кровь, и она не твоя. «Я не хочу однажды опознавать тебя в морге. Скажи, что это закончится»."
+  choices:
+    - label: Пообещать быть осторожнее
+      check: {stat: EMP, skill: persuasion, dv: 14}
+      success: {text: "Ты обещаешь и почти веришь в это. Партнёр прижимается и долго не отпускает.", effects: {"rel_npc:partner": 7, mood: 4}}
+      fail: {text: "Обещание звучит пусто, и оба это слышат. Ночь проходит без сна.", effects: {"rel_npc:partner": -6, mood: -4}}
+    - label: Научить защищаться
+      effects: {eddies: -500, "rel_npc:partner": 5, "skill_xp:firearms": 2}
+      text: "Тир, пистолет попроще, два часа стрельбы. Партнёру страшно, но уже не так беспомощно."
+    - label: Промолчать
+      effects: {"rel_npc:partner": -10, mood: -3}
+      text: "Ты забираешь куртку и выбрасываешь её. Вопрос остаётся висеть в воздухе."
+
+- id: rom_scandal_family
+  title: Семейный ужин
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    requires: [has_partner]
+  text: "У родни партнёра семейный ужин, и тебя ждут. Ты вспоминаешь об этом в ту минуту, когда пора уже звонить в дверь."
+  choices:
+    - label: Сорваться и приехать
+      effects: {eddies: -300, "rel_npc:partner": 6, mood: -1}
+      text: "Такси через весь город, торт из ближайшей лавки. Ты опаздываешь на час, но приезжаешь. Это засчитывают."
+    - label: Позвонить и извиниться
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Голос правильный, причина убедительная. Партнёр вздыхает, но прощает.", effects: {"rel_npc:partner": 1}}
+      fail: {text: "Родня партнёра слышит разговор по громкой связи. Теперь ты враг всей семьи.", effects: {"rel_npc:partner": -9, mood: -2}}
+    - label: Забыть совсем
+      effects: {"rel_npc:partner": -14, mood: -2}
+      text: "Ты не приезжаешь и не звонишь. Утром на столе записка из двух слов."
+
+- id: rom_scandal_cold
+  title: Чужие люди
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    requires: [has_partner]
+  text: "Вы ужинаете молча третий вечер подряд. Наконец партнёр откладывает вилку: «Мы живём как соседи. Помнишь, когда мы последний раз куда-то ходили вдвоём?»"
+  choices:
+    - label: Устроить выходные вдвоём
+      effects: {eddies: -1200, "rel_npc:partner": 10, mood: 5}
+      text: "Два дня за городом, без имплантов связи и без заказов. Вы снова смеётесь над одним и тем же."
+    - label: Поговорить по душам
+      check: {stat: EMP, skill: persuasion, dv: 15}
+      success: {text: "Разговор тяжёлый, но честный. В конце партнёр берёт тебя за руку.", effects: {"rel_npc:partner": 8, mood: 2}}
+      fail: {text: "Ты говоришь о делах, партнёр о чувствах. Вы не слышите друг друга.", effects: {"rel_npc:partner": -5, mood: -2}}
+    - label: Отмахнуться
+      effects: {"rel_npc:partner": -11, mood: -3}
+      text: "«Сейчас не время». Партнёр кивает так, будто давно ждал именно этих слов."
+
+- id: rom_scandal_chrome
+  title: Новый хром
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    requires: [has_partner]
+  text: "Партнёр смотрит на твой новый имплант и отводит глаза. «Каждый раз в тебе становится меньше тебя. Я боюсь проснуться рядом с машиной»."
+  choices:
+    - label: Успокоить
+      check: {stat: EMP, skill: persuasion, dv: 14}
+      success: {text: "Ты берёшь партнёра за руку и прижимаешь её к груди: сердце пока своё. Партнёр улыбается сквозь слёзы.", effects: {"rel_npc:partner": 7, humanity: 1}}
+      fail: {text: "Слова звучат механически. Это пугает партнёра ещё сильнее.", effects: {"rel_npc:partner": -7, mood: -2}}
+    - label: Сходить к терапевту вдвоём
+      effects: {eddies: -1000, "rel_npc:partner": 6, mood: 3, humanity: 1}
+      text: "Тихий кабинет, неудобный диван, и вы впервые говорите об этом спокойно."
+    - label: «Это моё тело»
+      effects: {"rel_npc:partner": -10}
+      text: "Правда. Но после неё в квартире становится холоднее."
+
+- id: rom_ultimatum
+  title: Ультиматум
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    requires: [has_partner]
+  text: "У двери стоит собранная сумка. Партнёр не плачет, голос ровный, и от этого страшнее. «Хватит ждать. Либо ты здесь, со мной, либо меня здесь нет»."
+  choices:
+    - label: Упросить остаться
+      check: {stat: EMP, skill: persuasion, dv: 16}
+      success: {text: "Ты говоришь то, что давно надо было сказать. Сумка остаётся у двери, но уже неразобранной не простоит.", effects: {"rel_npc:partner": 20, mood: 5}}
+      fail: {text: "Ты говоришь, но партнёр уже не слушает. Дверь закрывается тихо, и это хуже любого хлопка.", effects: {"npc_leave:partner": true, mood: -15}}
+    - label: Отменить всё и быть рядом
+      effects: {eddies: -2000, "rel_npc:partner": 15, mood: 3}
+      text: "Ты отменяешь заказы на неделю и выключаешь связь. Деньги потеряны, человек остался."
+    - label: Отпустить
+      effects: {"npc_leave:partner": true, mood: -10}
+      text: "Ты открываешь дверь сам. Партнёр уходит, не оборачиваясь."
+
+# ---------------------------------------------------------------- warm surprises
+
+- id: rom_sweet_breakfast
+  title: Завтрак в постель
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    requires: [has_partner]
+  text: "Ты просыпаешься от запаха настоящего кофе. Не синтетики, а зёрен, которые стоят как имплант. На подносе записка: «Просто так»."
+  choices:
+    - label: Утащить партнёра обратно под одеяло
+      effects: {"rel_npc:partner": 5, mood: 8}
+      text: "Кофе остывает. Никто не жалеет."
+    - label: Ответить тем же завтра
+      effects: {eddies: -200, "rel_npc:partner": 7, mood: 5}
+      text: "На следующее утро на подносе две чашки и твоя записка."
+
+- id: rom_sweet_patch
+  title: Заштопанная куртка
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    requires: [has_partner]
+  text: "После тяжёлой недели ты находишь свою куртку зашитой, а в кармане новый инжектор с лекарством. Партнёр делает вид, что ни при чём."
+  choices:
+    - label: Обнять молча
+      effects: {"rel_npc:partner": 6, mood: 6, hp: 10}
+      text: "Иногда слова только мешают."
+    - label: Спросить, откуда инжектор
+      effects: {"rel_npc:partner": 3, mood: 3, hp: 10}
+      text: "«Неважно. Главное — возвращайся домой». Ты не споришь."
+
+- id: rom_sweet_dance
+  title: Танец на крыше
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    requires: [has_partner]
+  text: "Партнёр тянет тебя на крышу. Там старая колонка, гирлянда и вид на огни города. «Потанцуем? Как раньше»."
+  choices:
+    - label: Танцевать
+      effects: {"rel_npc:partner": 6, mood: 10}
+      text: "Под ногами гудит Найт-Сити, а вам двоим всё равно."
+    - label: Сослаться на дела
+      effects: {"rel_npc:partner": -4}
+      text: "Партнёр выключает колонку и долго смотрит на город один."
+
+- id: rom_sweet_savings
+  title: Общая копилка
+  category: relationships
+  weight: 1
+  forced_only: true
+  conditions:
+    requires: [has_partner]
+  text: "Партнёр показывает счёт: «Тут понемногу копилось. На чёрный день. Похоже, он у тебя как раз сейчас». Сумма небольшая, но настоящая."
+  choices:
+    - label: Взять и пообещать вернуть
+      effects: {eddies: 2000, "rel_npc:partner": 3}
+      text: "Ты берёшь деньги и запоминаешь этот день."
+    - label: Отказаться
+      effects: {"rel_npc:partner": 6, mood: 4}
+      text: "«Оставь себе. Мне хватает того, что ты рядом». Партнёр краснеет."

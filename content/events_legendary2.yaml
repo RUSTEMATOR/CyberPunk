@@ -1,0 +1,85 @@
+# Legendary items, batch 2 (owner request): each from its own rare story, once per life.
+
+- id: lg2_saint_relic
+  title: Реликвия проповедника
+  category: rare
+  weight: 1
+  conditions:
+    flags_none: [lg2_saint]
+  text: "Старушка из церкви в Хейвуде просит помочь: в подвале лежит пистолет покойного проповедника, а ночью туда лезут мародёры. Она не хочет, чтобы оружие святого попало к бандитам."
+  choices:
+    - label: Охранять подвал ночью
+      check: {stat: COOL, skill: firearms, dv: 14}
+      success: {text: "Ночью приходят трое. Уходят двое, бегом. Утром старушка вкладывает пистолет тебе в руки: «Он бы хотел, чтобы пистолет остался у тебя»", effects: {flag_set:lg2_saint: true, item_grant:lg_neon_saint: true, humanity: 1}}
+      fail: {text: "Мародёры оказываются быстрее. Пистолет уходит в ночь, у тебя сотрясение.", effects: {flag_set:lg2_saint: true, hp: -8}}
+    - label: Отказаться
+      effects: {flag_set:lg2_saint: true}
+      text: "Ты говоришь, что это не твоя война. Старушка крестит тебя на прощание."
+
+- id: lg2_tiger_fang
+  title: Клык на шнурке
+  category: rare
+  weight: 1
+  available_from: 2020
+  conditions:
+    min_street_cred: 12
+    flags_none: [lg2_fang]
+  text: "Умирающий старик из Тигриных когтей просит передать нож внуку. Внук сидит в тюрьме Militech, и нож, похоже, никто никогда не передаст."
+  choices:
+    - label: Пообещать и оставить себе
+      effects: {flag_set:lg2_fang: true, item_grant:lg_tiger_fang: true, humanity: -1}
+      text: "Старик умирает спокойно. Нож на шнурке висит у тебя на шее. Иногда кажется, что он тяжелее, чем должен."
+    - label: Передать в тюрьму
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Охранник за взятку передаёт нож. Через месяц внук выходит и находит тебя: в благодарность весь клан Когтей теперь помнит твоё имя.", effects: {flag_set:lg2_fang: true, eddies: -500, faction_rep:tyger_claws: 10, street_cred: 2}}
+      fail: {text: "Охранник забирает и нож, и взятку. Обещание старику ты не выполнил.", effects: {flag_set:lg2_fang: true, eddies: -500, mood: -6}}
+
+- id: lg2_dust_devil
+  title: Карабин в песке
+  category: rare
+  weight: 1
+  conditions:
+    districts: [badlands]
+    flags_none: [lg2_dust]
+  text: "После песчаной бури из дюны торчит приклад. Рядом следы клана: кто-то спрятал оружие и не вернулся. Кочевники говорят, это карабин погибшего вождя."
+  choices:
+    - label: Откопать
+      effects: {flag_set:lg2_dust: true, item_grant:lg_dust_devil: true, faction_rep:aldecaldos: -2}
+      text: "Карабин в идеальном состоянии, песок ему не страшен. Клан смотрит на тебя без радости."
+    - label: Отнести клану
+      effects: {flag_set:lg2_dust: true, item_grant:lg_nomad_poncho: true, faction_rep:aldecaldos: 6, humanity: 1}
+      text: "Клан хоронит карабин вместе с памятью вождя, а тебе вручают его пончо: «Ты вернул нам его. Носи»."
+
+- id: lg2_rocker_guitar
+  title: Гитара в ломбарде
+  category: rare
+  weight: 1
+  conditions:
+    min_fame: 3
+    flags_none: [lg2_guitar]
+  text: "В ломбарде висит гитара с дробовиком в грифе. Ломбардщик клянётся, что на ней играла легенда рока, и просит четыре тысячи."
+  choices:
+    - label: Купить (4000)
+      effects: {flag_set:lg2_guitar: true, eddies: -4000, item_grant:lg_last_song: true, fame: 1}
+      text: "Ты выходишь из ломбарда с гитарой за спиной. На первом же перекрёстке тебя просят сыграть."
+    - label: Выиграть её в споре
+      check: {stat: EMP, skill: persuasion, dv: 16}
+      success: {text: "Ты играешь ломбардщику его любимую песню так, что он плачет. Гитара твоя бесплатно.", effects: {flag_set:lg2_guitar: true, item_grant:lg_last_song: true, fame: 2}}
+      fail: {text: "Ломбардщик слушает и качает головой: «Не тот звук». Гитара остаётся на стене.", effects: {flag_set:lg2_guitar: true, mood: -3}}
+
+- id: lg2_ronin_jacket
+  title: Куртка ронина
+  category: rare
+  weight: 1
+  conditions:
+    min_street_cred: 10
+    flags_none: [lg2_ronin]
+  text: "На барахолке продаётся потёртая кожаная куртка с самураем на спине. Продавец уверяет, что её носил наёмник, который в одиночку брал корпоративные башни."
+  choices:
+    - label: Купить (3000)
+      effects: {flag_set:lg2_ronin: true, eddies: -3000, item_grant:lg_samurai_jacket: true}
+      text: "Куртка сидит как влитая. В зеркале на секунду кажется, что за спиной стоит кто-то другой."
+    - label: Сторговаться
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Ты находишь на подкладке дыру от пули и сбиваешь цену вдвое.", effects: {flag_set:lg2_ronin: true, eddies: -1500, item_grant:lg_samurai_jacket: true}}
+      fail: {text: "Продавец обижается и продаёт куртку парню за твоей спиной.", effects: {flag_set:lg2_ronin: true}}

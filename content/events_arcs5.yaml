@@ -1,0 +1,241 @@
+# Story arcs, batch 5 (owner request: many quests): the early chrome years, 2013-2019, where the group lives now.
+# Same rules as events_arcs.yaml: the first step is a random event once per life, the next steps are forced_only.
+
+# ======================================================================== «Гаражный стартап»
+
+- id: arc_garage_1
+  title: Гараж с паяльником
+  category: work
+  weight: 3
+  available_until: 2019
+  conditions:
+    flags_none: [arc_garage]
+  text: "Двое студентов в гараже собирают нейроинтерфейс из деталей от игровых приставок. Им нужен третий: кто-то, кто умеет говорить с инвесторами и не боится тока."
+  choices:
+    - label: Войти в команду
+      effects: {flag_set:arc_garage: true, skill_xp:tech: 2, queue_event:arc_garage_2: true}
+      text: "Три ночи без сна, пицца, запах канифоли. Прототип включается и обжигает тебе палец. Это успех."
+    - label: Пожелать удачи
+      effects: {flag_set:arc_garage: true}
+      text: "Через пять лет ты увидишь их лица на обложке журнала. Или не увидишь — это же стартап."
+
+- id: arc_garage_2
+  title: Питч инвестору
+  category: work
+  weight: 1
+  forced_only: true
+  available_until: 2019
+  text: "Инвестор из Zetatech даёт десять минут. Прототип искрит, студенты бледнеют. Говорить придётся тебе."
+  choices:
+    - label: Продать мечту
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Ты рассказываешь про мир, где каждый подключён к каждому. Инвестор подписывает чек, не глядя на искры.", effects: {eddies: 2000, status: 1, queue_event:arc_garage_3: true}}
+      fail: {text: "Инвестор уходит на седьмой минуте. Студенты молчат весь вечер, но не сдаются.", effects: {mood: -4, queue_event:arc_garage_3: true}}
+    - label: Показать прототип вживую
+      check: {stat: TECH, skill: tech, dv: 14}
+      success: {text: "Ты подключаешь прототип себе к виску и двигаешь курсор мыслью. Инвестор роняет кофе.", effects: {eddies: 2500, glitches: 1, queue_event:arc_garage_3: true}}
+      fail: {text: "Прототип бьёт током. Ты приходишь в себя от запаха нашатыря. Инвестор всё ещё здесь: «Интересно»", effects: {hp: -5, queue_event:arc_garage_3: true}}
+
+- id: arc_garage_3
+  title: Предложение Zetatech
+  category: work
+  weight: 1
+  forced_only: true
+  available_until: 2019
+  text: "Zetatech предлагает выкупить проект целиком. Студенты смотрят на тебя: решай. Можно взять деньги, можно остаться и рискнуть."
+  choices:
+    - label: Продать
+      effects: {eddies: 8000, humanity: -1}
+      text: "Восемь тысяч твоих. Через год прототип в каждом магазине, на коробке чужие имена."
+    - label: Остаться независимыми
+      effects: {cyberware_grant:data_jack_early: true, later: [{weeks: 10, chance: 0.5, effects: {eddies: 15000, fame: 2}, text: "Ваш интерфейс выходит в продажу. Ты читаешь о себе в новостях и получаешь первую долю.", fail_text: "Деньги заканчиваются. Студенты устраиваются в Zetatech, ты остаёшься с прототипом в голове."}]}
+      text: "Первый серийный разъём студенты ставят тебе: «Ты наш главный тестировщик». Дальше будет видно."
+
+# ======================================================================== «Пиратское радио»
+
+- id: arc_pirate_1
+  title: Частота 66.6
+  category: relationships
+  weight: 3
+  available_until: 2019
+  conditions:
+    flags_none: [arc_pirate]
+  text: "Каждую ночь на частоте 66.6 вещает пиратская станция: музыка, ругань в адрес корпораций и новости, которых нет в официальных выпусках. Диджей просит помочь с антенной на крыше."
+  choices:
+    - label: Помочь с антенной
+      check: {stat: TECH, skill: tech, dv: 12}
+      success: {text: "Антенна встаёт, сигнал добивает до Пасифики. Диджей называет тебя в эфире «наш человек на крыше».", effects: {flag_set:arc_pirate: true, fame: 1, queue_event:arc_pirate_2: true}}
+      fail: {text: "Тебя бьёт ветром о трубу. Антенну всё же ставите вдвоём, ты — с ушибленным плечом.", effects: {flag_set:arc_pirate: true, hp: -3, queue_event:arc_pirate_2: true}}
+    - label: Просто слушать
+      effects: {flag_set:arc_pirate: true, mood: 3}
+      text: "Ты слушаешь станцию до утра. Через месяц она замолкает навсегда."
+
+- id: arc_pirate_2
+  title: Пеленгатор
+  category: ncpd
+  weight: 1
+  forced_only: true
+  available_until: 2019
+  text: "По району ездит фургон с пеленгатором: станцию ищут. Диджей просит перевезти передатчик в новое место, пока его не накрыли."
+  choices:
+    - label: Перевезти передатчик
+      check: {stat: REF, skill: driving, dv: 13}
+      success: {text: "Ты уходишь от фургона через два двора и мост. Передатчик на новой крыше к полуночи.", effects: {skill_xp:driving: 2, queue_event:arc_pirate_3: true}}
+      fail: {text: "Фургон садится на хвост. Передатчик спасён, но твою машину запомнили.", effects: {heat: 1, queue_event:arc_pirate_3: true}}
+    - label: Сбить пеленгатор с толку
+      check: {stat: INT, skill: netrunning, dv: 13}
+      success: {text: "Ты запускаешь фальшивый сигнал с другого конца города. Фургон уезжает искать ветер.", effects: {skill_xp:netrunning: 2, queue_event:arc_pirate_3: true}}
+      fail: {text: "Фальшивка не срабатывает, но станцию успевают свернуть. Ты теряешь ноутбук.", effects: {eddies: -400, queue_event:arc_pirate_3: true}}
+
+- id: arc_pirate_3
+  title: Последний эфир
+  category: relationships
+  weight: 1
+  forced_only: true
+  available_until: 2019
+  text: "Диджей уезжает из города: слишком горячо. Он отдаёт тебе ключи от передатчика: «Хочешь — вещай сам. Хочешь — продай. Станция твоя»."
+  choices:
+    - label: Вещать самому
+      effects: {fame: 2, mood: 8, heat: 1, add_npc:friend: true}
+      text: "Твой голос в эфире в три часа ночи. Утром соседка говорит, что слушала. Ты не признаёшься, чей это был голос."
+    - label: Продать передатчик
+      effects: {eddies: 2500}
+      text: "Новые хозяева ставят на частоту рекламу ломбарда. Шестьдесят шесть и шесть больше не ругается."
+
+# ======================================================================== «Первый киберпсих»
+
+- id: arc_psycho_1
+  title: Странный сосед
+  category: implants
+  weight: 2
+  available_until: 2019
+  conditions:
+    flags_none: [arc_psycho]
+  text: "Сосед поставил себе дешёвые военные руки с чёрного рынка. Он перестал спать, говорит с холодильником и вчера согнул перила, когда здоровался."
+  choices:
+    - label: Поговорить с ним
+      check: {stat: EMP, skill: persuasion, dv: 13}
+      success: {text: "Он плачет и признаётся, что руки иногда двигаются сами. Обещает сходить к рипперу.", effects: {flag_set:arc_psycho: true, humanity: 1, queue_event:arc_psycho_2: true}}
+      fail: {text: "Он смотрит сквозь тебя и закрывает дверь. Из-за двери слышен скрежет металла.", effects: {flag_set:arc_psycho: true, mood: -3, queue_event:arc_psycho_2: true}}
+    - label: Не лезть
+      effects: {flag_set:arc_psycho: true}
+      text: "Чужие руки — чужие проблемы. Пока что."
+
+- id: arc_psycho_2
+  title: Ночь срыва
+  category: implants
+  weight: 1
+  forced_only: true
+  available_until: 2019
+  text: "Ночью в подъезде крики. Сосед стоит на лестнице с окровавленными руками, вокруг перевёрнутая мебель. Полиция едет. Он узнаёт тебя."
+  choices:
+    - label: Успокоить его
+      check: {stat: EMP, skill: persuasion, dv: 15}
+      success: {text: "Ты говоришь с ним, пока он не садится на ступеньки. Когда приезжает полиция, он сам протягивает руки.", effects: {humanity: 2, street_cred: 1, queue_event:arc_psycho_3: true}}
+      fail: {text: "Он бросается на тебя. Ты уворачиваешься, но удар задевает плечо. Полиция стреляет в него трижды.", effects: {hp: -10, mood: -6, queue_event:arc_psycho_3: true}}
+    - label: Запереться и ждать
+      effects: {mood: -5, queue_event:arc_psycho_3: true}
+      text: "Ты сидишь за дверью, пока не стихают выстрелы. Утром на лестнице только следы и мел."
+
+- id: arc_psycho_3
+  title: Что осталось
+  category: implants
+  weight: 1
+  forced_only: true
+  available_until: 2019
+  text: "В квартире соседа работает комиссия городской больницы: первый случай «киберпсихоза», как пишут газеты. Врач просит тебя рассказать, каким он был до хрома."
+  choices:
+    - label: Рассказать
+      effects: {humanity: 2, skill_xp:medicine: 2, add_npc:contact: true}
+      text: "Ты рассказываешь про то, как он поливал цветы на балконе. Врач записывает всё. Через год выходит закон о лицензиях для рипперов."
+    - label: Продать историю газете
+      effects: {eddies: 1500, fame: 1, humanity: -1}
+      text: "Заголовок «Монстр из соседней квартиры» продаёт тираж. Цветы на балконе засыхают."
+
+# ======================================================================== «Танк пропал» (needs the dog from the shelter)
+
+- id: arc_tank_1
+  title: Танк пропал
+  category: relationships
+  weight: 4
+  conditions:
+    flags_all: [has_dog]
+    flags_none: [arc_tank]
+  text: "Утром ошейник Танка лежит у двери, перерезанный. На лестнице следы фургона. Соседский мальчишка шепчет, что видел людей, которые воруют собак с имплантами для боёв."
+  choices:
+    - label: Искать Танка
+      effects: {flag_set:arc_tank: true, queue_event:arc_tank_2: true}
+      text: "Ты обходишь все ветклиники и подворотни района. К вечеру у тебя есть адрес: подвал под автомойкой."
+    - label: Заявить в NCPD
+      effects: {flag_set:arc_tank: true, flag_clear:has_dog: true, mood: -10}
+      text: "Офицер записывает заявление и обещает перезвонить. Не перезванивает. Танк не возвращается."
+
+- id: arc_tank_2
+  title: Собачьи бои
+  category: street
+  weight: 1
+  forced_only: true
+  text: "В подвале ринг, ставки и клетки. В одной из них Танк: в наморднике, с новым шрамом. Через час его выпустят против бойцового пса Мальстрёма."
+  choices:
+    - label: Выкупить Танка
+      effects: {eddies: -2000, mood: 10, humanity: 1}
+      text: "Хозяин ринга торгуется, но уступает. Танк узнаёт тебя и скулит так, что у охраны дрожат руки."
+    - label: Вытащить ночью
+      check: {stat: REF, skill: stealth, dv: 14}
+      success: {text: "Ты открываешь все клетки разом. Двадцать собак вылетают на улицу, Танк — первым к тебе.", effects: {humanity: 3, street_cred: 2, mood: 12}}
+      fail: {text: "Охрана замечает тебя у клеток. Танк перегрызает поводок и уводит тебя через чёрный ход, хромая.", effects: {hp: -8, mood: 6}}
+    - label: Поставить на Танка
+      effects: {eddies: 1500, humanity: -3, hp: -2}
+      text: "Танк побеждает. Ты забираешь его окровавленного вместе с выигрышем. Он не смотрит тебе в глаза неделю."
+
+# ======================================================================== «Ограбление века» (2013-2019)
+
+- id: arc_vault_1
+  title: Хранилище на Корпоративной площади
+  category: money
+  weight: 2
+  available_until: 2019
+  conditions:
+    min_street_cred: 10
+    flags_none: [arc_vault]
+  text: "Старый медвежатник собирает команду: банковское хранилище с механическим замком, последнее в городе. Через месяц его заменят на электронный. Сейчас или никогда."
+  choices:
+    - label: Войти в команду
+      effects: {flag_set:arc_vault: true, queue_event:arc_vault_2: true}
+      text: "Чертежи, макет хранилища в гараже, три репетиции. Медвежатник говорит, что такого азарта не чувствовал с восьмидесятых."
+    - label: Отказаться
+      effects: {flag_set:arc_vault: true}
+      text: "Через месяц в новостях: «Дерзкое ограбление банка, преступники не найдены». Ты завидуешь чуть-чуть."
+
+- id: arc_vault_2
+  title: Ночь ограбления
+  category: money
+  weight: 1
+  forced_only: true
+  available_until: 2019
+  text: "Два часа ночи. Медвежатник у двери хранилища, у тебя сигнализация и охранник, который должен спать, но не спит."
+  choices:
+    - label: Отключить сигнализацию
+      check: {stat: TECH, skill: tech, dv: 15}
+      success: {text: "Провода перерезаны в правильном порядке. Дверь хранилища открывается со звуком, который ты запомнишь навсегда.", effects: {queue_event:arc_vault_3: true}}
+      fail: {text: "Сигнализация молчит, но где-то в участке загорается лампочка. У вас двадцать минут вместо часа.", effects: {heat: 2, queue_event:arc_vault_3: true}}
+    - label: Заговорить охранника
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Охранник оказывается фанатом бейсбола. Вы спорите о «Найт-Сити Кугуарс», пока медвежатник работает.", effects: {queue_event:arc_vault_3: true}}
+      fail: {text: "Охранник тянется к кнопке. Приходится его связать. Неприятно, но быстро.", effects: {humanity: -1, heat: 1, queue_event:arc_vault_3: true}}
+
+- id: arc_vault_3
+  title: Делёж
+  category: money
+  weight: 1
+  forced_only: true
+  available_until: 2019
+  text: "Сумки с наличными на полу гаража. Медвежатник считает и предлагает честную долю. Водитель шепчет тебе, что можно забрать всё и уехать сегодня же."
+  choices:
+    - label: Честная доля
+      effects: {eddies: 9000, street_cred: 3, item_grant:silenced_pistol: true}
+      text: "Медвежатник отдаёт долю и свой старый пистолет с глушителем: «С первого дня в деле. Это на память»."
+    - label: Забрать всё
+      check: {stat: COOL, skill: driving, dv: 16}
+      success: {text: "Ты уезжаешь с сумками до рассвета. Двадцать тысяч и двое людей, которые ищут тебя по всему городу.", effects: {eddies: 20000, humanity: -3, street_cred: -2, heat: 2}}
+      fail: {text: "Медвежатник оказывается быстрее. Ты уходишь без доли и с разбитым лицом.", effects: {hp: -12, street_cred: -2}}

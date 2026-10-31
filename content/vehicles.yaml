@@ -1,0 +1,66 @@
+# Vehicles (owner request). Schema: app/content/schemas.py (Vehicle). One ride at a time (character flag `vehicle`).
+# speed 1..12 (escapes and races), armor 0..10 (crashes), style 0..10 (people). Era windows like the chrome:
+# early classics leave in 2030, electric cars come with the Datakrash, aerodynes with the Reconstruction.
+
+# -- jokes -------------------------------------------------------------------------------------------------------------
+- {key: shopping_cart, name: Тележка с моторчиком, kind: joke, price: 150, speed: 1, style: 0, description: "Тележка из супермаркета с мотором от газонокосилки. Едет быстрее, чем выглядит. Немного.", mods: {mood_weekly: 1}}
+- {key: pizza_scooter, name: Розовый скутер доставщика, kind: joke, price: 400, speed: 2, style: 1, description: "Списанный скутер пиццерии с коробом на багажнике. Пахнет пепперони, и это не лечится.", mods: {check.talk_exit: 1}}
+
+# -- bikes -------------------------------------------------------------------------------------------------------------
+- {key: yamada_scooter, name: Скутер «Ямада», kind: bike, price: 900, speed: 3, style: 1, description: "Городской скутер, которым забит весь Кабуки. Проскальзывает в любую щель между машинами."}
+- {key: arch_street, name: Мотоцикл Arch уличный, kind: bike, price: 2600, speed: 6, style: 3, description: "Лёгкий мотоцикл без излишеств. На нём удобно уходить переулками.", mods: {check.escape: 1}}
+- {key: chopper_bozo, name: Чоппер с черепами, kind: bike, price: 4200, speed: 5, armor: 1, style: 5, min_street_cred: 5, available_until: 2049, description: "Хромированный чоппер с черепами на баке. Шумный, тяжёлый и очень уважаемый на улицах.", mods: {check.talk_exit: 1}}
+- {key: arch_nazare, name: Arch Nazaré, kind: bike, price: 22000, speed: 10, armor: 1, style: 8, min_street_cred: 25, available_from: 2070, description: "Легенда среди байков: колёса без спиц, рёв, который слышно в соседнем районе.", mods: {check.escape: 1}}
+- {key: hoverbike, name: Ховербайк, kind: bike, price: 45000, speed: 11, armor: 1, style: 9, min_street_cred: 30, available_from: 2080, description: "Байк на антигравитационных подушках. Улицы ему не нужны, только направление."}
+
+# -- cars --------------------------------------------------------------------------------------------------------------
+- {key: written_off_taxi, name: Списанное такси, kind: car, price: 1500, speed: 3, armor: 1, style: 0, description: "Жёлтая развалюха с дырой вместо счётчика. Копы не обращают на неё внимания."}
+- {key: old_sedan, name: Старый седан «Торнадо», kind: car, price: 1800, speed: 3, armor: 2, style: 1, description: "Ржавый седан с вечно горящим чек-энджином. Едет, и ладно."}
+- {key: classic_muscle_90s, name: Бензиновый маслкар 1990-х, kind: car, price: 7500, speed: 6, armor: 2, style: 6, min_street_cred: 5, available_until: 2029, description: "Настоящий бензин, настоящий V8, настоящий запах выхлопа. Таких почти не осталось.", mods: {mood_weekly: 1}}
+- {key: makigai_compact, name: Компакт «Макигай», kind: car, price: 3800, speed: 4, armor: 2, style: 2, description: "Маленькая японская машинка: экономная, юркая, паркуется где угодно."}
+- {key: quadra_type66, name: Маслкар «Квадра Тип-66», kind: car, price: 9500, speed: 7, armor: 2, style: 5, min_street_cred: 10, description: "Дикий маслкар с открытым воздухозаборником. Для тех, кто любит, когда на него смотрят."}
+- {key: zetatech_ev, name: Электрокар Zetatech, kind: car, price: 6500, speed: 5, armor: 2, style: 3, available_from: 2022, description: "Тихий электрокар, появившийся после Краха Сети: бензин подорожал, а заряжаться можно где угодно.", mods: {check.gig_quiet: 1}}
+- {key: mizutani_shion, name: Спорткар «Мидзутани Шион», kind: car, price: 16000, speed: 8, armor: 2, style: 7, min_street_cred: 15, description: "Низкий японский спорткар. В поворотах прилипает к асфальту.", mods: {skill.driving: 1}}
+- {key: herrera_outlaw, name: Herrera Outlaw, kind: car, price: 24000, speed: 9, armor: 3, style: 8, min_street_cred: 20, available_from: 2050, description: "Гиперкар для тех, кто зарабатывает быстро и тратит ещё быстрее."}
+- {key: exec_sedan, name: Представительский седан, kind: car, price: 21000, speed: 5, armor: 4, style: 9, min_street_cred: 5, description: "Длинный чёрный седан с тонированными окнами. С ним тебя пускают туда, куда простых не пускают.", mods: {check.social: 1, check.career: 1}}
+- {key: rayfield_caliburn, name: Rayfield Caliburn, kind: car, price: 65000, speed: 11, armor: 3, style: 10, min_street_cred: 30, available_from: 2070, description: "Самая быстрая машина в Найт-Сити. Стоит как квартира в Сити-центре и выглядит соответственно."}
+- {key: police_interceptor, name: Списанный перехватчик NCPD, kind: car, price: 8800, speed: 7, armor: 4, style: 3, min_street_cred: 8, description: "Бывшая патрульная машина, перекрашенная в чёрный. Мигалку сняли, но копы всё равно оборачиваются.", mods: {check.talk_exit: 1}}
+
+# -- trucks ------------------------------------------------------------------------------------------------------------
+- {key: thorton_mackinaw, name: Пикап «Торнтон Маккино», kind: truck, price: 3500, speed: 4, armor: 3, style: 2, description: "Надёжный пикап кочевников. В кузов помещается всё, что нужно для жизни, и немного контрабанды.", mods: {crime_reward_pct: 5}}
+- {key: colby_van, name: Фургон «Колби», kind: truck, price: 4200, speed: 3, armor: 3, style: 1, description: "Фургон без окон. Идеален для переездов, доставок и вопросов, которые лучше не задавать.", mods: {crime_reward_pct: 10}}
+- {key: nomad_rig, name: Кочевой бронегрузовик, kind: truck, price: 12000, speed: 4, armor: 7, style: 5, min_street_cred: 8, description: "Грузовик клана с наваренной бронёй и шипами на бампере. Пустоши уважают таких.", mods: {check.escape: 1, salary_pct.nomad: 10}}
+- {key: militech_behemoth, name: Бронеавтомобиль Militech, kind: truck, price: 30000, speed: 5, armor: 9, style: 6, min_street_cred: 20, available_from: 2020, description: "Трофей Корпоративных войн: броня, бойницы и смотровые щели. Кофе в нём не попьёшь, зато живым доедешь.", mods: {check.gig_loud: 1, damage_reduction: 1}}
+
+# -- aerodynes ---------------------------------------------------------------------------------------------------------
+- {key: av_courier, name: Курьерский аэродин, kind: aero, price: 90000, speed: 9, armor: 4, style: 7, min_street_cred: 30, available_from: 2050, description: "Небольшой аэродин с вертикальным взлётом. Пробки остаются внизу, проблемы тоже.", mods: {check.escape: 2}}
+- {key: av_corporate, name: Корпоративный аэродин, kind: aero, price: 160000, speed: 10, armor: 6, style: 10, min_street_cred: 40, available_from: 2060, description: "Летающий кабинет с бронёй и баром. С крыши такого аэродина город кажется маленьким.", mods: {check.escape: 2, check.social: 2, check.career: 1}}
+
+# -- more rides, batch 2 (owner request) --------------------------------------------------------------------------------
+- {key: electric_bike, name: Электровелосипед, kind: bike, price: 600, speed: 3, style: 2, description: "Тихий, лёгкий, заряжается от розетки в капсуле. Курьеры Кабуки только на таких.", mods: {check.gig_quiet: 1}}
+- {key: dirt_bike, name: Кроссовый мотоцикл, kind: bike, price: 2200, speed: 6, armor: 1, style: 3, description: "Прыгает через бордюры, лестницы и чужие крыши машин. Улицы для него слишком ровные.", mods: {check.escape: 1}}
+- {key: kaiju_bike, name: Мотоцикл «Кайдзю», kind: bike, price: 7800, speed: 8, armor: 2, style: 7, min_street_cred: 15, description: "Японский спортбайк с хищной мордой. Тигриные когти продали бы за такой мать."}
+- {key: hearse, name: Катафалк, kind: car, price: 3200, speed: 4, armor: 2, style: 4, description: "Длинный, чёрный и с местом сзади. Копы не любят его останавливать.", mods: {check.talk_exit: 1, mood_weekly: -1}}
+- {key: ice_cream_van, name: Фургон мороженщика, kind: truck, price: 2600, speed: 3, armor: 2, style: 3, description: "Играет мелодию на весь квартал. Идеальное прикрытие для чего угодно.", mods: {crime_reward_pct: 10, mood_weekly: 1}}
+- {key: armored_limo, name: Бронированный лимузин, kind: car, price: 45000, speed: 5, armor: 7, style: 10, min_street_cred: 25, available_from: 2020, description: "Лимузин корпоративного масштаба. Пули отскакивают, шампанское не проливается.", mods: {check.social: 2, damage_reduction: 1}}
+- {key: rally_car, name: Раллийная машина, kind: car, price: 12500, speed: 8, armor: 3, style: 6, min_street_cred: 12, description: "Подготовлена для гонок по Пустошам. В городе она просто самая быстрая на поворотах.", mods: {skill.driving: 1}}
+- {key: ambulance, name: Списанная скорая, kind: truck, price: 5500, speed: 5, armor: 3, style: 3, description: "Мигалки сняли, но внутри осталась каталка и шкафчики. Можно возить раненых, можно не только их.", mods: {check.heal: 1}}
+- {key: tuk_tuk, name: Моторикша, kind: joke, price: 500, speed: 2, style: 2, description: "Три колеса, тент и громкий клаксон. Туристы в восторге, гонщики в слезах.", mods: {check.social: 1}}
+- {key: mini_aerodyne, name: Одноместный аэродин, kind: aero, price: 55000, speed: 9, armor: 2, style: 8, min_street_cred: 25, available_from: 2065, description: "Летающая капсула на одного. Тесно, шумно, свободно.", mods: {check.escape: 2}}
+
+# -- legendary rides (owner request): never at the dealer, only from story arcs (effect vehicle_grant) ------------------
+- {key: lg_miss_midnight, name: Купе «Мисс Полночь», kind: car, price: 30000, speed: 9, armor: 3, style: 10, stealable: false, not_for_sale: true, description: "Вишнёвое купе из старого сарая, восстановленное по винтику. На капоте ручная роспись: женщина с луной в волосах.", mods: {check.social: 2, mood_weekly: 1}}
+- {key: lg_last_caravan, name: Фура «Последний караван», kind: truck, price: 40000, speed: 6, armor: 10, style: 8, stealable: false, not_for_sale: true, description: "Бронированная фура кочевого клана, прошедшая через три пустыни. На борту выцарапаны имена тех, кто не доехал.", mods: {check.escape: 1, damage_reduction: 1, crime_reward_pct: 10}}
+- {key: lg_red_dragon, name: Байк «Красный дракон», kind: bike, price: 35000, speed: 12, armor: 1, style: 10, stealable: false, not_for_sale: true, description: "Спортбайк чемпиона Тигриных когтей. Красная чешуя на обтекателе светится в темноте.", mods: {check.escape: 2, skill.driving: 1}}
+- {key: lg_rusty_hope, name: Ржавая «Надежда», kind: joke, price: 2000, speed: 4, armor: 2, style: 4, stealable: false, not_for_sale: true, description: "Машина, собранная тобой из трёх разных развалюх. Двери разного цвета, мотор от лодки, но она твоя.", mods: {mood_weekly: 2, check.talk_exit: 1}}
+- {key: lg_black_ghost, name: Чёрный аэродин без номеров, kind: aero, price: 120000, speed: 10, armor: 5, style: 9, stealable: false, not_for_sale: true, available_from: 2050, description: "Аэродин, которого нет ни в одном реестре. Радары его не видят, полиция делает вид, что тоже.", mods: {check.escape: 3, check.gig_quiet: 1}}
+
+# -- batch 3 (owner request: more items; era classics) ------------------------------------------------------------------
+- {key: hatchback_2010s, name: Хэтчбек из 2010-х, kind: car, price: 1200, speed: 3, armor: 1, style: 1, available_until: 2034, description: "Маленький бензиновый хэтчбек с наклейкой «Ученик» на заднем стекле. Её никто не снял."}
+- {key: police_bike_old, name: Списанный полицейский мотоцикл, kind: bike, price: 3000, speed: 6, armor: 1, style: 4, available_until: 2045, description: "Белый мотоцикл с замазанной надписью NCPD. Полиция по старой памяти иногда отдаёт честь.", mods: {check.talk_exit: 1}}
+- {key: muscle_70s, name: Маслкар 1970-х, kind: car, price: 11000, speed: 6, armor: 3, style: 8, min_street_cred: 8, available_until: 2039, description: "Восьмицилиндровый монстр полувековой давности. Ест бензин, как Мальстрём — патроны.", mods: {mood_weekly: 1, check.social: 1}}
+- {key: cargo_bike, name: Грузовой велосипед, kind: joke, price: 350, speed: 2, style: 2, description: "Трёхколёсный велосипед с ящиком спереди. В ящик помещается всё — от пиццы до тела, но лучше пиццу.", mods: {crime_reward_pct: 5}}
+- {key: offroad_buggy, name: Багги для Пустошей, kind: car, price: 5800, speed: 7, armor: 2, style: 4, description: "Каркас из труб, большие колёса, никакой крыши. В городе — игрушка, в Пустошах — свобода.", mods: {check.escape: 1, salary_pct.nomad: 5}}
+- {key: armored_van, name: Инкассаторский фургон, kind: truck, price: 14000, speed: 4, armor: 8, style: 2, min_street_cred: 10, description: "Бывший инкассаторский фургон. Бронированные двери, бойницы и всё ещё сейф внутри.", mods: {damage_reduction: 1, crime_reward_pct: 5}}
+- {key: electric_scooter_2020s, name: Электросамокат, kind: joke, price: 250, speed: 2, style: 1, available_from: 2018, description: "Складной самокат. Догнать никого не поможет, но до метро — запросто."}
+- {key: drift_coupe, name: Купе для дрифта, kind: car, price: 9800, speed: 8, armor: 1, style: 7, min_street_cred: 10, description: "Купе с выкрученным развалом и лысой резиной на задних колёсах. Едет боком лучше, чем прямо.", mods: {skill.driving: 1, mood_weekly: 1}}

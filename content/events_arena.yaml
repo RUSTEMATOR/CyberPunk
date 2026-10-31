@@ -1,0 +1,166 @@
+# The story of the ring (owner request 30.10: «если юзер пошёл драться на арене, у него открывается ветка квестов и
+# событий по арене», docs/PLAN_WORLD2.md phase 4). Opens after the first fight; every next chapter after a new win, one a
+# day (services/arena.py). Never drawn at random. Gender-neutral text.
+
+- id: arena_story_1
+  title: Промоутер
+  category: street
+  weight: 1
+  forced_only: true
+  text: "У выхода с ринга курит женщина в пальто из настоящей кожи. Мама Кость, промоутер ринга. «Видела твой бой. Руки так себе, а вот как ты встаёшь — это продаётся. Хочешь, чтобы о тебе говорили? Тогда слушай меня»."
+  choices:
+    - label: Подписать контракт с Мамой Кость
+      effects: {flag_set:arena_promoter: true, eddies: 1500, street_cred: 1}
+      text: "Контракт на салфетке, подпись кровью из разбитой губы. Мама Кость обещает тебе афиши и тренера."
+    - label: Драться без хозяев
+      effects: {flag_set:arena_free: true, mood: 2}
+      text: "Мама Кость пожимает плечами: «Свободные бойцы долго не живут. Но смотреть на них приятно»."
+
+- id: arena_story_2
+  title: Тренер
+  category: work
+  weight: 1
+  forced_only: true
+  text: "В подвальном спортзале пахнет потом и машинным маслом. Старый Абебе, бывший чемпион с протезом вместо правой руки, смотрит, как ты бьёшь грушу. «Ты бьёшь злостью. Злость кончается. Научу бить головой»."
+  choices:
+    - label: Тренироваться неделю
+      effects: {eddies: -1500, skill_xp:melee: 6, hp: -4}
+      text: "Неделя без сна, тысяча ударов в день. Абебе ни разу не хвалит. На седьмой день молча кивает."
+    - label: Спросить, кто отнял у него руку
+      check: {stat: EMP, skill: persuasion, dv: 12}
+      success: {text: "«Рэйзор Хьюз. Двенадцать лет назад, в финале. Он не остановился после гонга». Абебе тренирует тебя бесплатно.", effects: {flag_set:arena_abebe: true, skill_xp:melee: 4}}
+      fail: {text: "Абебе отворачивается. Тренировка стоит как обычно.", effects: {eddies: -1000, skill_xp:melee: 3}}
+
+- id: arena_story_3
+  title: Договорной бой
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Перед боем в раздевалку заходит человек в костюме букмекера. Кладёт на скамейку конверт. «Ляжешь в третьем раунде — тут втрое больше призовых. Не ляжешь — люди, которые поставили против тебя, расстроятся»."
+  choices:
+    - label: Взять конверт и лечь
+      effects: {eddies: 6000, humanity: -3, mood: -4, flag_set:arena_dove: true}
+      text: "Ты падаешь красиво. Публика свистит. Букмекер довольно кивает из ложи. Абебе больше не смотрит в твою сторону."
+    - label: Вернуть конверт
+      effects: {flag_set:arena_clean: true, enmity: 1, street_cred: 2}
+      text: "Букмекер забирает конверт без слов. На выходе с ринга твою машину ждут проколотые шины."
+    - label: Взять конверт и всё равно победить
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Ты побеждаешь, а конверт отдаёшь Маме Кость. Она знает, кому его вернуть так, чтобы букмекер извинился.", effects: {eddies: 3000, street_cred: 3, flag_set:arena_clean: true}}
+      fail: {text: "Ты побеждаешь, но букмекер не прощает. Ночью к тебе приходят трое с битами.", effects: {hp: -15, enmity: 2, eddies: 6000}}
+
+- id: arena_story_4
+  title: Человек букмекера
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Вышибала букмекера
+  foe_faction: animals
+  text: "Букмекер посылает за долгом своего лучшего человека: двухметровую «Животину» на гормонах. Он ждёт тебя у спортзала Абебе и улыбается железными зубами."
+  choices:
+    - label: Драться на улице
+      violent: true
+      effects: {start_combat: 3, flag_set:arena_bookie_beaten: true}
+      text: "Без гонга, без судьи, без матов. Улица — тоже ринг."
+    - label: Откупиться
+      effects: {eddies: -5000, mood: -2}
+      text: "Вышибала пересчитывает купюры и хлопает тебя по плечу так, что синяк остаётся на неделю."
+
+- id: arena_story_5
+  title: Стимы
+  category: implants
+  weight: 1
+  forced_only: true
+  text: "Сосед по раздевалке, улыбчивый парень по кличке Шприц, протягивает ампулу. «Боевой стим «Берсерк-лайт». Два раунда не чувствуешь боли. Все топы на нём сидят, иначе против хрома не выстоять»."
+  choices:
+    - label: Уколоться
+      effects: {humanity: -3, skill_xp:melee: 3, hp: 6, flag_set:arena_stims: true}
+      text: "Мир становится медленным и красным. Ты выигрываешь спарринг за двадцать секунд. Руки дрожат до утра."
+    - label: Отказаться
+      effects: {humanity: 1, mood: 1}
+      text: "Шприц пожимает плечами. Через месяц его увозят с ринга без пульса."
+    - label: Сдать поставщика Маме Кость
+      check: {stat: INT, skill: stealth, dv: 14}
+      success: {text: "Мама Кость выгоняет поставщика с ринга. Половина бойцов тебя ненавидит, вторая половина жива.", effects: {humanity: 3, street_cred: 2}}
+      fail: {text: "Поставщик узнаёт, кто его сдал. Твой шкафчик в раздевалке горит.", effects: {enmity: 1, eddies: -1000}}
+
+- id: arena_story_6
+  title: Киберпсих в клетке
+  category: rare
+  weight: 1
+  forced_only: true
+  foe: Киберпсих Мусорщик
+  foe_faction: cyberpsycho
+  text: "Мама Кость хочет шоу: в клетку выпускают пойманного киберпсиха на цепи. Цепь лопается на первой минуте. Публика визжит и лезет на трибуны, а ты стоишь в клетке один на один с ним."
+  choices:
+    - label: Драться
+      violent: true
+      effects: {start_combat: 4, fame: 2, flag_set:arena_psycho: true}
+      text: "Он не чувствует боли и не знает правил. Ты знаешь правила и чувствуешь всё."
+    - label: Вытащить из клетки ребёнка с трибуны
+      check: {stat: REF, dv: 15}
+      success: {text: "Мальчишка свалился в клетку, пытаясь сфотографировать бой. Ты выносишь его на руках, пока охрана глушит психа. Ролик облетает весь город.", effects: {fame: 3, humanity: 3, flag_set:arena_psycho: true}}
+      fail: {text: "Ты успеваешь, но киберпсих достаёт тебя когтями по спине.", effects: {hp: -18, humanity: 3, flag_set:arena_psycho: true}}
+
+- id: arena_story_7
+  title: Банда хочет своего чемпиона
+  category: street
+  weight: 1
+  forced_only: true
+  text: "К тебе в раздевалку заходят трое в цветах «Животных». «Наш босс хочет, чтобы пояс был у банды. Будешь драться в наших цветах — будешь жить как король. Не будешь — будешь жить недолго»."
+  choices:
+    - label: Надеть цвета банды
+      effects: {flag_set:arena_gang: true, eddies: 8000, street_cred: 3, enmity: -1}
+      text: "Тебе дарят куртку с эмблемой. На ринге теперь половина трибун орёт твоё имя, вторая половина — проклятия."
+    - label: Отказать с уважением
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "Ты говоришь с ними на их языке. Старший кивает: «Свободный боец. Уважаю. Но если проиграешь — пожалеешь, что не с нами»."
+        , effects: {street_cred: 2}}
+      fail: {text: "Слова не те. Тебя бьют в раздевалке, аккуратно, чтобы к бою зажило.", effects: {hp: -12, enmity: 1}}
+
+- id: arena_story_8
+  title: Тёмная лошадка
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Абебе приносит запись старых боёв Призрака Грейсона. Его никто не видел без маски, и никто не стоял против него больше минуты. На записи видно: перед каждым ударом у него чуть мигает левый глаз. Оптика с задержкой. Или ловушка."
+  choices:
+    - label: Изучать записи всю ночь
+      effects: {skill_xp:melee: 4, mood: -1, flag_set:arena_grayson_read: true}
+      text: "К утру ты знаешь, когда мигнёт глаз, и где у Призрака открыта печень."
+    - label: Подкупить его риппера
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "Риппер признаётся: оптика Призрака уходит в перезагрузку, если ударить в висок. Это стоит денег, но стоит.", effects: {eddies: -3000, flag_set:arena_grayson_read: true, skill_xp:melee: 2}}
+      fail: {text: "Риппер сдаёт тебя Призраку. Тот присылает тебе записку: «До встречи на ринге»."
+        , effects: {mood: -3}}
+
+- id: arena_story_9
+  title: Рука Абебе
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Перед финальной лестницей Абебе снимает свой старый протез и кладёт на стол. Внутри — гравировка: «Рэйзор не останавливается после гонга». «Хьюз будет бить, когда ты упадёшь. Он всегда так делает. Я хочу, чтобы ты не упал»."
+  choices:
+    - label: Пообещать Абебе победу
+      effects: {humanity: 2, mood: 4, flag_set:arena_promise: true}
+      text: "Абебе впервые улыбается. Улыбка у него молодая, совсем не по годам."
+    - label: Попросить его в угол на финал
+      effects: {skill_xp:melee: 4, flag_set:arena_corner: true}
+      text: "Абебе надевает старое полотенце на плечо. Он снова в углу ринга, через двенадцать лет."
+
+- id: arena_story_10
+  title: Пояс
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "После финала ринг гудит, как улей. Рэйзор Хьюз лежит на матах. Мама Кость выносит пояс и кастет, который выдают одному чемпиону в десять лет. Абебе в углу молча вытирает глаза. Микрофон перед тобой: весь город ждёт, что скажет новый чемпион."
+  choices:
+    - label: Посвятить пояс Абебе
+      effects: {item_grant:arena_champion_knuckles: true, fame: 5, street_cred: 5, humanity: 4, mood: 8}
+      text: "Ты отдаёшь пояс старику. Он держит его единственной рукой и плачет при всём городе. Кастет чемпиона остаётся тебе."
+    - label: Вызвать любого желающего
+      effects: {item_grant:arena_champion_knuckles: true, fame: 7, street_cred: 7, enmity: 1}
+      text: "«Любой. В любое время». Зал взрывается. С этой ночи каждый, кто хочет славы, знает, где тебя найти."
+    - label: Забрать призовые и уйти с ринга
+      effects: {item_grant:arena_champion_knuckles: true, eddies: 50000, fame: 3, mood: 5}
+      text: "Ты уходишь непобеждённым. Это самая редкая вещь на ринге, и её ценят больше пояса."

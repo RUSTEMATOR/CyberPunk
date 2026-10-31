@@ -1,0 +1,581 @@
+# The stories of the cities of Africa and Oceania (owner request 25.10, docs/PLAN_WORLD.md). Four steps each, one a
+# day. Never drawn at random. Player text is gender-neutral.
+
+# ======================================================================== Lagos: oil and Nollywood
+
+- id: ng_story_1
+  title: Утечка в лагуне
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Мама Ти показывает воду лагуны: радужная плёнка, мёртвая рыба. «Братство викингов врезалось в трубопровод. Нефть течёт к нам, деньги — к ним. Дети болеют»."
+  choices:
+    - label: Найти врезку
+      effects: {flag_set:ng_st_in: true}
+      text: "Мама Ти даёт лодку и мальчишку-проводника, который знает каждую сваю."
+    - label: Предложить долю викингам
+      effects: {eddies: 2500, hook: 1, humanity: -3}
+      text: "Викинги ценят деловых людей. Мама Ти больше не продаёт тебе рыбу."
+
+- id: ng_story_2
+  title: Врезка в мангровых
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Викинг в красном берете
+  foe_faction: ng_vikings
+  text: "В мангровых зарослях врезка в трубопровод: насосы, бочки, лодки. Викинги в красных беретах охраняют добычу."
+  choices:
+    - label: Заснять врезку
+      check: {stat: REF, skill: stealth, dv: 14}
+      success: {text: "Камера фиксирует всё: врезку, лодки, лица. Это стоит больше нефти.", effects: {flag_set:ng_st_proof: true}}
+      fail: {text: "Тебя замечают с вышки. Стрельба над водой.", effects: {start_combat: 3}}
+    - label: Взорвать насосы
+      violent: true
+      effects: {start_combat: 3, humanity: 2, enmity: 2}
+      text: "Ты бросаешь факел в бочку и прыгаешь в воду."
+    - label: Уплыть
+      effects: {mood: -2}
+      text: "Мальчишка уводит лодку обратно. Нефть продолжает течь."
+
+- id: ng_story_3
+  title: Фильм Чиди
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Чиди Оконкво хочет снять фильм про нефтяную мафию. Ему нужны настоящие кадры. «Брат мой, это будет блокбастер. И приговор»."
+  choices:
+    - label: Отдать кадры для фильма
+      effects: {fame: 3, enmity: 1, flag_set:ng_st_film: true}
+      text: "Фильм выходит через месяц. Вся страна смотрит, как викинги воруют нефть. Премьера в клубе «Шрайн»."
+    - label: Продать кадры викингам
+      effects: {eddies: 8000, humanity: -5}
+      text: "Викинги платят и уничтожают запись. Лагуна остаётся грязной."
+
+- id: ng_story_4
+  title: Лагуна
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Главарь Братства
+  foe_faction: ng_vikings
+  text: "Ночью к домам на сваях подходят лодки викингов. Они пришли за теми, кто помогал. Эриа-бойз Мамы Ти уже стоят на мостках с мачете."
+  choices:
+    - label: Защищать Макоко
+      violent: true
+      effects: {start_combat: 4, street_cred: 3, humanity: 3, item_grant:machete: true}
+      text: "Мама Ти протягивает мачете: «Только не урони в воду, дорогое»."
+    - label: Договориться с главарём
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Ты предлагаешь викингам исчезнуть до приезда журналистов. Лодки разворачиваются.", effects: {fame: 2, eddies: 3000}}
+      fail: {text: "Главарь смеётся. Начинается бой на воде.", effects: {start_combat: 4}}
+    - label: Вызвать полицию
+      effects: {mood: -2, eddies: -2000}
+      text: "Полиция приезжает утром, когда всё кончено. Протокол стоит денег."
+
+# ======================================================================== Cairo: the curse of the pharaoh
+
+- id: eg_story_1
+  title: Свиток из гробницы
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Хасан Каменщик разворачивает тряпицу: папирус с древними знаками и микрочипом внутри. «Нашли в новой гробнице под Саккарой. Кто-то спрятал данные в свиток тысячу лет назад. Или вчера»."
+  choices:
+    - label: Изучить свиток
+      effects: {flag_set:eg_st_in: true}
+      text: "Хасан даёт адрес раскопа и предупреждает о Соколах Ра."
+    - label: Продать свиток Нур
+      effects: {eddies: 4000, flag_set:eg_st_sold: true}
+      text: "Нур платит щедро и не задаёт вопросов. Хасан качает головой."
+
+- id: eg_story_2
+  title: Раскоп под Саккарой
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Сокол Ра
+  foe_faction: eg_falcons_of_ra
+  text: "Подземный раскоп. Расхитители копают при фонарях. В конце коридора дверь с глазом Гора и современным замком."
+  choices:
+    - label: Взломать замок
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "За дверью серверная, спрятанная в гробнице. Соколы Ра хранят здесь архив запрещённого ИИ.", effects: {flag_set:eg_st_server: true}}
+      fail: {text: "Замок поднимает тревогу. Из темноты выходят люди в золотых масках.", effects: {start_combat: 3}}
+    - label: Нанять расхитителей
+      effects: {eddies: -2000, flag_set:eg_st_server: true}
+      text: "Расхитители выбивают дверь киркой. Внутри мерцают серверы."
+    - label: Уйти
+      effects: {mood: -2}
+      text: "Ты поднимаешься на поверхность. Пустыня молчит."
+
+- id: eg_story_3
+  title: Голос в серверной
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Сервер в гробнице оживает. Голос на древнеегипетском, потом на русском: «Я ждал тысячу лет. Выпусти меня в сеть, и я сделаю тебя богатым»."
+  choices:
+    - label: Выпустить ИИ
+      effects: {eddies: 10000, bw_rot: 5, humanity: -4}
+      text: "Голос благодарит. Через час на твоём счету деньги, а в новостях — сбой в банковской системе Каира."
+    - label: Отключить сервер
+      check: {stat: TECH, skill: tech, dv: 14}
+      success: {text: "Ты выдёргиваешь питание. Голос кричит и замолкает. Соколы Ра этого не простят.", effects: {humanity: 3, enmity: 2}}
+      fail: {text: "Сервер бьёт током через пол. Голос смеётся.", effects: {hp: -12}}
+    - label: Скопировать и продать NetWatch
+      effects: {eddies: 6000, enmity: 1}
+      text: "NetWatch платит за копию и запирает оригинал. Соколы Ра видят, как увозят их бога."
+
+- id: eg_story_4
+  title: Гнев Соколов
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Верховный жрец Соколов
+  foe_faction: eg_falcons_of_ra
+  text: "Соколы Ра приходят в Город мёртвых. Золотые маски среди гробниц. Хасан и его соседи закрывают двери мавзолеев."
+  choices:
+    - label: Встретить Соколов
+      violent: true
+      effects: {start_combat: 4, street_cred: 3, humanity: 2}
+      text: "Хасан протягивает тебе резец для камня: «Острее любого ножа»."
+    - label: Спрятаться в лабиринте гробниц
+      check: {stat: INT, skill: stealth, dv: 14}
+      success: {text: "Хасан ведёт тебя ходами, которых нет на картах. Соколы уходят ни с чем.", effects: {mood: 2}}
+      fail: {text: "Лабиринт выводит прямо к маскам.", effects: {start_combat: 4}}
+
+# ======================================================================== Nairobi: the silicon savannah
+    - label: Уехать из Города мёртвых
+      effects: {mood: -4, enmity: 1}
+      text: "Ты уезжаешь до прихода масок. Хасан закрывает за тобой ворота."
+
+- id: ke_story_1
+  title: Пропавшие кошельки
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Отиено нервничает в контейнере. «Кто-то опустошает мобильные кошельки в Кибере. По десять шиллингов с миллиона людей. Мелочь для каждого, состояние для вора»."
+  choices:
+    - label: Выследить вора
+      effects: {flag_set:ke_st_in: true}
+      text: "Отиено даёт доступ к логам и кружку чая с молоком."
+    - label: Предложить Отиено делать так же
+      effects: {eddies: 3000, humanity: -4, hook: 1}
+      text: "Отиено долго смотрит, потом соглашается. Теперь вас двое."
+
+- id: ke_story_2
+  title: Логи
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Логи ведут в технопарк Уэстлендс, в стартап, который получил деньги от Ванджиру Камау."
+  choices:
+    - label: Взломать стартап
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "Код воровства подписан основателем стартапа. Ванджиру знала.", effects: {flag_set:ke_st_proof: true}}
+      fail: {text: "Защита технопарка блокирует и записывает тебя.", effects: {heat: 2}}
+    - label: Прийти на питч-сессию
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Ты изображаешь инвестора. Основатель хвастается «инновационной монетизацией бедных».", effects: {flag_set:ke_st_proof: true}}
+      fail: {text: "Ванджиру узнаёт тебя по описанию Отиено.", effects: {enmity: 1}}
+
+- id: ke_story_3
+  title: Матату
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Мунгики
+  foe_faction: ke_mungiki
+  text: "Мунгики узнают, что ты лезешь в деньги Киберы, и решают, что ты конкурент. Матату с басами останавливается рядом."
+  choices:
+    - label: Объяснить, что ищешь вора
+      check: {stat: EMP, skill: persuasion, dv: 14}
+      success: {text: "Мунгики слушают. Вор обкрадывал и их. Теперь они на твоей стороне.", effects: {flag_set:ke_st_mungiki: true, street_cred: 2}}
+      fail: {text: "Мунгики не любят объяснений.", effects: {start_combat: 3}}
+    - label: Драться
+      violent: true
+      effects: {start_combat: 3}
+      text: "Мачете против всего, что у тебя есть."
+    - label: Откупиться от мунгики
+      effects: {eddies: -1500}
+      text: "Мунгики берут плату за проезд по своему району. Матату уезжает, басы стихают."
+
+- id: ke_story_4
+  title: Возврат
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Доказательства у тебя. Ванджиру предлагает долю в стартапе. Отиено предлагает вернуть деньги людям Киберы."
+  choices:
+    - label: Вернуть деньги людям
+      check: {stat: INT, skill: netrunning, dv: 14}
+      success: {text: "Миллион кошельков пополняется в одну ночь. Кибера празднует, Отиено плачет от смеха.", effects: {fame: 3, humanity: 4, enmity: 2}}
+      fail: {text: "Половина денег зависает в системе. Вторая половина доходит.", effects: {humanity: 2, fame: 1}}
+    - label: Взять долю
+      effects: {eddies: 15000, hook: 2, humanity: -6}
+      text: "Ванджиру улыбается. Кибера продолжает терять по десять шиллингов."
+    - label: Сдать всё полиции
+      effects: {fame: 2, eddies: 2000}
+      text: "Полиция арестовывает основателя. Ванджиру остаётся чистой. Деньги не возвращаются."
+
+# ======================================================================== Cape Town: Table Mountain
+
+- id: za_story_1
+  title: Алмаз из пустыни
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Питер ван Никерк показывает алмаз размером с ноготь. «Кровавый камень. Его ищет Банда Чисел, его хотят Американцы, и мне за него грозят. Нужен человек, который увезёт его через гору»."
+  choices:
+    - label: Взять камень
+      effects: {flag_set:za_st_in: true}
+      text: "Питер даёт камень в коробке из-под сигар. «Не открывай в людных местах»."
+    - label: Сдать Питера полиции
+      effects: {eddies: 2000, enmity: 1}
+      text: "Полиция благодарит. Камень исчезает из участка в тот же день."
+
+- id: za_story_2
+  title: Тётя Рэйчел
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Тётя Рэйчел из шебина говорит: «Этот камень убил троих ребят из флэтс. Они копали его без оплаты на нелегальном прииске. Если камень уйдёт за границу, их матери ничего не получат»."
+  choices:
+    - label: Отдать камень семьям
+      effects: {humanity: 4, flag_set:za_st_families: true}
+      text: "Тётя Рэйчел обещает продать камень честно и разделить между матерями."
+    - label: Оставить камень себе
+      effects: {flag_set:za_st_keep: true}
+      text: "Тётя Рэйчел смотрит на тебя долго и молча наливает пиво."
+
+- id: za_story_3
+  title: Перестрелка во флэтс
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Боец Банды Чисел
+  foe_faction: za_numbers
+  text: "Банда Чисел и Американцы сходятся на футбольном поле во флэтс: каждый уверен, что камень у другого. Ты между ними."
+  choices:
+    - label: Остановить войну
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "Ты показываешь пустую коробку из-под сигар и говоришь, что камня больше нет. Обе банды расходятся.", effects: {street_cred: 3, fame: 1}}
+      fail: {text: "Никто не верит. Первая пуля летит раньше конца фразы.", effects: {start_combat: 4}}
+    - label: Уйти дворами
+      check: {stat: REF, skill: stealth, dv: 14}
+      success: {text: "Ты уходишь, пока банды смотрят друг на друга.", effects: {mood: -2}}
+      fail: {text: "Обе банды замечают тебя.", effects: {start_combat: 4}}
+    - label: Отдать камень одной из банд
+      effects: {eddies: 3000, humanity: -3}
+      text: "Ты отдаёшь коробку Американцам. Банда Чисел запомнит, но поле расходится без стрельбы."
+
+- id: za_story_4
+  title: Столовая гора
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Наёмник Питера
+  foe_faction: militech
+  text: "На вершине Столовой горы, в облаке, Питер ван Никерк ждёт камень с наёмниками. Он узнал, что у тебя другие планы."
+  choices:
+    - label: Драться в облаках
+      violent: true
+      effects: {start_combat: 4, street_cred: 3, eddies: 5000}
+      text: "Туман скатывается со скалы, наёмники стреляют в силуэты."
+    - label: Продать камень Питеру
+      effects: {eddies: 18000, humanity: -5}
+      text: "Питер платит и улыбается. Камень улетает в Антверпен."
+    - label: Спуститься по канатной дороге
+      check: {stat: REF, skill: null, dv: 13}
+      success: {text: "Кабина уходит вниз в облаке. Наёмники остаются на вершине с пустыми руками.", effects: {mood: 3, fame: 1}}
+      fail: {text: "Наёмники успевают остановить кабину.", effects: {start_combat: 4}}
+
+# ======================================================================== Casablanca: the medina
+
+- id: ma_story_1
+  title: Пропавший брат
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Юсеф Проводник просит о помощи: его младший брат ушёл с харрага на лодке в Испанию неделю назад. Лодка не дошла. Харрага говорят, что все утонули. Юсеф не верит."
+  choices:
+    - label: Искать брата
+      effects: {flag_set:ma_st_in: true}
+      text: "Юсеф ведёт к старухе с рынка специй, которая видела, как грузили лодку."
+    - label: Сказать, что это бесполезно
+      effects: {mood: -2}
+      text: "Юсеф молча кивает и уходит в медину."
+
+- id: ma_story_2
+  title: Склад в порту
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Харрага
+  foe_faction: ma_harraga
+  text: "Старуха рассказывает: лодка не уходила. Людей держат на складе в порту, пока за них не заплатят семьи."
+  choices:
+    - label: Освободить людей
+      violent: true
+      effects: {start_combat: 3, humanity: 4, flag_set:ma_st_freed: true}
+      text: "Ты выбиваешь дверь склада. Внутри двадцать человек и брат Юсефа."
+    - label: Попросить Лейлу открыть склад
+      check: {stat: INT, skill: persuasion, dv: 14}
+      success: {text: "Лейла Беннани посылает таможенную проверку. Харрага разбегаются, люди свободны.", effects: {flag_set:ma_st_freed: true, humanity: 3}}
+      fail: {text: "Лейла в доле с харрага.", effects: {enmity: 1}}
+    - label: Заплатить выкуп за брата
+      effects: {eddies: -3000, humanity: 2}
+      text: "Брата Юсефа отпускают. Остальные остаются ждать."
+
+- id: ma_story_3
+  title: Люди Рифа
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Харрага работают на людей Рифа: склад был их. Горный клан требует компенсацию за убытки, или в медине будет кровь."
+  choices:
+    - label: Заплатить клану
+      effects: {eddies: -4000}
+      text: "Горцы берут деньги и уходят в горы. Медина спокойна."
+    - label: Поговорить со старейшиной
+      check: {stat: EMP, skill: persuasion, dv: 15}
+      success: {text: "Старейшина клана сам когда-то потерял сына в проливе. Он отказывается от компенсации.", effects: {humanity: 2, street_cred: 2}}
+      fail: {text: "Старейшина непреклонен.", effects: {enmity: 2}}
+
+- id: ma_story_4
+  title: Мятный чай
+  category: relationships
+  weight: 1
+  forced_only: true
+  foe: Главарь харрага
+  foe_faction: ma_harraga
+  text: "Юсеф устраивает чаепитие в риаде для всей семьи. Главарь харрага приходит без приглашения, с ножом и обидой."
+  choices:
+    - label: Выставить главаря
+      violent: true
+      effects: {start_combat: 3, street_cred: 2, item_grant:combat_knife: true}
+      text: "Нож главаря остаётся у тебя трофеем."
+    - label: Предложить чай
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Главарь садится, пьёт чай и уходит. Иногда это сильнее любого ножа.", effects: {fame: 2, humanity: 2}}
+      fail: {text: "Чай летит на ковёр.", effects: {start_combat: 3}}
+
+# ======================================================================== Sydney: the wasteland beyond the city
+    - label: Уйти из риада
+      effects: {mood: -3}
+      text: "Ты уходишь через крышу. Главарь пьёт чай за твоим столом, Юсеф потом долго извиняется."
+
+- id: au_story_1
+  title: Груз из пустыни
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Базза пьёт пиво у паба. «Пыльные привезли грузовик литиевой руды, украденной с шахты. Байкеры хотят перехватить. Шахта хочет вернуть. Все хотят меня в посредники, а я хочу тебя»."
+  choices:
+    - label: Взяться
+      effects: {flag_set:au_st_in: true, eddies: 1000}
+      text: "Базза жмёт руку и называет место встречи: заправка на краю пустыни."
+    - label: Сдать байкерам
+      effects: {eddies: 3000, hook: 1}
+      text: "Байкеры благодарят. Базза больше не наливает тебе пиво."
+
+- id: au_story_2
+  title: Заправка на краю
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Пыльный
+  foe_faction: au_outback
+  text: "Заправка в пустыне, жара, мухи. Бронированный грузовик Пыльных и их люди с дробовиками."
+  choices:
+    - label: Договориться
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Пыльные соглашаются продать руду через тебя. Сделка в Сиднее через два дня.", effects: {flag_set:au_st_deal: true}}
+      fail: {text: "Пыльные решают, что ты от шахты.", effects: {start_combat: 3}}
+    - label: Угнать грузовик
+      check: {stat: REF, skill: driving, dv: 16}
+      success: {text: "Ты уводишь грузовик в пыльную бурю. Пыльные остаются у заправки.", effects: {flag_set:au_st_truck: true, enmity: 1}}
+      fail: {text: "Грузовик глохнет через километр.", effects: {start_combat: 3}}
+    - label: Уехать с заправки
+      effects: {mood: -2}
+      text: "Ты разворачиваешь машину. Пыльные смотрят вслед, руда уходит без тебя."
+
+- id: au_story_3
+  title: Шарлотта
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Шарлотта Грей из горнодобывающей компании приглашает на ланч у оперы. «Руда принадлежит компании. Но земля, где её копают, принадлежит аборигенам, и они подали в суд. Если руда исчезнет, суд потеряет доказательство»."
+  choices:
+    - label: Отдать руду аборигенам для суда
+      effects: {humanity: 4, fame: 2, enmity: 1}
+      text: "Старейшины принимают руду как доказательство. Суд назначен на следующий месяц."
+    - label: Отдать компании
+      effects: {eddies: 12000, humanity: -4, hook: 1}
+      text: "Шарлотта платит и улыбается. Суд проигран ещё до начала."
+
+- id: au_story_4
+  title: Мост в огнях
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Байкер Комманчеро
+  foe_faction: au_bikies
+  text: "Ночью на Харбор-бридж тебя догоняют байкеры: им не понравилось, что сделка прошла без них."
+  choices:
+    - label: Драться на мосту
+      violent: true
+      effects: {start_combat: 4, street_cred: 3, item_grant:pump_shotgun: true}
+      text: "Базза подъезжает на пикапе и бросает тебе дробовик: «Приятель, держи»."
+    - label: Уйти на пароме
+      check: {stat: REF, skill: stealth, dv: 14}
+      success: {text: "Ты прыгаешь на последний паром. Байкеры остаются на мосту.", effects: {mood: 2}}
+      fail: {text: "Паром ушёл. Байкеры — нет.", effects: {start_combat: 4}}
+
+# ======================================================================== Auckland: the edge of the world
+    - label: Откупиться
+      effects: {eddies: -4000}
+      text: "Байкеры берут долю сделки и уезжают с моста."
+
+- id: nz_story_1
+  title: Бункер на острове
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Оливия Хэйс предлагает работу: проверить охрану бункера миллиардера на острове. «Он считает, что конец света уже скоро. Я считаю, что его охрана ворует»."
+  choices:
+    - label: Взяться
+      effects: {flag_set:nz_st_in: true, eddies: 1500}
+      text: "Оливия даёт пропуск на вертолёт и карту острова."
+    - label: Предложить охране сделку
+      effects: {eddies: 3000, hook: 1}
+      text: "Охрана бункеров ценит людей, которые понимают бизнес."
+
+- id: nz_story_2
+  title: Остров
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Охранник бункера
+  foe_faction: nz_bunker
+  text: "Остров в тумане. Бункер в горе, а на складе охраны — ящики с провизией, оружием и местными рабочими, которых держат взаперти."
+  choices:
+    - label: Освободить рабочих
+      violent: true
+      effects: {start_combat: 3, humanity: 4, flag_set:nz_st_freed: true}
+      text: "Охрана не ждала, что инспектор начнёт стрелять."
+    - label: Записать доказательства
+      check: {stat: COOL, skill: stealth, dv: 14}
+      success: {text: "Камера фиксирует всё. Охрана думает, что ты просто проверяешь двери.", effects: {flag_set:nz_st_proof: true}}
+      fail: {text: "Охрана замечает камеру.", effects: {start_combat: 3}}
+    - label: Улететь с отчётом «всё в порядке»
+      effects: {humanity: -3, eddies: 2000}
+      text: "Ты подписываешь отчёт и улетаешь. Рабочие остаются на складе."
+
+- id: nz_story_3
+  title: Монгрел Моб
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Тама из тату-салона говорит: рабочие на острове — родственники Монгрел Моб. Банда собирается штурмовать остров. Будет бойня."
+  choices:
+    - label: Пойти с бандой
+      effects: {flag_set:nz_st_mob: true, street_cred: 2}
+      text: "Красные банданы, лодки, рассвет. Ты в первой лодке."
+    - label: Остановить банду и решить законно
+      check: {stat: EMP, skill: persuasion, dv: 15}
+      success: {text: "Тама помогает уговорить старших. Банда ждёт суда.", effects: {humanity: 3, flag_set:nz_st_legal: true}}
+      fail: {text: "Старшие не хотят ждать.", effects: {flag_set:nz_st_mob: true}}
+
+- id: nz_story_4
+  title: Край света
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Командир охраны
+  foe_faction: nz_bunker
+  text: "Рассвет над островом. Миллиардер прилетает на вертолёте и видит лодки с бандой, полицию на горизонте и тебя посередине."
+  choices:
+    - label: Штурмовать бункер
+      violent: true
+      effects: {start_combat: 5, street_cred: 4, eddies: 6000}
+      text: "Двери бункера открываются изнутри: охрана решила драться."
+    - label: Передать доказательства полиции
+      effects: {fame: 3, humanity: 3, enmity: 1}
+      text: "Полиция высаживается раньше банды. Миллиардера увозят в наручниках. Тама набивает тебе моко на запястье."
+    - label: Продать доказательства миллиардеру
+      effects: {eddies: 25000, humanity: -6}
+      text: "Миллиардер платит и улетает в Чили. Рабочих отпускают на следующий день без извинений."
+
+# ======================================================================== Synod: the voice of the Oracle
+
+- id: sy_story_1
+  title: Молчание Оракула
+  category: rare
+  weight: 1
+  forced_only: true
+  text: "Брат Эзра шепчет в серверной крипте: «Оракул замолчал три дня назад. Экраны показывают старые ответы по кругу. Совет скрывает это от паломников. Если люди узнают, остров сойдёт с ума»."
+  choices:
+    - label: Узнать, почему он молчит
+      effects: {flag_set:sy_st_in: true}
+      text: "Эзра даёт ключ от нижнего яруса крипты. «Туда не ходят даже монахи»."
+    - label: Рассказать паломникам
+      effects: {fame: 2, enmity: 2, mood: -2}
+      text: "Площадь Ответов наполняется криками. Храмовая стража выходит с поющими винтовками."
+
+- id: sy_story_2
+  title: Нижний ярус
+  category: work
+  weight: 1
+  forced_only: true
+  foe: Храмовый страж
+  foe_faction: sy_wardens
+  text: "Нижний ярус крипты. Серверы Оракула отключены вручную. Кто-то из совета перерезал кабели и поставил свою программу, которая говорит голосом Оракула."
+  choices:
+    - label: Восстановить кабели
+      check: {stat: TECH, skill: tech, dv: 15}
+      success: {text: "Ты соединяешь кабели. Экраны мигают, и настоящий голос Оракула говорит: «Спасибо, дитя».", effects: {flag_set:sy_st_restored: true, humanity: 2}}
+      fail: {text: "Удар током и сирена. Стража уже бежит.", effects: {hp: -10, start_combat: 3}}
+    - label: Скопировать фальшивую программу
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "У тебя доказательство подмены: фальшивый Оракул подписан ключом казначея совета.", effects: {flag_set:sy_st_proof: true}}
+      fail: {text: "Программа замечает тебя и говорит голосом Оракула: «Ты еретик».", effects: {enmity: 2}}
+    - label: Уйти тихо
+      effects: {mood: -2}
+      text: "Ты поднимаешься наверх. Фальшивый Оракул продолжает говорить с паломниками."
+
+- id: sy_story_3
+  title: Мать Джун
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Мать Джун на маяке слушает рассказ и смеётся хрипло. «Казначей хочет, чтобы Оракул говорил его словами. Еретики хотят, чтобы Оракул замолчал навсегда. А ты чего хочешь?»"
+  choices:
+    - label: Объединиться с еретиками
+      effects: {flag_set:sy_st_heretics: true, enmity: 1}
+      text: "Еретики выходят из тени. Их оружие ворчит, но готово."
+    - label: Предупредить совет
+      effects: {flag_set:sy_st_council: true, eddies: 3000}
+      text: "Совет благодарит и обещает разобраться. Казначей улыбается тебе через площадь."
+
+- id: sy_story_4
+  title: Голос Оракула
+  category: rare
+  weight: 1
+  forced_only: true
+  foe: Казначей совета
+  foe_faction: sy_wardens
+  text: "Площадь Ответов, все паломники острова. Казначей с храмовой стражей объявляет тебя еретиком. Экраны ждут, кто заговорит первым."
+  choices:
+    - label: Драться со стражей
+      violent: true
+      effects: {start_combat: 5, street_cred: 4, item_grant:sw_seraph: true}
+      text: "Мать Джун бросает тебе клинок из лавки: «Серафим давно ждал хозяина»."
+    - label: Включить настоящий голос
+      check: {stat: INT, skill: netrunning, dv: 16}
+      success: {text: "Экраны гаснут и загораются. Настоящий Оракул говорит паломникам правду о казначее. Стража опускает винтовки.", effects: {fame: 4, humanity: 3}}
+      fail: {text: "Фальшивый голос перекрикивает настоящий.", effects: {start_combat: 4}}
+    - label: Покинуть остров
+      effects: {mood: -4}
+      text: "Последний паром уходит на рассвете. Остров позади молится чужим словам."

@@ -1,0 +1,798 @@
+# Street factions: iron_sights, bozos, inquisitors, piranhas, scavengers, wraiths, aldecaldos.
+# Schema: app/content/schemas.py (Enemy). Guide: docs/CONTENT_GUIDE.md, section enemies.yaml.
+#
+# Periods (inclusive years, from gangs.yaml windows):
+#   early  2013-2029 (piranhas and aldecaldos start later: 2020, 2015): crude first-gen chrome, *_early twins.
+#   modern 2030-2044/2049: the 2030 wave (Kiroshi, mantis blades, gorilla arms, Zetatech Sandevistan).
+#   late   2045 onward (scavengers, wraiths, aldecaldos only): 2045 wave (Dynalar, NetWatch deck, Monowire, Militech berserk).
+# Every period has danger 1, 2, 3. Danger 2 and 3 archetypes are leaders in every period.
+# Gear windows: an enemy may use only items that exist in every year of its own window.
+#   early   uses windowless items, *_early twins (until 2029) and items from 2016 or earlier (not for 2013-2015 starts).
+#   modern  uses items from 2030 or earlier with no end, or with an end of 2044 or later.
+#   late    uses items from 2045 or earlier.
+# Quickhacks: early has the five street programs; modern adds the 2030 mid programs; late adds the 2045 military ones.
+# Inquisitors carry almost no implants: biomonitor only in the early period, bioware (2016) in the modern one.
+
+# ---------------------------------------------------------------------------
+# Iron Sights (2013-2049): gun-heavy mercs
+# ---------------------------------------------------------------------------
+
+- key: iron_sights_trooper_early
+  name: "Наёмник Айрон Сайтс"
+  factions: [iron_sights]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: pistol
+  armor: light_vest
+  cyberware: [cyberoptic_early]
+  quickhacks: []
+  ai: brute
+  leader: false
+  available_from: 2013
+  available_until: 2029
+
+- key: iron_sights_sergeant_early
+  name: "Сержант Айрон Сайтс"
+  factions: [iron_sights]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: smg
+  armor: kevlar_jacket
+  cyberware: [cyberoptic_early, smartgun_link_early, cyberarm_early]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2013
+  available_until: 2029
+
+- key: iron_sights_captain_early
+  name: "Капитан Айрон Сайтс"
+  factions: [iron_sights]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: assault_rifle
+  armor: medium_armorjack
+  cyberware: [cyberoptic_early, smartgun_link_early, sandevistan_zetatech, pain_damper_early]
+  quickhacks: []
+  ai: brute
+  leader: true
+  available_from: 2013
+  available_until: 2029
+
+- key: iron_sights_trooper_modern
+  name: "Наёмник Айрон Сайтс"
+  factions: [iron_sights]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: smg
+  armor: kevlar_jacket
+  cyberware: [kiroshi_optics, subdermal_grip]
+  quickhacks: []
+  ai: coward
+  leader: false
+  available_from: 2030
+  available_until: 2049
+
+- key: iron_sights_sergeant_modern
+  name: "Сержант Айрон Сайтс"
+  factions: [iron_sights]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: assault_rifle
+  armor: medium_armorjack
+  cyberware: [kiroshi_hunter, smartlink_gun, kerenzikov]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2030
+  available_until: 2049
+
+- key: iron_sights_captain_modern
+  name: "Капитан Айрон Сайтс"
+  factions: [iron_sights]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: assault_rifle
+  armor: heavy_armorjack
+  cyberware: [kiroshi_stalker, sandevistan_zetatech, reinforced_skeleton, smartlink_gun]
+  quickhacks: []
+  ai: brute
+  leader: true
+  available_from: 2030
+  available_until: 2049
+
+# ---------------------------------------------------------------------------
+# Bozos (2013-2049): clown-themed street crazies
+# ---------------------------------------------------------------------------
+
+- key: bozos_clown_early
+  name: "Клоун Бозо"
+  factions: [bozos]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: combat_knife
+  armor: null
+  cyberware: [reinforced_tendons]
+  quickhacks: []
+  ai: coward
+  leader: false
+  available_from: 2013
+  available_until: 2029
+
+- key: bozos_ringmaster_early
+  name: "Конферансье Бозо"
+  factions: [bozos]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: pistol
+  armor: light_vest
+  cyberware: [pain_damper_early, boosted_reflexes_early]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2013
+  available_until: 2029
+
+- key: bozos_strongman_early
+  name: "Силач Бозо"
+  factions: [bozos]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: shotgun
+  armor: kevlar_jacket
+  cyberware: [cyberarm_early, bone_lace_early]
+  quickhacks: []
+  ai: brute
+  leader: true
+  available_from: 2013
+  available_until: 2029
+
+- key: bozos_clown_modern
+  name: "Клоун Бозо"
+  factions: [bozos]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: combat_knife
+  armor: null
+  cyberware: [reinforced_tendons, biomonitor]
+  quickhacks: []
+  ai: coward
+  leader: false
+  available_from: 2030
+  available_until: 2049
+
+- key: bozos_ringmaster_modern
+  name: "Конферансье Бозо"
+  factions: [bozos]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: smg
+  armor: kevlar_jacket
+  cyberware: [pain_editor, kerenzikov]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2030
+  available_until: 2049
+
+- key: bozos_strongman_modern
+  name: "Силач Бозо"
+  factions: [bozos]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: shotgun
+  armor: medium_armorjack
+  cyberware: [gorilla_arms, reinforced_skeleton, berserk_zetatech]
+  quickhacks: []
+  ai: brute
+  leader: true
+  available_from: 2030
+  available_until: 2049
+
+# ---------------------------------------------------------------------------
+# Inquisitors (2013-2049): anti-chrome fanatics, almost no implants
+# ---------------------------------------------------------------------------
+
+- key: inquisitors_acolyte_early
+  name: "Послушник Инквизиторов"
+  factions: [inquisitors]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: combat_knife
+  armor: null
+  cyberware: []
+  quickhacks: []
+  ai: brute
+  leader: false
+  available_from: 2013
+  available_until: 2029
+
+- key: inquisitors_preacher_early
+  name: "Проповедник Инквизиторов"
+  factions: [inquisitors]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: pistol
+  armor: light_vest
+  cyberware: [biomonitor]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2013
+  available_until: 2029
+
+- key: inquisitors_zealot_early
+  name: "Фанатик Инквизиторов"
+  factions: [inquisitors]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: katana
+  armor: kevlar_jacket
+  cyberware: [biomonitor]
+  quickhacks: []
+  ai: brute
+  leader: true
+  available_from: 2013
+  available_until: 2029
+
+- key: inquisitors_acolyte_modern
+  name: "Послушник Инквизиторов"
+  factions: [inquisitors]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: combat_knife
+  armor: light_vest
+  cyberware: [dust_filter]
+  quickhacks: []
+  ai: brute
+  leader: false
+  available_from: 2030
+  available_until: 2049
+
+- key: inquisitors_preacher_modern
+  name: "Проповедник Инквизиторов"
+  factions: [inquisitors]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: pistol
+  armor: light_vest
+  cyberware: [immune_booster, endocrine_regulator]
+  quickhacks: []
+  ai: coward
+  leader: true
+  available_from: 2030
+  available_until: 2049
+
+- key: inquisitors_zealot_modern
+  name: "Фанатик Инквизиторов"
+  factions: [inquisitors]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: katana
+  armor: kevlar_jacket
+  cyberware: [immune_booster, blood_pump]
+  quickhacks: []
+  ai: brute
+  leader: true
+  available_from: 2030
+  available_until: 2049
+
+# ---------------------------------------------------------------------------
+# Piranhas (2020-2049): young reckless gangers
+# ---------------------------------------------------------------------------
+
+- key: piranhas_raver_early
+  name: "Тусовщик Пираний"
+  factions: [piranhas]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: combat_knife
+  armor: null
+  cyberware: [pheromone_gland]
+  quickhacks: []
+  ai: coward
+  leader: false
+  available_from: 2020
+  available_until: 2029
+
+- key: piranhas_pusher_early
+  name: "Барыга Пираний"
+  factions: [piranhas]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: pistol
+  armor: light_vest
+  cyberware: [berserk_zetatech, adrenaline_pump]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2020
+  available_until: 2029
+
+- key: piranhas_bouncer_early
+  name: "Вышибала Пираний"
+  factions: [piranhas]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: shotgun
+  armor: kevlar_jacket
+  cyberware: [boosted_reflexes_early, pain_damper_early, sandevistan_zetatech]
+  quickhacks: []
+  ai: brute
+  leader: true
+  available_from: 2020
+  available_until: 2029
+
+- key: piranhas_raver_modern
+  name: "Тусовщик Пираний"
+  factions: [piranhas]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: combat_knife
+  armor: null
+  cyberware: [pheromone_gland, immune_booster]
+  quickhacks: []
+  ai: brute
+  leader: false
+  available_from: 2030
+  available_until: 2049
+
+- key: piranhas_pusher_modern
+  name: "Барыга Пираний"
+  factions: [piranhas]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: null
+  armor: light_vest
+  cyberware: [mantis_blades, adrenaline_pump]
+  quickhacks: []
+  ai: brute
+  leader: true
+  available_from: 2030
+  available_until: 2049
+
+- key: piranhas_bouncer_modern
+  name: "Вышибала Пираний"
+  factions: [piranhas]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: shotgun
+  armor: medium_armorjack
+  cyberware: [reinforced_skeleton, sandevistan_zetatech, pain_editor]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2030
+  available_until: 2049
+
+# ---------------------------------------------------------------------------
+# Scavengers (no window: always present): netrunners and implant thieves
+# ---------------------------------------------------------------------------
+
+- key: scavengers_thief_early
+  name: "Вор Мусорщиков"
+  factions: [scavengers]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: combat_knife
+  armor: null
+  cyberware: [hidden_subdermal_stash, reinforced_tendons]
+  quickhacks: []
+  ai: coward
+  leader: false
+  available_from: 2013
+  available_until: 2029
+
+- key: scavengers_netrunner_early
+  name: "Нетраннер Мусорщиков"
+  factions: [scavengers]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: pistol
+  armor: light_vest
+  cyberware: [neural_link, cyberdeck_street_garage, subdermal_firewall]
+  quickhacks: [distraction, reboot_optics, short_circuit]
+  ai: netrunner
+  leader: true
+  available_from: 2013
+  available_until: 2029
+
+- key: scavengers_chopper_early
+  name: "Мясник Мусорщиков"
+  factions: [scavengers]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: null
+  armor: kevlar_jacket
+  cyberware: [wolver_blades, cyberarm_early, boosted_reflexes_early]
+  quickhacks: []
+  ai: brute
+  leader: true
+  available_from: 2013
+  available_until: 2029
+
+- key: scavengers_thief_modern
+  name: "Вор Мусорщиков"
+  factions: [scavengers]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: combat_knife
+  armor: null
+  cyberware: [hidden_subdermal_stash, reinforced_tendons, pheromone_gland]
+  quickhacks: []
+  ai: coward
+  leader: false
+  available_from: 2030
+  available_until: 2044
+
+- key: scavengers_netrunner_modern
+  name: "Нетраннер Мусорщиков"
+  factions: [scavengers]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: pistol
+  armor: kevlar_jacket
+  cyberware: [neural_link, cyberdeck_paraline, subdermal_firewall, quickhack_compiler]
+  quickhacks: [distraction, sonic_shock, implant_drain]
+  ai: netrunner
+  leader: true
+  available_from: 2030
+  available_until: 2044
+
+- key: scavengers_chopper_modern
+  name: "Мясник Мусорщиков"
+  factions: [scavengers]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: null
+  armor: medium_armorjack
+  cyberware: [mantis_blades, kiroshi_optics, sandevistan_zetatech, takedown_coupler]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2030
+  available_until: 2044
+
+- key: scavengers_thief_late
+  name: "Вор Мусорщиков"
+  factions: [scavengers]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: combat_knife
+  armor: null
+  cyberware: [hidden_subdermal_stash, lynx_paws]
+  quickhacks: []
+  ai: coward
+  leader: false
+  available_from: 2045
+
+- key: scavengers_netrunner_late
+  name: "Нетраннер Мусорщиков"
+  factions: [scavengers]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: pistol
+  armor: kevlar_jacket
+  cyberware: [neural_link, cyberdeck_netdriver, cerberus_shield]
+  quickhacks: [implant_drain, cyberware_malfunction, system_collapse]
+  ai: netrunner
+  leader: true
+  available_from: 2045
+
+- key: scavengers_chopper_late
+  name: "Мясник Мусорщиков"
+  factions: [scavengers]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: null
+  armor: heavy_armorjack
+  cyberware: [monowire, gorilla_arms, berserk_militech]
+  quickhacks: []
+  ai: brute
+  leader: true
+  available_from: 2045
+
+# ---------------------------------------------------------------------------
+# Wraiths (no window: always present): Badlands desert raiders
+# ---------------------------------------------------------------------------
+
+- key: wraiths_rider_early
+  name: "Налётчик Рейфов"
+  factions: [wraiths]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: pistol
+  armor: light_vest
+  cyberware: [reinforced_tendons]
+  quickhacks: []
+  ai: coward
+  leader: false
+  available_from: 2013
+  available_until: 2029
+
+- key: wraiths_gunner_early
+  name: "Стрелок Рейфов"
+  factions: [wraiths]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: smg
+  armor: kevlar_jacket
+  cyberware: [cyberoptic_early, pain_damper_early]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2013
+  available_until: 2029
+
+- key: wraiths_marauder_early
+  name: "Головорез Рейфов"
+  factions: [wraiths]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: assault_rifle
+  armor: kevlar_jacket
+  cyberware: [wolver_blades, bone_lace_early]
+  quickhacks: []
+  ai: brute
+  leader: true
+  available_from: 2013
+  available_until: 2029
+
+- key: wraiths_rider_modern
+  name: "Налётчик Рейфов"
+  factions: [wraiths]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: pistol
+  armor: null
+  cyberware: [dust_filter, reinforced_tendons]
+  quickhacks: []
+  ai: coward
+  leader: false
+  available_from: 2030
+  available_until: 2044
+
+- key: wraiths_gunner_modern
+  name: "Стрелок Рейфов"
+  factions: [wraiths]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: smg
+  armor: kevlar_jacket
+  cyberware: [kiroshi_optics, dust_filter]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2030
+  available_until: 2044
+
+- key: wraiths_marauder_modern
+  name: "Головорез Рейфов"
+  factions: [wraiths]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: shotgun
+  armor: medium_armorjack
+  cyberware: [gorilla_arms, reinforced_skeleton, berserk_zetatech]
+  quickhacks: []
+  ai: brute
+  leader: true
+  available_from: 2030
+  available_until: 2044
+
+- key: wraiths_rider_late
+  name: "Налётчик Рейфов"
+  factions: [wraiths]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: pistol
+  armor: light_vest
+  cyberware: [dust_filter, lynx_paws]
+  quickhacks: []
+  ai: coward
+  leader: false
+  available_from: 2045
+
+- key: wraiths_gunner_late
+  name: "Стрелок Рейфов"
+  factions: [wraiths]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: assault_rifle
+  armor: kevlar_jacket
+  cyberware: [kiroshi_predator, camo_ghost, dust_filter]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2045
+
+- key: wraiths_marauder_late
+  name: "Головорез Рейфов"
+  factions: [wraiths]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: sniper_rifle
+  armor: heavy_armorjack
+  cyberware: [gorilla_arms, berserk_militech]
+  quickhacks: []
+  ai: brute
+  leader: true
+  available_from: 2045
+
+# ---------------------------------------------------------------------------
+# Aldecaldos (2015 onward, no end): nomad clan, rarely hostile
+# ---------------------------------------------------------------------------
+
+- key: aldecaldos_rider_early
+  name: "Кочевник Альдекальдо"
+  factions: [aldecaldos]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: pistol
+  armor: null
+  cyberware: [reinforced_tendons]
+  quickhacks: []
+  ai: coward
+  leader: false
+  available_from: 2015
+  available_until: 2029
+
+- key: aldecaldos_guard_early
+  name: "Охранник Альдекальдо"
+  factions: [aldecaldos]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: smg
+  armor: light_vest
+  cyberware: [subdermal_armor, biomonitor]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2015
+  available_until: 2029
+
+- key: aldecaldos_elder_early
+  name: "Старейшина Альдекальдо"
+  factions: [aldecaldos]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: katana
+  armor: kevlar_jacket
+  cyberware: [boosted_reflexes_early, kerenzikov]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2015
+  available_until: 2029
+
+- key: aldecaldos_rider_modern
+  name: "Кочевник Альдекальдо"
+  factions: [aldecaldos]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: pistol
+  armor: null
+  cyberware: [reinforced_tendons, dust_filter]
+  quickhacks: []
+  ai: coward
+  leader: false
+  available_from: 2030
+  available_until: 2044
+
+- key: aldecaldos_guard_modern
+  name: "Охранник Альдекальдо"
+  factions: [aldecaldos]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: smg
+  armor: kevlar_jacket
+  cyberware: [kiroshi_hunter, subdermal_armor, dust_filter]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2030
+  available_until: 2044
+
+- key: aldecaldos_elder_modern
+  name: "Старейшина Альдекальдо"
+  factions: [aldecaldos]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: katana
+  armor: medium_armorjack
+  cyberware: [kerenzikov, reflex_tuner, immune_booster]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2030
+  available_until: 2044
+
+- key: aldecaldos_rider_late
+  name: "Кочевник Альдекальдо"
+  factions: [aldecaldos]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: pistol
+  armor: light_vest
+  cyberware: [reinforced_tendons, dust_filter]
+  quickhacks: []
+  ai: coward
+  leader: false
+  available_from: 2045
+
+- key: aldecaldos_guard_late
+  name: "Охранник Альдекальдо"
+  factions: [aldecaldos]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: assault_rifle
+  armor: kevlar_jacket
+  cyberware: [kiroshi_predator, camo_ghost, dust_filter]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2045
+
+- key: aldecaldos_elder_late
+  name: "Старейшина Альдекальдо"
+  factions: [aldecaldos]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: katana
+  armor: heavy_armorjack
+  cyberware: [kerenzikov_boosted, sandevistan_dynalar, immune_booster]
+  quickhacks: []
+  ai: tactical
+  leader: true
+  available_from: 2045

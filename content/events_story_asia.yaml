@@ -1,0 +1,636 @@
+# The stories of the cities of Asia (owner request 25.10, docs/PLAN_WORLD.md). Four steps each, one a day from the
+# country window («Мир» → country → «Сюжет»). Never drawn at random. Player text is gender-neutral.
+
+# ======================================================================== Japan: the debt of the Kurogawa clan
+
+- id: jp_story_1
+  title: Палец в коробке
+  category: street
+  weight: 1
+  forced_only: true
+  text: "В лапшичной Старика Мацуды к тебе подсаживается молодой якудза с перебинтованной рукой. Под бинтом не хватает пальца. «Мой брат должен клану Курогава. Брат пропал. Теперь долг мой. Ты иностранец, тебя никто не знает. Помоги найти брата»."
+  choices:
+    - label: Взяться за поиски
+      effects: {flag_set:jp_st_help: true, street_cred: 1}
+      text: "Парня зовут Рё. Он даёт тебе фотографию брата и адрес последнего места работы: подпольный патинко в Кабукитё."
+    - label: Сдать парня клану
+      effects: {flag_set:jp_st_clan: true, eddies: 1500, humanity: -2}
+      text: "Ты звонишь по номеру с визитки клана. Через десять минут Рё уводят под руки. Клан запоминает полезного иностранца."
+    - label: Отказаться
+      effects: {mood: -1}
+      text: "Рё молча кланяется и уходит. Его лапша остаётся нетронутой."
+
+- id: jp_story_2
+  title: Патинко в Кабукитё
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Охранник клана
+  foe_faction: jp_kurogawa
+  text: "В подвальном патинко грохот шариков и дым. Управляющий клана Курогава смотрит на тебя без выражения. Брат Рё работал здесь, пока не начал выигрывать слишком часто."
+  choices:
+    - label: Взломать автоматы и найти записи
+      check: {stat: INT, skill: netrunning, dv: 14}
+      success: {text: "В логах автоматов ты находишь схему: брат выигрывал по чужой подсказке, а деньги уходили на счёт портового склада. Он не сбежал. Его спрятали.", effects: {flag_set:jp_st_clue: true, eddies: 2000}}
+      fail: {text: "Автомат блокирует тебя и вызывает охрану. Тебя вежливо выводят и запоминают лицо.", effects: {enmity: 1, hp: -6}}
+    - label: Поговорить с управляющим
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Управляющий проговаривается: «Мальчик работает на складе в порту. Отрабатывает». Он думает, что ты от клана.", effects: {flag_set:jp_st_clue: true}}
+      fail: {text: "Управляющий кланяется и щёлкает пальцами. Охрана выходит из-за ширмы.", effects: {start_combat: 2}}
+    - label: Устроить драку
+      violent: true
+      effects: {start_combat: 3, enmity: 1, flag_set:jp_st_clue: true}
+      text: "Шарики летят по залу. Пока охрана разбирается с тобой, ты успеваешь увидеть на столе накладную портового склада."
+
+- id: jp_story_3
+  title: Склад в порту Токио
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Надзиратель клана
+  foe_faction: jp_kurogawa
+  text: "Портовый склад клана. Внутри два десятка должников собирают контрабандные импланты под надзором. Брат Рё среди них, худой и в наручниках."
+  choices:
+    - label: Вытащить всех
+      violent: true
+      effects: {start_combat: 4, humanity: 4, street_cred: 3, enmity: 2, flag_set:jp_st_freed: true, flag_set:nem_spawn_jp_kurogawa: true}
+      text: "Ты сбиваешь замок, и двадцать должников бросаются к воротам. Надзиратели стреляют вслед."
+    - label: Выкупить брата
+      effects: {eddies: -6000, flag_set:jp_st_bought: true, mood: 2}
+      text: "Ты кладёшь деньги на стол бухгалтера клана. Брата Рё выводят к тебе. Остальные остаются у конвейера."
+    - label: Тихо увести одного
+      check: {stat: REF, skill: stealth, dv: 15}
+      success: {text: "Ночная смена, открытое окно в туалете, двое в тени. Утром на складе на одного должника меньше.", effects: {flag_set:jp_st_freed: true}}
+      fail: {text: "Вас ловят у ворот. Брата возвращают к конвейеру, тебя — на улицу с переломанными рёбрами.", effects: {hp: -15, enmity: 1}}
+
+- id: jp_story_4
+  title: Чай с оябуном
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Тебя приглашают в чайный дом в Синдзюку. Оябун клана Курогава, седой человек с идеальной осанкой, наливает тебе чай сам. «Ты доставил нам неудобства. Ты также показал характер. Клан ценит характер. Выбирай: стать нашим или стать нашим врагом»."
+  choices:
+    - label: Принять предложение клана
+      effects: {eddies: 8000, street_cred: 3, hook: 2, item_grant:katana: true}
+      text: "Оябун кивает и передаёт тебе катану в лакированных ножнах. «Теперь у тебя есть семья в Токио». Семья, из которой не уходят."
+    - label: Отказаться с поклоном
+      check: {stat: COOL, skill: persuasion, dv: 16}
+      success: {text: "Ты кланяешься ниже, чем оябун. Он смеётся впервые за вечер. «Иностранец с манерами. Иди с миром». Рё и его брат провожают тебя до такси.", effects: {fame: 2, street_cred: 2, humanity: 2, eddies: 3000}}
+      fail: {text: "Поклон неверный. Оябун допивает чай и выходит. Охрана остаётся.", effects: {enmity: 2, hp: -12}}
+    - label: Записать разговор для полиции
+      check: {stat: INT, skill: stealth, dv: 17}
+      success: {text: "Через неделю в новостях облава на клан Курогава. Оябун под арестом, Рё с братом уезжают на Хоккайдо и шлют тебе открытку.", effects: {humanity: 4, fame: 3, enmity: 2}}
+      fail: {text: "Охрана находит микрофон. Тебя вывозят за город и оставляют в лесу без обуви.", effects: {hp: -18, enmity: 3, eddies_pct: -15}}
+
+# ======================================================================== Hong Kong: the walled city
+
+- id: hk_story_1
+  title: Двойник
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Тётушка Мэй наливает чай и показывает фото: человек с твоим лицом выходит из банка Кан Тао с кейсом. «Близнецы научились делать любые лица. Твоё им понравилось»."
+  choices:
+    - label: Найти клинику Близнецов
+      effects: {flag_set:hk_st_in: true}
+      text: "Тётушка Мэй называет рынок электроники, где продают чужие лица."
+    - label: Пойти в полицию
+      effects: {heat: 1, mood: -2}
+      text: "В полиции смотрят на твоё лицо и на фото и предлагают тебе сознаться."
+
+- id: hk_story_2
+  title: Рынок лиц
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Близнец
+  foe_faction: hk_clones
+  text: "На рынке Мон Кок за занавеской лавка, где на полках висят лица. Твоё — на витрине, с ценником."
+  choices:
+    - label: Выкупить своё лицо
+      effects: {eddies: -4000, flag_set:hk_st_face: true}
+      text: "Продавец отдаёт шаблон и клянётся, что копий нет. Он врёт, но меньше."
+    - label: Разгромить лавку
+      violent: true
+      effects: {start_combat: 3, flag_set:hk_st_face: true, enmity: 1}
+      text: "Лица падают с полок. Из-за занавески выходят люди с одинаковыми лицами."
+    - label: Взломать базу лавки
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "Ты стираешь шаблон и находишь заказчика: триада 14К.", effects: {flag_set:hk_st_face: true, flag_set:hk_st_14k: true}}
+      fail: {text: "База защищена лучше банка. Тебя выкидывают с рынка.", effects: {hp: -6}}
+
+- id: hk_story_3
+  title: Ограбление банка
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Винсент Лау объясняет: 14К ограбили банк Кан Тао твоим лицом, чтобы корпорация искала тебя. Теперь служба безопасности Кан Тао хочет поговорить."
+  choices:
+    - label: Сдать 14К корпорации
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Кан Тао верит доказательствам и снимает с тебя подозрение. Триада теперь знает твоё настоящее лицо.", effects: {enmity: 2, street_cred: 2}}
+      fail: {text: "Кан Тао не верит. Счета заморожены до выяснения.", effects: {eddies_pct: -15}}
+    - label: Договориться с триадой
+      effects: {hook: 2, eddies: 5000}
+      text: "Триада предлагает долю за молчание. Деньги из банка Кан Тао пахнут неприятностями."
+
+- id: hk_story_4
+  title: Город-крепость
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Боец 14К
+  foe_faction: hk_14k
+  text: "Ночь в руинах Города-крепости. 14К назначили встречу, чтобы закрыть вопрос. Тётушка Мэй прислала троих соседей с ножами для мяса."
+  choices:
+    - label: Драться
+      violent: true
+      effects: {start_combat: 4, street_cred: 3, item_grant:cleaver_pair: true}
+      text: "Соседи тётушки Мэй вручают тебе два тесака: «Для гостей»."
+    - label: Заключить мир у алтаря
+      check: {stat: EMP, skill: persuasion, dv: 16}
+      success: {text: "Ты клянёшься перед алтарём Гуань-ди не трогать дела триады. Они клянутся не трогать тебя.", effects: {fame: 2, eddies: 3000}}
+      fail: {text: "Клятва не принята.", effects: {start_combat: 4}}
+    - label: Не прийти на встречу
+      effects: {enmity: 2, mood: -3}
+      text: "Ты не приходишь. Триада считает это ответом."
+
+# ======================================================================== Shanghai: the social rating
+
+- id: cn_story_1
+  title: Обнулённый
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Мин Чжао предлагает работу: поднять рейтинг клиенту, которого обнулили за критику корпорации. «Он не может купить билет, снять квартиру и даже войти в метро. Он платит хорошо»."
+  choices:
+    - label: Взяться
+      effects: {flag_set:cn_st_in: true, eddies: 1500}
+      text: "Мин даёт имя клиента: учитель Чэнь, который живёт в переулке лунтан."
+    - label: Отказаться
+      effects: {mood: -1}
+      text: "Мин кивает: «Система продолжит работать без вас»."
+
+- id: cn_story_2
+  title: Учитель Чэнь
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Учитель Чэнь живёт в подвале, учит детей бесплатно. Его рейтинг обнулили за урок истории, где он сказал лишнее. Бабушка Ли кормит его в долг."
+  choices:
+    - label: Поднять рейтинг через систему
+      check: {stat: INT, skill: netrunning, dv: 16}
+      success: {text: "Рейтинг Чэня плюс пятьсот. Он снова может войти в метро и плачет у турникета.", effects: {humanity: 3, flag_set:cn_st_up: true}}
+      fail: {text: "Система замечает вмешательство. Твой рейтинг тоже падает.", effects: {heat: 2}}
+    - label: Сделать ему поддельный чип
+      effects: {eddies: -2000, flag_set:cn_st_chip: true}
+      text: "Бабушка Ли за маджонгом продаёт чип с чужим рейтингом. Чэнь стал другим человеком."
+
+- id: cn_story_3
+  title: Змееголовые
+  category: street
+  weight: 1
+  foe: Змееголовый
+  foe_faction: cn_snakeheads
+  forced_only: true
+  text: "Змееголовые узнают о Чэне. Они предлагают вывезти его из страны в контейнере, за всё, что у него есть, и ещё за всё, что у тебя."
+  choices:
+    - label: Заплатить за вывоз
+      effects: {eddies: -5000, humanity: 2, flag_set:cn_st_out: true}
+      text: "Контейнер уходит в порт. Через месяц Чэнь пишет из Сингапура."
+    - label: Защитить его здесь
+      violent: true
+      effects: {start_combat: 3, street_cred: 2}
+      text: "Змееголовые не любят отказов."
+    - label: Сдать Змееголовых полиции
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Полиция любит доносы. Змееголовые пропадают, твой рейтинг растёт.", effects: {street_cred: 1, enmity: 1}}
+      fail: {text: "Полиция берёт и Змееголовых, и Чэня.", effects: {humanity: -3}}
+
+- id: cn_story_4
+  title: Урок истории
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Чэнь просит последнее: записать его урок и выпустить в сеть. Мин Чжао предупреждает: если урок выйдет, система обнулит всех, кто помогал."
+  choices:
+    - label: Выпустить урок
+      effects: {fame: 3, humanity: 3, heat: 3, enmity: 2}
+      text: "Урок смотрят миллионы. Система обнуляет Чэня навсегда, а тебя вносит в список. Ты стоишь рядом с ним."
+    - label: Сохранить на будущее
+      effects: {humanity: 1, eddies: 2000}
+      text: "Запись в тайнике. Когда-нибудь она понадобится. Мин платит за благоразумие."
+    - label: Продать запись Мину
+      effects: {eddies: 8000, humanity: -5}
+      text: "Мин платит и стирает урок. Чэнь больше не преподаёт."
+
+# ======================================================================== Seoul: the idol
+
+- id: kr_story_1
+  title: Исчезнувшая звезда
+  category: relationships
+  weight: 1
+  forced_only: true
+  text: "Чжи У Пак взволнован: пропала Хана Со, главная солистка агентства «Стар-Лайт». Агентство говорит, что она отдыхает. Чжи У говорит, что её продали."
+  choices:
+    - label: Искать Хану
+      effects: {flag_set:kr_st_in: true}
+      text: "Чжи У даёт пароль от её личного облака и номер её водителя."
+    - label: Продать сплетню журналистам
+      effects: {eddies: 2000, fame: 1}
+      text: "Новость разлетается. Агентство в ярости, Чжи У тоже."
+
+- id: kr_story_2
+  title: Контракт
+  category: work
+  weight: 1
+  forced_only: true
+  text: "В облаке Ханы контракт: агентство продало её «эксклюзивные выступления» частному клиенту из Каннама на пять лет. Кханпхэ охраняют сделку."
+  choices:
+    - label: Найти клиента
+      check: {stat: INT, skill: netrunning, dv: 15}
+      success: {text: "Клиент — сын председателя чеболя. Хану держат в его пентхаусе.", effects: {flag_set:kr_st_where: true}}
+      fail: {text: "Облако заблокировано. Агентство знает, что кто-то копал.", effects: {enmity: 1}}
+    - label: Спросить у водителя
+      effects: {eddies: -1500, flag_set:kr_st_where: true}
+      text: "Водитель за деньги показывает адрес и просит тебя его не помнить."
+
+- id: kr_story_3
+  title: Гонка над рекой
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Гонщик
+  foe_faction: kr_racers
+  text: "Ночные гонщики знают маршрут кортежа клиента. Они помогут, если ты выиграешь гонку над рекой Хан."
+  choices:
+    - label: Выиграть гонку
+      check: {stat: REF, skill: driving, dv: 15}
+      success: {text: "Финиш на полкорпуса впереди. Гонщики рисуют тебе маршрут и время кортежа.", effects: {street_cred: 2, flag_set:kr_st_racers: true}}
+      fail: {text: "Ты проигрываешь и машину. Гонщики смеются, но маршрут дают из жалости.", effects: {eddies: -3000, flag_set:kr_st_racers: true}}
+    - label: Отобрать маршрут силой
+      violent: true
+      effects: {start_combat: 3, flag_set:kr_st_racers: true}
+      text: "Гонщики не любят проигрывать вне трассы."
+
+- id: kr_story_4
+  title: Пентхаус
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Охранник кханпхэ
+  foe_faction: kr_kkangpae
+  text: "Пентхаус над Каннамом. Хана поёт для одного зрителя. Охрана кханпхэ у лифтов."
+  choices:
+    - label: Вытащить Хану
+      violent: true
+      effects: {start_combat: 4, humanity: 3, fame: 3, item_grant:baseball_bat: true}
+      text: "Охранник роняет биту. Ты подбираешь."
+    - label: Выкупить контракт
+      effects: {eddies: -15000, humanity: 3, fame: 2}
+      text: "Сын председателя продаёт контракт, как продал бы машину. Хана уезжает с тобой и через месяц выпускает песню про тебя."
+    - label: Слить видео в сеть
+      check: {stat: INT, skill: stealth, dv: 16}
+      success: {text: "Видео концерта для одного зрителя смотрит вся страна. Контракт аннулирован скандалом.", effects: {fame: 3, enmity: 2}}
+      fail: {text: "Видео перехватывают. Хану увозят за границу.", effects: {mood: -6}}
+
+# ======================================================================== Mumbai: the Bollywood debt
+
+- id: ind_story_1
+  title: Продюсер в беде
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Прия Капур рыдает театрально, но всерьёз. «Компания Д вложила в мой фильм деньги. Фильм провалился. Через неделю они заберут студию, а может, и меня»."
+  choices:
+    - label: Помочь Прие
+      effects: {flag_set:ind_st_in: true}
+      text: "Прия обещает тебе роль в следующем фильме. И процент."
+    - label: Предложить долю Компании Д
+      effects: {hook: 2, eddies: 3000}
+      text: "Компания Д ценит людей с инициативой. Прия больше не плачет при тебе."
+
+- id: ind_story_2
+  title: Хром из Дхарави
+  category: work
+  weight: 1
+  forced_only: true
+  text: "Раджу Бхай знает выход: на свалке хрома лежит партия списанных имплантов кинозвёзд. Коллекционеры заплатят миллион, если доказать подлинность."
+  choices:
+    - label: Проверить импланты
+      check: {stat: TECH, skill: tech, dv: 14}
+      success: {text: "Серийные номера сходятся. Это импланты трёх суперзвёзд. Цена растёт.", effects: {flag_set:ind_st_chrome: true, skill_xp:tech: 2}}
+      fail: {text: "Половина — подделки. Но вторая половина настоящая.", effects: {flag_set:ind_st_chrome: true}}
+    - label: Купить партию целиком
+      effects: {eddies: -4000, flag_set:ind_st_chrome: true}
+      text: "Раджу Бхай пересчитывает деньги и благословляет сделку."
+
+- id: ind_story_3
+  title: Армия Шивы
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Боец Армии Шивы
+  foe_faction: ind_shiv
+  text: "Армия Шивы узнаёт о сделке. Они считают, что хром со свалки Дхарави принадлежит жителям Дхарави, и окружают склад."
+  choices:
+    - label: Поделиться с районом
+      effects: {eddies: -3000, humanity: 3, flag_set:ind_st_share: true}
+      text: "Часть денег уходит на школу у железной дороги. Армия Шивы расходится с цветами."
+    - label: Прорваться
+      violent: true
+      effects: {start_combat: 3, enmity: 1}
+      text: "Толпа с дубинками и лозунгами."
+
+- id: ind_story_4
+  title: Премьера
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Аукцион хрома звёзд. Коллекционеры, кинозвёзды, люди Компании Д в белых костюмах. Деньги могут спасти студию Прии или купить тебе особняк в Бандре."
+  choices:
+    - label: Спасти студию
+      effects: {eddies: 5000, fame: 3, humanity: 2}
+      text: "Прия выкупает студию и снимает фильм о тебе. В фильме у тебя усы."
+    - label: Забрать всё себе
+      effects: {eddies: 20000, enmity: 2}
+      text: "Ты уезжаешь богаче, Прия — без студии, Компания Д — с вопросами."
+    - label: Отдать Компании Д
+      effects: {eddies: 8000, hook: 2, street_cred: 2}
+      text: "Компания Д довольна. Прия получает студию обратно. Под присмотром."
+
+# ======================================================================== Bangkok: the fight at Lumpinee
+
+- id: th_story_1
+  title: Договорной бой
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Сомчай вытирает перчатки. «Мой лучший боец, мальчишка Ной, должен проиграть в субботу в Лумпини. Крёстные отцы поставили на соперника. Если выиграет, его убьют. Если проиграет, он перестанет быть бойцом»."
+  choices:
+    - label: Помочь Ною
+      effects: {flag_set:th_st_in: true}
+      text: "Сомчай улыбается впервые за неделю."
+    - label: Поставить против Ноя
+      effects: {eddies: -2000, flag_set:th_st_bet: true}
+      text: "Ставка принята у крёстных отцов. Ты в деле."
+
+- id: th_story_2
+  title: Тренировка
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Ной тренируется ночью, в тайне. Он хочет выиграть. Неоновые кобры приходят в зал проверить, понимает ли он, что от него ждут."
+  choices:
+    - label: Спарринг с коброй
+      check: {stat: BODY, skill: melee, dv: 15}
+      success: {text: "Ты укладываешь кобру на ринг. Ной смотрит и учится. Кобры уходят задумчивыми.", effects: {street_cred: 2, skill_xp:melee: 2}}
+      fail: {text: "Кобра ломает тебе нос. Ной видит, что бывает с теми, кто идёт против.", effects: {hp: -12}}
+    - label: Предупредить кобр, что Ной проиграет
+      effects: {humanity: -2, eddies: 1000}
+      text: "Кобры довольны. Ной не смотрит тебе в глаза."
+
+- id: th_story_3
+  title: Стадион Лумпини
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Суббота. Стадион ревёт. Ной в углу ринга. В пятом раунде он может нокаутировать соперника. Он смотрит на тебя."
+  choices:
+    - label: Кивнуть — побеждай
+      effects: {flag_set:th_st_win: true, fame: 2, enmity: 2}
+      text: "Нокаут. Стадион в истерике. Крёстные отцы встают и уходят."
+    - label: Покачать головой
+      effects: {flag_set:th_st_lose: true, humanity: -3, eddies: 3000}
+      text: "Ной падает в пятом раунде. Ставка сыграла. Ной больше не выходит на ринг."
+
+- id: th_story_4
+  title: После боя
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Наёмник крёстного отца
+  foe_faction: th_jao_pho
+  text: "Ночью к залу Сомчая подъезжают машины крёстных отцов. Ной, Сомчай и ты внутри."
+  choices:
+    - label: Защищать зал
+      violent: true
+      effects: {start_combat: 4, street_cred: 3, humanity: 2}
+      text: "Ной надевает перчатки. Сомчай берёт палку для тренировок. Ты — всё, что есть."
+    - label: Откупиться
+      effects: {eddies: -8000, mood: 2}
+      text: "Крёстные отцы берут деньги и уезжают. Ной может выступать дальше, под их присмотром."
+    - label: Увезти Ноя из страны
+      check: {stat: REF, skill: driving, dv: 15}
+      success: {text: "Ночная трасса на юг, лодка до Малайзии. Через год Ной чемпион Азии и посвящает пояс тебе.", effects: {fame: 3, humanity: 3}}
+      fail: {text: "Вас перехватывают на трассе. Ной возвращается к крёстным отцам.", effects: {hp: -10, mood: -5}}
+
+# ======================================================================== Singapore: the perfect city
+
+- id: sg_story_1
+  title: Кит в казино
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Рэйчел Тан показывает досье: богатый игрок проигрывает миллионы каждую ночь. Казино подозревает, что он отмывает деньги Синдиката Лотоса. Ей нужны доказательства."
+  choices:
+    - label: Следить за китом
+      effects: {flag_set:sg_st_in: true, eddies: 1000}
+      text: "Рэйчел даёт пропуск в VIP-зал и предупреждает о камерах."
+    - label: Предупредить кита
+      effects: {eddies: 4000, hook: 1}
+      text: "Кит благодарит щедро. Синдикат запоминает полезного человека."
+
+- id: sg_story_2
+  title: VIP-зал
+  category: work
+  weight: 1
+  forced_only: true
+  text: "VIP-зал над заливом. Кит проигрывает и улыбается. Его фишки куплены через десятки подставных счетов."
+  choices:
+    - label: Сфотографировать фишки
+      check: {stat: COOL, skill: stealth, dv: 15}
+      success: {text: "Кадры с номерами фишек у тебя. Камеры казино смотрят в другую сторону.", effects: {flag_set:sg_st_proof: true}}
+      fail: {text: "Охрана замечает телефон. Тебя выводят и штрафуют по-сингапурски.", effects: {eddies: -3000, heat: 1}}
+    - label: Сыграть против кита
+      check: {stat: LUCK, skill: null, dv: 14}
+      success: {text: "Ты выигрываешь у кита крупную партию. Он злится и говорит лишнее.", effects: {eddies: 6000, flag_set:sg_st_proof: true}}
+      fail: {text: "Удача не на твоей стороне.", effects: {eddies: -4000}}
+
+- id: sg_story_3
+  title: Гейланг ночью
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Человек синдиката
+  foe_faction: sg_syndicate
+  text: "Дядюшка Тан шепчет над дурианами: Синдикат знает, что ты копаешь. Ростовщики А Лонг уже пишут краской на двери отеля Рэйчел."
+  choices:
+    - label: Встретить синдикат
+      violent: true
+      effects: {start_combat: 3, street_cred: 2}
+      text: "Ночной рынок пустеет за минуту."
+    - label: Спрятать Рэйчел
+      effects: {eddies: -2000, humanity: 2}
+      text: "Дядюшка Тан прячет её в подсобке среди дурианов. Запах ужасный, но безопасный."
+
+- id: sg_story_4
+  title: Идеальный город
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Доказательства готовы. Рэйчел может передать их полиции. Синдикат предлагает тебе выкуп. Казино предлагает молчание и долю."
+  choices:
+    - label: Передать полиции
+      effects: {fame: 3, eddies: 5000, enmity: 2}
+      text: "Синдикат Лотоса под следствием. Сингапур благодарит, сдержанно и по форме."
+    - label: Взять выкуп синдиката
+      effects: {eddies: 18000, humanity: -5, hook: 2}
+      text: "Доказательства сгорают в печи для дурианов. Рэйчел уходит из казино."
+    - label: Взять долю казино
+      effects: {eddies: 10000, hook: 1}
+      text: "Казино закрывает кита тихо, без полиции. Деньги остаются в системе."
+
+# ======================================================================== Dubai: desert gold
+
+- id: ae_story_1
+  title: Золото в песке
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Фатима взвешивает браслет и говорит, не поднимая глаз: «Соколы везут через залив золото, украденное у шейха. Шейх хочет его назад. Соколы хотят продать. Я хочу посредничать»."
+  choices:
+    - label: Стать посредником Фатимы
+      effects: {flag_set:ae_st_in: true}
+      text: "Фатима кивает. «Двадцать процентов. Не торгуйся»."
+    - label: Предупредить шейха
+      effects: {eddies: 3000, hook: 1}
+      text: "Халид аль-Мансури передаёт благодарность дяди. Благодарность тяжёлая, как золото."
+
+- id: ae_story_2
+  title: Дау у ручья
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Сокол
+  foe_faction: ae_falcons
+  text: "Причал дау в Дейре. Соколы разгружают ящики под брезентом. Капитан ждёт посредника и не любит сюрпризов."
+  choices:
+    - label: Договориться о цене
+      check: {stat: COOL, skill: persuasion, dv: 15}
+      success: {text: "Капитан соглашается продать золото через Фатиму. Сделка в пустыне через два дня.", effects: {flag_set:ae_st_deal: true}}
+      fail: {text: "Капитан решает, что ты от шейха.", effects: {start_combat: 3}}
+    - label: Забрать ящик
+      violent: true
+      effects: {start_combat: 3, eddies: 4000}
+      text: "Брезент летит в воду, капитан хватается за автомат."
+    - label: Уйти с причала
+      effects: {mood: -2}
+      text: "Ты разворачиваешься. Фатима найдёт другого посредника, а ты сохранишь голову."
+
+- id: ae_story_3
+  title: Сделка в дюнах
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Гвардеец шейха
+  foe_faction: ae_sheikh_guard
+  text: "Дюны за городом, полнолуние. Соколы с золотом, Фатима с деньгами и вдалеке огни внедорожников Гвардии шейха."
+  choices:
+    - label: Увести сделку от гвардии
+      check: {stat: REF, skill: driving, dv: 16}
+      success: {text: "Ты уводишь внедорожники гвардии в барханы. Сделка проходит без тебя, но с твоими процентами.", effects: {eddies: 8000, street_cred: 2}}
+      fail: {text: "Внедорожник переворачивается на гребне дюны.", effects: {hp: -15}}
+    - label: Встретить гвардию
+      violent: true
+      effects: {start_combat: 5, street_cred: 3}
+      text: "Экзоскелеты в лунном свете. Это не будет лёгкая ночь."
+
+- id: ae_story_4
+  title: Шейх
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Тебя приглашают на яхту шейха. Он знает всё и говорит спокойно: «Ты взял моё золото. Ты также показал, что мои люди слабы. Работай на меня или уезжай из страны навсегда»."
+  choices:
+    - label: Работать на шейха
+      effects: {eddies: 15000, hook: 3, status: 2, item_grant:sniper_rifle: true}
+      text: "Шейх дарит снайперскую винтовку из своей коллекции. Теперь ты его человек в городе."
+    - label: Вернуть долю и уехать с честью
+      effects: {eddies: -5000, fame: 2, humanity: 2}
+      text: "Шейх уважает жест. «Иншалла, ещё увидимся»."
+    - label: Отказаться
+      effects: {enmity: 3, flag_set:nem_spawn_ae_sheikh_guard: true}
+      text: "Шейх улыбается. Гвардия запоминает тебя в лицо."
+
+# ======================================================================== Almaty: apples and uranium
+
+- id: kz_story_1
+  title: Контейнер с яблоками
+  category: money
+  weight: 1
+  forced_only: true
+  text: "Аслан Ага поднимает тост. «На барахолку пришёл контейнер яблок из Китая. Яблоки светятся в темноте. Внутри не яблоки. Род Курай говорит, что контейнер их. Степные волки — что их. Я говорю, что контейнер стоит на моей земле»."
+  choices:
+    - label: Проверить контейнер
+      effects: {flag_set:kz_st_in: true}
+      text: "Аслан Ага даёт ключ и дозиметр. «На всякий случай»."
+    - label: Продать информацию Курай
+      effects: {eddies: 3000, hook: 1}
+      text: "Курай платит. Аслан Ага перестаёт наливать тебе за общим столом."
+
+- id: kz_story_2
+  title: Что светится
+  category: work
+  weight: 1
+  forced_only: true
+  text: "В ящиках с яблоками капсулы с обогащённым ураном для чёрного рынка реакторов. Дозиметр трещит."
+  choices:
+    - label: Сообщить Айгерим в министерство
+      effects: {flag_set:kz_st_gov: true, humanity: 2}
+      text: "Айгерим отвечает через минуту: «Не трогайте. Я приеду сама»."
+    - label: Вывезти капсулы
+      check: {stat: TECH, skill: tech, dv: 15}
+      success: {text: "Ты упаковываешь капсулы в свинцовые контейнеры и прячешь в горах.", effects: {flag_set:kz_st_hidden: true}}
+      fail: {text: "Капсула трескается. Ты уходишь с ожогами и дозой.", effects: {hp: -20, humanity: -2}}
+
+- id: kz_story_3
+  title: Степные волки
+  category: street
+  weight: 1
+  forced_only: true
+  foe: Степной волк
+  foe_faction: kz_steppe
+  text: "Степные волки окружают контейнер. Им не важно, что внутри, им важно, кто здесь хозяин."
+  choices:
+    - label: Драться
+      violent: true
+      effects: {start_combat: 3, street_cred: 2}
+      text: "Борцы с барахолки выходят на пустырь."
+    - label: Предложить им долю
+      effects: {eddies: -3000, mood: 1}
+      text: "Волки берут деньги и уходят. Им достаточно знать, что их уважают."
+    - label: Сказать, что внутри
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Волки бледнеют и уходят быстрее, чем пришли. Никто не хочет светиться в темноте.", effects: {street_cred: 1}}
+      fail: {text: "Волки не верят и проверяют сами. Дозиметр убеждает их через минуту.", effects: {hp: -6}}
+
+- id: kz_story_4
+  title: Горы над городом
+  category: money
+  weight: 1
+  forced_only: true
+  foe: Охранник рода Курай
+  foe_faction: kz_kurai
+  text: "Предгорья Медеу. Айгерим приезжает с людьми министерства, род Курай — со своими. Каждый хочет капсулы. Ты знаешь, где они."
+  choices:
+    - label: Отдать министерству
+      effects: {fame: 3, humanity: 3, eddies: 5000, enmity: 2}
+      text: "Капсулы увозят под конвоем. Айгерим жмёт руку. Род Курай уезжает в молчании."
+    - label: Продать роду Курай
+      effects: {eddies: 25000, humanity: -8, hook: 3}
+      text: "Курай платят щедро. Где-то в мире будет новый грязный реактор."
+    - label: Защитить капсулы до утра
+      violent: true
+      effects: {start_combat: 4, street_cred: 3, item_grant:hunting_carbine: true}
+      text: "Аслан Ага присылает старый карабин и бутылку коньяка. «Держись до рассвета»."

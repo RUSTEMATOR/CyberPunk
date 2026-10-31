@@ -1,0 +1,182 @@
+# Gangs against NCPD (owner request 25.10, services/control.py): scenes of a district held by gangs and of a police
+# regime. Queued by the press, never drawn at random. Gender-neutral text.
+
+- id: ctrl_raid_door
+  title: Облава в доме
+  category: ncpd
+  weight: 1
+  forced_only: true
+  foe_faction: ncpd
+  text: "В шесть утра в подъезде грохот: полицейский режим, NCPD проверяет квартиру за квартирой. В твою дверь стучат прикладом."
+  choices:
+    - label: Открыть и показать документы
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Сканер, вопросы, фото квартиры. Сержант машет рукой: чисто. Соседа снизу уводят в наручниках.", effects: {mood: -2}}
+      fail: {text: "Находят что-то, что им не нравится. Штраф и отметка в базе.", effects: {eddies: -800, heat: 2, mood: -3}}
+    - label: Заплатить сержанту
+      effects: {eddies: -1200}
+      text: "Конверт уходит в бронежилет. Твою дверь пропускают, как будто её нет."
+    - label: Встретить их стволом
+      violent: true
+      effects: {start_combat: 3, heat: 3}
+      text: "Ты стреляешь сквозь дверь первым."
+
+- id: ctrl_raid_checkpoint
+  title: Блокпост у дома
+  category: ncpd
+  weight: 1
+  forced_only: true
+  foe_faction: ncpd
+  text: "На углу твоей улицы бетонные блоки, турель и очередь. Без проверки домой не пройти."
+  choices:
+    - label: Встать в очередь
+      check: {stat: COOL, skill: persuasion, dv: 12}
+      success: {text: "Полтора часа под дождём, сканер пищит зелёным. Дома.", effects: {mood: -2}}
+      fail: {text: "Тебя отводят в сторону и держат до вечера без объяснений.", effects: {mood: -5, heat: 1}}
+    - label: Обойти дворами
+      check: {stat: REF, skill: stealth, dv: 13}
+      success: {text: "Через рынок и подвал прачечной. Турель смотрит в другую сторону.", effects: {}}
+      fail: {text: "Дрон замечает тебя на крыше гаража. Штраф и отметка.", effects: {eddies: -500, heat: 2}}
+    - label: Взломать турель
+      check: {stat: INT, skill: netrunning, dv: 14}
+      success: {text: "Турель зависает. В очереди кто-то аплодирует.", effects: {street_cred: 1, heat: 1}}
+      fail: {text: "Турель разворачивается к тебе. Пара пуль по ногам.", effects: {hp: -10, heat: 2}}
+
+- id: ctrl_raid_sweep
+  title: Зачистка квартала
+  category: ncpd
+  weight: 1
+  forced_only: true
+  foe_faction: ncpd
+  text: "NCPD гонит всех из квартала на площадь: «Руки на виду, лицом к стене». Ищут кого-то конкретного, бьют всех."
+  choices:
+    - label: Стоять у стены
+      effects: {mood: -4, hp: -3}
+      text: "Удар дубинкой для порядка, три часа на коленях. Потом отпускают."
+    - label: Помочь соседям уйти
+      check: {stat: COOL, skill: stealth, dv: 14}
+      success: {text: "Ты уводишь через подвал троих, в том числе старика с кислородом. Квартал это запомнит.", effects: {humanity: 2, street_cred: 2}}
+      fail: {text: "Вас ловят на выходе. Тебя записывают в зачинщики.", effects: {heat: 3, hp: -6}}
+    - label: Ударить первым
+      violent: true
+      effects: {start_combat: 3, heat: 3, street_cred: 1}
+      text: "Ты выдёргиваешь дубинку у ближайшего и бьёшь в визор."
+
+# owner request 25.10 (2): the megacorps instead of NCPD. The three police scenes above stay for the queues that
+# already hold them; the corps' own scenes:
+- id: ctrl_corp_scan
+  title: Пропускной режим
+  category: street
+  weight: 1
+  forced_only: true
+  foe_faction: militech
+  text: "На входе в твой квартал рамка, турель и охрана в корпоративной броне. «Жильцы — по биометрии. Остальные — по пропускам. Нет пропуска — нет квартала»."
+  choices:
+    - label: Пройти скан
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Скан пищит зелёным. Охранник даже не поднимает глаз. Ты дома, но теперь в их базе.", effects: {mood: -2}}
+      fail: {text: "Скан находит у тебя «несоответствие профиля». Штраф за нарушение режима, списание прямо со счёта.", effects: {eddies: -900, heat: 1, mood: -3}}
+    - label: Подделать пропуск
+      check: {stat: INT, skill: netrunning, dv: 14}
+      success: {text: "Ты переписываешь свой профиль в их системе. Теперь у тебя пропуск сотрудника.", effects: {street_cred: 1}}
+      fail: {text: "Система замечает правку. Тебя ведут в комнату без окон и держат до вечера.", effects: {heat: 2, hp: -5}}
+    - label: Прорваться
+      violent: true
+      effects: {start_combat: 3, heat: 2}
+      text: "Ты бьёшь первым, пока турель ещё перезагружается."
+
+- id: ctrl_corp_buyout
+  title: Выкуп дома
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Под дверью конверт с логотипом: корпорация выкупила дом и предлагает жильцам «компенсацию за добровольный переезд». На лестнице двое в костюмах ждут ответа."
+  choices:
+    - label: Торговаться
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Ты называешь сумму и пару статей закона. Они переглядываются и платят, чтобы ты остался тихим.", effects: {eddies: 1500, mood: 2}}
+      fail: {text: "Юрист улыбается и вписывает тебя в список «несговорчивых». Свет и вода теперь по расписанию.", effects: {mood: -5}}
+    - label: Подписать и забыть
+      effects: {eddies: 500, mood: -3}
+      text: "Пятьсот эдди и подпись. Дом теперь их, тебя терпят до конца месяца."
+    - label: Собрать жильцов
+      check: {stat: EMP, skill: persuasion, dv: 13}
+      success: {text: "Весь подъезд отказывается подписывать. Костюмы уходят. Пока.", effects: {humanity: 2, street_cred: 1}}
+      fail: {text: "Соседи боятся и подписывают. Ты остаёшься один против корпорации.", effects: {mood: -4}}
+
+- id: ctrl_corp_sweep
+  title: Зачистка квартала
+  category: street
+  weight: 1
+  forced_only: true
+  foe_faction: militech
+  text: "Охрана корпорации гонит людей из квартала: «Территория переходит под охраняемый периметр». Тех, кто спорит, кладут лицом в асфальт."
+  choices:
+    - label: Переждать в стороне
+      effects: {mood: -4}
+      text: "Ты смотришь, как выносят чужие вещи. Через час периметр закрыт, жизнь продолжается за забором."
+    - label: Вывести соседей
+      check: {stat: COOL, skill: stealth, dv: 14}
+      success: {text: "Через подвал ты выводишь семью с детьми. Квартал это запомнит.", effects: {humanity: 2, street_cred: 2}}
+      fail: {text: "Дрон замечает вас на выходе. Тебя записывают в зачинщики.", effects: {heat: 3, hp: -6}}
+    - label: Встать у них на пути
+      violent: true
+      effects: {start_combat: 3, street_cred: 1}
+      text: "Ты встаёшь между охраной и стариком с сумками."
+
+- id: ctrl_gang_tribute
+  title: Дань
+  category: street
+  weight: 1
+  forced_only: true
+  text: "У подъезда трое с нашивками местной банды. «Район теперь наш. С каждого жильца — дань. С тебя тоже»."
+  choices:
+    - label: Заплатить
+      effects: {eddies: -700, mood: -2}
+      text: "Они пересчитывают эдди и хлопают по плечу: «Теперь ты под защитой». От кого — не уточняют."
+    - label: Отказаться
+      violent: true
+      effects: {start_combat: 3}
+      text: "«Нет». Первый уже достаёт нож."
+    - label: Договориться
+      check: {stat: COOL, skill: persuasion, dv: 14}
+      success: {text: "Ты называешь пару имён и пару цифр. Они решают, что с тебя выгоднее не брать.", effects: {street_cred: 1}}
+      fail: {text: "Имена не впечатлили. Платишь вдвое за наглость.", effects: {eddies: -1400}}
+
+- id: ctrl_gang_recruit
+  title: Вербовка
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Главарь местной банды ловит тебя у ларька: «Нам нужны люди вроде тебя. Либо ты с нами, либо ты на нашей улице»."
+  choices:
+    - label: Вежливо отказаться
+      check: {stat: COOL, skill: persuasion, dv: 13}
+      success: {text: "Он кивает: «Уважаю». И уходит. Пока.", effects: {}}
+      fail: {text: "Он не любит отказов. Тебе разбивают витрину любимого бара и ставят счётчик.", effects: {mood: -4, eddies: -400}}
+    - label: Сделать для них одно дело
+      effects: {eddies: 900, humanity: -2, heat: 1}
+      text: "Одна посылка, один адрес. Деньги чистые, совесть нет."
+    - label: Ответить кулаком
+      violent: true
+      effects: {start_combat: 3, street_cred: 1}
+      text: "Он не успевает договорить."
+
+- id: ctrl_gang_block
+  title: Перекрытая улица
+  category: street
+  weight: 1
+  forced_only: true
+  text: "Банда перегородила улицу горящими покрышками. Своих пропускают, чужих обыскивают, а потом решают."
+  choices:
+    - label: Ждать, пока уйдут
+      effects: {mood: -3}
+      text: "Ночь в баре на углу. Утром покрышки догорели, а у соседнего магазина нет витрин."
+    - label: Пройти напролом
+      violent: true
+      effects: {start_combat: 3}
+      text: "Ты идёшь прямо на огонь. Им это не нравится."
+    - label: Пройти крышами
+      check: {stat: REF, skill: stealth, dv: 13}
+      success: {text: "Крыши, пожарные лестницы, дом. Снизу орут, но поздно.", effects: {}}
+      fail: {text: "Ржавая лестница ломается. Ты падаешь им прямо под ноги.", effects: {hp: -8, eddies: -500}}

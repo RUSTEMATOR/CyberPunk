@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru" class="t-neon">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0B0A12">
+<title>Night City Life</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="stylesheet" href="/static/fonts.css">
+<link rel="stylesheet" href="/static/vendor/augmented-ui.min.css">
+<link rel="stylesheet" href="/static/app.css">
+<link rel="stylesheet" href="/static/chat.css">
+<link rel="stylesheet" href="/static/living.css">
+<link rel="stylesheet" href="/static/fx.css">
+<link rel="stylesheet" href="/static/glass.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <span class="rep" id="rep" hidden></span>
+    <div class="who">
+      <span class="name" id="name">Night City Life</span>
+      <span class="sub" id="sub"></span>
+    </div>
+    <span class="num cash" id="cash" hidden></span>
+    <span class="num ap" id="ap" hidden></span>
+    <button type="button" class="pill" id="pill" data-state="wait" aria-live="polite"><span class="pill-text">Связь…</span></button>
+  </header>
+  <div class="banner" id="banner" hidden></div>
+  <div class="shell">
+    <nav class="tabs" id="tabs" aria-label="Навигация">
+      <button type="button" class="tab" data-tab="menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg><span>Главная</span></button>
+      <button type="button" class="tab" data-tab="city"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><path d="M8 2v16M16 6v16"/></svg><span>Город</span></button>
+      <button type="button" class="tab" data-tab="gigs"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>Заказы</span></button>
+      <button type="button" class="tab" data-tab="char"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Персонаж</span></button>
+      <button type="button" class="tab" data-tab="chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Беседа</span><b class="tab-badge" id="chatBadge" hidden></b></button>
+    </nav>
+    <main class="layout">
+      <section class="view screen" id="screen" aria-live="polite">
+        <div class="hero" id="hero" hidden></div>
+        <div class="hud hud-main" id="hudMain" hidden></div>
+        <h1 class="title" id="title" hidden></h1>
+        <div class="text" id="text"></div>
+        <form class="input" id="input" hidden>
+          <label for="reply" id="replyLabel">Ответь сообщением</label>
+          <div class="input-row">
+            <input id="reply" type="text" maxlength="1000" autocomplete="off" placeholder="Напиши здесь">
+            <button type="submit" class="send" aria-label="Отправить">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            </button>
+          </div>
+        </form>
+        <div class="rows" id="rows"></div>
+        <div class="sect" id="tilesHead" hidden><span>Разделы</span></div>
+        <nav class="tiles" id="tiles" aria-label="Разделы" hidden></nav>
+        <div class="rows" id="rowsAfter"></div>
+        <div class="dock" id="dock" hidden></div>
+      </section>
+      <section class="view char" id="charView" hidden aria-label="Персонаж">
+        <div class="seg" role="tablist" aria-label="Персонаж">
+          <button type="button" role="tab" data-seg="sum" aria-selected="true">Сводка</button>
+          <button type="button" role="tab" data-seg="body" aria-selected="false">Тело</button>
+          <button type="button" role="tab" data-seg="fight" aria-selected="false">Бой</button>
+        </div>
+        <div class="char-body" id="charBody"></div>
+      </section>
+      <section class="view chat-view" id="chatView" hidden aria-label="Беседа"></section>
+    </main>
+    <aside class="side">
+      <div class="side-char" id="sideChar" hidden></div>
+      <div class="sect cyan"><span>Журнал</span></div>
+      <ol class="journal" id="journal"></ol>
+      <p class="hint">Окно в группе показывает то же самое. Действие уходит один раз, даже если связь пропала: оно ждёт на телефоне и отправится само.</p>
+    </aside>
+  </div>
+</div>
+<script src="/static/vendor/fx-vendor.js" defer></script>
+<script src="/static/vendor/fx-vendor2.js" defer></script>
+<script src="/static/fx.js"></script>
+<script src="/static/fx2.js"></script>
+<script src="/static/feedback.js"></script>
+<script src="/static/living.js"></script>
+<script src="/static/chat.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

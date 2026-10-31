@@ -1,0 +1,181 @@
+- key: watson
+  name: Уотсон
+  description: "Тесные улицы, рынки и мегабашни. Жильё дешёвое, работу найти легко, нарваться на банду ещё легче."
+  danger: 3
+  fixer: regina_jones
+  gangs: [maelstrom, tyger_claws, iron_sights]
+  corps: [arasaka]
+  places: ["мегабашня H10", "клиника Виктора", "«Посмертие»", "бар «Лиззи»", "Tom's Diner"]
+  heat_mult: 1.0
+  image_tags: [watson, district]
+
+- key: westbrook
+  name: Вестбрук
+  description: "Джапантаун, неон, дорогие клубы и подпольные клиники. Спокойнее, чем в Уотсоне, но и платить за всё приходится больше."
+  danger: 2
+  fixer: wakako_okada
+  gangs: [tyger_claws, moxes, bozos]
+  corps: [arasaka]
+  places: ["Джапантаун", "Джиг-Джиг-стрит", "клиника Фингерса", "клуб «Облака»"]
+  heat_mult: 1.0
+  image_tags: [westbrook, district]
+
+- key: city_center
+  name: Сити-центр
+  description: "Стекло, охрана и чистые тротуары. Стреляют здесь редко, а любое нарушение полиция замечает сразу."
+  danger: 1
+  fixer: dino_dinovic
+  gangs: []
+  corps: [arasaka, militech, kang_tao]
+  places: ["Башня Arasaka", "Корпо-плаза"]
+  heat_mult: 2.0
+  image_tags: [city_center, district]
+
+- key: heywood
+  name: Хейвуд
+  description: "Жилые кварталы, церковные приюты и бары, где пьют до утра. Банды делят улицы по перекрёсткам."
+  danger: 3
+  fixer: padre
+  gangs: [valentinos, sixth_street, inquisitors]
+  corps: [militech]
+  places: [Уэллспрингс, Виста-дель-Рей, El Coyote Cojo]
+  heat_mult: 1.0
+  image_tags: [heywood, district]
+
+- key: santo_domingo
+  name: Санто-Доминго
+  description: "Заводы и пыльные кварталы на краю города. Жара, очереди у церквей и патрули банд на перекрёстках."
+  danger: 3
+  fixer: el_capitan
+  gangs: [sixth_street, scavengers, piranhas]   # scavengers keep the district populated before 6th Street appears (2026)
+  corps: []
+  places: [Арройо, Ранчо-Коронадо]
+  heat_mult: 1.0
+  image_tags: [santo_domingo, district]
+
+- key: pacifica
+  name: Пасифика
+  description: "Брошенный курорт: недостроенные отели, выбитые окна и стрельба по ночам. Один из самых опасных районов, и закона здесь нет."
+  danger: 4
+  fixer: mr_hands
+  gangs: [voodoo_boys, animals]
+  corps: [militech]
+  places: ["Гранд Империал Молл", "недостроенные отели"]
+  heat_mult: 1.0
+  image_tags: [pacifica, district]
+  available_from: 2062
+
+- key: dogtown
+  name: Догтаун
+  description: "Чёрный рынок, стадион и Баргест на каждом углу. Самый опасный район города: продают здесь всё, а возвратов не бывает."
+  danger: 5
+  fixer: mr_hands
+  gangs: [barghest]
+  corps: []
+  places: ["чёрный рынок", "стадион"]
+  heat_mult: 1.0
+  image_tags: [dogtown, district]
+  available_from: 2070
+
+- key: badlands
+  name: Бэдлендс
+  description: "Пустыня за городом, свалки и караваны кочевников. Закон здесь ничего не стоит, а вода стоит дорого."
+  danger: 3
+  fixer: dakota_smith
+  gangs: [wraiths, aldecaldos]
+  corps: [petrochem]
+  places: [пустыня, свалки]
+  heat_mult: 1.0
+  image_tags: [badlands, district]
+
+# -- more of the city (owner request: «в городе мало районов») -----------------------------------------------------------
+# Original quarters next to the canon ones. No end year: a district never closes under a player who lives there.
+
+- key: northside
+  name: Нортсайд
+  description: "Промзона на севере Уотсона: литейные цеха, склады и клубы, где хром ставят прямо у барной стойки. Работы много, здоровья на неё не хватает."
+  danger: 4
+  fixer: big_mama_zhu
+  gangs: [maelstrom, scavengers, iron_sights]
+  corps: [arasaka, petrochem]
+  places: ["литейный цех «Всё для фронта»", "клуб «Тотентанц»", "склады у железки", "свалка роботов"]
+  heat_mult: 1.0
+  image_tags: [northside, district]
+
+- key: waterfront
+  name: Портовый район
+  description: "Контейнерный терминал, пирсы и рыбный рынок. Всё, что приходит в город морем, проходит через чьи-то руки здесь. И часть остаётся."
+  danger: 3
+  fixer: captain_rook
+  gangs: [tyger_claws, scavengers, bozos]
+  corps: [arasaka, militech]
+  places: ["пирс 13", "контейнерный терминал", "рыбный рынок", "сухой док"]
+  heat_mult: 1.0
+  image_tags: [waterfront, district]
+
+- key: little_europe
+  name: Маленькая Европа
+  description: "Кофейни, брусчатка и старые деньги эмигрантов. Здесь пьют вино, слушают оперу и решают вопросы через адвокатов, а не через дробовики. Почти всегда."
+  danger: 2
+  fixer: signora_valli
+  gangs: [bozos, inquisitors]
+  corps: [biotechnica, zetatech]
+  places: ["оперный театр", "Старый вокзал", "кафе «Вена»", "антикварный ряд"]
+  heat_mult: 1.2
+  image_tags: [little_europe, district]
+
+- key: north_oak
+  name: Норт-Оук
+  description: "Холмы, виллы за высокими заборами и частная охрана на каждом повороте. Тихо, дорого и очень внимательно к чужакам."
+  danger: 1
+  fixer: mister_blue
+  gangs: []
+  corps: [arasaka, biotechnica]
+  places: ["колумбарий Норт-Оук", "гольф-клуб", "виллы на холмах", "частная клиника «Лотос»"]
+  heat_mult: 1.5
+  image_tags: [north_oak, district]
+
+- key: the_glen
+  name: Глен
+  description: "Мэрия, суды и штаб NCPD, а через две улицы — лоурайдеры и уличные тако. Здесь власть рядом, и поэтому все ведут себя чуть приличнее."
+  danger: 2
+  fixer: judge_ortega
+  gangs: [valentinos, inquisitors]
+  corps: [ncpd, militech]
+  places: ["мэрия", "штаб NCPD", "Дворец правосудия", "рынок на Глен-авеню"]
+  heat_mult: 1.5
+  image_tags: [the_glen, district]
+
+- key: combat_zone
+  name: Боевая зона
+  description: "Кварталы, от которых отказался город: полиция не приезжает, свет дают банды, вода по расписанию. Здесь выживает тот, кто стреляет первым."
+  danger: 5
+  fixer: one_eyed_sam
+  gangs: [scavengers, iron_sights, inquisitors, wraiths]
+  corps: []
+  places: ["Ржавый пояс", "арена в бывшем кинотеатре", "рынок на крышах", "сгоревшая больница"]
+  heat_mult: 0.7
+  image_tags: [combat_zone, district]
+
+- key: university
+  name: Университетский район
+  description: "Кампус, дешёвые общаги, круглосуточные лаборатории и студенты, которые продают свои нейроданные ради стипендии. Учиться здесь легче, чем где-либо."
+  danger: 2
+  fixer: professor_kane
+  gangs: [bozos, inquisitors]
+  corps: [zetatech, biotechnica]
+  places: ["кампус NCU", "общежитие «Улей»", "лаборатория нейросетей", "кафе «Синтаксис»"]
+  heat_mult: 1.0
+  image_tags: [university, district]
+
+- key: hot_zone
+  name: Горячая зона
+  description: "Кварталы вокруг воронки 2023 года. Радиация, мёртвые башни и мародёры, а по краям корпорации годами строят то, что никак не достроят."
+  danger: 5
+  fixer: geiger
+  gangs: [scavengers, wraiths, piranhas]
+  corps: [militech]
+  places: ["воронка", "мёртвая башня Arasaka", "дозиметрические посты", "стройка Militech"]
+  heat_mult: 0.8
+  image_tags: [hot_zone, district]
+  available_from: 2023

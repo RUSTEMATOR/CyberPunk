@@ -1,0 +1,845 @@
+# Gang archetypes: Maelstrom, Tyger Claws, 6th Street, Valentinos, Voodoo Boys, Moxes, Animals, Barghest.
+# Periods: early (2020-2029, crude chrome from cyberware_early.yaml), mid (2030-2059, 2030-level chrome),
+# late (2060 onward, open-ended; 2045+ chrome). Open-ended late windows keep the gangs alive after 2077.
+# Hard refs (weapon, armor, cyberware, quickhacks) must cover every year of the archetype: see CONTENT_GUIDE.md.
+# Danger 1-2 use street chrome, 3-4 mid, leaders carry the flexible implants.
+
+# ---------- Maelstrom ----------
+
+- key: maelstrom_ganger_early
+  name: "Боец Мальстрёма"
+  factions: [maelstrom]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: combat_knife
+  armor: light_vest
+  cyberware: [subdermal_armor, reinforced_tendons, pain_damper_early]
+  ai: brute
+  leader: false
+  available_from: 2020
+  available_until: 2029
+
+- key: maelstrom_berserker_early
+  name: "Берсерк Мальстрёма"
+  factions: [maelstrom]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: combat_knife
+  armor: kevlar_jacket
+  cyberware: [berserk_zetatech, adrenaline_pump, pain_damper_early]
+  ai: brute
+  leader: false
+  available_from: 2020
+  available_until: 2029
+
+- key: maelstrom_boss_early
+  name: "Бригадир Мальстрёма"
+  factions: [maelstrom]
+  danger: 2
+  attack: 12
+  defense: 16
+  weapon: heavy_pistol
+  armor: kevlar_jacket
+  cyberware: [kerenzikov, cyberarm_early, bone_lace_early, pain_damper_early]
+  ai: tactical
+  leader: true
+  available_from: 2020
+  available_until: 2029
+
+- key: maelstrom_chief_early
+  name: "Главарь Мальстрёма"
+  factions: [maelstrom]
+  danger: 3
+  attack: 13
+  defense: 21
+  weapon: null
+  armor: medium_armorjack
+  cyberware: [berserk_zetatech, bone_lace_early, adrenaline_pump, cyberarm_early]
+  ai: brute
+  leader: true
+  available_from: 2020
+  available_until: 2029
+
+- key: maelstrom_ganger_mid
+  name: "Громила Мальстрёма"
+  factions: [maelstrom]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: null
+  armor: light_vest
+  cyberware: [gorilla_arms, reinforced_tendons]
+  ai: brute
+  leader: false
+  available_from: 2030
+  available_until: 2059
+
+- key: maelstrom_berserker_mid
+  name: "Берсерк Мальстрёма"
+  factions: [maelstrom]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: null
+  armor: kevlar_jacket
+  cyberware: [berserk_zetatech, gorilla_arms, reinforced_skeleton]
+  ai: brute
+  leader: false
+  available_from: 2030
+  available_until: 2059
+
+- key: maelstrom_boss_mid
+  name: "Бригадир Мальстрёма"
+  factions: [maelstrom]
+  danger: 2
+  attack: 12
+  defense: 16
+  weapon: combat_knife
+  armor: kevlar_jacket
+  cyberware: [kerenzikov, gorilla_arms, reinforced_skeleton, pain_editor]
+  ai: tactical
+  leader: true
+  available_from: 2030
+  available_until: 2059
+
+- key: maelstrom_chief_mid
+  name: "Главарь Мальстрёма"
+  factions: [maelstrom]
+  danger: 3
+  attack: 13
+  defense: 21
+  weapon: null
+  armor: medium_armorjack
+  cyberware: [berserk_zetatech, gorilla_arms, reinforced_skeleton, subdermal_armor, pain_editor]
+  ai: brute
+  leader: true
+  available_from: 2030
+  available_until: 2059
+
+- key: maelstrom_ganger_late
+  name: "Громила Мальстрёма"
+  factions: [maelstrom]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: null
+  armor: light_vest
+  cyberware: [gorilla_arms, subdermal_armor, reinforced_tendons]
+  ai: brute
+  leader: false
+  available_from: 2060
+
+- key: maelstrom_berserker_late
+  name: "Берсерк Мальстрёма"
+  factions: [maelstrom]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: combat_knife
+  armor: kevlar_jacket
+  cyberware: [berserk_zetatech, gorilla_arms, adrenaline_pump, subdermal_armor]
+  ai: brute
+  leader: false
+  available_from: 2060
+
+- key: maelstrom_boss_late
+  name: "Бригадир Мальстрёма"
+  factions: [maelstrom]
+  danger: 2
+  attack: 12
+  defense: 16
+  weapon: combat_knife
+  armor: kevlar_jacket
+  cyberware: [berserk_militech, gorilla_arms, reinforced_skeleton, pain_editor, subdermal_armor]
+  ai: tactical
+  leader: true
+  available_from: 2060
+
+- key: maelstrom_chief_late
+  name: "Главарь Мальстрёма"
+  factions: [maelstrom]
+  danger: 3
+  attack: 13
+  defense: 21
+  weapon: null
+  armor: medium_armorjack
+  cyberware: [kerenzikov_boosted, gorilla_arms, reinforced_skeleton, subdermal_armor, dermal_laminate, pain_editor]
+  ai: tactical
+  leader: true
+  available_from: 2060
+
+# ---------- Tyger Claws ----------
+
+- key: tyger_claws_blade_early
+  name: "Боец Тигриных когтей"
+  factions: [tyger_claws]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: combat_knife
+  armor: light_vest
+  cyberware: [reinforced_tendons, subdermal_armor]
+  ai: brute
+  leader: false
+  available_from: 2020
+  available_until: 2029
+
+- key: tyger_claws_dancer_early
+  name: "Мечник Тигриных когтей"
+  factions: [tyger_claws]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: katana
+  armor: kevlar_jacket
+  cyberware: [kerenzikov, reinforced_tendons, cyberoptic_early]
+  ai: tactical
+  leader: false
+  available_from: 2020
+  available_until: 2029
+
+- key: tyger_claws_oyabun_early
+  name: "Бригадир Тигриных когтей"
+  factions: [tyger_claws]
+  danger: 2
+  attack: 12
+  defense: 16
+  weapon: katana
+  armor: kevlar_jacket
+  cyberware: [sandevistan_zetatech, wolver_blades, cyberoptic_early, subdermal_armor]
+  ai: tactical
+  leader: true
+  available_from: 2020
+  available_until: 2029
+
+- key: tyger_claws_captain_early
+  name: "Оябун Тигриных когтей"
+  factions: [tyger_claws]
+  danger: 3
+  attack: 13
+  defense: 21
+  weapon: katana
+  armor: medium_armorjack
+  cyberware: [sandevistan_zetatech, bone_lace_early, cyberoptic_early, subdermal_armor]
+  ai: tactical
+  leader: true
+  available_from: 2020
+  available_until: 2029
+
+- key: tyger_claws_blade_mid
+  name: "Клинок Тигриных когтей"
+  factions: [tyger_claws]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: null
+  armor: light_vest
+  cyberware: [mantis_blades, reinforced_tendons]
+  ai: brute
+  leader: false
+  available_from: 2030
+  available_until: 2059
+
+- key: tyger_claws_dancer_mid
+  name: "Мечник Тигриных когтей"
+  factions: [tyger_claws]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: katana
+  armor: kevlar_jacket
+  cyberware: [kerenzikov, kiroshi_optics, reinforced_tendons]
+  ai: tactical
+  leader: false
+  available_from: 2030
+  available_until: 2059
+
+- key: tyger_claws_oyabun_mid
+  name: "Бригадир Тигриных когтей"
+  factions: [tyger_claws]
+  danger: 2
+  attack: 12
+  defense: 16
+  weapon: katana
+  armor: kevlar_jacket
+  cyberware: [sandevistan_zetatech, mantis_blades, kiroshi_stalker, subdermal_armor]
+  ai: tactical
+  leader: true
+  available_from: 2030
+  available_until: 2059
+
+- key: tyger_claws_captain_mid
+  name: "Оябун Тигриных когтей"
+  factions: [tyger_claws]
+  danger: 3
+  attack: 13
+  defense: 21
+  weapon: katana
+  armor: medium_armorjack
+  cyberware: [sandevistan_zetatech, mantis_blades, kiroshi_hunter, reinforced_skeleton, pain_editor]
+  ai: tactical
+  leader: true
+  available_from: 2030
+  available_until: 2059
+
+- key: tyger_claws_blade_late
+  name: "Клинок Тигриных когтей"
+  factions: [tyger_claws]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: null
+  armor: kevlar_jacket
+  cyberware: [mantis_blades, reinforced_tendons, subdermal_armor]
+  ai: brute
+  leader: false
+  available_from: 2060
+
+- key: tyger_claws_dancer_late
+  name: "Мечник Тигриных когтей"
+  factions: [tyger_claws]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: katana
+  armor: kevlar_jacket
+  cyberware: [kerenzikov, lynx_paws, kiroshi_optics]
+  ai: tactical
+  leader: false
+  available_from: 2060
+
+- key: tyger_claws_oyabun_late
+  name: "Бригадир Тигриных когтей"
+  factions: [tyger_claws]
+  danger: 2
+  attack: 12
+  defense: 16
+  weapon: katana
+  armor: kevlar_jacket
+  cyberware: [sandevistan_dynalar, mantis_blades, kiroshi_predator, subdermal_armor, dermal_laminate]
+  ai: tactical
+  leader: true
+  available_from: 2060
+
+- key: tyger_claws_captain_late
+  name: "Оябун Тигриных когтей"
+  factions: [tyger_claws]
+  danger: 3
+  attack: 13
+  defense: 21
+  weapon: katana
+  armor: medium_armorjack
+  cyberware: [kerenzikov_boosted, mantis_blades, kiroshi_predator, reinforced_skeleton, tactical_processor, subdermal_armor]
+  ai: tactical
+  leader: true
+  available_from: 2060
+
+# ---------- 6th Street ----------
+
+- key: sixth_street_patrol_early
+  name: "Патрульный Шестой улицы"
+  factions: [sixth_street]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: pistol
+  armor: light_vest
+  cyberware: [subdermal_armor, biomonitor]
+  ai: coward
+  leader: false
+  available_from: 2026
+  available_until: 2029
+
+- key: sixth_street_veteran_early
+  name: "Ветеран Шестой улицы"
+  factions: [sixth_street]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: smg
+  armor: kevlar_jacket
+  cyberware: [boosted_reflexes_early, cyberoptic_early, smartgun_link_early]
+  ai: brute
+  leader: false
+  available_from: 2026
+  available_until: 2029
+
+- key: sixth_street_sergeant_early
+  name: "Сержант Шестой улицы"
+  factions: [sixth_street]
+  danger: 2
+  attack: 12
+  defense: 16
+  weapon: heavy_pistol
+  armor: kevlar_jacket
+  cyberware: [kerenzikov, cyberoptic_early, pain_damper_early, subdermal_armor]
+  ai: tactical
+  leader: true
+  available_from: 2026
+  available_until: 2029
+
+- key: sixth_street_lieutenant_early
+  name: "Лейтенант Шестой улицы"
+  factions: [sixth_street]
+  danger: 3
+  attack: 13
+  defense: 21
+  weapon: assault_rifle
+  armor: medium_armorjack
+  cyberware: [kerenzikov, bone_lace_early, cyberarm_early, smartgun_link_early]
+  ai: tactical
+  leader: true
+  available_from: 2026
+  available_until: 2029
+
+- key: sixth_street_patrol_mid
+  name: "Патрульный Шестой улицы"
+  factions: [sixth_street]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: pistol
+  armor: light_vest
+  cyberware: [subdermal_armor, reinforced_tendons]
+  ai: coward
+  leader: false
+  available_from: 2030
+  available_until: 2059
+
+- key: sixth_street_veteran_mid
+  name: "Ветеран Шестой улицы"
+  factions: [sixth_street]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: smg
+  armor: kevlar_jacket
+  cyberware: [kiroshi_optics, smartlink_gun, reflex_tuner]
+  ai: brute
+  leader: false
+  available_from: 2030
+  available_until: 2059
+
+- key: sixth_street_sergeant_mid
+  name: "Сержант Шестой улицы"
+  factions: [sixth_street]
+  danger: 2
+  attack: 12
+  defense: 16
+  weapon: assault_rifle
+  armor: kevlar_jacket
+  cyberware: [kerenzikov, kiroshi_hunter, smartlink_gun, subdermal_armor]
+  ai: tactical
+  leader: true
+  available_from: 2030
+  available_until: 2059
+
+- key: sixth_street_lieutenant_mid
+  name: "Лейтенант Шестой улицы"
+  factions: [sixth_street]
+  danger: 3
+  attack: 13
+  defense: 21
+  weapon: assault_rifle
+  armor: medium_armorjack
+  cyberware: [sandevistan_zetatech, kiroshi_stalker, reinforced_skeleton, smartlink_gun, subdermal_armor]
+  ai: tactical
+  leader: true
+  available_from: 2030
+  available_until: 2059
+
+- key: sixth_street_patrol_late
+  name: "Патрульный Шестой улицы"
+  factions: [sixth_street]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: pistol
+  armor: kevlar_jacket
+  cyberware: [subdermal_armor, dermal_laminate, reinforced_tendons]
+  ai: coward
+  leader: false
+  available_from: 2060
+
+- key: sixth_street_veteran_late
+  name: "Ветеран Шестой улицы"
+  factions: [sixth_street]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: smg
+  armor: kevlar_jacket
+  cyberware: [kiroshi_optics, subdermal_armor, reinforced_tendons]
+  ai: brute
+  leader: false
+  available_from: 2060
+
+- key: sixth_street_sergeant_late
+  name: "Сержант Шестой улицы"
+  factions: [sixth_street]
+  danger: 2
+  attack: 12
+  defense: 16
+  weapon: assault_rifle
+  armor: kevlar_jacket
+  cyberware: [kerenzikov_boosted, kiroshi_predator, smartlink_gun, subdermal_armor]
+  ai: tactical
+  leader: true
+  available_from: 2060
+
+- key: sixth_street_lieutenant_late
+  name: "Лейтенант Шестой улицы"
+  factions: [sixth_street]
+  danger: 3
+  attack: 13
+  defense: 21
+  weapon: assault_rifle
+  armor: medium_armorjack
+  cyberware: [sandevistan_dynalar, ballistic_coprocessor, reinforced_skeleton, subdermal_armor, dermal_laminate]
+  ai: tactical
+  leader: true
+  available_from: 2060
+
+# ---------- Valentinos ----------
+
+- key: valentinos_soldier_mid
+  name: "Боец Валентинос"
+  factions: [valentinos]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: pistol
+  armor: light_vest
+  cyberware: [subdermal_armor, reinforced_tendons]
+  ai: brute
+  leader: false
+  available_from: 2037
+  available_until: 2059
+
+- key: valentinos_shooter_mid
+  name: "Стрелок Валентинос"
+  factions: [valentinos]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: smg
+  armor: kevlar_jacket
+  cyberware: [kiroshi_optics, subdermal_armor, smartlink_gun]
+  ai: brute
+  leader: false
+  available_from: 2037
+  available_until: 2059
+
+- key: valentinos_capo_mid
+  name: "Капо Валентинос"
+  factions: [valentinos]
+  danger: 2
+  attack: 12
+  defense: 16
+  weapon: heavy_pistol
+  armor: kevlar_jacket
+  cyberware: [kerenzikov, kiroshi_stalker, synthskin_face, subdermal_armor]
+  ai: tactical
+  leader: true
+  available_from: 2037
+  available_until: 2059
+
+- key: valentinos_bodyguard_mid
+  name: "Телохранитель Валентинос"
+  factions: [valentinos]
+  danger: 3
+  attack: 13
+  defense: 21
+  weapon: shotgun
+  armor: medium_armorjack
+  cyberware: [reflex_tuner, kiroshi_hunter, reinforced_skeleton, smartlink_gun, subdermal_armor]
+  ai: tactical
+  leader: true
+  available_from: 2037
+  available_until: 2059
+
+- key: valentinos_soldier_late
+  name: "Боец Валентинос"
+  factions: [valentinos]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: pistol
+  armor: light_vest
+  cyberware: [subdermal_armor, biomonitor, reinforced_tendons]
+  ai: brute
+  leader: false
+  available_from: 2060
+
+- key: valentinos_shooter_late
+  name: "Стрелок Валентинос"
+  factions: [valentinos]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: smg
+  armor: kevlar_jacket
+  cyberware: [kiroshi_optics, subdermal_armor, dermal_laminate]
+  ai: brute
+  leader: false
+  available_from: 2060
+
+- key: valentinos_capo_late
+  name: "Капо Валентинос"
+  factions: [valentinos]
+  danger: 2
+  attack: 12
+  defense: 16
+  weapon: heavy_pistol
+  armor: kevlar_jacket
+  cyberware: [kerenzikov_boosted, kiroshi_predator, synthskin_face, subdermal_armor, dermal_laminate]
+  ai: tactical
+  leader: true
+  available_from: 2060
+
+- key: valentinos_bodyguard_late
+  name: "Телохранитель Валентинос"
+  factions: [valentinos]
+  danger: 3
+  attack: 13
+  defense: 21
+  weapon: assault_rifle
+  armor: medium_armorjack
+  cyberware: [sandevistan_dynalar, kiroshi_hunter, reinforced_skeleton, smartlink_gun, subdermal_armor]
+  ai: tactical
+  leader: true
+  available_from: 2060
+
+# ---------- Voodoo Boys ----------
+
+- key: voodoo_boys_runner
+  name: "Нетраннер Вудуистов"
+  factions: [voodoo_boys]
+  danger: 1
+  attack: 8
+  defense: 14
+  weapon: pistol
+  armor: light_vest
+  cyberware: [neural_link, cyberdeck_street_garage]
+  quickhacks: [short_circuit, distraction]
+  ai: netrunner
+  leader: false
+  available_from: 2062
+
+- key: voodoo_boys_dancer
+  name: "Громила Вудуистов"
+  factions: [voodoo_boys]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: null
+  armor: kevlar_jacket
+  cyberware: [gorilla_arms, subdermal_armor, reinforced_tendons]
+  ai: brute
+  leader: false
+  available_from: 2062
+
+- key: voodoo_boys_shaman
+  name: "Шаман Вудуистов"
+  factions: [voodoo_boys]
+  danger: 2
+  attack: 12
+  defense: 16
+  weapon: null
+  armor: kevlar_jacket
+  cyberware: [neural_link, cyberdeck_netdriver, cerberus_shield]
+  quickhacks: [overheat, reboot_optics]
+  ai: netrunner
+  leader: true
+  available_from: 2062
+
+- key: voodoo_boys_seer
+  name: "Провидец Вудуистов"
+  factions: [voodoo_boys]
+  danger: 3
+  attack: 13
+  defense: 21
+  weapon: null
+  armor: medium_armorjack
+  cyberware: [neural_link, cyberdeck_netdriver, cerberus_shield, kiroshi_predator]
+  quickhacks: [implant_drain, reboot_optics]
+  ai: netrunner
+  leader: true
+  available_from: 2062
+
+# ---------- Moxes ----------
+
+- key: moxes_bouncer
+  name: "Вышибала Шельм"
+  factions: [moxes]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: pistol
+  armor: light_vest
+  cyberware: [subdermal_armor, biomonitor, reinforced_tendons]
+  ai: coward
+  leader: false
+  available_from: 2067
+
+- key: moxes_guard
+  name: "Охранник Шельм"
+  factions: [moxes]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: smg
+  armor: kevlar_jacket
+  cyberware: [kiroshi_optics, subdermal_armor, dermal_laminate]
+  ai: brute
+  leader: false
+  available_from: 2067
+
+- key: moxes_manager
+  name: "Бригадир Шельм"
+  factions: [moxes]
+  danger: 2
+  attack: 12
+  defense: 16
+  weapon: smg
+  armor: kevlar_jacket
+  cyberware: [kerenzikov, synthskin_face, kiroshi_optics, subdermal_armor]
+  ai: tactical
+  leader: true
+  available_from: 2067
+
+- key: moxes_captain
+  name: "Главарь Шельм"
+  factions: [moxes]
+  danger: 3
+  attack: 13
+  defense: 21
+  weapon: heavy_pistol
+  armor: medium_armorjack
+  cyberware: [kerenzikov_boosted, dermal_laminate, subdermal_armor, biomonitor, kiroshi_hunter]
+  ai: tactical
+  leader: true
+  available_from: 2067
+
+# ---------- Animals ----------
+
+- key: animals_brawler
+  name: "Боец Животных"
+  factions: [animals]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: null
+  armor: light_vest
+  cyberware: [gorilla_arms, reinforced_tendons]
+  ai: brute
+  leader: false
+  available_from: 2070
+
+- key: animals_berserker
+  name: "Берсерк Животных"
+  factions: [animals]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: null
+  armor: kevlar_jacket
+  cyberware: [berserk_zetatech, gorilla_arms, subdermal_armor]
+  ai: brute
+  leader: false
+  available_from: 2070
+
+- key: animals_shooter
+  name: "Стрелок Животных"
+  factions: [animals]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: shotgun
+  armor: kevlar_jacket
+  cyberware: [kiroshi_optics, subdermal_armor, reinforced_tendons]
+  ai: brute
+  leader: false
+  available_from: 2070
+
+- key: animals_alpha
+  name: "Вожак Животных"
+  factions: [animals]
+  danger: 3
+  attack: 13
+  defense: 21
+  weapon: null
+  armor: medium_armorjack
+  cyberware: [berserk_militech, gorilla_arms, reinforced_skeleton, subdermal_armor]
+  ai: tactical
+  leader: true
+  available_from: 2070
+
+# ---------- Barghest ----------
+
+- key: barghest_hound
+  name: "Рядовой Баргеста"
+  factions: [barghest]
+  danger: 1
+  attack: 9
+  defense: 14
+  weapon: smg
+  armor: kevlar_jacket
+  cyberware: [subdermal_armor, reinforced_tendons, kiroshi_optics]
+  ai: coward
+  leader: false
+  available_from: 2070
+
+- key: barghest_handler
+  name: "Солдат Баргеста"
+  factions: [barghest]
+  danger: 2
+  attack: 11
+  defense: 15
+  weapon: assault_rifle
+  armor: kevlar_jacket
+  cyberware: [subdermal_armor, dermal_laminate, kiroshi_hunter, reflex_tuner]
+  ai: tactical
+  leader: false
+  available_from: 2070
+
+- key: barghest_gunner
+  name: "Штурмовик Баргеста"
+  factions: [barghest]
+  danger: 3
+  attack: 12
+  defense: 20
+  weapon: shotgun
+  armor: medium_armorjack
+  cyberware: [smartlink_gun, kiroshi_stalker, subdermal_armor]
+  ai: brute
+  leader: false
+  available_from: 2070
+
+- key: barghest_warden
+  name: "Сержант Баргеста"
+  factions: [barghest]
+  danger: 3
+  attack: 13
+  defense: 21
+  weapon: smg
+  armor: medium_armorjack
+  cyberware: [sandevistan_dynalar, kiroshi_predator, subdermal_armor, dermal_laminate, pain_editor]
+  ai: tactical
+  leader: true
+  available_from: 2070
+
+- key: barghest_huntmaster
+  name: "Командир Баргеста"
+  factions: [barghest]
+  danger: 4
+  attack: 16
+  defense: 20
+  weapon: assault_rifle
+  armor: heavy_armorjack
+  cyberware: [sandevistan_apogee, militech_eagle, subdermal_armor, dermal_ablative]
+  ai: tactical
+  leader: true
+  available_from: 2070

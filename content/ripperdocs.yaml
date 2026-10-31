@@ -1,0 +1,214 @@
+- key: viktor_vektor
+  name: Виктор Вектор
+  district: watson
+  description: "Лучший риппер Уотсона. Берёт честную цену, ставит без осложнений и прямо говорит, что с тобой не так."
+  price_mod: 1.0
+  complication_chance: 0.0
+  infection_chance: 0.0
+  scan_lie_chance: 0.0
+  underground: false
+  sells_software: true
+  available_from: 2070
+
+- key: fingers
+  name: Фингерс
+  district: westbrook
+  description: "Риппер из Вестбрука. Дешевле всех в районе, но сканер у него иногда врёт, а операции проходят не всегда гладко."
+  price_mod: 0.7
+  complication_chance: 0.2
+  infection_chance: 0.0
+  scan_lie_chance: 0.3
+  underground: false
+  sells_software: true
+  available_from: 2070
+
+- key: underground_watson
+  name: Подпольный риппер Уотсона
+  district: watson
+  description: "Клиника без вывески за прачечной. Очень дёшево, но осложнения и заражения здесь обычное дело."
+  price_mod: 0.5
+  complication_chance: 0.35
+  infection_chance: 0.25
+  scan_lie_chance: 0.0
+  underground: true
+
+- key: underground_westbrook
+  name: Подпольный риппер Вестбрука
+  district: westbrook
+  description: "Подвал под закрытой закусочной. Свет включают только на время операции, инструменты кипятят в тазу."
+  price_mod: 0.5
+  complication_chance: 0.35
+  infection_chance: 0.25
+  scan_lie_chance: 0.0
+  underground: true
+
+- key: underground_city_center
+  name: Подпольный риппер Сити-центра
+  district: city_center
+  description: "Бывший хирург корпоративной клиники. Оперирует по ночам в машине с тонированными стёклами и не спрашивает имён."
+  price_mod: 0.5
+  complication_chance: 0.35
+  infection_chance: 0.25
+  scan_lie_chance: 0.0
+  underground: true
+
+- key: underground_heywood
+  name: Подпольный риппер Хейвуда
+  district: heywood
+  description: "Принимает в бывшей исповедальне при церкви, за пожертвование. Святые на стенах смотрят, как льётся кровь."
+  price_mod: 0.5
+  complication_chance: 0.35
+  infection_chance: 0.25
+  scan_lie_chance: 0.0
+  underground: true
+
+- key: underground_santo_domingo
+  name: Подпольный риппер Санто-Доминго
+  district: santo_domingo
+  description: "Старик с набором отвёрток в гараже на окраине. Ставит хром за еду и пиво, долгов не записывает."
+  price_mod: 0.5
+  complication_chance: 0.35
+  infection_chance: 0.25
+  scan_lie_chance: 0.0
+  underground: true
+
+- key: underground_pacifica
+  name: Подпольный риппер Пасифики
+  district: pacifica
+  description: "Работает в недостроенном отеле, где весь свет от одного генератора. Оплата вперёд и только наличными."
+  price_mod: 0.5
+  complication_chance: 0.35
+  infection_chance: 0.25
+  scan_lie_chance: 0.0
+  underground: true
+  available_from: 2062
+
+- key: underground_dogtown
+  name: Подпольный риппер Догтауна
+  district: dogtown
+  description: "Клиника на чёрном рынке, между прилавком с хромом и ящиком с костями. Пациента, который не заплатил, отсюда не выпускают."
+  price_mod: 0.5
+  complication_chance: 0.35
+  infection_chance: 0.25
+  scan_lie_chance: 0.0
+  underground: true
+  available_from: 2070
+
+- key: underground_badlands
+  name: Подпольный риппер Бэдлендса
+  district: badlands
+  description: "Передвижная мастерская в фургоне каравана. Ставит всё, что работает от батареи, и не спрашивает, откуда деталь."
+  price_mod: 0.5
+  complication_chance: 0.35
+  infection_chance: 0.25
+  scan_lie_chance: 0.0
+  underground: true
+
+# Early-era ripperdocs (2013-2069): original characters, not canon. Viktor Vektor and Fingers work from 2070.
+- key: doc_hollis
+  name: Док Холлис
+  district: watson
+  description: "Клиника над лапшичной, лицензия на стене, в журнале чужие подписи. Ставит аккуратно, но каждый шов включает в счёт."
+  price_mod: 1.0
+  complication_chance: 0.1
+  infection_chance: 0.0
+  scan_lie_chance: 0.0
+  underground: false
+  sells_software: true
+  available_until: 2069
+
+- key: doc_tanaka
+  name: Док Танака
+  district: westbrook
+  description: "Старый хирург из японского квартала. Ставит дёшево и быстро, а потом долго извиняется. Сканер у него старый и иногда врёт."
+  price_mod: 0.8
+  complication_chance: 0.15
+  infection_chance: 0.0
+  scan_lie_chance: 0.1
+  underground: false
+  sells_software: true
+  available_until: 2069
+
+- key: gale_clinic
+  name: Клиника «Гейл и партнёры»
+  district: city_center
+  description: "Корпоративная клиника на тридцатом этаже. Стерильно, дорого, договор мелким шрифтом. Ошибок почти не бывает, вопросов тоже."
+  price_mod: 1.3
+  complication_chance: 0.02
+  infection_chance: 0.0
+  scan_lie_chance: 0.0
+  underground: false
+  sells_software: true
+  available_until: 2069
+
+# -- ripperdocs of the new districts (owner request: more districts) -----------------------------------------------------
+
+- key: doc_furnace
+  name: Риппер «Горн»
+  district: northside
+  description: "Мастерская при литейном цехе. Ставит военный хром прямо на сварочном столе. Наркоз — бутылка и песня."
+  price_mod: 0.7
+  complication_chance: 0.25
+  infection_chance: 0.15
+  scan_lie_chance: 0.1
+  underground: true
+
+- key: doc_pier
+  name: Плавучая клиника на пирсе 13
+  district: waterfront
+  description: "Клиника на старом катере. Импланты прямо с контейнеров, иногда ещё в заводской смазке. Качает на волнах во время операции."
+  price_mod: 0.8
+  complication_chance: 0.2
+  infection_chance: 0.1
+
+- key: clinic_vienna
+  name: Клиника доктора Штайнера
+  district: little_europe
+  description: "Частная клиника в старинном особняке: мрамор, классическая музыка и счёт с тремя нулями. Зато руки у доктора не дрожат."
+  price_mod: 1.3
+  complication_chance: 0.04
+  infection_chance: 0.01
+
+- key: clinic_lotus
+  name: Клиника «Лотус»
+  district: north_oak
+  description: "Корпоративная клиника для своих. Импланты ставят во сне, а будят с бокалом шампанского и счётом на подносе."
+  price_mod: 1.6
+  complication_chance: 0.02
+  infection_chance: 0.0
+
+- key: doc_glen_morgue
+  name: Риппер из морга
+  district: the_glen
+  description: "Патологоанатом городского морга подрабатывает по ночам. Хром в основном снят с тех, кому он больше не нужен."
+  price_mod: 0.6
+  complication_chance: 0.3
+  infection_chance: 0.2
+  underground: true
+
+- key: doc_combat_zone
+  name: Мясник Боевой зоны
+  district: combat_zone
+  description: "Операционная в бывшем кинотеатре, свет от генератора. Ставит что угодно за что угодно. Выживают не все, но выжившие возвращаются."
+  price_mod: 0.4
+  complication_chance: 0.4
+  infection_chance: 0.3
+  underground: true
+
+- key: clinic_university
+  name: Учебная клиника NCU
+  district: university
+  description: "Студенты-медики оперируют под присмотром профессора. Дёшево, старательно и очень медленно."
+  price_mod: 0.7
+  complication_chance: 0.15
+  infection_chance: 0.05
+
+- key: doc_geiger_tent
+  name: Палатка ликвидаторов
+  district: hot_zone
+  description: "Военная палатка с пломбированными ящиками хрома, найденного в руинах. Перед операцией меряют фон, после — тоже."
+  price_mod: 0.5
+  complication_chance: 0.3
+  infection_chance: 0.2
+  underground: true
+  available_from: 2023

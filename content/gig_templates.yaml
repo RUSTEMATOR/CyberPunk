@@ -1,0 +1,585 @@
+- key: data_theft
+  type: hack
+  titles: ["Слить данные {target_gen}", "Шард из сейфа {target_gen}"]
+  targets: [corp, gang]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: BODY, skill: melee}]
+    quiet: [{stat: REF, skill: stealth}, {stat: INT, skill: netrunning}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: COOL, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: ice_breach
+  type: hack
+  titles: ["Взломать сеть {target_gen}", "Дрон над складом {target_gen}", "Ослепить камеры {target_gen}"]
+  targets: [corp, gang]
+  approaches:
+    loud:  [{stat: BODY, skill: melee}, {stat: COOL, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: INT, skill: netrunning}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: package_drop
+  type: delivery
+  titles: ["Посылка мимо постов {target_gen}", "Пакет под носом у {target_gen}", "Ночная доставка в обход {target_gen}"]
+  targets: [corp, gang]
+  approaches:
+    loud:  [{stat: REF, skill: driving}, {stat: COOL, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: COOL, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: contraband_run
+  type: delivery
+  titles: ["Чёрный груз мимо {target_gen}", "Контрабанда по улицам {target_gen}"]
+  targets: [gang]
+  tiers: [1, 2, 3]
+  approaches:
+    loud:  [{stat: REF, skill: driving}, {stat: BODY, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: tech}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: TECH, skill: tech}, {stat: INT, skill: netrunning}]
+
+- key: street_heist
+  type: theft
+  titles: ["Ограбить {target_acc}", "Вынести склад {target_gen}", "Взять кассу {target_gen}"]
+  targets: [corp, gang]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: COOL, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: INT, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: car_lift
+  type: theft
+  titles: ["Угнать машину {target_gen}", "Тачка из гаража {target_gen}"]
+  targets: [corp, gang]
+  approaches:
+    loud:  [{stat: REF, skill: driving}, {stat: BODY, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: tech}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: TECH, skill: tech}, {stat: INT, skill: netrunning}]
+
+- key: street_hit
+  type: elimination
+  titles: ["Убрать человека {target_gen}", "Тихо снять бойца {target_gen}", "Ликвидировать главаря {target_gen}"]
+  targets: [gang]
+  tiers: [1, 2, 3, 4]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: BODY, skill: melee}]
+    quiet: [{stat: REF, skill: stealth}, {stat: REF, skill: firearms}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: exec_hit
+  type: elimination
+  titles: ["Голова менеджера {target_gen}", "Тихий уход директора {target_gen}"]
+  targets: [corp]
+  tiers: [3, 4, 5]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: COOL, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: INT, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: vip_escort
+  type: escort
+  titles: ["Провести клиента мимо {target_gen}", "До порта в обход {target_gen}"]
+  targets: [corp, gang]
+  approaches:
+    loud:  [{stat: BODY, skill: firearms}, {stat: REF, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: COOL, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: TECH, skill: tech}, {stat: INT, skill: netrunning}]
+
+- key: ride_along
+  type: escort
+  titles: ["Довезти живым мимо {target_gen}", "Эскорт под огнём {target_gen}"]
+  targets: [corp, gang]
+  tiers: [1, 2, 3]
+  approaches:
+    loud:  [{stat: REF, skill: driving}, {stat: BODY, skill: firearms}]
+    quiet: [{stat: REF, skill: driving}, {stat: REF, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: TECH, skill: tech}, {stat: INT, skill: netrunning}]
+
+- key: psycho_hunt
+  type: cyberpsycho
+  titles: ["Охота на киберпсиха у {target_gen}", "Сорвался боец {target_gen}", "Киберпсих на территории {target_gen}"]
+  targets: [gang, corp]
+  tiers: [3, 4, 5]
+  approaches:
+    loud:  [{stat: BODY, skill: firearms}, {stat: REF, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: INT, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: psycho_cleanup
+  type: cyberpsycho
+  titles: ["Зачистка на территории {target_gen}", "Киберпсих в рядах {target_gen}"]
+  targets: [gang]
+  tiers: [3, 4, 5]
+  approaches:
+    loud:  [{stat: BODY, skill: melee}, {stat: REF, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: INT, skill: medicine}]
+    talk:  [{stat: EMP, skill: persuasion}, {stat: COOL, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: runaway_find
+  type: missing
+  titles: ["Найти беглеца раньше {target_gen}", "Беглец из {target_gen}"]
+  targets: [corp, gang]
+  approaches:
+    loud:  [{stat: COOL, skill: firearms}, {stat: BODY, skill: melee}]
+    quiet: [{stat: REF, skill: stealth}, {stat: INT, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: lost_contact
+  type: missing
+  titles: ["Пропал контакт у {target_gen}", "Найти пропавшего у {target_gen}"]
+  targets: [gang]
+  tiers: [1, 2, 3]
+  approaches:
+    loud:  [{stat: REF, skill: driving}, {stat: COOL, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: INT, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+# -- more gigs (owner request): early chrome, rides, drugs, corp intrigue, rescue --------------------------------------
+
+- key: prototype_grab
+  type: theft
+  titles: ["Прототип из лаборатории {target_gen}", "Украсть опытный имплант {target_gen}", "Чертежи нового хрома {target_gen}"]
+  targets: [corp]
+  tiers: [2, 3, 4, 5]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: BODY, skill: melee}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: tech}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: INT, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: getaway_wheel
+  type: escort
+  titles: ["Водитель для налёта на {target_acc}", "Увезти команду от {target_gen}", "Три минуты с мотором у {target_gen}"]
+  targets: [corp, gang]
+  tiers: [1, 2, 3, 4]
+  approaches:
+    loud:  [{stat: REF, skill: driving}, {stat: REF, skill: firearms}]
+    quiet: [{stat: REF, skill: driving}, {stat: COOL, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: REF, skill: driving}]
+    hack:  [{stat: TECH, skill: tech}, {stat: REF, skill: driving}]
+
+- key: car_to_order
+  type: theft
+  titles: ["Тачка на заказ из гаража {target_gen}", "Спорткар из-под носа {target_gen}", "Броневик {target_gen} — в разбор"]
+  targets: [corp, gang]
+  tiers: [1, 2, 3]
+  approaches:
+    loud:  [{stat: REF, skill: driving}, {stat: BODY, skill: melee}]
+    quiet: [{stat: TECH, skill: tech}, {stat: REF, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: TECH, skill: tech}, {stat: INT, skill: netrunning}]
+
+- key: lab_raid
+  type: theft
+  titles: ["Подпольная лаборатория {target_gen}", "Сжечь склад синтокса {target_gen}", "Партия «Блеска» {target_gen}"]
+  targets: [gang]
+  tiers: [1, 2, 3, 4]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: BODY, skill: melee}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: tech}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: blackmail_drop
+  type: delivery
+  titles: ["Компромат на менеджера {target_gen}", "Шантаж для {target_gen}", "Фото, которые {target} купит дорого"]
+  targets: [corp]
+  tiers: [2, 3, 4]
+  approaches:
+    loud:  [{stat: BODY, skill: melee}, {stat: COOL, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: COOL, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: INT, skill: tech}]
+
+- key: hostage_rescue
+  type: escort
+  titles: ["Вытащить заложника у {target_gen}", "Выкупить пленного у {target_gen}", "Похищенный инженер в подвале {target_gen}"]
+  targets: [gang]
+  tiers: [2, 3, 4, 5]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: BODY, skill: melee}, {stat: REF, skill: driving}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: tech}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: protection_racket
+  type: elimination
+  titles: ["Проучить сборщиков дани {target_gen}", "Выгнать {target_acc} с рынка", "Разогнать точку {target_gen}"]
+  targets: [gang]
+  tiers: [1, 2, 3]
+  approaches:
+    loud:  [{stat: BODY, skill: melee}, {stat: REF, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: BODY, skill: melee}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: BODY, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: med_delivery
+  type: delivery
+  titles: ["Кровь для подпольной клиники в обход {target_gen}", "Холодильник с органами мимо {target_gen}", "Лекарства в карантинную зону мимо {target_gen}"]
+  targets: [corp, gang]
+  tiers: [1, 2, 3]
+  approaches:
+    loud:  [{stat: REF, skill: driving}, {stat: COOL, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: medicine}]
+    talk:  [{stat: EMP, skill: persuasion}, {stat: COOL, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: medicine}]
+
+- key: defector_extract
+  type: escort
+  titles: ["Вывезти перебежчика из {target_gen}", "Учёный хочет уйти от {target_gen}", "Инженер {target_gen} меняет хозяина"]
+  targets: [corp]
+  tiers: [3, 4, 5]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: REF, skill: driving}, {stat: BODY, skill: melee}]
+    quiet: [{stat: REF, skill: stealth}, {stat: COOL, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: sabotage_line
+  type: hack
+  titles: ["Сорвать запуск у {target_gen}", "Испортить партию хрома {target_gen}", "Вирус на конвейер {target_gen}"]
+  targets: [corp]
+  tiers: [2, 3, 4]
+  approaches:
+    loud:  [{stat: BODY, skill: melee}, {stat: TECH, skill: tech}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: tech}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: INT, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: INT, skill: netrunning}]
+
+- key: debt_collection
+  type: missing
+  titles: ["Найти должника {target_gen}", "Вернуть беглого бухгалтера {target_gen}", "Где прячется кассир {target_gen}"]
+  targets: [corp, gang]
+  tiers: [1, 2, 3]
+  approaches:
+    loud:  [{stat: BODY, skill: melee}, {stat: REF, skill: driving}]
+    quiet: [{stat: REF, skill: stealth}, {stat: INT, skill: stealth}]
+    talk:  [{stat: EMP, skill: persuasion}, {stat: COOL, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: INT, skill: tech}]
+
+- key: street_race_fix
+  type: delivery
+  titles: ["Подставная гонка против {target_gen}", "Слить заезд, на который поставили {target}", "Обогнать курьеров {target_gen}"]
+  targets: [gang]
+  tiers: [1, 2, 3]
+  approaches:
+    loud:  [{stat: REF, skill: driving}, {stat: REF, skill: driving}]
+    quiet: [{stat: TECH, skill: tech}, {stat: REF, skill: driving}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: REF, skill: driving}]
+    hack:  [{stat: TECH, skill: tech}, {stat: INT, skill: netrunning}]
+
+- key: chrome_repo
+  type: theft
+  titles: ["Вернуть неоплаченный хром у бойца {target_gen}", "Изъять импланты за долги у {target_gen}"]
+  targets: [gang]
+  tiers: [2, 3, 4]
+  approaches:
+    loud:  [{stat: BODY, skill: melee}, {stat: REF, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: medicine}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+  available_from: 2013
+
+- key: war_salvage
+  type: theft
+  titles: ["Трофеи Корпоративной войны со склада {target_gen}", "Списанный армейский хром у {target_gen}"]
+  targets: [corp, gang]
+  tiers: [2, 3, 4]
+  available_from: 2022
+  available_until: 2049
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: BODY, skill: melee}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: tech}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: TECH, skill: tech}, {stat: INT, skill: netrunning}]
+
+- key: braindance_leak
+  type: hack
+  titles: ["Слить брейнданс-запись {target_gen}", "Украсть воспоминания свидетеля у {target_gen}"]
+  targets: [corp, gang]
+  tiers: [2, 3, 4]
+  approaches:
+    loud:  [{stat: BODY, skill: melee}, {stat: REF, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: tech}]
+    talk:  [{stat: EMP, skill: persuasion}, {stat: COOL, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: bodyguard_night
+  type: escort
+  titles: ["Охранять клиента от {target_gen} на вечеринке", "Ночь с клиентом, за которым охотятся люди {target_gen}"]
+  targets: [corp, gang]
+  tiers: [1, 2, 3, 4]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: BODY, skill: melee}]
+    quiet: [{stat: COOL, skill: stealth}, {stat: REF, skill: driving}]
+    talk:  [{stat: EMP, skill: persuasion}, {stat: COOL, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+# -- batch 2 (owner request: many quests) -------------------------------------------------------------------------------
+
+- key: fake_auction
+  type: theft
+  titles: ["Подменить лот на аукционе {target_gen}", "Увести коллекционный хром с аукциона {target_gen}"]
+  targets: [corp]
+  tiers: [2, 3, 4]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: BODY, skill: melee}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: tech}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: dog_kidnap
+  type: missing
+  titles: ["Найти собаку, которую украли люди {target_gen}", "Вернуть боевого пса, уведённого у {target_gen}"]
+  targets: [gang]
+  tiers: [1, 2]
+  approaches:
+    loud:  [{stat: BODY, skill: melee}, {stat: REF, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: INT, skill: stealth}]
+    talk:  [{stat: EMP, skill: persuasion}, {stat: COOL, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: food_truck_escort
+  type: escort
+  titles: ["Провести фургон с лапшой через район {target_gen}", "Охранять уличную кухню от рэкета {target_gen}"]
+  targets: [gang]
+  tiers: [1, 2]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: BODY, skill: melee}]
+    quiet: [{stat: REF, skill: driving}, {stat: COOL, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: TECH, skill: tech}, {stat: INT, skill: netrunning}]
+
+- key: rival_hacker
+  type: hack
+  titles: ["Выкинуть нетраннера {target_gen} из чужой сети", "Перехватить взлом, который ведут люди {target_gen}"]
+  targets: [corp, gang]
+  tiers: [2, 3, 4, 5]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: BODY, skill: melee}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: tech}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: INT, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: medicine_run
+  type: delivery
+  titles: ["Довезти лекарства мимо блокпостов {target_gen}", "Доставить кровь для операции через территорию {target_gen}"]
+  targets: [gang, corp]
+  tiers: [1, 2, 3]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: REF, skill: driving}]
+    quiet: [{stat: REF, skill: stealth}, {stat: REF, skill: driving}]
+    talk:  [{stat: EMP, skill: persuasion}, {stat: COOL, skill: persuasion}]
+    hack:  [{stat: TECH, skill: tech}, {stat: INT, skill: netrunning}]
+
+- key: rooftop_sniper
+  type: elimination
+  titles: ["Снять снайпера {target_gen} с крыши", "Убрать стрелка {target_gen}, засевшего над рынком"]
+  targets: [gang]
+  tiers: [2, 3, 4]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: REF, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: BODY, skill: melee}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: prototype_car
+  type: theft
+  titles: ["Угнать прототип машины у {target_gen}", "Увести тестовый аэродин с площадки {target_gen}"]
+  targets: [corp]
+  tiers: [3, 4, 5]
+  approaches:
+    loud:  [{stat: REF, skill: driving}, {stat: REF, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: REF, skill: driving}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: TECH, skill: tech}, {stat: INT, skill: netrunning}]
+
+- key: witness_protect
+  type: escort
+  titles: ["Спрятать свидетеля против {target_gen}", "Довести до суда того, кто сдаёт {target_acc}"]
+  targets: [corp, gang]
+  tiers: [2, 3, 4]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: BODY, skill: melee}]
+    quiet: [{stat: COOL, skill: stealth}, {stat: REF, skill: driving}]
+    talk:  [{stat: EMP, skill: persuasion}, {stat: COOL, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: lost_netrunner
+  type: missing
+  titles: ["Найти нетраннера, пропавшего в сети {target_gen}", "Вытащить из подвала {target_gen} нетраннера в коме"]
+  targets: [corp, gang]
+  tiers: [2, 3, 4]
+  approaches:
+    loud:  [{stat: BODY, skill: melee}, {stat: REF, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: medicine}]
+    talk:  [{stat: EMP, skill: persuasion}, {stat: COOL, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: INT, skill: netrunning}]
+
+- key: chrome_frenzy_mall
+  type: cyberpsycho
+  titles: ["Остановить киберпсиха в торговом центре на земле {target_gen}", "Загнать в угол бойца {target_gen}, у которого сорвало крышу"]
+  targets: [gang, corp]
+  tiers: [3, 4, 5]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: BODY, skill: melee}, {stat: REF, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: tech}]
+    talk:  [{stat: EMP, skill: persuasion}, {stat: COOL, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: wedding_crash
+  type: elimination
+  titles: ["Сорвать свадьбу босса {target_gen}", "Испортить праздник {target_dat} так, чтобы запомнили"]
+  targets: [gang, corp]
+  tiers: [2, 3]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: BODY, skill: melee}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: tech}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: data_courier_rain
+  type: delivery
+  titles: ["Пронести шард с данными мимо охраны {target_gen}", "Отвезти чип в обход сканеров {target_gen}"]
+  targets: [corp]
+  tiers: [1, 2, 3, 4]
+  approaches:
+    loud:  [{stat: REF, skill: driving}, {stat: REF, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: COOL, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: TECH, skill: tech}, {stat: INT, skill: netrunning}]
+
+# -- contracts, tiers 6-9 (owner request 29.10): the money of those who already have millions ---------------------
+
+- key: board_coup
+  type: hack
+  titles: ["Развернуть совет директоров {target_gen}", "Тихий переворот в верхах {target_gen}", "Подменить решение совета {target_gen}"]
+  targets: [corp]
+  tiers: [6, 7, 8, 9]
+  approaches:
+    loud:  [{stat: COOL, skill: firearms}, {stat: BODY, skill: melee}, {stat: REF, skill: driving}]
+    quiet: [{stat: REF, skill: stealth}, {stat: INT, skill: stealth}, {stat: INT, skill: netrunning}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}, {stat: INT, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: exec_snatch
+  type: theft
+  titles: ["Вывезти топ-менеджера {target_gen} из-под охраны", "Живой груз: человек {target_gen}", "Забрать нужного человека у {target_gen}"]
+  targets: [corp, gang]
+  tiers: [6, 7, 8]
+  approaches:
+    loud:  [{stat: REF, skill: driving}, {stat: REF, skill: firearms}, {stat: BODY, skill: melee}]
+    quiet: [{stat: REF, skill: stealth}, {stat: COOL, skill: stealth}, {stat: TECH, skill: tech}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}, {stat: REF, skill: driving}]
+
+- key: vault_assault
+  type: theft
+  titles: ["Хранилище {target_gen}: вынести всё", "Налёт на резервы {target_gen}", "Сейф века у {target_gen}"]
+  targets: [corp]
+  tiers: [7, 8, 9]
+  approaches:
+    loud:  [{stat: BODY, skill: firearms}, {stat: REF, skill: firearms}, {stat: TECH, skill: tech}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: tech}, {stat: INT, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}, {stat: INT, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}, {stat: INT, skill: netrunning}]
+
+- key: warlord_hit
+  type: elimination
+  titles: ["Убрать главаря {target_gen}", "Голова вожака {target_gen}", "Конец династии {target_gen}"]
+  targets: [gang]
+  tiers: [6, 7, 8, 9]
+  approaches:
+    loud:  [{stat: BODY, skill: firearms}, {stat: REF, skill: firearms}, {stat: BODY, skill: melee}]
+    quiet: [{stat: REF, skill: stealth}, {stat: REF, skill: firearms}, {stat: COOL, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}, {stat: REF, skill: firearms}]
+
+- key: cfo_hit
+  type: elimination
+  titles: ["Устранить финансового директора {target_gen}", "Несчастный случай для человека {target_gen}", "Тихая ликвидация у {target_gen}"]
+  targets: [corp]
+  tiers: [7, 8, 9]
+  approaches:
+    loud:  [{stat: REF, skill: firearms}, {stat: BODY, skill: firearms}, {stat: REF, skill: driving}]
+    quiet: [{stat: REF, skill: stealth}, {stat: COOL, skill: stealth}, {stat: INT, skill: medicine}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: century_leak
+  type: hack
+  titles: ["Утечка века из недр {target_gen}", "Слить весь архив {target_gen}", "Чёрный ящик {target_gen} в открытую сеть"]
+  targets: [corp]
+  tiers: [8, 9]
+  approaches:
+    loud:  [{stat: BODY, skill: firearms}, {stat: TECH, skill: tech}, {stat: INT, skill: netrunning}]
+    quiet: [{stat: REF, skill: stealth}, {stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: INT, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: convoy_hijack
+  type: theft
+  titles: ["Перехватить броне-колонну {target_gen}", "Колонна {target_gen} не дойдёт", "Груз {target_gen} на трассе"]
+  targets: [corp, gang]
+  tiers: [6, 7, 8]
+  approaches:
+    loud:  [{stat: REF, skill: driving}, {stat: BODY, skill: firearms}, {stat: REF, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: tech}, {stat: REF, skill: driving}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}, {stat: REF, skill: driving}]
+
+- key: defector_airlift
+  type: escort
+  titles: ["Вывезти перебежчика из башни {target_gen}", "Эвакуация учёного от {target_gen}", "Воздушный коридор для беглеца {target_gen}"]
+  targets: [corp]
+  tiers: [6, 7, 8, 9]
+  approaches:
+    loud:  [{stat: REF, skill: driving}, {stat: REF, skill: firearms}, {stat: BODY, skill: firearms}]
+    quiet: [{stat: REF, skill: stealth}, {stat: COOL, skill: stealth}, {stat: REF, skill: driving}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}, {stat: EMP, skill: medicine}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}, {stat: REF, skill: driving}]
+
+- key: psycho_swarm
+  type: cyberpsycho
+  titles: ["Стая сорвавшихся у {target_gen}", "Партия бойцов {target_gen} вышла из-под контроля", "Чистка после срыва у {target_gen}"]
+  targets: [gang, corp]
+  tiers: [6, 7, 8, 9]
+  approaches:
+    loud:  [{stat: BODY, skill: firearms}, {stat: REF, skill: firearms}, {stat: BODY, skill: melee}]
+    quiet: [{stat: REF, skill: stealth}, {stat: INT, skill: stealth}, {stat: INT, skill: medicine}]
+    talk:  [{stat: EMP, skill: persuasion}, {stat: COOL, skill: persuasion}, {stat: EMP, skill: medicine}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}, {stat: INT, skill: medicine}]
+
+- key: black_site_find
+  type: missing
+  titles: ["Найти чёрную точку {target_gen}", "Пропал человек в закрытом секторе {target_gen}", "След ведёт на секретный объект {target_gen}"]
+  targets: [corp]
+  tiers: [7, 8, 9]
+  approaches:
+    loud:  [{stat: BODY, skill: firearms}, {stat: REF, skill: firearms}, {stat: REF, skill: driving}]
+    quiet: [{stat: REF, skill: stealth}, {stat: INT, skill: stealth}, {stat: COOL, skill: stealth}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: EMP, skill: persuasion}, {stat: INT, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: INT, skill: netrunning}, {stat: TECH, skill: tech}]
+
+- key: ai_shard_grab
+  type: theft
+  available_from: 2060
+  titles: ["Осколок ИИ из лаборатории {target_gen}", "Вынести спящий разум у {target_gen}", "Прототип сознания {target_gen}"]
+  targets: [corp]
+  tiers: [8, 9]
+  approaches:
+    loud:  [{stat: BODY, skill: firearms}, {stat: REF, skill: firearms}, {stat: TECH, skill: tech}]
+    quiet: [{stat: REF, skill: stealth}, {stat: TECH, skill: tech}, {stat: INT, skill: netrunning}]
+    talk:  [{stat: COOL, skill: persuasion}, {stat: INT, skill: persuasion}]
+    hack:  [{stat: INT, skill: netrunning}, {stat: TECH, skill: tech}, {stat: INT, skill: netrunning}]

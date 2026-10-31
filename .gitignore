@@ -11,8 +11,4 @@ nightcity-sync*.tar.gz
 nightcity-bot.zip
 .DS_Store
 .claude/
-unity/NightCity3D/Library/
-unity/NightCity3D/Logs/
 unity/NightCity3D/Temp/
-unity/NightCity3D/UserSettings/
-webapp/unity/u*/

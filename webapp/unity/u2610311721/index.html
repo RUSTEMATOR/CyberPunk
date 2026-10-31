@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Night City 3D</title>
+<style>
+  :root { --bg: #0b0a12; --panel: rgba(18, 14, 28, 0.88); --line: #2a2140; --text: #ece6ff; --dim: #9d93b8; --acc: #ff3e8a; --acc2: #ffb547; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 15px/1.4 -apple-system, "Segoe UI", Roboto, sans-serif; overflow: hidden; -webkit-user-select: none; user-select: none; }
+  /* owner request 31.10: the client is landscape; an upright phone gets the whole stage turned by 90° (layout()) */
+  #stage { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; transform-origin: 0 0; }
+  #unity-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; background: var(--bg); touch-action: none; }
+  .layer { position: absolute; left: 0; right: 0; padding: 0 16px; box-sizing: border-box; }
+  #gate { inset: 0; display: flex; flex-direction: column; justify-content: center; gap: 14px; background: radial-gradient(circle at 50% 30%, #241634, var(--bg) 70%); z-index: 5; }
+  #gate h1 { margin: 0; font-size: 22px; letter-spacing: 0.02em; }
+  #gate h1 b { color: var(--acc); }
+  #gate p { margin: 0; color: var(--dim); }
+  #gate .size { color: var(--text); font-size: 17px; }
+  .btns { display: flex; gap: 10px; margin-top: 6px; }
+  button { font: inherit; border: 1px solid var(--line); background: #1a1428; color: var(--text); border-radius: 10px; padding: 12px 16px; cursor: pointer; }
+  button.main { background: var(--acc); border-color: var(--acc); color: #160812; font-weight: 600; flex: 1; }
+  #load { inset: auto 0 40% 0; display: none; z-index: 4; text-align: center; }
+  #load .track { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin: 10px 0 6px; }
+  #load .fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--acc), var(--acc2)); transition: width 0.2s; }
+  #load small { color: var(--dim); }
+  /* the first-person interface (owner request 31.10): left thumb walks, right thumb looks */
+  #touch { position: absolute; inset: 0; z-index: 2; touch-action: none; display: none; }
+  #top { top: 0; padding-top: 10px; display: none; z-index: 3; pointer-events: none; }
+  #top .bar { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  #top .where { display: inline-block; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 6px 10px; }
+  #top .where small { color: var(--dim); }
+  #top .btns { margin: 0; pointer-events: auto; }
+  #top .btns button { padding: 8px 12px; font-size: 14px; }
+  #list { position: absolute; right: 16px; top: 56px; width: min(320px, 46%); max-height: calc(var(--sh, 400px) * 0.62); overflow-y: auto;
+    display: none; z-index: 4; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px; box-sizing: border-box; }
+  #list button { display: block; width: 100%; text-align: left; margin-bottom: 6px; padding: 9px 12px; }
+  #list button small { color: var(--dim); }
+  #joy { position: absolute; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; z-index: 3; pointer-events: none;
+    border: 2px solid rgba(255, 255, 255, 0.25); background: rgba(255, 255, 255, 0.06); display: none; }
+  #knob { position: absolute; left: 50%; top: 50%; width: 52px; height: 52px; margin: -26px 0 0 -26px; border-radius: 50%; background: rgba(255, 255, 255, 0.35); }
+  #run { position: absolute; right: 18px; bottom: 18px; z-index: 3; display: none; width: 76px; height: 76px; border-radius: 50%; padding: 0; }
+  #run.on { background: var(--acc2); border-color: var(--acc2); color: #160812; font-weight: 600; }
+  #near { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); width: min(360px, 52%); z-index: 3; display: none; }
+  #near .row { display: flex; gap: 8px; align-items: center; }
+  #near .txt { flex: 1; min-width: 0; }
+  #near .txt div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #near .kind { color: var(--dim); font-size: 13px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+  #hint { position: absolute; left: 50%; top: 42%; transform: translate(-50%, -50%); z-index: 3; display: none; pointer-events: none; text-align: center;
+    color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; transition: opacity 0.6s; }
+  #turn { color: var(--acc2); display: none; }
+  /* the fight in first person (owner request 31.10, docs/PLAN_FIGHT3D.md phase 2) */
+  #fhud { position: absolute; left: 50%; top: 10px; transform: translateX(-50%); z-index: 3; display: none; width: min(320px, 40%); pointer-events: none; }
+  #fhud .hp { height: 10px; border-radius: 5px; background: rgba(0, 0, 0, 0.55); border: 1px solid var(--line); overflow: hidden; }
+  #fhud .hp i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, #ff2a4f, #ff7a45); transition: width 0.25s; }
+  #fhud .txt { text-align: center; font-size: 13px; color: var(--text); margin-top: 3px; text-shadow: 0 1px 2px #000; }
+  #fire { position: absolute; right: 108px; bottom: 22px; width: 92px; height: 92px; border-radius: 50%; z-index: 3; display: none; padding: 0;
+    background: rgba(255, 62, 138, 0.25); border: 2px solid var(--acc); color: var(--text); font-weight: 700; touch-action: none; }
+  #fire.down { background: var(--acc); color: #160812; }
+  #wpn { position: absolute; right: 18px; bottom: 112px; z-index: 3; display: none; max-width: 160px; font-size: 13px; padding: 8px 10px; }
+  #fx { position: absolute; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; }
+  #fx div { position: absolute; transform: translate(-50%, -50%); font-weight: 700; font-size: 17px; white-space: nowrap; text-shadow: 0 2px 3px #000;
+    transition: transform 1.1s ease-out, opacity 1.1s ease-in; }
+  #fx .dmg { color: #ffd34d; } #fx .miss { color: #b9b3cc; } #fx .info { color: #9fd8ff; font-size: 14px; } #fx .hurt { color: #ff4a5e; font-size: 20px; } #fx .dodge { color: #7dffb0; }
+  #flash { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(circle, transparent 40%, rgba(255, 0, 40, 0.55)); opacity: 0; transition: opacity 0.35s; }
+  #fend { position: absolute; inset: 0; z-index: 6; display: none; background: rgba(11, 10, 18, 0.86); flex-direction: column; justify-content: center; align-items: center; gap: 12px; text-align: center; padding: 0 16px; }
+  #fend h2 { margin: 0; font-size: 26px; }
+  #fend p { margin: 0; color: var(--dim); max-width: 460px; }
+  #cross { position: absolute; left: 50%; top: 50%; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: rgba(255, 255, 255, 0.55); z-index: 3; display: none; pointer-events: none; }
+  /* quickhacks (owner request 31.10): the button, the list of programs, RAM, the title over the screen */
+  #hackBtn { position: absolute; right: 214px; bottom: 30px; width: 76px; height: 76px; border-radius: 50%; z-index: 3; display: none; padding: 0;
+    background: rgba(61, 242, 255, 0.16); border: 2px solid #3df2ff; color: var(--text); font-weight: 700; font-size: 13px; touch-action: none; }
+  #hackList { position: absolute; right: 18px; bottom: 120px; z-index: 5; display: none; flex-direction: column; gap: 6px; max-height: 62%; overflow-y: auto;
+    background: rgba(8, 14, 20, 0.92); border: 1px solid #3df2ff; border-radius: 12px; padding: 8px; width: min(300px, 46%); }
+  #hackList button { display: flex; justify-content: space-between; gap: 10px; text-align: left; font-size: 14px; padding: 9px 10px; }
+  #hackList button small { color: #3df2ff; font-family: ui-monospace, monospace; flex: 0 0 auto; }
+  #hackList button[disabled] { opacity: 0.4; }
+  #hackList .k { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto; align-self: center; }
+  #fhud .ram { display: flex; gap: 3px; justify-content: center; margin-top: 4px; }
+  #fhud .ram i { width: 9px; height: 6px; border: 1px solid #3df2ff; } #fhud .ram i.on { background: #3df2ff; box-shadow: 0 0 6px #3df2ff; }
+  #fx .hack { color: #3df2ff; }
+  #hx { position: absolute; inset: 0; z-index: 4; pointer-events: none; display: none; place-items: center; overflow: hidden; --c: #3df2ff; }
+  #hx.on { display: grid; }
+  #hx .bg { position: absolute; inset: 0; opacity: 0; background: repeating-linear-gradient(0deg, color-mix(in srgb, var(--c) 14%, transparent) 0 1px, transparent 1px 3px), radial-gradient(ellipse at center, transparent 35%, color-mix(in srgb, var(--c) 30%, transparent) 100%); }
+  #hx.on .bg { animation: hxbg 1.5s steps(12) forwards; }
+  @keyframes hxbg { 0% { opacity: 0; } 10% { opacity: 1; } 22% { opacity: .3; } 34% { opacity: .9; } 70% { opacity: .7; } 100% { opacity: 0; } }
+  #hx .w { grid-area: 1 / 1; font-weight: 800; font-size: min(64px, 8vw); letter-spacing: .04em; text-align: center; color: var(--c); padding: 0 16px;
+    text-shadow: 3px 0 0 rgba(255, 60, 120, .6), -3px 0 0 rgba(60, 200, 255, .6), 0 0 26px var(--c); }
+  #hx.on .w { animation: hxw 1.6s cubic-bezier(.2, .8, .2, 1) forwards; }
+  @keyframes hxw { 0% { transform: scale(2.2); opacity: 0; filter: blur(8px); } 12% { transform: scale(1); opacity: 1; filter: blur(0); } 70% { opacity: 1; } 100% { transform: scale(.6); opacity: 0; } }
+  #hx .s { grid-area: 1 / 1; margin-top: min(120px, 16vw); font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: var(--c); text-shadow: 0 0 10px var(--c); }
+  #hx.on .s { animation: hxs 1.6s ease-out forwards; }
+  @keyframes hxs { 0% { opacity: 0; } 15% { opacity: 1; } 75% { opacity: 1; } 100% { opacity: 0; } }
+  #hx .tear { position: absolute; left: 0; right: 0; background: var(--c); mix-blend-mode: difference; opacity: 0; animation: hxt .45s steps(4) 2; }
+  @keyframes hxt { 0% { opacity: 0; transform: none; } 30% { opacity: .7; transform: translateX(-7vw); } 60% { opacity: .3; transform: translateX(5vw); } 100% { opacity: 0; transform: none; } }
+  #stage.hijack canvas { animation: hxhj .8s steps(8); }
+  @keyframes hxhj { 0%, 100% { filter: none; } 25% { filter: hue-rotate(-40deg) saturate(2) contrast(1.4); } 50% { filter: invert(.8) hue-rotate(160deg); } 75% { filter: saturate(1.8) brightness(.7); } }
+  #msg { inset: 0; display: none; z-index: 6; background: rgba(11, 10, 18, 0.92); flex-direction: column; justify-content: center; gap: 12px; }
+</style>
+</head>
+<body>
+<div id="stage">
+<canvas id="unity-canvas" tabindex="-1"></canvas>
+
+<div id="gate" class="layer">
+  <h1>Найт-Сити <b>3D</b></h1>
+  <p>Отдельный 3D-клиент на Unity. Сейчас начнётся загрузка.</p>
+  <p class="size" id="size">Размер считается...</p>
+  <p id="turn">Поверни телефон набок: клиент работает в горизонтальном экране.</p>
+  <p>Лучше по Wi-Fi. Второй раз откроется быстрее: файлы останутся в памяти браузера.</p>
+  <div class="btns"><button class="main" id="go">Загрузить</button><button id="back">Назад</button></div>
+</div>
+
+<div id="load" class="layer">
+  <div>Загружаю клиент</div>
+  <div class="track"><div class="fill" id="fill"></div></div>
+  <small id="pct">0%</small>
+</div>
+
+<div id="touch"></div>
+<div id="cross"></div>
+<div id="joy"><div id="knob"></div></div>
+<div id="top" class="layer"><div class="bar"><span class="where" id="where">...</span>
+  <div class="btns"><button id="toggle">Все двери</button><button id="close">← Найт-Сити</button></div></div></div>
+<div id="list"></div>
+<div id="hint">Слева веди пальцем, чтобы идти.<br>Справа, чтобы смотреть.</div>
+<button id="run">Бег</button>
+<div id="near" class="card"><div class="row"><div class="txt"><div id="nearName"></div><div class="kind" id="nearKind"></div></div>
+  <button class="main" id="enter" style="flex:0 0 auto">Войти</button></div></div>
+
+<div id="flash"></div>
+<div id="fx"></div>
+<div id="fhud"><div class="hp"><i id="fhp"></i></div><div class="txt" id="fhpText"></div><div class="ram" id="fram"></div></div>
+<button id="wpn">Оружие</button>
+<button id="fire">Огонь</button>
+<button id="hackBtn">Взлом</button>
+<div id="hackList"></div>
+<div id="hx"><div class="bg"></div><div class="w" id="hxW"></div><div class="s" id="hxS"></div></div>
+<div id="fend"><h2 id="fendTitle"></h2><p id="fendText"></p><div class="btns"><button class="main" id="fendBack">← Найт-Сити</button></div></div>
+
+<div id="msg" class="layer"><div id="msgText"></div><div class="btns"><button class="main" id="msgBack">← Найт-Сити</button></div></div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var token = (/[#&]t=([^&]+)/.exec(location.hash) || [])[1] || "";
+  var fight = /[#&]m=fight/.test(location.hash), fightOver = false, fview = null, wIndex = 0;
+  var inApp = window.parent !== window;
+  var version = "u2610311721";
+  var M = { version: version, ua: navigator.userAgent.slice(0, 280), screen: screen.width + "x" + screen.height, dpr: window.devicePixelRatio || 1 };
+  var instance = null, map = null, doors = {}, t0 = 0;
+
+  // landscape always: an upright window turns the stage by 90° clockwise (the player tilts the phone to the left)
+  var rot = false;
+  function layout() {
+    var W = window.innerWidth, H = window.innerHeight, st = $("stage");
+    rot = H > W;
+    st.style.width = (rot ? H : W) + "px"; st.style.height = (rot ? W : H) + "px";
+    st.style.transform = rot ? "translateX(" + W + "px) rotate(90deg)" : "";
+    document.documentElement.style.setProperty("--sh", (rot ? W : H) + "px");
+    // Unity reads a turned canvas's size through getBoundingClientRect (upright) and would stretch the picture, so the
+    // drawing buffer is set here from the stage's own size (config.matchWebGLToCanvasSize = false)
+    var c = $("unity-canvas"), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    c.width = Math.round((rot ? H : W) * dpr); c.height = Math.round((rot ? W : H) * dpr);
+    $("turn").style.display = rot ? "block" : "none";
+  }
+  // a point of the screen in the stage's own frame, 0..1 from its top left
+  function stagePoint(e) {
+    var W = window.innerWidth, H = window.innerHeight;
+    return rot ? { x: e.clientY / H, y: (W - e.clientX) / W } : { x: e.clientX / W, y: e.clientY / H };
+  }
+  layout();
+  window.addEventListener("resize", layout);
+  window.addEventListener("orientationchange", function () { setTimeout(layout, 250); });
+
+  function post(msg) { if (inApp) window.parent.postMessage(msg, location.origin); }
+  function close() {
+    if (fight && !fightOver && instance) { // the fight goes on in the text window, at its current tick
+      try { fetch("/api/fight3d/leave", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ t: decodeURIComponent(token) }), keepalive: true }); } catch (e) {}
+    }
+    if (inApp) post({ nc: "close" }); else history.back();
+  }
+  function send(extra) {
+    var body = Object.assign({ t: token }, M, extra || {});
+    try { fetch("/api/unity/metric", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), keepalive: true }); } catch (e) {}
+  }
+  function show(id, on, how) { $(id).style.display = on ? (how || "block") : "none"; }
+  function fail(text, err) {
+    $("msgText").textContent = text; show("msg", true, "flex"); show("load", false);
+    send({ stage: "error", error: String(err || text).slice(0, 280) });
+  }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  fetch("build.json", { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (b) {
+    M.bytes = b.bytes || 0;
+    $("size").textContent = "Размер: " + (M.bytes / 1048576).toFixed(1) + " МБ";
+  }).catch(function () { $("size").textContent = "Размер: несколько мегабайт"; });
+
+  $("back").onclick = close; $("close").onclick = close; $("msgBack").onclick = close;
+  $("toggle").onclick = function () { var l = $("list"); l.style.display = l.style.display === "block" ? "none" : "block"; };
+
+  // -- the input of the first person: the page collects it, Unity reads it each frame (nc.jslib NcAxis) --------------
+  // 0 move x, 1 move y (forward +), 2 look dx, 3 look dy (pixels, Unity consumes them), 4 run
+  var IN = window.ncIn = [0, 0, 0, 0, 0, 0];
+  var joy = null, look = null, keys = {}, near = null, R = 56;
+  function stageSize() { var W = window.innerWidth, H = window.innerHeight; return rot ? { w: H, h: W } : { w: W, h: H }; }
+  function stagePx(e) { var p = stagePoint(e), s = stageSize(); return { x: p.x * s.w, y: p.y * s.h }; }
+  function keyMove() {
+    if (joy) return;
+    IN[0] = (keys.KeyD || keys.ArrowRight ? 1 : 0) - (keys.KeyA || keys.ArrowLeft ? 1 : 0);
+    IN[1] = (keys.KeyW || keys.ArrowUp ? 1 : 0) - (keys.KeyS || keys.ArrowDown ? 1 : 0);
+  }
+  var pad = $("touch");
+  pad.addEventListener("pointerdown", function (e) {
+    var p = stagePx(e);
+    try { pad.setPointerCapture(e.pointerId); } catch (x) {}
+    hideHint();
+    if (e.pointerType !== "mouse" && !joy && p.x < stageSize().w * 0.45) {
+      joy = { id: e.pointerId, x: p.x, y: p.y };
+      var j = $("joy"); j.style.left = p.x + "px"; j.style.top = p.y + "px"; j.style.display = "block";
+      $("knob").style.transform = "translate(0px, 0px)";
+    } else if (!look) {
+      look = { id: e.pointerId, x: p.x, y: p.y };
+    }
+    e.preventDefault();
+  });
+  pad.addEventListener("pointermove", function (e) {
+    var p = stagePx(e);
+    if (joy && e.pointerId === joy.id) {
+      var dx = p.x - joy.x, dy = p.y - joy.y, len = Math.sqrt(dx * dx + dy * dy);
+      if (len > R) { dx = dx / len * R; dy = dy / len * R; }
+      $("knob").style.transform = "translate(" + dx + "px, " + dy + "px)";
+      IN[0] = dx / R; IN[1] = -dy / R;
+    } else if (look && e.pointerId === look.id) {
+      IN[2] += p.x - look.x; IN[3] += p.y - look.y;
+      look.x = p.x; look.y = p.y;
+    }
+  });
+  function release(e) {
+    if (joy && e.pointerId === joy.id) { joy = null; IN[0] = 0; IN[1] = 0; $("joy").style.display = "none"; keyMove(); }
+    if (look && e.pointerId === look.id) look = null;
+  }
+  pad.addEventListener("pointerup", release);
+  pad.addEventListener("pointercancel", release);
+  window.addEventListener("keydown", function (e) {
+    if (e.code === "ShiftLeft" || e.code === "ShiftRight") { IN[4] = 1; return; }
+    if (e.code === "KeyE" || e.code === "Enter") { enter(); return; }
+    if (fight && (e.code === "Space" || e.code === "KeyF")) { IN[5] = 1; e.preventDefault(); return; }
+    if (fight && e.code === "KeyQ") { nextWeapon(); return; }
+    if (fight && e.code === "KeyH" && fview && fview.hacks && fview.hacks.length) { $("hackBtn").click(); return; }
+    keys[e.code] = true; keyMove(); hideHint();
+  });
+  window.addEventListener("keyup", function (e) {
+    if (e.code === "ShiftLeft" || e.code === "ShiftRight") { IN[4] = $("run").classList.contains("on") ? 1 : 0; return; }
+    if (e.code === "Space" || e.code === "KeyF") { IN[5] = 0; return; }
+    keys[e.code] = false; keyMove();
+  });
+  window.addEventListener("blur", function () { keys = {}; keyMove(); });
+  $("run").onclick = function () { var on = !$("run").classList.contains("on"); $("run").classList.toggle("on", on); IN[4] = on ? 1 : 0; };
+  var hintTimer = 0;
+  function hideHint() { var h = $("hint"); if (h.style.display === "block") { h.style.opacity = "0"; clearTimeout(hintTimer); hintTimer = setTimeout(function () { h.style.display = "none"; }, 600); } }
+
+  function enter() {
+    if (!near || !instance) return;
+    // a door with a room: step inside; the room's exit: back to the street (both stay in Unity)
+    if (near.type === "room") { instance.SendMessage("NC", "OnEnter", near.id); return; }
+    if (near.type === "exit") { instance.SendMessage("NC", "OnExit", ""); return; }
+    if (!inApp) { fail("Двери работают, когда клиент открыт из приложения Найт-Сити."); return; }
+    post({ nc: "press", screen: "city", action: "d3", arg: near.id });
+  }
+  $("enter").onclick = enter;
+
+  // the C# side (Assets/NC/Plugins/WebGL/nc.jslib) calls these
+  window.ncUi = function (json) {
+    try { map = JSON.parse(json); } catch (e) { map = null; }
+    if (!map || !map.ok) { fail(map && map.status === "auth" ? "Ссылка устарела. Открой клиент заново из «Города»." : "Не удалось получить район. Попробуй ещё раз.", map && map.status); return; }
+    $("where").innerHTML = esc(map.district_name) + " <small>· " + esc(map.city_name) + "</small>";
+    var html = "";
+    (map.doors || []).forEach(function (d) { doors[d.id] = d; html += '<button data-id="' + esc(d.id) + '">' + esc(d.label) + " <small>" + esc(d.kind) + "</small></button>"; });
+    $("list").innerHTML = html;
+    Array.prototype.forEach.call($("list").querySelectorAll("button"), function (b) {
+      b.onclick = function () { if (instance) instance.SendMessage("NC", "OnPick", b.getAttribute("data-id")); $("list").style.display = "none"; };
+    });
+    show("top", true); show("touch", true); show("run", true); show("cross", true);
+    if (fight) { $("toggle").style.display = "none"; $("hint").innerHTML = "Слева веди пальцем, чтобы идти. Справа, чтобы целиться.<br>«Огонь» стреляет, каждое попадание — бросок кубиков."; }
+    var h = $("hint"); h.style.display = "block"; h.style.opacity = "1";
+    hintTimer = setTimeout(hideHint, 6000);
+  };
+  // -- the fight: the server's answers come through Unity (NcFightUi), the floating rolls through NcFx ----------------
+  function fireOn(on) { IN[5] = on ? 1 : 0; $("fire").classList.toggle("down", !!on); }
+  $("fire").addEventListener("pointerdown", function (e) { fireOn(true); hideHint(); e.preventDefault(); e.stopPropagation(); });
+  ["pointerup", "pointercancel", "pointerleave"].forEach(function (k) { $("fire").addEventListener(k, function () { fireOn(false); }); });
+  function nextWeapon() {
+    if (!fview || !fview.weapons || !fview.weapons.length || !instance) return;
+    wIndex = (wIndex + 1) % fview.weapons.length;
+    instance.SendMessage("NC", "OnWeapon", String(wIndex));
+    showWeapon();
+  }
+  function showWeapon() {
+    var w = fview && fview.weapons && fview.weapons[wIndex];
+    $("wpn").textContent = w ? (w.melee ? "🔪 " : "🔫 ") + w.name + (fview.weapons.length > 1 ? " ⟳" : "") : "Оружие";
+  }
+  $("wpn").onclick = nextWeapon;
+  $("fendBack").onclick = close;
+  var TITLES = { won: "Победа", downed: "Ты на земле", fled: "Ты ушёл", surrendered: "Ты сдался", avoided: "Обошлось" };
+  window.ncFightUi = function (json) {
+    var v = null; try { v = JSON.parse(json); } catch (e) { return; }
+    if (!v) return;
+    if (fightOver && (v.status === "none" || v.status === "net")) return; // answers after the end keep the result on screen
+    if (!v.ok || v.status === "none" || v.status === "text_only" || v.status === "auth" || v.status === "net") {
+      var why = { none: "Боя сейчас нет: он уже закончился в окне бота.", text_only: "Этот бой идёт только в тексте: в нём участвуют другие игроки или волны элиты.",
+                  auth: "Ссылка устарела. Открой бой заново из окна бота.", net: "Нет связи с сервером. Попробуй ещё раз." }[v.status] || "Бой не открылся.";
+      if (v.status === "net" && fview) return; // one lost answer does not end the fight
+      fightOver = true; $("fendTitle").textContent = "Бой в 3D"; $("fendText").textContent = why; show("fend", true, "flex"); return;
+    }
+    fview = Object.assign(fview || {}, v);
+    show("fhud", true); show("fire", true); show("wpn", true); showWeapon();
+    show("hackBtn", !!(v.hacks && v.hacks.length) && !fightOver);
+    var ram = (v.player && v.player.max_ram) || 0, rh = "";
+    for (var ri = 0; ri < ram; ri++) rh += '<i class="' + (ri < v.player.ram ? "on" : "") + '"></i>';
+    $("fram").innerHTML = rh;
+    if ($("hackList").style.display === "flex") hackListFill();
+    var p = v.player || {}, part = p.max_hp ? Math.max(0, p.hp) / p.max_hp : 0;
+    $("fhp").style.width = (part * 100).toFixed(1) + "%";
+    var alive = (v.enemies || []).filter(function (e) { return e.active; }).length;
+    $("fhpText").textContent = "Здоровье " + Math.max(0, p.hp || 0) + "/" + (p.max_hp || 0) + " · врагов " + alive;
+    if (v.over && !fightOver) {
+      fightOver = true; fireOn(false); show("hackBtn", false); $("hackList").style.display = "none";
+      $("fendTitle").textContent = v.died ? "Ты погиб" : (TITLES[v.outcome] || "Бой окончен");
+      $("fendText").textContent = "Итог боя уже в окне бота: опыт, репутация, тела, раны. Всё посчитано теми же бросками, что и в тексте.";
+      setTimeout(function () { show("fend", true, "flex"); }, 900);
+    } else if (v.reinforced && !fightOver) {
+      fightOver = true; fireOn(false);
+      $("fendTitle").textContent = "Подкрепление прибыло";
+      $("fendText").textContent = "Их стало слишком много. Решай в окне бота: бежать или сдаться.";
+      show("fend", true, "flex");
+    }
+  };
+  // -- quickhacks (owner request 31.10): pick a program, Unity aims it at the enemy nearest to the crosshair ----------
+  var HCOL = { fire: "#ff6b1a", shock: "#59ccff", jam: "#b86bff", virus: "#80ff4d", glitch: "#ffe14d", litany: "#ff61d2", blackwall: "#ff1a40", emp: "#6fa8ff",
+               ice: "#9fe6ff", firewall: "#5cffa8", intrusion: "#ff2a47" };
+  function hackListFill() {
+    var box = $("hackList"), ram = (fview && fview.player && fview.player.ram) || 0;
+    box.innerHTML = "";
+    (fview && fview.hacks || []).forEach(function (h) {
+      var b = document.createElement("button"); b.type = "button"; b.disabled = h.cost > ram;
+      b.innerHTML = '<i class="k"></i><span style="flex:1"></span><small></small>';
+      b.querySelector(".k").style.background = HCOL[h.kind] || "#6fa8ff";
+      b.querySelector("span").textContent = h.name + (h.spread ? " ⇉" : "");
+      b.querySelector("small").textContent = h.cost + " ОЗУ";
+      b.onclick = function () { box.style.display = "none"; if (instance) instance.SendMessage("NC", "OnHack", h.key); };
+      box.appendChild(b);
+    });
+  }
+  ["hackBtn", "hackList"].forEach(function (id) { $(id).addEventListener("pointerdown", function (e) { e.stopPropagation(); }); });
+  $("hackBtn").addEventListener("click", function (e) {
+    e.stopPropagation(); hideHint();
+    var box = $("hackList"), open = box.style.display === "flex";
+    if (!open) hackListFill();
+    box.style.display = open ? "none" : "flex";
+  });
+  var hxTimer = 0;
+  window.ncHackUi = function (json) {
+    var f = null; try { f = JSON.parse(json); } catch (e) { return; }
+    if (!f) return;
+    var hx = $("hx");
+    hx.classList.remove("on"); void hx.offsetWidth;
+    hx.style.setProperty("--c", HCOL[f.kind] || "#3df2ff");
+    $("hxW").textContent = String(f.word || "").toUpperCase(); $("hxS").textContent = f.sub || "";
+    hx.querySelectorAll(".tear").forEach(function (t) { t.remove(); });
+    if (f.kind === "intrusion" || f.kind === "jam" || f.kind === "glitch" || f.kind === "blackwall") {
+      for (var i = 0; i < 5; i++) { var t = document.createElement("i"); t.className = "tear"; t.style.top = (Math.random() * 95) + "%"; t.style.height = (1 + Math.random() * 5) + "%"; t.style.animationDelay = (Math.random() * 400) + "ms"; hx.appendChild(t); }
+    }
+    hx.classList.add("on");
+    if (f.kind === "intrusion") { $("stage").classList.add("hijack"); setTimeout(function () { $("stage").classList.remove("hijack"); }, 800); }
+    try { var H = window.Telegram && Telegram.WebApp && Telegram.WebApp.HapticFeedback; if (H) H.impactOccurred(f.kind === "intrusion" ? "heavy" : f.ok ? "rigid" : "light"); } catch (e) {}
+    clearTimeout(hxTimer); hxTimer = setTimeout(function () { hx.classList.remove("on"); }, 1700);
+  };
+  var flashTimer = 0;
+  window.ncFx = function (json) {
+    var f = null; try { f = JSON.parse(json); } catch (e) { return; }
+    if (!f) return;
+    var s = stageSize(), d = document.createElement("div");
+    d.className = f.kind || "dmg"; d.textContent = f.text;
+    d.style.left = (f.x * s.w) + "px"; d.style.top = (f.y * s.h) + "px";
+    $("fx").appendChild(d);
+    requestAnimationFrame(function () { requestAnimationFrame(function () { d.style.transform = "translate(-50%, -160%)"; d.style.opacity = "0"; }); });
+    setTimeout(function () { d.remove(); }, 1200);
+    if (f.kind === "hurt") { var fl = $("flash"); fl.style.opacity = "1"; clearTimeout(flashTimer); flashTimer = setTimeout(function () { fl.style.opacity = "0"; }, 180); }
+  };
+
+  window.ncNear = function (json) {
+    if (fight) return; // in a fight the doors wait
+    near = null;
+    try { near = json ? JSON.parse(json) : null; } catch (e) { near = null; }
+    if (!near) { show("near", false); return; }
+    $("nearName").textContent = near.label || "";
+    $("nearKind").textContent = near.type === "npc" ? "Житель района" : near.type === "exit" ? "На улицу" :
+      near.type === "counter" ? "Стойка: " + (near.kind || "") : (near.kind || "");
+    $("enter").textContent = { npc: "Подойти", exit: "Выйти", counter: "Открыть" }[near.type] || "Войти";
+    show("near", true);
+  };
+  window.ncStat = function (json) {
+    var s = {}; try { s = JSON.parse(json); } catch (e) {}
+    var heap = instance && instance.Module && instance.Module.HEAPU8 ? instance.Module.HEAPU8.length / 1048576 : 0;
+    var mem = performance && performance.memory ? performance.memory.usedJSHeapSize / 1048576 : 0;
+    send({ fps: s.fps, gpu: s.gpu, device: s.device, sys_mb: s.sys_mb, stage: s.stage || "ready", heap_mb: heap, mem_mb: mem });
+  };
+
+  // owner report 31.10: a failed start compiles the engine file here to learn exactly what this browser refuses
+  function probeWasm(first) {
+    var url = "Build/u2610311721.wasm.unityweb";
+    fetch(url).then(function (r) { return r.arrayBuffer(); }).then(function (buf) {
+      var b = new Uint8Array(buf);
+      if (b[0] === 0x1f && b[1] === 0x8b && typeof DecompressionStream === "function") {
+        return new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream("gzip"))).arrayBuffer();
+      }
+      return buf;
+    }).then(function (wasm) {
+      return WebAssembly.compile(wasm).then(function () { return "compile ok, " + wasm.byteLength + " bytes"; },
+        function (e) { return "compile: " + e; });
+    }).then(function (res) { send({ stage: "probe", error: (res + " | " + first).slice(0, 290) }); })
+      .catch(function (e) { send({ stage: "probe", error: ("probe failed: " + e).slice(0, 290) }); });
+  }
+
+  $("go").onclick = function () {
+    show("gate", false); show("load", true);
+    t0 = performance.now();
+    send({ stage: "start" });
+    var buildUrl = "Build";
+    var config = {
+      arguments: [],
+      dataUrl: buildUrl + "/u2610311721.data.unityweb",
+      frameworkUrl: buildUrl + "/u2610311721.framework.js.unityweb",
+      codeUrl: buildUrl + "/u2610311721.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "Night City Life",
+      productName: "Night City 3D",
+      productVersion: version,
+      devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+      matchWebGLToCanvasSize: false,
+      showBanner: function (text, type) { if (type === "error") fail("Клиент упал при запуске.", text); }
+    };
+    var s = document.createElement("script");
+    s.src = buildUrl + "/u2610311721.loader.js";
+    s.onerror = function () { fail("Не удалось скачать клиент. Проверь связь и открой ещё раз.", "loader"); };
+    s.onload = function () {
+      createUnityInstance($("unity-canvas"), config, function (p) {
+        var pct = Math.round(p * 100); $("fill").style.width = pct + "%"; $("pct").textContent = pct + "%";
+      }).then(function (inst) {
+        instance = inst;
+        M.load_ms = Math.round(performance.now() - t0);
+        show("load", false);
+        send({ stage: "loaded" });
+        inst.SendMessage("NC", "OnBoot", JSON.stringify({ t: decodeURIComponent(token), api: location.origin, m: fight ? "fight" : "" }));
+      }).catch(function (err) { probeWasm(String(err)); fail("Клиент не запустился на этом устройстве.", err); });
+    };
+    document.body.appendChild(s);
+  };
+
+  if (!token) { $("size").textContent = "Нет пропуска. Открой клиент из «Города»."; $("go").disabled = true; }
+})();
+</script>
+</body>
+</html>
